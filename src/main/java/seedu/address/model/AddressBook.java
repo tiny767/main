@@ -147,10 +147,35 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
+    /***
+     * Removes {@code tag} from the chosen person in the addressbook
+     *@throws PersonNotFoundException if the person is not found in the addressbook
+     */
+
+    public void deleteTagFromPerson(Tag tag, Person person) throws PersonNotFoundException {
+        // TODO: Implement delete tag from chosen person function
+
+    }
+
     //// tag-level operations
 
     public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {
         tags.add(t);
+    }
+
+    /***
+     * Deletes chosen tag {@code tag} from all persons in this {@code AddressBook}
+     *
+     */
+    public void deleteTag(Tag tag) {
+        try {
+            for( Person person : persons) {
+                deleteTagFromPerson(tag, person);
+            }
+        }
+        catch (PersonNotFoundException personNotFoundException) {
+            throw new AssertionError("Access error: Person was found in AddressBook");
+        }
     }
 
     //// util methods
