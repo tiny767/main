@@ -3,7 +3,6 @@ package seedu.address.model.tag;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.rmi.NoSuchObjectException;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
