@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= Infinity Book - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -12,7 +12,7 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/se-edu/addressbook-level4/tree/master
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team JACKHA (W11-B3)`      Since: `Mar 2018`      Licence: `MIT`
 
 == Setting up
 
@@ -781,14 +781,12 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 == Product Scope
 
 *Target user profile*:
+Tech recruiters who have the need for finding and acquiring skilled Computing students for tech companies.
 
-* has a need to manage a significant number of contacts
-* prefer desktop apps over other types
-* can type fast
-* prefers typing over mouse input
-* is reasonably comfortable using CLI apps
-
-*Value proposition*: manage contacts faster than a typical mouse/GUI driven app
+* manage a significant number of student contacts
+* store student's basic information, contacts, expected graduation year, familiar frameworks, languages.
+* find students whose skill set is suitable for available positions
+* Keep track of student’s past interactions with the company: internship, coding challenges, interview,...
 
 [appendix]
 == User Stories
