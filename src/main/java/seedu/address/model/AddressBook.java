@@ -170,14 +170,15 @@ public class AddressBook implements ReadOnlyAddressBook {
             updatePerson(person, modifiedPerson);
         }
         catch (DuplicatePersonException duplictePersonException) {
-            throw new AssertionError("Modifying tags must not create duplicate persons.");
+            throw new AssertionError("Modifying a person's tags only should not result in a duplicate. " + "See Person#equals(Object).");
         }
      }
 
     //// tag-level operations
 
     public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {
-        tags.add(t);
+        tags.
+                add(t);
     }
 
     /***
@@ -191,7 +192,7 @@ public class AddressBook implements ReadOnlyAddressBook {
             }
         }
         catch (PersonNotFoundException personNotFoundException) {
-            throw new AssertionError("Access error: Person was found in AddressBook");
+            throw new AssertionError("Impossible: Person was found in AddressBook.");
         }
     }
 
