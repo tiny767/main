@@ -2,9 +2,12 @@ package seedu.address.model;
 
 import static org.junit.Assert.assertEquals;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_NONEXISTENT;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
-import static seedu.address.testutil.TypicalPersons.*;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_NONEXISTENT;
+import static seedu.address.testutil.TypicalPersons.ALICE;
+import static seedu.address.testutil.TypicalPersons.AMY;
+import static seedu.address.testutil.TypicalPersons.BOB;
+import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,8 +23,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.model.person.Person;
 import seedu.address.model.tag.Tag;
-import seedu.address.testutil.PersonBuilder;
+
 import seedu.address.testutil.AddressBookBuilder;
+import seedu.address.testutil.PersonBuilder;
 
 public class AddressBookTest {
 
@@ -29,8 +33,10 @@ public class AddressBookTest {
     public ExpectedException thrown = ExpectedException.none();
 
     private final AddressBook addressBook = new AddressBook();
-    private final AddressBook addressBookWithBobAndAlice = new AddressBookBuilder().withPerson(BOB).withPerson(ALICE).build();
-    private final AddressBook addressBookWithBobAndAmy = new AddressBookBuilder().withPerson(BOB).withPerson(AMY).build();
+    private final AddressBook addressBookWithBobAndAlice =
+            new AddressBookBuilder().withPerson(BOB).withPerson(ALICE).build();
+    private final AddressBook addressBookWithBobAndAmy =
+            new AddressBookBuilder().withPerson(BOB).withPerson(AMY).build();
 
     @Test
     public void constructor() {
@@ -53,13 +59,14 @@ public class AddressBookTest {
     }
 
     @Test
-    public void deleteTag_TagExistsForSomeUsers_tagRemovedFromAllPersons() throws Exception {
+    public void deleteTag_tagExistsForSomeUsers_tagRemovedFromAllPersons() throws Exception {
         addressBookWithBobAndAmy.deleteTag(new Tag(VALID_TAG_FRIEND));
 
         Person bobWithFriendTag = new PersonBuilder(BOB).withTags(VALID_TAG_HUSBAND).build();
         Person amyWithoutFriendTag = new PersonBuilder(AMY).withTags().build();
 
-        AddressBook expectedAddressBook = new AddressBookBuilder().withPerson(bobWithFriendTag).withPerson(amyWithoutFriendTag).build();
+        AddressBook expectedAddressBook =
+                new AddressBookBuilder().withPerson(bobWithFriendTag).withPerson(amyWithoutFriendTag).build();
 
         assertEquals(expectedAddressBook, addressBookWithBobAndAmy);
 
