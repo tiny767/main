@@ -49,13 +49,13 @@ public class AddressBookParser {
         switch (commandWord) {
         case AddCommand.COMMAND_ALIAS:
             return new AddCommandParser().parse(arguments);
-        
+
         case AddCommand.COMMAND_WORD:
             return new AddCommandParser().parse(arguments);
-        
+
         case EditCommand.COMMAND_ALIAS:
-            return new EditCommandParser().parse(arguments); 
-        
+            return new EditCommandParser().parse(arguments);
+
         case EditCommand.COMMAND_WORD:
             return new EditCommandParser().parse(arguments);
 
