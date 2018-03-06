@@ -2,6 +2,7 @@ package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
 
+import java.rmi.NoSuchObjectException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -155,10 +156,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
 
     public void deleteTagFromPerson(Tag tag, Person person) throws PersonNotFoundException {
-        // TODO: Implement delete tag from chosen person function
-
-        Set<Tag> modifiedTags = new HashSet<Tag>();
-        modifiedTags = person.getTags();
+        Set<Tag> modifiedTags = new HashSet<Tag>(person.getTags());
 
         if(!modifiedTags.remove(tag)) {
             return;
@@ -194,6 +192,24 @@ public class AddressBook implements ReadOnlyAddressBook {
         catch (PersonNotFoundException personNotFoundException) {
             throw new AssertionError("Impossible: Person was found in AddressBook.");
         }
+
+        if(!tagExistsInAddressBook(tag)) {
+            try {
+                tags.remove(tag);
+            }
+            catch (NoSuchObjectException noSuchObjectException) {
+
+            }
+        }
+
+    }
+
+    public boolean tagExistsInAddressBook(Tag tag) {
+        for( Person person : persons) {
+            if(person.getTags().contains(tag))
+                return true;
+        }
+        return false;
     }
 
     //// util methods

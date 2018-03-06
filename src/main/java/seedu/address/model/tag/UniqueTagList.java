@@ -3,6 +3,7 @@ package seedu.address.model.tag;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.rmi.NoSuchObjectException;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
@@ -88,6 +89,23 @@ public class UniqueTagList implements Iterable<Tag> {
             throw new DuplicateTagException();
         }
         internalList.add(toAdd);
+
+        assert CollectionUtil.elementsAreUnique(internalList);
+    }
+
+    /**
+     * Removes a Tag from the list.
+     *
+     * @throws java.rmi.NoSuchObjectException if the Tag to remove does not exist in the list.
+     */
+    public void remove(Tag toRemove) throws NoSuchObjectException {
+        requireNonNull(toRemove);
+        if (contains(toRemove)) {
+            internalList.remove(toRemove);
+        }
+        else {
+            throw new NoSuchObjectException("Tag to remove not found in AddressBook.");
+        }
 
         assert CollectionUtil.elementsAreUnique(internalList);
     }

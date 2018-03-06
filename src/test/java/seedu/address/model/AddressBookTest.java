@@ -1,12 +1,10 @@
 package seedu.address.model;
 
 import static org.junit.Assert.assertEquals;
-import static seedu.address.testutil.TypicalPersons.ALICE;
-import static seedu.address.testutil.TypicalPersons.BOB;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_NONEXISTENT;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
+import static seedu.address.testutil.TypicalPersons.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -32,6 +30,7 @@ public class AddressBookTest {
 
     private final AddressBook addressBook = new AddressBook();
     private final AddressBook addressBookWithBobAndAlice = new AddressBookBuilder().withPerson(BOB).withPerson(ALICE).build();
+    private final AddressBook addressBookWithBobAndAmy = new AddressBookBuilder().withPerson(BOB).withPerson(AMY).build();
 
     @Test
     public void constructor() {
@@ -46,11 +45,24 @@ public class AddressBookTest {
     }
 
     @Test
-    public void removeTag_nonExistentTag_noChangesToAddressBook() throws Exception {
+    public void deleteTag_nonExistentTag_noChangesToAddressBook() throws Exception {
         addressBookWithBobAndAlice.deleteTag(new Tag(VALID_TAG_NONEXISTENT));
         AddressBook expectedAddressBook = new AddressBookBuilder().withPerson(BOB).withPerson(ALICE).build();
 
-        assertEquals(addressBookWithBobAndAlice, expectedAddressBook);
+        assertEquals(expectedAddressBook, addressBookWithBobAndAlice);
+    }
+
+    @Test
+    public void deleteTag_TagExistsForSomeUsers_tagRemovedFromAllPersons() throws Exception {
+        addressBookWithBobAndAmy.deleteTag(new Tag(VALID_TAG_FRIEND));
+
+        Person bobWithFriendTag = new PersonBuilder(BOB).withTags(VALID_TAG_HUSBAND).build();
+        Person amyWithoutFriendTag = new PersonBuilder(AMY).withTags().build();
+
+        AddressBook expectedAddressBook = new AddressBookBuilder().withPerson(bobWithFriendTag).withPerson(amyWithoutFriendTag).build();
+
+        assertEquals(expectedAddressBook, addressBookWithBobAndAmy);
+
     }
 
     @Test
