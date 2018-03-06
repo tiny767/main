@@ -2,7 +2,11 @@ package seedu.address.model;
 
 import static org.junit.Assert.assertEquals;
 import static seedu.address.testutil.TypicalPersons.ALICE;
+import static seedu.address.testutil.TypicalPersons.BOB;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_NONEXISTENT;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -18,6 +22,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.model.person.Person;
 import seedu.address.model.tag.Tag;
+import seedu.address.testutil.PersonBuilder;
+import seedu.address.testutil.AddressBookBuilder;
 
 public class AddressBookTest {
 
@@ -25,6 +31,7 @@ public class AddressBookTest {
     public ExpectedException thrown = ExpectedException.none();
 
     private final AddressBook addressBook = new AddressBook();
+    private final AddressBook addressBookWithBobAndAlice = new AddressBookBuilder().withPerson(BOB).withPerson(ALICE).build();
 
     @Test
     public void constructor() {
@@ -36,6 +43,14 @@ public class AddressBookTest {
     public void resetData_null_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
         addressBook.resetData(null);
+    }
+
+    @Test
+    public void removeTag_nonExistentTag_noChangesToAddressBook() throws Exception {
+        addressBookWithBobAndAlice.deleteTag(new Tag(VALID_TAG_NONEXISTENT));
+        AddressBook expectedAddressBook = new AddressBookBuilder().withPerson(BOB).withPerson(ALICE).build();
+
+        assertEquals(addressBookWithBobAndAlice, expectedAddressBook);
     }
 
     @Test
