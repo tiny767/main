@@ -158,7 +158,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void deleteTagFromPerson(Tag tag, Person person) throws PersonNotFoundException {
         Set<Tag> modifiedTags = new HashSet<Tag>(person.getTags());
 
-        if(!modifiedTags.remove(tag)) {
+        if (!modifiedTags.remove(tag)) {
             return;
         }
 
@@ -168,8 +168,8 @@ public class AddressBook implements ReadOnlyAddressBook {
         try {
             updatePerson(person, modifiedPerson);
         } catch (DuplicatePersonException duplictePersonException) {
-            throw new AssertionError("Modifying " +
-                    "a person's tags only should not result in a duplicate. " + "See Person#equals(Object).");
+            throw new AssertionError("Modifying "
+                    + "a person's tags only should not result in a duplicate. " + "See Person#equals(Object).");
         }
     }
 
@@ -183,25 +183,18 @@ public class AddressBook implements ReadOnlyAddressBook {
      * Deletes chosen tag {@code tag} from all persons in this {@code AddressBook}
      *
      */
-    public void deleteTag(Tag tag) {
+    public void deleteTag(Tag tag) throws NoSuchObjectException {
         try {
-            for( Person person : persons) {
+            for (Person person : persons) {
                 deleteTagFromPerson(tag, person);
             }
-        }
-        catch (PersonNotFoundException personNotFoundException) {
+        } catch (PersonNotFoundException personNotFoundException) {
             throw new AssertionError("Impossible: Person was found in AddressBook.");
         }
 
-        if(!tagExistsInAddressBook(tag)) {
-            try {
-                tags.remove(tag);
-            }
-            catch (NoSuchObjectException noSuchObjectException) {
-
-            }
+        if (!tagExistsInAddressBook(tag)) {
+            tags.remove(tag);
         }
-
     }
 
     /***
