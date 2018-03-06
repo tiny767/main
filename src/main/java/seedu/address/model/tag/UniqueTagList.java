@@ -96,16 +96,12 @@ public class UniqueTagList implements Iterable<Tag> {
     /**
      * Removes a Tag from the list.
      *
-     * @throws java.rmi.NoSuchObjectException if the Tag to remove does not exist in the list.
      */
-    public void remove(Tag toRemove) throws NoSuchObjectException {
+    public void remove(Tag toRemove) {
         requireNonNull(toRemove);
         if (contains(toRemove)) {
             internalList.remove(toRemove);
-        } else {
-            throw new NoSuchObjectException("Tag to remove not found in AddressBook.");
         }
-
         assert CollectionUtil.elementsAreUnique(internalList);
     }
 
