@@ -10,6 +10,8 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import javax.swing.text.html.HTML;
+
 import javafx.collections.ObservableList;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
@@ -148,14 +150,29 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /***
-     * Removes {@code tag} from the chosen person in the addressbook
-     *@throws PersonNotFoundException if the person is not found in the addressbook
+     * Removes {@code tag} from the chosen {@code person} in the {@code AddressBook}
+     *@throws PersonNotFoundException if the {@code person} is not found in the {@code AddressBook}
      */
 
     public void deleteTagFromPerson(Tag tag, Person person) throws PersonNotFoundException {
         // TODO: Implement delete tag from chosen person function
 
-    }
+        Set<Tag> modifiedTags = new HashSet<Tag>();
+        modifiedTags = person.getTags();
+
+        if(!modifiedTags.remove(tag)) {
+            return;
+        }
+
+        Person modifiedPerson = new Person(person.getName(), person.getPhone(), person.getEmail(), person.getAddress(), modifiedTags);
+
+        try {
+            updatePerson(person, modifiedPerson);
+        }
+        catch (DuplicatePersonException duplictePersonException) {
+            throw new AssertionError("Modifying tags must not create duplicate persons.");
+        }
+     }
 
     //// tag-level operations
 
