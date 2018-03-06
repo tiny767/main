@@ -162,21 +162,21 @@ public class AddressBook implements ReadOnlyAddressBook {
             return;
         }
 
-        Person modifiedPerson = new Person(person.getName(), person.getPhone(), person.getEmail(), person.getAddress(), modifiedTags);
+        Person modifiedPerson =
+                new Person(person.getName(), person.getPhone(), person.getEmail(), person.getAddress(), modifiedTags);
 
         try {
             updatePerson(person, modifiedPerson);
+        } catch (DuplicatePersonException duplictePersonException) {
+            throw new AssertionError("Modifying " +
+                    "a person's tags only should not result in a duplicate. " + "See Person#equals(Object).");
         }
-        catch (DuplicatePersonException duplictePersonException) {
-            throw new AssertionError("Modifying a person's tags only should not result in a duplicate. " + "See Person#equals(Object).");
-        }
-     }
+    }
 
     //// tag-level operations
 
     public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {
-        tags.
-                add(t);
+        tags.add(t);
     }
 
     /***
@@ -204,10 +204,16 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     }
 
+    /***
+     * Checks if {@code tag} is assigned to atleast one {@code person} in the {@code AddressBook}
+     * @param tag
+     * @return a boolean value indicating the presence of the tag somewhere on the list
+     */
     public boolean tagExistsInAddressBook(Tag tag) {
-        for( Person person : persons) {
-            if(person.getTags().contains(tag))
+        for (Person person : persons) {
+            if (person.getTags().contains(tag)) {
                 return true;
+            }
         }
         return false;
     }
