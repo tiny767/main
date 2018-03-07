@@ -848,6 +848,10 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |User with interest in recruitment |view candidates' LinkedIn profiles from commandline |to know about their work profiles
 
+|`* *` |User |view my search history |to keep track of my previous searches
+
+|`* * *` |User |delete a tag from address book |to remove tags I am no longer interested in
+
 |=======================================================================
 
 _{More to be added}_
