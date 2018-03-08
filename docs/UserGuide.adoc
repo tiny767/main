@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= Infinity Book - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
