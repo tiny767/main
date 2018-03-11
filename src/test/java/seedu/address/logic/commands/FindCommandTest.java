@@ -67,7 +67,7 @@ public class FindCommandTest {
     @Test
     public void execute_multipleKeywords_multiplePersonsFound() {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
-        FindCommand command = prepareCommand("Kurz Elle Kunz");
+        FindCommand command = prepareCommand("95352563 Elle lydia@example.com");
         assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL, ELLE, FIONA));
     }
 
