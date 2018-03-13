@@ -49,7 +49,7 @@ public class AddressBookParser {
         final String arguments = matcher.group("arguments");
         switch (commandWord) {
         case RemarkCommand.COMMAND_WORD:
-            return new RemarkCommand();
+            return new RemarkCommandParser().parse(arguments);
 
         case AddCommand.COMMAND_ALIAS:
             return new AddCommandParser().parse(arguments);
