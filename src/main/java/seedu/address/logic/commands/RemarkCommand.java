@@ -7,6 +7,7 @@ import java.util.Objects;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.person.Remark;
 
 /**
  * Modifies the remark of a person in the address book
@@ -22,14 +23,14 @@ public class RemarkCommand extends UndoableCommand {
             + PREFIX_REMARK + "Is a very good coder.";
 
     private final Index index;
-    private final String remark;
+    private final Remark remark;
 
     /**
      *
      * @param index index of the person in the list to modify the remark
      * @param remark content of the remark to be updated
      */
-    public RemarkCommand(Index index, String remark) {
+    public RemarkCommand(Index index, Remark remark) {
         requireNonNull(index);
         requireNonNull(remark);
 
