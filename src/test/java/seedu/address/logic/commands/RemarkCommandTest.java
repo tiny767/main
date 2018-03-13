@@ -4,7 +4,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_REMARK_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_REMARK_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
@@ -25,17 +24,8 @@ import seedu.address.model.person.Remark;
 public class RemarkCommandTest {
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-
-  //  @Test
-    public void execute() throws Exception{
-        final String remark = "Likes shopping";
-
-        assertCommandFailure(makeCommand(INDEX_FIRST_PERSON, remark), model,
-                INDEX_FIRST_PERSON.getOneBased() + " " + remark);
-    }
-
     @Test
-    public void equals() throws Exception{
+    public void equals() throws Exception {
         final RemarkCommand standardCommand = new RemarkCommand(INDEX_FIRST_PERSON, new Remark(VALID_REMARK_AMY));
 
         // same values -> returns true
@@ -62,7 +52,7 @@ public class RemarkCommandTest {
     /**
      * Returns a {@code RemarkCommand}
      */
-    private RemarkCommand makeCommand(Index index, String remark){
+    private RemarkCommand makeCommand(Index index, String remark) {
         RemarkCommand remarkCommand = new RemarkCommand(index, new Remark(remark));
         remarkCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return remarkCommand;
