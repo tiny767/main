@@ -233,10 +233,30 @@ Format: `exit`
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
-// tag::dataencryption[]
-=== Encrypting data files `[coming in v2.0]`
+=== Data visualization
+Make data-driven decisions with recruiting analytics
 
-_{explain how the user can enable/disable data encryption}_
+image::graph.png[width="500"]
+
+Format: `draw [t/TAG]...`
+
+=== Job Posting
+Add job requirements to find out qualified candidates.
+
+Format: `addjob [SKILLS]`
+
+=== Resume Auto Scanning
+Easily filter candidates whose resume having desirable keywords. +
+
+Format: `scanresume [KEYWORD]`
+
+=== LinkedIn Integration
+Reduced clicks, and continuously updated information of candidates.
+
+View LinkedIn profile of the person identified by the index number used in the last person listing. +
+Format: `viewlinkedin [INDEX]`
+
+=== Encrypting data files `[coming in v2.0]`
 // end::dataencryption[]
 
 == FAQ
