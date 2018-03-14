@@ -882,13 +882,34 @@ Use case ends.
 +
 Use case resumes at step 2.
 
-_{More to be added}_
+=== Use case: Search a person by tag
+*MSS*
+
+1. User requests to search and provides search params
+2. Addr	essBook shows a list of person fitting the given criteria
++
+Use case ends.
+
+=== Use case: View Linkedin profile of a person
+*MSS*
+
+1. User requests to search the person by name
+2. AddressBook shows a list of person
+3. User chooses a person by index in the list
+4. AddressBook shows the linkedin page of that person
++
+Use case ends.
 
 [appendix]
 == Non Functional Requirements
 
 .  Should work on any <<mainstream-os,mainstream OS>> as long as it has Java `1.8.0_60` or higher installed.
-.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
+.  Should be able to hold up to 1000 persons with a reponse time of less than 2 seconds for a command.
+.  Commands should ideally be less than 12 characters long to enable users with reasonable typing speed to use commands effectively.
+.  Should not use more than 11% CPU resources for executing commands
+.  Data storage for address book with 1000 contacts should not exceed 500 Gb
+.  Should be able to work even on older 32-bit system
+.  Project should not require updates to remain functional.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
 
 _{More to be added}_
