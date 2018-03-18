@@ -118,6 +118,19 @@ Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
+=== Viewing a person: `view`
+Views the person whose email is the same as given email. +
+Format: `view email`
+****
+* The email needs to be correct format.
+* Only one person returned since email is unique.
+****
+
+Examples: `view john@gmail.com`
+
+Return the person whose email is `john@gmail.com` +
+Display all the information about this person and display the resume on browser panel.
+
 === Deleting a person : `delete`
 
 Deletes the specified person from the address book. +
