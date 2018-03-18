@@ -20,7 +20,12 @@ public class ViewCommandParserTest {
     }
 
     @Test
-    public void parse_validArgs_returnsFindCommand() {
+    public void parse_emptyArg_throwsIllegalException() {
+        assertParseFailure(parser, "     ", String.format(MESSAGE_INVALID_COMMAND_FORMAT, ViewCommand.MESSAGE_USAGE));
+    }
+
+    @Test
+    public void parse_validArgs_returnsViewCommand() {
         // no leading and trailing whitespaces
         String example = "john@example.com";
         Email email = new Email(example);
@@ -28,5 +33,4 @@ public class ViewCommandParserTest {
                 new ViewCommand(new EmailFilter(email));
         assertParseSuccess(parser, "john@example.com", expectedFindCommand);
     }
-
 }

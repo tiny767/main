@@ -31,4 +31,14 @@ public class EmailFilterTest {
         // different person -> returns false
         assertFalse(firstPredicate.equals(secondPredicate));
     }
+
+    @Test
+    public void tests() {
+        Email firstEmail = new Email("abc@example.com");
+        Email secondEmail = new Email("def@example.com");
+
+        EmailFilter firstPredicate = new EmailFilter(firstEmail);
+        EmailFilter secondPredicate = new EmailFilter(secondEmail);
+
+    }
 }
