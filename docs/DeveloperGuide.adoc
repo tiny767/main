@@ -789,6 +789,28 @@ Tech recruiters who have the need for finding and acquiring skilled Computing st
 * find students whose skill set is suitable for available positions
 * Keep track of student’s past interactions with the company: internship, coding challenges, interview,...
 
+=== Feature contribution:
+==== Huynh Thanh Duc Anh (@anh211)
+===== Major Enhancement: Data visualization
+This allows users to make data-driven decisions with the visualization of recruiting data.
+
+image::graph.png[width="500"]
+
+In the above example, `Screening`, `Interviewing`, `Accepted`, `SoftwareEngineerIntern` are tags that can be managed
+conveniently by the user. Given this chart, the recruiter can help a better high-level insights of candidates, which
+helps them significantly in making decisions.
+
+Implementations needed:
+
+. Making Command accepts OPTION. Example: `tag add`, `tag remove`.
+. Allowing add/remove one tag.
+. Drawing chart.
+
+===== Minor Enhancement: Enhance Find command
+* Allow users to Find Person by name, phone, email, and tags.
+* Given the huge number of contacts that a recruiter may have, it is not possible for them to remember candidates' name.
+ Hence, users should be able to search by other fields so that it's easier for them to locate a person.
+
 [appendix]
 == User Stories
 
