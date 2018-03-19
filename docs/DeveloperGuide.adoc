@@ -789,6 +789,19 @@ Tech recruiters who have the need for finding and acquiring skilled Computing st
 * find students whose skill set is suitable for available positions
 * Keep track of student’s past interactions with the company: internship, coding challenges, interview,...
 
+=== Feature Contribution:
+==== Nguyen Thi Viet Ha (@deeheenguyen)
+===== Major Enhancement: Candidates Comparison
+This allows users to make compare the potential between candidates based on the skills.
+
+Implementation needed:
+
+Make a new Compare Command to compare between two candidates based on skills, education, ....
+Display the github page on browser panel.
+
+===== Minor Enhancement: View Command
+View specific persons with emailID and display all the information in the person card.
+
 [appendix]
 == User Stories
 
