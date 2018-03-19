@@ -1,5 +1,6 @@
 package seedu.address.logic.commands;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -50,7 +51,9 @@ public class ViewCommandTest {
         try {
             String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0);
             ViewCommand command = prepareCommand(" ");
-            command.execute();
+            CommandResult commandResult = command.execute();
+            assertEquals(expectedMessage, commandResult.feedbackToUser);
+
         } catch (IllegalArgumentException e) {
             assertFalse(Email.isValidEmail(" "));
         }

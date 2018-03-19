@@ -5,6 +5,8 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import seedu.address.testutil.PersonBuilder;
+
 public class EmailFilterTest {
 
     @Test
@@ -34,11 +36,7 @@ public class EmailFilterTest {
 
     @Test
     public void tests() {
-        Email firstEmail = new Email("abc@example.com");
-        Email secondEmail = new Email("def@example.com");
-
-        EmailFilter firstPredicate = new EmailFilter(firstEmail);
-        EmailFilter secondPredicate = new EmailFilter(secondEmail);
-
+        EmailFilter predicate = new EmailFilter(new Email("abc@example.com"));
+        assertTrue(predicate.test(new PersonBuilder().withEmail("abc@example.com").build()));
     }
 }
