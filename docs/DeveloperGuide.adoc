@@ -11,9 +11,9 @@ ifdef::env-github[]
 :note-caption: :information_source:
 
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103JAN2018-W11-B3/main
 
-By: `Team JACKHA (W11-B3)`      Since: `Mar 2018`      Licence: `MIT`
+By: `Team JACKHA (W11-B3)`      Since: `Mar 2018`      Licence: `MIT`
 
 == Setting up
 
@@ -789,6 +789,59 @@ Tech recruiters who have the need for finding and acquiring skilled Computing st
 * find students whose skill set is suitable for available positions
 * Keep track of student’s past interactions with the company: internship, coding challenges, interview,...
 
+=== Feature contribution:
+==== Huynh Thanh Duc Anh (@anh211)
+===== Major Enhancement: Data visualization
+This allows users to make data-driven decisions with the visualization of recruiting data.
+
+image::graph.png[width="500"]
+
+In the above example, `Screening`, `Interviewing`, `Accepted`, `SoftwareEngineerIntern` are tags that can be managed
+conveniently by the user. Given this chart, the recruiter can help a better high-level insights of candidates, which
+helps them significantly in making decisions.
+
+Implementations needed:
+
+. Making Command accepts OPTION. Example: `tag add`, `tag remove`.
+. Allowing add/remove one tag.
+. Drawing chart.
+
+===== Minor Enhancement: Enhance Find command
+* Allow users to Find Person by name, phone, email, and tags.
+* Given the huge number of contacts that a recruiter may have, it is not possible for them to remember candidates' name.
+ Hence, users should be able to search by other fields so that it's easier for them to locate a person.
+
+==== Sashankh Chengavalli Kumar (@ChengSashankh)
+===== Major Enhancement: Adding job postings
+This allows the user to add job postings and receive suggestions about most suitable candidates based on various parameters.
+
+For example, when the need arises to hire a new fresh graduate for a backend software development role with proficiency in MYSQL and Javascript, with location restrictions as well, the user may create such a job posting. As candidates are added and removed, the application displays an updated list of matching candidates, until removed from address book.
+
+Implementations needed:
+
+. Creating a postjob command that creates a job posting.
+. Creating an edit and delete command that does said operations to job posting.
+. Display pane for showing the list of jobs currently active.
+
+===== Minor Enhancement: Add a skills field to the Infinity Book to allow users to make
+* Allows the recruiter to tag each user with a set of skills which are used for other candidate matching purposes.
+* In account of the multiple roles that each candidate might be suitable for, skills allow recruiter to choose the best match.
+ This feature addresses this core need for recruiters.
+
+==== Nguyen Thi Viet Ha (@deeheenguyen)
+===== Major Enhancement: Candidates Comparison
+This allows users to make compare the potential between candidates based on the skills.
+Can list all the high-performance candidates with specific skills.
+
+Implementation needed:
+
+Make a new Compare Command to compare between two candidates based on skills, education, ....
+Display the github page on browser panel and the display the skills on the person card.
+
+===== Minor Enhancement: View Command
+. View specific persons with emailID and display all the information in the person card.
+
+
 [appendix]
 == User Stories
 
@@ -797,49 +850,21 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [width="59%",cols="22%,<23%,<25%,<30%",options="header",]
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
-|`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
-
 |`* * *` |user |add a new person |
 
 |`* * *` |user |delete a person |remove entries that I no longer need
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
-|`* *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
-
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
-
 |`* * *` |user who wants to record notes |add a note entry for a person |record more information about the person
-
-|`* *` |user who uses many applications |export search result to CSV/JSON |import them into other applications
-
-|`* *` |with many contacts |set profile pictures for contacts |identify and remember them |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
-
-|`* *` |user |read all notes about a contact |remember my past interactions and research about the contact
-
-|`*` |user concerned about confidentiality |set a password for the AddressBook |My address book will be secure
-
-|`* *` |user with multiple address books |export my contacts |import into another address book application
-
-|`* *` |user with multiple devices |back up my address book in the cloud |data is accessible from other devices
-
-|`* * *` |user with frequently changing contacts |delete a person |to remove irrelevant data from address book
-
-|`*` |user with frequently changing contacts |clear the entire address book |to start with new candidates when required
 
 |`* * *` |user interested in a contact's skills |get the technical skills of a candidate |to find suitable candidates
 
-|`* *` |user interested in specific skills |search candidates by skill |to find suitable candidates easily
-
-|`* *` |user who is recruiting |search by graduation year |to find suitable full/part time candidates
-
-|`* *` |user interested in checking projects |access contacts' Github repositories |easily view and evaluate projects
-
-|`*` |user who frequently emails contacts |open an email link to the contact directly |quickly email candidates with copying their addresses
-
-|`*` |user who types many commands |get autocomplete suggestion |quickly complete command
-
 |`* * *` |user who saves many resumes |open candidates' resumes from commandline |to quickly view their profiles
+
+|`* * *` |User |delete a tag from address book |to remove tags I am no longer interested in
+
+|`* *` |user |hide private contact details by default |minimize chance of someone else seeing them by accident
 
 |`* *` |user with multiple address books |export my contacts |import into another address book application
 
@@ -849,7 +874,31 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |User |view my search history |to keep track of my previous searches
 
-|`* * *` |User |delete a tag from address book |to remove tags I am no longer interested in
+|`* *` |user interested in specific skills |search candidates by skill |to find suitable candidates easily
+
+|`* *` |user who is recruiting |search by graduation year |to find suitable full/part time candidates
+
+|`* *` |user interested in checking projects |access contacts' Github repositories |easily view and evaluate projects
+
+|`* *` |user who uses many applications |export search result to CSV/JSON |import them into other applications
+
+|`* *` |with many contacts |set profile pictures for contacts |identify and remember them |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
+
+|`* *` |user |read all notes about a contact |remember my past interactions and research about the contact
+
+|`* *` |user with multiple address books |export my contacts |import into another address book application
+
+|`* *` |user with multiple devices |back up my address book in the cloud |data is accessible from other devices
+
+|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+
+|`*` |user concerned about confidentiality |set a password for the AddressBook |My address book will be secure
+
+|`*` |user with frequently changing contacts |clear the entire address book |to start with new candidates when required
+
+|`*` |user who frequently emails contacts |open an email link to the contact directly |quickly email candidates with copying their addresses
+
+|`*` |user who types many commands |get autocomplete suggestion |quickly complete command
 
 |=======================================================================
 
@@ -886,13 +935,34 @@ Use case ends.
 +
 Use case resumes at step 2.
 
-_{More to be added}_
+=== Use case: Search a person by tag
+*MSS*
+
+1. User requests to search and provides search params
+2. Addr	essBook shows a list of person fitting the given criteria
++
+Use case ends.
+
+=== Use case: View Linkedin profile of a person
+*MSS*
+
+1. User requests to search the person by name
+2. AddressBook shows a list of person
+3. User chooses a person by index in the list
+4. AddressBook shows the linkedin page of that person
++
+Use case ends.
 
 [appendix]
 == Non Functional Requirements
 
 .  Should work on any <<mainstream-os,mainstream OS>> as long as it has Java `1.8.0_60` or higher installed.
-.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
+.  Should be able to hold up to 1000 persons with a reponse time of less than 2 seconds for a command.
+.  Commands should ideally be less than 12 characters long to enable users with reasonable typing speed to use commands effectively.
+.  Should not use more than 11% CPU resources for executing commands
+.  Data storage for address book with 1000 contacts should not exceed 500 Gb
+.  Should be able to work even on older 32-bit system
+.  Project should not require updates to remain functional.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
 
 _{More to be added}_
