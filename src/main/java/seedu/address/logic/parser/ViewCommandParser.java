@@ -23,9 +23,12 @@ public class ViewCommandParser implements Parser<ViewCommand> {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, ViewCommand.MESSAGE_USAGE));
         }
-        String[] nameKeywords = trimmedArgs.split("\\s+");
+        if (!Email.isValidEmail(trimmedArgs)) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, ViewCommand.MESSAGE_USAGE));
+        }
 
-        return new ViewCommand(new EmailFilter(new Email(nameKeywords[0])));
+        return new ViewCommand(new EmailFilter(new Email(trimmedArgs)));
     }
 
 }

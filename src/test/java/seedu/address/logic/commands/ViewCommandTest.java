@@ -47,16 +47,11 @@ public class ViewCommandTest {
         assertFalse(findFirstCommand.equals(findSecondCommand));
     }
     @Test
-    public void execute_zeroKeywords_noPersonFound() {
-        try {
-            String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0);
-            ViewCommand command = prepareCommand(" ");
-            CommandResult commandResult = command.execute();
-            assertEquals(expectedMessage, commandResult.feedbackToUser);
-
-        } catch (IllegalArgumentException e) {
-            assertFalse(Email.isValidEmail(" "));
-        }
+    public void executeTest() {
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0);
+        ViewCommand command = prepareCommand("no@example.com");
+        CommandResult commandResult = command.execute();
+        assertEquals(expectedMessage, commandResult.feedbackToUser);
     }
 
     /**
