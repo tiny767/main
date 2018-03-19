@@ -791,7 +791,7 @@ Tech recruiters who have the need for finding and acquiring skilled Computing st
 
 === Feature contribution:
 ==== Sashankh Chengavalli Kumar (@ChengSashankh)
-+===== Major Enhancement: Adding job postings
+===== Major Enhancement: Adding job postings
 This allows the user to add job postings and receive suggestions about most suitable candidates based on various parameters.
 
 For example, when the need arises to hire a new fresh graduate for a backend software development role with proficiency in MYSQL and Javascript, with location restrictions as well, the user may create such a job posting. As candidates are added and removed, the application displays an updated list of matching candidates, until removed from address book.
@@ -835,11 +835,12 @@ Can list all the high-performance candidates with specific skills.
 
 Implementation needed:
 
-Make a new Compare Command to compare between two candidates based on skills, education, ....
-Display the github page on browser panel and the display the skills on the person card.
+. Make a new Compare Command to compare between two candidates based on skills, education.
+. Display the github page on browser panel and the display the skills on the person card.
 
 ===== Minor Enhancement: View Command
-. View specific persons with emailID and display all the information in the person card.
+. View specific persons with emailID.
+. Display all the information in the person card.
 
 [appendix]
 == User Stories
