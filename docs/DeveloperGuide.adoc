@@ -842,6 +842,21 @@ Implementation needed:
 . View specific persons with emailID.
 . Display all the information in the person card.
 
+==== Nguyen Dinh Dung (@tiny767)
+===== Major Enhancement: Make several enhancements to the UI so that it is much more user-friendly.
+This allows tech recruiters who need to manage big address books to save time by using the app more efficiently
+and feel more comfortable.
+
+Implementations needed:
+
+* Making the color for tags the same for tags with same name and the choice of color stays the same.
+* For the user's command input, coloring keywords such as `name`, `p/`.
+* Provide usage syntax or syntax error in real time (e.g. display syntax for `add` when the users finish typing 'add'
+
+===== Minor Enhancement: `remark` command
+* Allow users to add remarks for people in their address books.
+* This allows tech recruiters to have a more flexible field to use for their candidates
+
 [appendix]
 == User Stories
 
