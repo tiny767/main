@@ -10,6 +10,9 @@ import java.util.Set;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
+import seedu.address.model.job.JobTitle;
+import seedu.address.model.job.Location;
+import seedu.address.model.job.Skill;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -93,7 +96,77 @@ public class ParserUtil {
         return string.isPresent() ? Optional.of(parseString(string.get())) : Optional.empty();
     }
 
+    /**
+     * Parses a {@code String string} into a trimmed {@code JobTitle}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code string} is invalid.
+     */
+    public static JobTitle parseJobTitle(String string) throws IllegalValueException {
+        requireNonNull(string);
+        String trimmedString = string.trim();
+        if (!JobTitle.isValidTitle(trimmedString)) {
+            throw new IllegalValueException(JobTitle.MESSAGE_TITLE_CONSTRAINTS);
+        }
+        return new JobTitle(trimmedString);
+    }
 
+    /**
+     * Parses a {@code Optional<String> string} into an {@code Optional<JobTitle>} if {@code string} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<JobTitle> parseJobTitle(Optional<String> string) throws IllegalValueException {
+        requireNonNull(string);
+        return string.isPresent() ? Optional.of(parseJobTitle(string.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String string} into a trimmed {@code Location}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code string} is invalid.
+     */
+    public static Location parseLocation(String string) throws IllegalValueException {
+        requireNonNull(string);
+        String trimmedString = string.trim();
+        if (!Location.isValidLocation(trimmedString)) {
+            throw new IllegalValueException(Location.MESSAGE_LOCATION_CONSTRAINTS);
+        }
+        return new Location(trimmedString);
+    }
+
+    /**
+     * Parses a {@code Optional<String> string} into an {@code Optional<Location>} if {@code string} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Location> parseLocation(Optional<String> string) throws IllegalValueException {
+        requireNonNull(string);
+        return string.isPresent() ? Optional.of(parseLocation(string.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String string} into a trimmed {@code Skill}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code string} is invalid.
+     */
+    public static Skill parseSkill(String string) throws IllegalValueException {
+        requireNonNull(string);
+        String trimmedString = string.trim();
+        if (!Skill.isValidSkill(trimmedString)) {
+            throw new IllegalValueException(Location.MESSAGE_LOCATION_CONSTRAINTS);
+        }
+        return new Skill(trimmedString);
+    }
+
+    /**
+     * Parses a {@code Optional<String> string} into an {@code Optional<Skill>} if {@code string} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Skill> parseSkill(Optional<String> string) throws IllegalValueException {
+        requireNonNull(string);
+        return string.isPresent() ? Optional.of(parseSkill(string.get())) : Optional.empty();
+    }
 
     /**
      * Parses a {@code String phone} into a {@code Phone}.

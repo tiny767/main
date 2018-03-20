@@ -10,27 +10,27 @@ import seedu.address.model.tag.UniqueTagList;
  * TODO: Write javadoc commenet
  */
 public class Job {
-    private final String jobTitle;
-    private final String location;
-    private final String skills;
+    private final JobTitle jobTitle;
+    private final Location location;
+    private final Skill skills;
     private final UniqueTagList tags;
 
-    public Job(String jobTitle, String location, String skills, Set<Tag> tags) {
+    public Job(JobTitle jobTitle, Location location, Skill skills, Set<Tag> tags) {
         this.jobTitle = jobTitle;
         this.location = location;
         this.skills = skills;
         this.tags = new UniqueTagList(tags);
     }
 
-    public String getJobTitle() {
+    public JobTitle getJobTitle() {
         return jobTitle;
     }
 
-    public String getLocation() {
+    public Location getLocation() {
         return location;
     }
 
-    public String getSkills() {
+    public Skill getSkills() {
         return skills;
     }
 

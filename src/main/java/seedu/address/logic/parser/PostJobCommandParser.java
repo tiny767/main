@@ -13,6 +13,9 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.PostJobCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.job.Job;
+import seedu.address.model.job.JobTitle;
+import seedu.address.model.job.Location;
+import seedu.address.model.job.Skill;
 import seedu.address.model.tag.Tag;
 
 /***
@@ -35,9 +38,9 @@ public class PostJobCommandParser implements Parser<PostJobCommand> {
         }
 
         try {
-            String jobTitle = ParserUtil.parseString(argMultimap.getValue(PREFIX_JOBTITLE)).get();
-            String location = ParserUtil.parseString(argMultimap.getValue(PREFIX_LOCATION)).get();
-            String skills = ParserUtil.parseString(argMultimap.getValue(PREFIX_SKILLS)).get();
+            JobTitle jobTitle = ParserUtil.parseJobTitle(argMultimap.getValue(PREFIX_JOBTITLE)).get();
+            Location location = ParserUtil.parseLocation(argMultimap.getValue(PREFIX_LOCATION)).get();
+            Skill skills = ParserUtil.parseSkill(argMultimap.getValue(PREFIX_SKILLS)).get();
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
             Job job = new Job(jobTitle, location, skills, tagList);
