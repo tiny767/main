@@ -4,7 +4,7 @@ import static java.util.Objects.requireNonNull;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.job.exceptions.DuplicateJobException;
 
 /**
  * A list of jobs that enforces uniqueness between its elements and does not allow nulls.
@@ -27,13 +27,13 @@ public class UniqueJobList {
     /**
      * Adds a job to the list.
      *
-     * @throws DuplicatePersonException if the job to add is a duplicate of an existing person in the list.
+     * @throws DuplicateJobException if the job to add is a duplicate of an existing person in the list.
      */
-    public void add(Job toAdd) throws DuplicatePersonException {
+    public void add(Job toAdd) throws DuplicateJobException {
         requireNonNull(toAdd);
         if (contains(toAdd)) {
             // TODO: Replace with new exception
-            throw new DuplicatePersonException();
+            throw new DuplicateJobException();
         }
         internalList.add(toAdd);
     }

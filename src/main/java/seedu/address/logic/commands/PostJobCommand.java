@@ -8,7 +8,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.job.Job;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.job.exceptions.DuplicateJobException;
 
 /***
  * TODO: Javadoc comment required here.
@@ -49,7 +49,7 @@ public class PostJobCommand extends UndoableCommand {
         try {
             model.addJob(toAdd);
             return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
-        } catch (DuplicatePersonException e) {
+        } catch (DuplicateJobException e) {
             throw new CommandException(MESSAGE_DUPLICATE_JOB);
         }
 

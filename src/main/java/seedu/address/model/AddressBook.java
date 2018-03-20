@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 import javafx.collections.ObservableList;
 import seedu.address.model.job.Job;
 import seedu.address.model.job.UniqueJobList;
+import seedu.address.model.job.exceptions.DuplicateJobException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -222,7 +223,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      * TODO: Write the exception.
      * @throws DuplicatePersonException if an equivalent person already exists.
      */
-    public void addJob(Job j) throws DuplicatePersonException {
+    public void addJob(Job j) throws DuplicateJobException {
         // TODO: Mimic the implementation of the addperson method.
         jobs.add(j);
     }

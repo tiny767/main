@@ -4,6 +4,7 @@ import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import seedu.address.model.job.Job;
+import seedu.address.model.job.exceptions.DuplicateJobException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -50,7 +51,7 @@ public interface Model {
     void updateFilteredPersonList(Predicate<Person> predicate);
 
     /* Adds the given job. */
-    void addJob(Job j) throws DuplicatePersonException;
+    void addJob(Job j) throws DuplicateJobException;
 
     /**
      * Updates the filter of the filtered job list to filter by the given {@code predicate}.

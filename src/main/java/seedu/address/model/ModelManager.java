@@ -13,6 +13,7 @@ import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.model.job.Job;
+import seedu.address.model.job.exceptions.DuplicateJobException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -86,7 +87,7 @@ public class ModelManager extends ComponentManager implements Model {
     //=========== Filtered Job List Accessors =============================================================
 
     @Override
-    public synchronized void addJob(Job job) throws DuplicatePersonException {
+    public synchronized void addJob(Job job) throws DuplicateJobException {
         addressBook.addJob(job);
         updateFilteredJobList(PREDICATE_SHOW_ALL_JOBS);
         indicateAddressBookChanged();

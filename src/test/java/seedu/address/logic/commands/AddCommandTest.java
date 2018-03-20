@@ -22,6 +22,7 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.job.Job;
+import seedu.address.model.job.exceptions.DuplicateJobException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -103,8 +104,7 @@ public class AddCommandTest {
         }
 
         @Override
-        // TODO: Replace the exception
-        public void addJob(Job job) throws DuplicatePersonException {
+        public void addJob(Job job) throws DuplicateJobException {
             fail("This method should not be called.");
         }
 
