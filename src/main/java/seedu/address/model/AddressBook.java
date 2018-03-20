@@ -12,6 +12,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import javafx.collections.ObservableList;
+import seedu.address.model.job.Job;
+import seedu.address.model.job.UniqueJobList;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -27,6 +29,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     private final UniquePersonList persons;
     private final UniqueTagList tags;
+    private final UniqueJobList jobs;
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -38,6 +41,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     {
         persons = new UniquePersonList();
         tags = new UniqueTagList();
+        jobs = new UniqueJobList();
     }
 
     public AddressBook() {}
@@ -209,6 +213,20 @@ public class AddressBook implements ReadOnlyAddressBook {
         return false;
     }
 
+    //// job methods
+
+    /**
+     * Adds a job to the address book.
+     *
+     * TODO: Write the javadoc comment
+     * TODO: Write the exception.
+     * @throws DuplicatePersonException if an equivalent person already exists.
+     */
+    public void addJob(Job j) throws DuplicatePersonException {
+        // TODO: Mimic the implementation of the addperson method.
+        jobs.add(j);
+    }
+
     //// util methods
 
     @Override
@@ -222,6 +240,10 @@ public class AddressBook implements ReadOnlyAddressBook {
         return persons.asObservableList();
     }
 
+    @Override
+    public ObservableList<Job> getJobList() {
+        return jobs.asObservableList();
+    }
     @Override
     public ObservableList<Tag> getTagList() {
         return tags.asObservableList();
