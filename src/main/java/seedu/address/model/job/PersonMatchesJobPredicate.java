@@ -21,6 +21,10 @@ public class PersonMatchesJobPredicate implements Predicate<Person> {
         this.keywords.addAll(Arrays.asList(job.getLocation().toString().split(" ")));
     }
 
+    public PersonMatchesJobPredicate(List<String> keywords) {
+        this.keywords = keywords;
+    }
+
     @Override
     public boolean test(Person person) {
         boolean skillsMatch = keywords.stream()
