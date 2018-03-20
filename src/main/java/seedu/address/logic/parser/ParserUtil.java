@@ -46,15 +46,17 @@ public class ParserUtil {
     /**
      * Parses a {@code String name} into a {@code Name}.
      * Leading and trailing whitespaces will be trimmed.
-     *
+     * TODO: Change this after classes are created for each field.
      * @throws IllegalValueException if the given {@code name} is invalid.
      */
     public static Name parseName(String name) throws IllegalValueException {
         requireNonNull(name);
         String trimmedName = name.trim();
+        /*
         if (!Name.isValidName(trimmedName)) {
             throw new IllegalValueException(Name.MESSAGE_NAME_CONSTRAINTS);
         }
+        */
         return new Name(trimmedName);
     }
 
@@ -66,6 +68,32 @@ public class ParserUtil {
         requireNonNull(name);
         return name.isPresent() ? Optional.of(parseName(name.get())) : Optional.empty();
     }
+
+    /**
+     * Parses a {@code String name} into a trimmed {@code String}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code string} is invalid.
+     */
+    public static String parseString(String string) throws IllegalValueException {
+        requireNonNull(string);
+        String trimmedString = string.trim();
+        if (!Name.isValidName(trimmedString)) {
+            throw new IllegalValueException(Name.MESSAGE_NAME_CONSTRAINTS);
+        }
+        return trimmedString;
+    }
+
+    /**
+     * Parses a {@code Optional<String> name} into an {@code Optional<Name>} if {@code name} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<String> parseString(Optional<String> string) throws IllegalValueException {
+        requireNonNull(string);
+        return string.isPresent() ? Optional.of(parseString(string.get())) : Optional.empty();
+    }
+
+
 
     /**
      * Parses a {@code String phone} into a {@code Phone}.
