@@ -18,7 +18,6 @@ public class Remark {
      * @param remark A valid address.
      */
     public Remark(String remark) {
-//      requireNonNull(remark);
         this.value = remark;
     }
 
