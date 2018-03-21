@@ -8,6 +8,7 @@ import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.index.Index;
 import seedu.address.model.job.exceptions.DuplicateJobException;
 import seedu.address.model.job.exceptions.JobNotFoundException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -91,6 +92,10 @@ public class UniqueJobList implements Iterable<Job> {
             replacement.add(job);
         }
         setJobs(replacement);
+    }
+
+    public Job getJob(Index index) {
+        return internalList.get(index.getZeroBased());
     }
 
     /**

@@ -2,11 +2,10 @@ package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
-import java.util.Arrays;
-
+import seedu.address.commons.core.index.Index;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.JobMatchCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.job.PersonMatchesJobPredicate;
 
 /***
  * TODO: Write a javadoc comment
@@ -19,14 +18,13 @@ public class JobMatchCommandParser implements Parser<JobMatchCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public JobMatchCommand parse(String args) throws ParseException {
-        String trimmedArgs = args.trim();
-        if (trimmedArgs.isEmpty()) {
+        try {
+            Index index = ParserUtil.parseIndex(args);
+            return new JobMatchCommand(index);
+        } catch (IllegalValueException ive) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, JobMatchCommand.MESSAGE_USAGE));
         }
-
-        String[] keywords = trimmedArgs.split("\\s+");
-
-        return new JobMatchCommand(new PersonMatchesJobPredicate(Arrays.asList(keywords)));
     }
+
 }

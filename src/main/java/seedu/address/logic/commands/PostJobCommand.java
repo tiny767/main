@@ -48,6 +48,7 @@ public class PostJobCommand extends UndoableCommand {
         requireNonNull(model);
         try {
             model.addJob(toAdd);
+            System.out.println(model.getFilteredJobList().get(0).toString());
             return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
         } catch (DuplicateJobException e) {
             throw new CommandException(MESSAGE_DUPLICATE_JOB);

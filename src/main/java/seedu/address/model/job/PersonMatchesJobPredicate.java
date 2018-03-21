@@ -27,12 +27,8 @@ public class PersonMatchesJobPredicate implements Predicate<Person> {
 
     @Override
     public boolean test(Person person) {
-        boolean skillsMatch = keywords.stream()
-                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getSkills().toString(), keyword));
-        boolean locationMatch = keywords.stream()
+        return keywords.stream()
                 .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getAddress().value, keyword));
-
-        return (skillsMatch || locationMatch);
     }
 
     @Override

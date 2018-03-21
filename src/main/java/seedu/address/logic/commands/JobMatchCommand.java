@@ -1,5 +1,6 @@
 package seedu.address.logic.commands;
 
+import seedu.address.commons.core.index.Index;
 import seedu.address.model.job.PersonMatchesJobPredicate;
 
 /**
@@ -12,17 +13,19 @@ public class JobMatchCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Matches all persons whose profiles match job posting "
             + "the specified keywords (case-sensitive) and displays them as a list with index numbers.\n"
-            + "Parameters: JOB [MORE_KEYWORDS]...\n"
-            + "Example: " + COMMAND_WORD + " alice bob charlie";
+            + "Parameters: JOB INDEX...\n"
+            + "Example: " + COMMAND_WORD + " 1";
 
     private final PersonMatchesJobPredicate predicate;
 
-    public JobMatchCommand(PersonMatchesJobPredicate predicate) {
-        this.predicate = predicate;
+    public JobMatchCommand(Index index) {
+        System.out.println(model.getFilteredJobList().get(index.getZeroBased()).toString());
+        this.predicate = new PersonMatchesJobPredicate(model.getFilteredJobList().get(index.getZeroBased()));
     }
 
     @Override
     public CommandResult execute() {
+        System.out.println(model.getFilteredJobList().get(0).toString());
         model.updateFilteredPersonList(predicate);
         return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
     }

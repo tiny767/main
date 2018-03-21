@@ -99,6 +99,15 @@ public class ModelManager extends ComponentManager implements Model {
         filteredJobs.setPredicate(predicate);
     }
 
+    /**
+     * Returns an unmodifiable view of the list of {@code Job} backed by the internal list of
+     * {@code addressBook}
+     */
+    @Override
+    public ObservableList<Job> getFilteredJobList() {
+        return FXCollections.unmodifiableObservableList(filteredJobs);
+    }
+
     //=========== Filtered Person List Accessors =============================================================
 
     /**
@@ -131,7 +140,8 @@ public class ModelManager extends ComponentManager implements Model {
         // state check
         ModelManager other = (ModelManager) obj;
         return addressBook.equals(other.addressBook)
-                && filteredPersons.equals(other.filteredPersons);
+                && filteredPersons.equals(other.filteredPersons)
+                && filteredJobs.equals(other.filteredJobs);
     }
 
 }
