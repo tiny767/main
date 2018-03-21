@@ -17,8 +17,7 @@ public class ArgumentWithOption {
 
     private static final Pattern ARGUMENT_FORMAT =
             Pattern.compile("(?<commandOption>" + PREFIX_OPTION.getPrefix() + "\\S+)?(?<arguments>.*)");
-    
-    private String rawArgs;
+    private String rawArg;
     private final String option;
     private String args;
 
