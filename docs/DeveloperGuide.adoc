@@ -407,6 +407,29 @@ Use an array of pre-defined colors. +
 **Pros:** Number of different color is very big (i.e. there is less repetitive color used)   +
 **Cons:** The color for each tag value might be different between app launchs +
 
+=== Add/Remove one Tag for a person
+
+As Person may have a long list of tags, we need to have a convenient way to update them.+
+Command syntax: EDIT [-OPTIONS] [PARAMETERS]…​, where: +
+
+The EDIT specifies the edit action to be performed, +
+
+OPTIONS are prefixed with a dash: `add-tag` to add new tags the current list of tags and
+`delete-tag` to delete tags from the current list of tags.
+
+PARAMETERS provide information for the Edit command to be executed with.
+
+==== Design Considerations*
+**Aspect:** Implementation of removing/adding a single tag +
+
+**Alternative 1 (current choice):** Modify EditPersonDescriptor +
+**Pros:** Maintain the current structure and coupling. +
+**Cons:** May cause conflicts with other features. +
+
+**Alternative 2:** Retrieve the list of tags then modify it +
+**Pros:** Keep the Edit Command logic   +
+**Cons:** Have to rely on Model, which is not flexible.
+
 == Documentation
 
 We use asciidoc for writing documentation.
