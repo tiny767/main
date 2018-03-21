@@ -24,6 +24,7 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Remark;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
@@ -255,6 +256,7 @@ public class EditCommand extends UndoableCommand {
             Name updatedName = getName().orElse(personToEdit.getName());
             Phone updatedPhone = getPhone().orElse(personToEdit.getPhone());
             Email updatedEmail = getEmail().orElse(personToEdit.getEmail());
+            Remark updatedRemark = personToEdit.getRemark();
             Address updatedAddress = getAddress().orElse(personToEdit.getAddress());
 
             Set<Tag> updatedTags;
@@ -278,7 +280,7 @@ public class EditCommand extends UndoableCommand {
             }
 
 
-            return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags);
+            return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedRemark, updatedTags);
         }
 
         @Override

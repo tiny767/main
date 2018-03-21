@@ -13,7 +13,7 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/CS2103JAN2018-W11-B3/main
 
-By: `Team JACKHA (W11-B3)`      Since: `Mar 2018`      Licence: `MIT`
+By: `Team JACKHA (W11-B3)`      Since: `Mar 2018`      Licence: `MIT`
 
 == Setting up
 
@@ -385,6 +385,27 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 === Configuration
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
+
+=== Tag colors
+
+==== Current Implementation
+
+The colors for tags are fixed for each tag with the same name upon start up of the application.
+Make sure of hash code to ensure that the color is consistent each time the app is launched.
+(e.g. red,blue,green) and selecting from the array of colors. +
+Use an array of pre-defined colors. +
+
+==== Design considerations
+
+**Aspect:** Implementation of color for tags +
+
+**Alternative 1 (current choice):** Have tags to be colored using hashcode instead of randomization +
+**Pros:** The color stay consistent each time the app is launched +
+**Cons:** Limited number of colors (the limiting factor is the size of pre-define color array) +
+
+**Alternative 2:** Have tag colors to be a random hexadecimal color value +
+**Pros:** Number of different color is very big (i.e. there is less repetitive color used)   +
+**Cons:** The color for each tag value might be different between app launchs +
 
 == Documentation
 
@@ -790,6 +811,23 @@ Tech recruiters who have the need for finding and acquiring skilled Computing st
 * Keep track of student’s past interactions with the company: internship, coding challenges, interview,...
 
 === Feature contribution:
+==== Sashankh Chengavalli Kumar (@ChengSashankh)
+===== Major Enhancement: Adding job postings
+This allows the user to add job postings and receive suggestions about most suitable candidates based on various parameters.
+
+For example, when the need arises to hire a new fresh graduate for a backend software development role with proficiency in MYSQL and Javascript, with location restrictions as well, the user may create such a job posting. As candidates are added and removed, the application displays an updated list of matching candidates, until removed from address book.
+
+Implementations needed:
+
+. Creating a postjob command that creates a job posting.
+. Creating an edit and delete command that does said operations to job posting.
+. Display pane for showing the list of jobs currently active.
+
+===== Minor Enhancement: Add a skills field to the Infinity Book to allow users to make
+* Allows the recruiter to tag each user with a set of skills which are used for other candidate matching purposes.
+* In account of the multiple roles that each candidate might be suitable for, skills allow recruiter to choose the best match.
+ This feature addresses this core need for recruiters.
+
 ==== Huynh Thanh Duc Anh (@anh211)
 ===== Major Enhancement: Data visualization
 This allows users to make data-driven decisions with the visualization of recruiting data.
@@ -810,6 +848,35 @@ Implementations needed:
 * Allow users to Find Person by name, phone, email, and tags.
 * Given the huge number of contacts that a recruiter may have, it is not possible for them to remember candidates' name.
  Hence, users should be able to search by other fields so that it's easier for them to locate a person.
+
+==== Nguyen Thi Viet Ha (@deeheenguyen)
+===== Major Enhancement: Candidates Comparison
+This allows users to make compare the potential between candidates based on the skills.
+Can list all the high-performance candidates with specific skills.
+
+Implementation needed:
+
+. Make a new Compare Command to compare between two candidates based on skills, education.
+. Display the github page on browser panel and the display the skills on the person card.
+
+===== Minor Enhancement: View Command
+. View specific persons with emailID.
+. Display all the information in the person card.
+
+==== Nguyen Dinh Dung (@tiny767)
+===== Major Enhancement: Make several enhancements to the UI so that it is much more user-friendly.
+This allows tech recruiters who need to manage big address books to save time by using the app more efficiently
+and feel more comfortable.
+
+Implementations needed:
+
+* Making the color for tags the same for tags with same name and the choice of color stays the same.
+* For the user's command input, coloring keywords such as `name`, `p/`.
+* Provide usage syntax or syntax error in real time (e.g. display syntax for `add` when the users finish typing 'add'
+
+===== Minor Enhancement: `remark` command
+* Allow users to add remarks for people in their address books.
+* This allows tech recruiters to have a more flexible field to use for their candidates
 
 [appendix]
 == User Stories
