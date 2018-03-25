@@ -17,9 +17,15 @@ By: `Team CS2103JAN2018-W11-B3`      Since: `Jun 2016`      Licence: `MIT`
 
 == Introduction
 
-AddressBook Level 4 (AB4) is for those who *prefer to use a desktop app for managing contacts*. More importantly, AB4 is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, AB4 can get your contact management tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
+Infinity Book (IB) is for those Tech recruiters who *prefer to use a desktop app for managing candidates*.  +
+
+More importantly, IB is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, IB can get your candidates management tasks done faster than traditional GUI apps. +
+
+Interested? +
+Jump to the <<Quick Start>> to get started. Enjoy!
 
 == Quick Start
+If you are a first time user, this section will help you get started with Infinity Book in 5 easy steps:
 
 .  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
 +
@@ -36,14 +42,14 @@ image::Ui.png[width="790"]
 +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
-.  Some example commands you can try:
+.  Set up is complete. Try some example commands shown here:
 
 * *`list`* : lists all contacts
 * **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
 * **`delete`**`3` : deletes the 3rd contact shown in the current list
 * *`exit`* : exits the app
 
-.  Refer to <<Features>> for details of each command.
+.  Refer to <<Features>> for details of each command and for more commands.
 
 [[Features]]
 == Features
