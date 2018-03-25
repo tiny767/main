@@ -32,7 +32,7 @@ If you are a first time user, this section will help you get started with Infini
 [NOTE]
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8. +
-Refer to FAQ for instructions to check Java version.
+Refer to <<FAQ>> for instructions to check Java version.
 +
 .  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
 .  Copy the file to the folder you want to use as the home folder for your Address Book.
@@ -64,31 +64,37 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 ====
 
 === Viewing help : `help`
-
-Format: `help`
+* *Description:* Opens the User Guide in a new window +
+* *Format:* `help`
 
 === Adding a person: `add`
 
-Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+* *Description:* Adds a person to the address book +
 
-[TIP]
+* *Format:* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+
+* *Examples:* +
+- `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
+- `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+
+[NOTE]
 A person can have any number of tags (including 0)
-
-Examples:
-
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
 
 === Listing all persons : `list`
 
-Shows a list of all persons in the address book. +
-Format: `list`
+* *Description:* Shows a list of all persons in the address book. +
+* *Format:* `list`
 
 === Editing a person : `edit`
 
-Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+* *Description:* Edits an existing person in the address book. +
+* *Format:* `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+
+* *Examples:* +
+- `edit 1 p/91234567 e/johndoe@example.com` +
+Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
+- `edit 2 n/Betsy Crower t/` +
+Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -98,17 +104,15 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
 * You can remove all the person's tags by typing `t/` without specifying any tags after it.
 ****
 
-Examples:
-
-* `edit 1 p/91234567 e/johndoe@example.com` +
-Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-* `edit 2 n/Betsy Crower t/` +
-Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
-
 === Locating persons by name: `find`
 
-Finds persons whose names contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]`
+* *Description:* Finds persons whose names contain any of the given keywords. +
+* *Format:* `find KEYWORD [MORE_KEYWORDS]`
+* *Examples:*
+- `find John` +
+Returns `john` and `John Doe`
+- `find Betsy Tim John` +
+Returns any person having names `Betsy`, `Tim`, or `John`
 
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
@@ -118,30 +122,30 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 * Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 ****
 
-Examples:
-
-* `find John` +
-Returns `john` and `John Doe`
-* `find Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
-
 === Viewing a person: `view`
-Views the person whose email is the same as given email. +
-Format: `view email`
+* *Description:* Displays the person whose email is the same as given email. +
+* *Format:* `view email`
+* *Examples:* `view john@gmail.com`
+- Returns the person whose email is `john@gmail.com` +
+- Display all the information about this person and display the resume on browser panel.
+
 ****
 * The email needs to be correct format.
 * Only one person returned since email is unique.
 ****
 
-Examples: `view john@gmail.com`
-
-Return the person whose email is `john@gmail.com` +
-Display all the information about this person and display the resume on browser panel.
-
 === Deleting a person : `delete`
 
-Deletes the specified person from the address book. +
-Format: `delete INDEX`
+* *Description:* Deletes the specified person from the address book. +
+* *Format:* `delete INDEX`
+* *Examples:*
+
+- `list` +
+`delete 2` +
+Deletes the 2nd person in the address book.
+- `find Betsy` +
+`delete 1` +
+Deletes the 1st person in the results of the `find` command.
 
 ****
 * Deletes the person at the specified `INDEX`.
@@ -149,88 +153,74 @@ Format: `delete INDEX`
 * The index *must be a positive integer* 1, 2, 3, ...
 ****
 
-Examples:
-
-* `list` +
-`delete 2` +
-Deletes the 2nd person in the address book.
-* `find Betsy` +
-`delete 1` +
-Deletes the 1st person in the results of the `find` command.
-
 === Selecting a person : `select`
 
-Selects the person identified by the index number used in the last person listing. +
-Format: `select INDEX`
+* *Description:* Selects the person identified by the index number used in the last person listing. +
+* *Format:* `select INDEX`
+* *Examples:*
 
+- `list` +
+`select 2` +
+Selects the 2nd person in the address book.
+- `find Betsy` +
+`select 1` +
+Selects the 1st person in the results of the `find` command.
 ****
 * Selects the person and loads the Google search page the person at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* `1, 2, 3, ...`
 ****
 
-Examples:
-
-* `list` +
-`select 2` +
-Selects the 2nd person in the address book.
-* `find Betsy` +
-`select 1` +
-Selects the 1st person in the results of the `find` command.
-
 === Listing entered commands : `history`
 
-Lists all the commands that you have entered in reverse chronological order. +
-Format: `history`
+* *Description:* Lists all the commands that you have entered in reverse chronological order. +
+* *Format:* `history`
 
-[NOTE]
-====
-Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
-====
+****
+* Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
+****
 
 // tag::undoredo[]
 === Undoing previous command : `undo`
 
-Restores the address book to the state before the previous _undoable_ command was executed. +
-Format: `undo`
+* *Description:* Restores the address book to the state before the previous _undoable_ command was executed. +
+* *Format:* `undo`
+* *Examples:*
+
+- `delete 1` +
+`list` +
+`undo` (reverses the `delete 1` command) +
+
+- `select 1` +
+`list` +
+`undo` +
+The `undo` command fails as there are no undoable commands executed previously.
+
+- `delete 1` +
+`clear` +
+`undo` (reverses the `clear` command) +
+`undo` (reverses the `delete 1` command) +
 
 [NOTE]
 ====
 Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
 ====
-
-Examples:
-
-* `delete 1` +
-`list` +
-`undo` (reverses the `delete 1` command) +
-
-* `select 1` +
-`list` +
-`undo` +
-The `undo` command fails as there are no undoable commands executed previously.
-
-* `delete 1` +
-`clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
-
 === Redoing the previously undone command : `redo`
 
-Reverses the most recent `undo` command. +
-Format: `redo`
+* *Description:* Reverses the most recent `undo` command. +
+* *Format:* `redo`
 
-Examples:
+* *Examples:*
 
-* `delete 1` +
+- `delete 1` +
 `undo` (reverses the `delete 1` command) +
 `redo` (reapplies the `delete 1` command) +
 
-* `delete 1` +
+- `delete 1` +
 `redo` +
 The `redo` command fails as there are no `undo` commands executed previously.
 
-* `delete 1` +
+- `delete 1` +
 `clear` +
 `undo` (reverses the `clear` command) +
 `undo` (reverses the `delete 1` command) +
@@ -240,13 +230,13 @@ The `redo` command fails as there are no `undo` commands executed previously.
 
 === Clearing all entries : `clear`
 
-Clears all entries from the address book. +
-Format: `clear`
+* *Description:* Clears all entries from the address book. +
+* *Format:* `clear`
 
 === Exiting the program : `exit`
 
-Exits the program. +
-Format: `exit`
+* *Description:* Exits the program. +
+* *Format:* `exit`
 
 === Saving the data
 
@@ -261,20 +251,20 @@ image::graph.png[width="500"]
 Format: `draw [t/TAG]...`
 
 === Job Posting
-Add job requirements to find out qualified candidates.
-
-Format: `addjob [SKILLS]`
+* *Description:* Add job requirements to find out qualified candidates.
+* *Format:* `addjob [SKILLS]`
 
 === Resume Auto Scanning
-Easily filter candidates whose resume having desirable keywords. +
-
-Format: `scanresume [KEYWORD]`
+* *Description:* Easily filter candidates whose resume having desirable keywords. +
+* *Format:* `scanresume [KEYWORD]`
 
 === LinkedIn Integration
-Reduced clicks, and continuously updated information of candidates.
 
-View LinkedIn profile of the person identified by the index number used in the last person listing. +
-Format: `viewlinkedin [INDEX]`
+* *Description:* View LinkedIn profile of the person identified by the index number used in the last person listing. +
+* *Format:* `viewlinkedin [INDEX]`
+====
+Reduced clicks, and continuously updated information of candidates.
+====
 
 === Encrypting data files `[coming in v2.0]`
 // end::dataencryption[]
@@ -284,7 +274,7 @@ Format: `viewlinkedin [INDEX]`
 *Q*: How do I transfer my data to another Computer? +
 *A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
 
-*Q*: How do I check if Infinty Book is compatible with my computer? +
+*Q*: How do I check if Infinity Book is compatible with my computer? +
 *A*: Infinity Book is compatible with Windows, Mac OS and Ubuntu with Java `1.8.0_60` or later installed. Compatibility with other UNIX distributions is not guaranteed. +
 
 ****
