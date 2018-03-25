@@ -937,7 +937,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |User |Delete a tag from address book |To remove tags I am no longer interested in
 
-|`* *` |User |Hide private contact details by default |Minimize chance of someone else seeing them by accident
+|`* *` |User |Hide <<private-contact-detail,private>> contact details by default |Minimize chance of someone else seeing them by accident
 
 |`* *` |User with multiple address books |Export my contacts |Import into another address book application
 
