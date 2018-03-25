@@ -1052,19 +1052,20 @@ A contact detail that is not meant to be shared with others
 [appendix]
 == Product Survey
 
-*Product Name*
+*Infinity Book*
 
-Author: ...
+Author: Sashankh Chengavalli Kumar
 
 Pros:
 
-* ...
-* ...
+* Allows recruiters to collate all candidate details in one location
+* Allows for quick management of data using a Desktop Application
+* End-to-end support for recruiters from viewing candidates to inviting to interviews.
 
 Cons:
 
-* ...
-* ...
+* Synchronization across multiple devices/cloud not possible.
+* Mobile client not available to enable remote access to Infinity Book.
 
 [appendix]
 == Instructions for Manual Testing
