@@ -278,18 +278,21 @@ Format: `viewlinkedin [INDEX]`
 *A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
 
 == Command Summary
+
+The following table summarises Infinity Book commands with suitable examples:
+
 [width="100%",cols="10%,<45%,<45%",options="header",]
 |=====================================================================================================
 |Command |Command Format |Example
 |Add |`add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` | `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-|Clear |`clear`|
+|Clear |`clear`| `clear`
 |Delete |`delete INDEX` |`delete 3`
 |Edit |`edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` |`edit 2 n/James Lee e/jameslee@example.com`
 |Find |`find KEYWORD [MORE_KEYWORDS]` |`find James Jake`
-|List | `list`|
-|Help |`help` |
+|Help |`help` |`help`
+|History |`history` | `history`
+|List | `list`|`list`
+|Redo |`redo`|`redo`
 |Select |`select INDEX` |`select 2`
-|History |`history` |
-|Undo |`undo` |
-|Redo |`redo`|
+|Undo |`undo` |`undo`
 |=====================================================================================================
