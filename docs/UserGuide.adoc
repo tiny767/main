@@ -25,7 +25,8 @@ AddressBook Level 4 (AB4) is for those who *prefer to use a desktop app for mana
 +
 [NOTE]
 Having any Java 8 version is not enough. +
-This app will not work with earlier versions of Java 8.
+This app will not work with earlier versions of Java 8. +
+Refer to FAQ for instructions to check Java version.
 +
 .  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
 .  Copy the file to the folder you want to use as the home folder for your Address Book.
@@ -276,6 +277,28 @@ Format: `viewlinkedin [INDEX]`
 
 *Q*: How do I transfer my data to another Computer? +
 *A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+
+*Q*: How do I check if Infinty Book is compatible with my computer? +
+*A*: Infinity Book is compatible with Windows, Mac OS and Ubuntu with Java `1.8.0_60` or later installed. Compatibility with other UNIX distributions is not guaranteed. +
+
+****
+To check your Java Version:
+
+* MAC OS/ OS-X Users: +
+1. Open Spotlight using Command + Space
+2. Search for `Terminal` and open the application
+3. In the terminal, copy paste the following command without enclosing double quotes to find your Java version:
+ `"/Library/Internet\ Plug-Ins/JavaAppletPlugin.plugin/Contents/Home/bin/java -version"`
+* Windows users: +
+1. Open Run using Windows Key + R
+2. Type `cmd` and press enter to open Command Prompt
+3. In Command Prompt, enter the following command without enclosing double quotes to find your Java version:
+`"java -showversion"`
+* Ubuntu users: +
+1. Open Terminal using Ctrl + Alt + T
+2. In the terminal copy paste the following command without enclosing double quotes to find your Java vesion:
+`"java -v"`
+****
 
 == Command Summary
 
