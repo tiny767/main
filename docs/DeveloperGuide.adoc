@@ -430,7 +430,7 @@ PARAMETERS provide information for the Edit command to be executed with.
 **Pros:** Keep the Edit Command logic   +
 **Cons:** Have to rely on Model, which is not flexible.
 
-=== Display relevant github or resume page.
+=== Display relevant Github or resume page.
 As a candidate may have linked online resume or github page. The recruiter may want
 to consider these pages.
 Aspects: Implementation of removing/adding a linked page.
@@ -885,18 +885,20 @@ Implementations needed:
  Hence, users should be able to search by other fields so that it's easier for them to locate a person.
 
 ==== Nguyen Thi Viet Ha (@deeheenguyen)
-===== Major Enhancement: Candidates Comparison
-This allows users to make compare the potential between candidates based on the skills.
-Can list all the high-performance candidates with specific skills.
+===== Major Enhancement: Adding Interview
+This allows the recruiters maintain a list of interview. Each Interview is linked to a
+person. The recruiters can search about the interview based on the candidates.
 
 Implementation needed:
 
-. Make a new Compare Command to compare between two candidates based on skills, education.
-. Display the github page on browser panel and the display the skills on the person card.
+. Make a interview model
+. Add a interview command
+. Make the interview searchable.
 
 ===== Minor Enhancement: View Command
-. View specific persons with emailID.
+. Given a list of candidates, the recruiters can view a specific person by emailID.
 . Display all the information in the person card.
+. If there is a linked page to the person, it will be displayed on the brower panel.
 
 ==== Nguyen Dinh Dung (@tiny767)
 ===== Major Enhancement: Make several enhancements to the UI so that it is much more user-friendly.
@@ -921,55 +923,55 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [width="59%",cols="22%,<23%,<25%,<30%",options="header",]
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
-|`* * *` |user |add a new person |
+|`* * *` |User |Add a new person |
 
-|`* * *` |user |delete a person |remove entries that I no longer need
+|`* * *` |User |Delete a person |Remove entries that I no longer need
 
-|`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
+|`* * *` |User |Find a person by name |Locate details of persons without having to go through the entire list
 
-|`* * *` |user who wants to record notes |add a note entry for a person |record more information about the person
+|`* * *` |User who wants to record notes |Add a note entry for a person |Record more information about the person
 
-|`* * *` |user interested in a contact's skills |get the technical skills of a candidate |to find suitable candidates
+|`* * *` |User interested in a contact's skills |Get the technical skills of a candidate |to find suitable candidates
 
-|`* * *` |user who saves many resumes |open candidates' resumes from commandline |to quickly view their profiles
+|`* * *` |User who saves many resumes |Open candidates' resumes from commandline |to quickly view their profiles
 
-|`* * *` |User |delete a tag from address book |to remove tags I am no longer interested in
+|`* * *` |User |Delete a tag from address book |To remove tags I am no longer interested in
 
-|`* *` |user |hide private contact details by default |minimize chance of someone else seeing them by accident
+|`* *` |User |Hide private contact details by default |Minimize chance of someone else seeing them by accident
 
-|`* *` |user with multiple address books |export my contacts |import into another address book application
+|`* *` |User with multiple address books |Export my contacts |Import into another address book application
 
-|`* *` |user who views contacts |list frequently viewed candidates |to select the most probable candidates
+|`* *` |User who views contacts |List frequently viewed candidates |To select the most probable candidates
 
-|`* *` |User with interest in recruitment |view candidates' LinkedIn profiles from commandline |to know about their work profiles
+|`* *` |User with interest in recruitment |View candidates' LinkedIn profiles from commandline |To know about their work profiles
 
-|`* *` |User |view my search history |to keep track of my previous searches
+|`* *` |User |View my search history |To keep track of my previous searches
 
-|`* *` |user interested in specific skills |search candidates by skill |to find suitable candidates easily
+|`* *` |User interested in specific skills |Search candidates by skill |To find suitable candidates easily
 
-|`* *` |user who is recruiting |search by graduation year |to find suitable full/part time candidates
+|`* *` |User who is recruiting |Search by graduation year |To find suitable full/part time candidates
 
-|`* *` |user interested in checking projects |access contacts' Github repositories |easily view and evaluate projects
+|`* *` |User interested in checking projects |Access contacts' Github repositories |easily view and evaluate projects
 
-|`* *` |user who uses many applications |export search result to CSV/JSON |import them into other applications
+|`* *` |User who uses many applications |Export search result to CSV/JSON |import them into other applications
 
-|`* *` |with many contacts |set profile pictures for contacts |identify and remember them |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
+|`* *` |With many contacts |Set profile pictures for contacts |identify and remember them |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
-|`* *` |user |read all notes about a contact |remember my past interactions and research about the contact
+|`* *` |User |read all notes about a contact |Remember my past interactions and research about the contact
 
-|`* *` |user with multiple address books |export my contacts |import into another address book application
+|`* *` |User with multiple address books |Export my contacts |Import into another address book application
 
-|`* *` |user with multiple devices |back up my address book in the cloud |data is accessible from other devices
+|`* *` |User with multiple devices |Back up my address book in the cloud |Data is accessible from other devices
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|`*` |User with many persons in the address book |Sort persons by name |Locate a person easily
 
-|`*` |user concerned about confidentiality |set a password for the AddressBook |My address book will be secure
+|`*` |User concerned about confidentiality |Set a password for the AddressBook |My address book will be secure
 
-|`*` |user with frequently changing contacts |clear the entire address book |to start with new candidates when required
+|`*` |User with frequently changing contacts |Clear the entire address book |To start with new candidates when required
 
-|`*` |user who frequently emails contacts |open an email link to the contact directly |quickly email candidates with copying their addresses
+|`*` |User who frequently emails contacts |Open an email link to the contact directly |Quickly email candidates with copying their addresses
 
-|`*` |user who types many commands |get autocomplete suggestion |quickly complete command
+|`*` |User who types many commands |Get autocomplete suggestion |Quickly complete command
 
 |=======================================================================
 
