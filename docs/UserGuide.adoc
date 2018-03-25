@@ -1,5 +1,6 @@
 = Infinity Book - User Guide
 :toc:
+:toclevels: 3
 :toc-title:
 :toc-placement: preamble
 :sectnums:
@@ -13,7 +14,7 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/CS2103JAN2018-W11-B3/main
 
-By: `Team CS2103JAN2018-W11-B3`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team JACKHA (CS2103JAN2018-W11-B3)`      Since: `Jun 2016`      Licence: `MIT`
 
 == Introduction
 
@@ -77,11 +78,9 @@ The User Interface might appear mildly different for different versions of the p
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
 
-=== Viewing help : `help`
-* *Description:* Opens the User Guide in a new window +
-* *Format:* `help`
+=== Managing Candidates' Information
 
-=== Adding a person: `add`
+==== Adding a person: `add`
 
 * *Description:* Adds a person to the address book +
 
@@ -94,12 +93,7 @@ The User Interface might appear mildly different for different versions of the p
 [NOTE]
 A person can have any number of tags (including 0)
 
-=== Listing all persons : `list`
-
-* *Description:* Shows a list of all persons in the address book. +
-* *Format:* `list`
-
-=== Editing a person : `edit`
+==== Editing a person : `edit`
 
 * *Description:* Edits an existing person in the address book. +
 * *Format:* `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
@@ -118,37 +112,7 @@ Edits the name of the 2nd person to be `Betsy Crower` and clears all existing ta
 * You can remove all the person's tags by typing `t/` without specifying any tags after it.
 ****
 
-=== Locating persons by name: `find`
-
-* *Description:* Finds persons whose names contain any of the given keywords. +
-* *Format:* `find KEYWORD [MORE_KEYWORDS]`
-* *Examples:*
-- `find John` +
-Returns `john` and `John Doe`
-- `find Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
-
-****
-* The search is case insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
-****
-
-=== Viewing a person: `view`
-* *Description:* Displays the person whose email is the same as given email. +
-* *Format:* `view email`
-* *Examples:* `view john@gmail.com`
-- Returns the person whose email is `john@gmail.com` +
-- Displays all the person's information and resume in the browser panel.
-
-****
-* The email needs to be correct format.
-* Only one person returned since email is unique.
-****
-
-=== Deleting a person : `delete`
+==== Deleting a person : `delete`
 
 * *Description:* Deletes the specified person from the address book. +
 * *Format:* `delete INDEX`
@@ -167,7 +131,51 @@ Deletes the 1st person in the results of the `find` command.
 * The index *must be a positive integer* 1, 2, 3, ...
 ****
 
-=== Selecting a person : `select`
+==== Clearing all entries : `clear`
+
+* *Description:* Clears all entries from the address book. +
+* *Format:* `clear`
+
+=== Navigating Infinity Book
+
+==== Listing all persons : `list`
+
+* *Description:* Shows a list of all persons in the address book. +
+* *Format:* `list`
+
+
+==== Locating persons by name: `find`
+
+* *Description:* Finds persons whose names contain any of the given keywords. +
+* *Format:* `find KEYWORD [MORE_KEYWORDS]`
+* *Examples:*
+- `find John` +
+Returns `john` and `John Doe`
+- `find Betsy Tim John` +
+Returns any person having names `Betsy`, `Tim`, or `John`
+
+****
+* The search is case insensitive. e.g `hans` will match `Hans`
+* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
+* Only the name is searched.
+* Only full words will be matched e.g. `Han` will not match `Hans`
+* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+****
+
+==== Viewing a person: `view`
+
+* *Description:* Displays the person whose email is the same as given email. +
+* *Format:* `view email`
+* *Examples:* `view john@gmail.com`
+- Returns the person whose email is `john@gmail.com` +
+- Displays all the person's information and resume in the browser panel.
+
+****
+* The email needs to be correct format.
+* Only one person returned since email is unique.
+****
+
+==== Selecting a person : `select`
 
 * *Description:* Selects the person identified by the index number used in the last person listing. +
 * *Format:* `select INDEX`
@@ -185,7 +193,65 @@ Selects the 1st person in the results of the `find` command.
 * The index *must be a positive integer* `1, 2, 3, ...`
 ****
 
-=== Listing entered commands : `history`
+=== Dashboard Reporting
+
+==== Understanding The Workflow
+
+As a recruiter, your work mainly involves monitoring the progress of open jobs. Imagining a working day, you have to
+keep track of the number of new candidates, interviewees, and accepted offer, which is time-consuming given there is a
+significant number of candidates. Furthermore, you may want to analyze the productivity of your recruiting team in the
+last week, month, and quarter. Keeping track of historical data becomes necessary here. +
+
+Infinity Book proposes a workflow that helps you efficiently achieve these requirements: +
+
+1. Summarize each candidate by a few keywords using `Tagging` feature. Example: `new`, `interviewing`, `offering`,
+`accepted`, ... +
+
+2. Define a pie-chart report tailored to your specific goals. A report is defined by one `population` tag and at most
+three `group` tags. Example:
+
+image::graph.png[width="500"]
+
+You are recruiting interns, and you can use this report to keep track of the number of candidates in each stage. This
+report is defined by  tag `SoftwareEngineerInterns` as `population` tag,  and `screening`, `interviewing`, `accepted`
+as `group` tags. +
+
+3.Save the current state of report persistently so that you can retrieve it in the future.
+
+==== Managing tag of a person: refer to `edit` command
+
+==== Adding a new report : `report -new`
+
+* *Description:* Need to keep track certain information? Add new report using `report -new` command. +
+* *Format:*  `report -new POPULATION [GROUP 1] [GROUP 2] [GROUP 3]` +
+This will create a new Report with name presented in the format: `POPULATION_[GROUP 1]_[GROUP 2]_[GROUP 3]` +
+* *Examples:* `report -new SoftwareEngineerInterns screening interviewing accepted` +
+This should create a new report named `SoftwareEngineerInterns_screening_interviewing_accepted`.
+
+==== Removing a report : `report -remove`
+* *Description:* To remove a report, use `report -remove` command
+* *Format:*  `report -remove REPORT_NAME`
+
+==== Saving the current state of report `report -freeze`
+* *Description:* To save the current state of a report persistently, use `report -freeze` command.
+* *Format:*  `report -freeze POPULATION [GROUP 1] [GROUP 2] [GROUP 3]`
+* *Examples:* `report -freeze SoftwareEngineerInterns_screening_interviewing_accepted` +
+This will add an entry to report `SoftwareEngineerInterns_screening_interviewing_accepted` including list of emails and
+number of candidates in each group.
+
+==== List all available reports [coming in v2.0]
+
+=== Job Posting
+* *Description:* Add job requirements to find out qualified candidates.
+* *Format:* `addjob [SKILLS]`
+
+=== Miscellaneous
+
+==== Viewing help : `help`
+* *Description:* Opens the User Guide in a new window +
+* *Format:* `help`p
+
+==== Listing entered commands : `history`
 
 * *Description:* Lists all the commands that you have entered in reverse chronological order. +
 * *Format:* `history`
@@ -195,7 +261,7 @@ Selects the 1st person in the results of the `find` command.
 ****
 
 // tag::undoredo[]
-=== Undoing previous command : `undo`
+==== Undoing previous command : `undo`
 
 * *Description:* Restores the address book to the state before the previous _undoable_ command was executed. +
 * *Format:* `undo`
@@ -219,7 +285,7 @@ The `undo` command fails as there are no undoable commands executed previously.
 ====
 Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
 ====
-=== Redoing the previously undone command : `redo`
+==== Redoing the previously undone command : `redo`
 
 * *Description:* Reverses the most recent `undo` command. +
 * *Format:* `redo`
@@ -242,46 +308,15 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
-=== Clearing all entries : `clear`
-
-* *Description:* Clears all entries from the address book. +
-* *Format:* `clear`
-
-=== Exiting the program : `exit`
+==== Exiting the program : `exit`
 
 * *Description:* Exits the program. +
 * *Format:* `exit`
 
-=== Saving the data
+==== Saving the data
 
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
-
-=== Data visualization
-Make data-driven decisions with recruiting analytics
-
-image::graph.png[width="500"]
-
-Format: `draw [t/TAG]...`
-
-=== Job Posting
-* *Description:* Add job requirements to find out qualified candidates.
-* *Format:* `addjob [SKILLS]`
-
-=== Resume Auto Scanning
-* *Description:* Easily filter candidates whose resume having desirable keywords. +
-* *Format:* `scanresume [KEYWORD]`
-
-=== LinkedIn Integration
-
-* *Description:* View LinkedIn profile of the person identified by the index number used in the last person listing. +
-* *Format:* `viewlinkedin [INDEX]`
-====
-Reduced clicks, and continuously updated information of candidates.
-====
-
-=== Encrypting data files `[coming in v2.0]`
-// end::dataencryption[]
 
 == FAQ
 
