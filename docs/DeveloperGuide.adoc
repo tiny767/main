@@ -430,6 +430,18 @@ PARAMETERS provide information for the Edit command to be executed with.
 **Pros:** Keep the Edit Command logic   +
 **Cons:** Have to rely on Model, which is not flexible.
 
+=== Display relevant github or resume page.
+As a candidate may have linked online resume or github page. The recruiter may want
+to consider these pages.
+Aspects: Implementation of removing/adding a linked page.
+
+**Alternative 1:** (current choice): Each person has a page, which is resume or github.
+Add the view command to view a specific person, and view the linked page
+on the browser panel.
+Pros: The page can be linked to the person.
+**Alternative 2:** Add a new command to view specific page, which is hard code URL.
+Hard to maintain the hard code URL.
+
 == Documentation
 
 We use asciidoc for writing documentation.
