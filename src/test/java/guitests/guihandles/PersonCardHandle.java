@@ -29,7 +29,6 @@ public class PersonCardHandle extends NodeHandle<Node> {
 
     public PersonCardHandle(Node cardNode) {
         super(cardNode);
-
         this.idLabel = getChildNode(ID_FIELD_ID);
         this.nameLabel = getChildNode(NAME_FIELD_ID);
         this.addressLabel = getChildNode(ADDRESS_FIELD_ID);
@@ -65,7 +64,9 @@ public class PersonCardHandle extends NodeHandle<Node> {
         return emailLabel.getText();
     }
 
-    public String getRemark() { return remarkLabel.getText(); }
+    public String getRemark() {
+        return remarkLabel.getText();
+    }
 
     public List<String> getTags() {
         return tagLabels

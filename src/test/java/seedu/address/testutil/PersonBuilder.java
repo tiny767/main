@@ -5,6 +5,7 @@ import java.util.Set;
 
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.Link;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
@@ -23,6 +24,7 @@ public class PersonBuilder {
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
     public static final String DEFAULT_REMARK = "";
     public static final String DEFAULT_TAGS = "friends";
+    public static final String DEFAULT_LINK = "https://www.google.com.sg/";
 
     private Name name;
     private Phone phone;
@@ -30,6 +32,7 @@ public class PersonBuilder {
     private Address address;
     private Remark remark;
     private Set<Tag> tags;
+    private Link link;
 
     public PersonBuilder() {
         name = new Name(DEFAULT_NAME);
@@ -37,6 +40,7 @@ public class PersonBuilder {
         email = new Email(DEFAULT_EMAIL);
         address = new Address(DEFAULT_ADDRESS);
         remark = new Remark(DEFAULT_REMARK);
+        link = new Link(DEFAULT_LINK);
         tags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
     }
 
@@ -49,6 +53,7 @@ public class PersonBuilder {
         email = personToCopy.getEmail();
         address = personToCopy.getAddress();
         remark = personToCopy.getRemark();
+        link = personToCopy.getLink();
         tags = new HashSet<>(personToCopy.getTags());
     }
 
@@ -100,8 +105,17 @@ public class PersonBuilder {
         this.remark = new Remark(remark);
         return this;
     }
+
+    /**
+     * Sets the {@code Link} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withLink(String link) {
+        this.link = new Link(link);
+        return this;
+    }
+
     public Person build() {
-        return new Person(name, phone, email, address, remark, tags);
+        return new Person(name, phone, email, address, remark, link, tags);
     }
 
 }

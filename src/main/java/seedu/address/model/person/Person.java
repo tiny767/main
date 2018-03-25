@@ -20,19 +20,20 @@ public class Person {
     private final Email email;
     private final Address address;
     private final Remark remark;
-
     private final UniqueTagList tags;
+    private final Link link;
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Remark remark, Set<Tag> tags) {
+    public Person(Name name, Phone phone, Email email, Address address, Remark remark, Link link, Set<Tag> tags) {
         requireAllNonNull(name, phone, email, address, remark, tags);
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
         this.remark = remark;
+        this.link = link;
         // protect internal tags from changes in the arg list
         this.tags = new UniqueTagList(tags);
     }
@@ -47,6 +48,10 @@ public class Person {
 
     public Email getEmail() {
         return email;
+    }
+
+    public Link getLink() {
+        return link;
     }
 
     public Address getAddress() {
@@ -98,6 +103,8 @@ public class Person {
                 .append(getEmail())
                 .append(" Address: ")
                 .append(getAddress())
+                .append("Link: ")
+                .append(getLink())
                 .append(" Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();

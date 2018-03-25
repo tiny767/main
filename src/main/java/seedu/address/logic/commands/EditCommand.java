@@ -21,6 +21,7 @@ import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.Link;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
@@ -257,6 +258,7 @@ public class EditCommand extends UndoableCommand {
             Phone updatedPhone = getPhone().orElse(personToEdit.getPhone());
             Email updatedEmail = getEmail().orElse(personToEdit.getEmail());
             Remark updatedRemark = personToEdit.getRemark();
+            Link updatedLink = personToEdit.getLink();
             Address updatedAddress = getAddress().orElse(personToEdit.getAddress());
 
             Set<Tag> updatedTags;
@@ -280,7 +282,8 @@ public class EditCommand extends UndoableCommand {
             }
 
 
-            return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedRemark, updatedTags);
+            return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedRemark,
+                    updatedLink, updatedTags);
         }
 
         @Override

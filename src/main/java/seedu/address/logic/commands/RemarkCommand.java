@@ -91,6 +91,7 @@ public class RemarkCommand extends UndoableCommand {
                 personToEdit.getEmail(),
                 personToEdit.getAddress(),
                 this.remark,
+                personToEdit.getLink(),
                 personToEdit.getTags());
     }
 

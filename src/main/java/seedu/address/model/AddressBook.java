@@ -12,6 +12,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import javafx.collections.ObservableList;
+import seedu.address.model.interview.Interview;
+import seedu.address.model.interview.UniqueInterviewList;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -27,6 +29,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     private final UniquePersonList persons;
     private final UniqueTagList tags;
+    private final UniqueInterviewList interviews;
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -38,6 +41,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     {
         persons = new UniquePersonList();
         tags = new UniqueTagList();
+        interviews = new UniqueInterviewList();
     }
 
     public AddressBook() {}
@@ -134,7 +138,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         personTags.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
         return new Person(
                 person.getName(), person.getPhone(), person.getEmail(), person.getAddress(),
-                person.getRemark(), correctTagReferences);
+                person.getRemark(), person.getLink(), correctTagReferences);
     }
 
     /**
@@ -163,7 +167,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
         Person modifiedPerson =
                 new Person(person.getName(), person.getPhone(), person.getEmail(), person.getAddress(),
-                        person.getRemark(), modifiedTags);
+                        person.getRemark(), person.getLink(), modifiedTags);
 
         try {
             updatePerson(person, modifiedPerson);
@@ -211,6 +215,11 @@ public class AddressBook implements ReadOnlyAddressBook {
         return false;
     }
 
+    //// interview-level operations
+
+    public void addInterview(Interview interview) {
+
+    }
     //// util methods
 
     @Override

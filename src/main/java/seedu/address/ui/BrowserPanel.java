@@ -22,7 +22,7 @@ public class BrowserPanel extends UiPart<Region> {
 
     public static final String DEFAULT_PAGE = "default.html";
     public static final String SEARCH_PAGE_URL =
-            "https://se-edu.github.io/addressbook-level4/DummySearchPage.html?name=";
+            "https://www.google.com.sg/";
 
     private static final String FXML = "BrowserPanel.fxml";
 
@@ -41,8 +41,16 @@ public class BrowserPanel extends UiPart<Region> {
         registerAsAnEventHandler(this);
     }
 
+    /**
+     * Loading the personal page with the given url
+     * If @param person is null. Return default page.
+    */
     private void loadPersonPage(Person person) {
-        loadPage(SEARCH_PAGE_URL + person.getName().fullName);
+        if (person.getLink() == null) {
+            loadPage(SEARCH_PAGE_URL);
+        } else {
+            loadPage(person.getLink().value);
+        }
     }
 
     public void loadPage(String url) {
