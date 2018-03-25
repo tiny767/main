@@ -19,10 +19,18 @@ By: `Team CS2103JAN2018-W11-B3`      Since: `Jun 2016`      Licence: `MIT`
 
 Infinity Book (IB) is for those Tech recruiters who *prefer to use a desktop app for managing candidates*.  +
 
-More importantly, IB is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, IB can get your candidates management tasks done faster than traditional GUI apps. +
+More importantly, IB is *optimized for those who prefer to work with a Command Line Interface* (link:#cli[CLI]) while still having the benefits of a Graphical User Interface (link:#gui[GUI]). If you can type fast, IB can get your candidates management tasks done faster than traditional GUI apps. +
 
 Interested? +
 Jump to the <<Quick Start>> to get started. Enjoy!
+
+== About
+
+This User Guide introduces a user to Infinity Book, provides set up instructions and details the features of the product.
+This document does not assume any prior knowledge, and the glossary explains any technical terms.
+
+[NOTE]
+For information about implementation and architecture, please refer to the Developer Guide.
 
 == Quick Start
 If you are a first time user, this section will help you get started with Infinity Book in 5 easy steps:
@@ -281,7 +289,7 @@ Reduced clicks, and continuously updated information of candidates.
 *A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
 
 *Q*: How do I check if Infinity Book is compatible with my computer? +
-*A*: Infinity Book is compatible with Windows, Mac OS and Ubuntu with Java `1.8.0_60` or later installed. Compatibility with other UNIX distributions is not guaranteed. +
+*A*: Infinity Book is compatible with Windows, Mac OS and Ubuntu with Java `1.8.0_60` or later installed. Compatibility with other link:#unix[UNIX] distributions is not guaranteed. +
 
 ****
 To check your Java Version:
@@ -321,3 +329,18 @@ The following table summarises Infinity Book commands with suitable examples:
 |Select |`select INDEX` |`select 2`
 |Undo |`undo` |`undo`
 |=====================================================================================================
+
+[appendix]
+
+== Glossary +
+* The following are some terms referenced in the User Guide: +
+** [#unix]*UNIX*: Unix  is a family of multitasking, multiuser computer operating systems. Common UNIX operating systems include Linux, Fedora and MAC OS.
+** [#cli]*Command Line Interface*: A user interface in which the user executes and responds to an application through a specified text input where commands are typed.
+** [#gui]*Graphical User Interface*: A user interface in which the user interacts with the application through visual representations through menus, text, images, etc.
+
+
+
+
+
+
+
