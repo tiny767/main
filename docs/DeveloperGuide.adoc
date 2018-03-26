@@ -32,11 +32,15 @@ This Developer Guide provides details on setting up this project for development
 For information about application usage, refer to the link:https://github.com/CS2103JAN2018-W11-B3/main/blob/master/docs/UserGuide.adoc[User Guide]
 Interested? +
 Jump to the <<Setting up, Setting up>> section to get started. Enjoy!
+
 link:#top[Back to top]
+
 == Setting up
 
 This section provides step-by-step instructions to set up Infinity Book for development on your computer. +
+
 link:#top[Back to top]
+
 === Prerequisites
 
 To continue development, the following two prerequisites are recommended to be met:
@@ -981,6 +985,8 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |User |Delete a tag from address book |To remove tags I am no longer interested in
 
+|`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
+
 |`* *` |User |Hide <<private-contact-detail,private>> contact details by default |Minimize chance of someone else seeing them by accident
 
 |`* *` |User with multiple address books |Export my contacts |Import into another address book application
@@ -999,7 +1005,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |User who uses many applications |Export search result to CSV/JSON |import them into other applications
 
-|`* *` |With many contacts |Set profile pictures for contacts |identify and remember them |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
+|`* *` |With many contacts |Set profile pictures for contacts |identify and remember them
 
 |`* *` |User |read all notes about a contact |Remember my past interactions and research about the contact
 
@@ -1086,8 +1092,6 @@ Use case ends.
 
 link:#top[Back to top]
 
-=======
-
 [appendix]
 == Glossary
 
@@ -1154,12 +1158,14 @@ These instructions only provide a starting point for testers to work on; testers
    Expected: Similar to previous.
 
 // TODO: Give more incorrect commands to try.
+
 === Saving data
 
 . Dealing with missing/corrupted data files
 .. Missing data cannot be replaced selectively.
 // TODO: read the comments originally placed here and update this section
 // .. _{explain how to simulate a missing/corrupted file and the expected behavior}_
+
 link:#top[Back to top]
 
 
