@@ -14,10 +14,32 @@ endif::[]
 :repoURL: https://github.com/CS2103JAN2018-W11-B3/main
 
 By: `Team JACKHA (W11-B3)`      Since: `Mar 2018`      Licence: `MIT`
+[[top]]
 
+== Introduction
+Infinity Book (IB) is an address book application for Tech recruiters who *prefer to use a desktop app for managing candidates*.  +
+
+IB provides end-to-end support, from searching for candidates,to adding job postings and saving their resumes and interviews. +
+
+More importantly, IB is *optimized for those who prefer to work with a Command Line Interface* (link:#cli[CLI]) while still having the benefits of a Graphical User Interface (link:#gui[GUI]). If you can type fast, IB can get your candidates management tasks done faster than traditional GUI apps. +
+
+link:#top[Back to top]
+
+== About
+
+This Developer Guide provides details on setting up this project for development, compatibility, and architecture information about IB. Design and implementation specifications are specified below, followed by product management specifics. +
+
+For information about application usage, refer to the link:https://github.com/CS2103JAN2018-W11-B3/main/blob/master/docs/UserGuide.adoc[User Guide]
+Interested? +
+Jump to the <<Setting up, Setting up>> section to get started. Enjoy!
+link:#top[Back to top]
 == Setting up
 
+This section provides step-by-step instructions to set up Infinity Book for development on your computer. +
+link:#top[Back to top]
 === Prerequisites
+
+To continue development, the following two prerequisites are recommended to be met:
 
 . *JDK `1.8.0_60`* or later
 +
@@ -34,6 +56,8 @@ Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plu
 
 
 === Setting up the project in your computer
+
+After meeting the <<Prerequisites, prerequisites>>, follow these steps to set up the project on your computer:
 
 . Fork this repo, and clone the fork to your computer
 . Open IntelliJ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first)
@@ -53,6 +77,8 @@ This will generate all resources required by the application and tests.
 . <<Testing,Run the tests>> to ensure they all pass.
 
 === Configurations to do before writing code
+
+Configuring the coding style, documentation and continuous integration (CI) is recommended to maintain uniformity across contributions.
 
 ==== Configuring the coding style
 
@@ -92,9 +118,13 @@ When you are ready to start coding,
 1. Get some sense of the overall design by reading <<Design-Architecture>>.
 2. Take a look at <<GetStartedProgramming>>.
 
-== Design
+<<top,Back to top>>
 
+== Design
 [[Design-Architecture]]
+
+The following sections describe the architecture of the system, with details about each component.
+
 === Architecture
 
 .Architecture Diagram
@@ -226,6 +256,8 @@ The `Storage` component,
 === Common classes
 
 Classes used by multiple components are in the `seedu.addressbook.commons` package.
+
+link:#top[Back to top]
 
 == Implementation
 
@@ -442,9 +474,10 @@ Pros: The page can be linked to the person.
 **Alternative 2:** Add a new command to view specific page, which is hard code URL.
 Hard to maintain the hard code URL.
 
-== Documentation
+link:#top[Back to top]
 
-We use asciidoc for writing documentation.
+== Documentation
+This project maintains documentation in the docs folder, also accessible through the readme. This documentation is written and maintained using *asciidoc*.
 
 [NOTE]
 We chose asciidoc over Markdown because asciidoc, although a bit more complex than Markdown, provides more flexibility in formatting.
@@ -472,8 +505,11 @@ Here are the steps to convert the project documentation files to PDF format.
 .Saving documentation as PDF files in Chrome
 image::chrome_save_as_pdf.png[width="300"]
 
+link:#top[Back to top]
+
 [[Testing]]
 == Testing
+The Infinity Book project maintains GUI and non-GUI tests. Instructions on writing and running tests, and details about the nature of these tests are provided in this section.
 
 === Running Tests
 
@@ -522,6 +558,8 @@ e.g. `seedu.address.logic.LogicManagerTest`
 * Reason: One of its dependencies, `UserGuide.html` in `src/main/resources/docs` is missing.
 * Solution: Execute Gradle task `processResources`.
 
+link:#top[Back to top]
+
 == Dev Ops
 
 === Build Automation
@@ -553,6 +591,8 @@ Here are the steps to create a new release.
 A project often depends on third-party libraries. For example, Address Book depends on the http://wiki.fasterxml.com/JacksonHome[Jackson library] for XML parsing. Managing these _dependencies_ can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than these alternatives. +
 a. Include those libraries in the repo (this bloats the repo size) +
 b. Require developers to download those libraries manually (this creates extra work for developers)
+
+link:#top[Back to top]
 
 [[GetStartedProgramming]]
 [appendix]
@@ -834,6 +874,8 @@ We now have everything set up... but we still can't modify the remarks. Let's fi
 
 See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-by-step solution.
 
+link:#top[Back to top]
+
 [appendix]
 == Product Scope
 
@@ -845,7 +887,7 @@ Tech recruiters who have the need for finding and acquiring skilled Computing st
 * find students whose skill set is suitable for available positions
 * Keep track of student’s past interactions with the company: internship, coding challenges, interview,...
 
-=== Feature contribution:
+=== Feature contributions
 ==== Sashankh Chengavalli Kumar (@ChengSashankh)
 ===== Major Enhancement: Adding job postings
 This allows the user to add job postings and receive suggestions about most suitable candidates based on various parameters.
@@ -863,7 +905,7 @@ Implementations needed:
 * In account of the multiple roles that each candidate might be suitable for, skills allow recruiter to choose the best match.
  This feature addresses this core need for recruiters.
 
-==== Huynh Thanh Duc Anh (@anh211)
+==== Huynh Thanh Duc Anh (@anh2111)
 ===== Major Enhancement: Data visualization
 This allows users to make data-driven decisions with the visualization of recruiting data.
 
@@ -914,6 +956,8 @@ Implementations needed:
 ===== Minor Enhancement: `remark` command
 * Allow users to add remarks for people in their address books.
 * This allows tech recruiters to have a more flexible field to use for their candidates
+
+link:#top[Back to top]
 
 [appendix]
 == User Stories
@@ -974,6 +1018,9 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`*` |User who types many commands |Get autocomplete suggestion |Quickly complete command
 
 |=======================================================================
+
+
+link:#top[Back to top]
 
 [appendix]
 == Use Cases
@@ -1036,6 +1083,11 @@ Use case ends.
 .  Project should not require updates to remain functional.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
 
+
+link:#top[Back to top]
+
+=======
+
 [appendix]
 == Glossary
 
@@ -1044,6 +1096,8 @@ Windows, Linux, Unix, OS-X
 
 [[private-contact-detail]] Private contact detail::
 A contact detail that is not meant to be shared with others
+
+link:#top[Back to top]
 
 [appendix]
 == Product Survey
@@ -1062,6 +1116,8 @@ Cons:
 
 * Synchronization across multiple devices/cloud not possible.
 * Mobile client not available to enable remote access to Infinity Book.
+
+link:#top[Back to top]
 
 [appendix]
 == Instructions for Manual Testing
@@ -1103,3 +1159,7 @@ These instructions only provide a starting point for testers to work on; testers
 . Dealing with missing/corrupted data files
 .. Missing data cannot be replaced selectively.
 // TODO: read the comments originally placed here and update this section
+// .. _{explain how to simulate a missing/corrupted file and the expected behavior}_
+link:#top[Back to top]
+
+
