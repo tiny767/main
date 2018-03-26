@@ -874,7 +874,7 @@ Tech recruiters who have the need for finding and acquiring skilled Computing st
 * find students whose skill set is suitable for available positions
 * Keep track of student’s past interactions with the company: internship, coding challenges, interview,...
 
-=== Feature contribution:
+=== Feature contributions
 ==== Sashankh Chengavalli Kumar (@ChengSashankh)
 ===== Major Enhancement: Adding job postings
 This allows the user to add job postings and receive suggestions about most suitable candidates based on various parameters.
