@@ -14,6 +14,7 @@ endif::[]
 :repoURL: https://github.com/CS2103JAN2018-W11-B3/main
 
 By: `Team JACKHA (W11-B3)`      Since: `Mar 2018`      Licence: `MIT`
+[[top]]
 
 == Introduction
 Infinity Book (IB) is an address book application for Tech recruiters who *prefer to use a desktop app for managing candidates*.  +
@@ -21,6 +22,8 @@ Infinity Book (IB) is an address book application for Tech recruiters who *prefe
 IB provides end-to-end support, from searching for candidates,to adding job postings and saving their resumes and interviews. +
 
 More importantly, IB is *optimized for those who prefer to work with a Command Line Interface* (link:#cli[CLI]) while still having the benefits of a Graphical User Interface (link:#gui[GUI]). If you can type fast, IB can get your candidates management tasks done faster than traditional GUI apps. +
+
+link:#top[Back to top]
 
 == About
 
@@ -34,6 +37,8 @@ Jump to the <<Setting up, Setting up>> section to get started. Enjoy!
 This section provides step-by-step instructions to set up Infinity Book for development on your computer. +
 
 === Prerequisites
+
+To continue development, the following two prerequisites are recommended to be met:
 
 . *JDK `1.8.0_60`* or later
 +
@@ -50,6 +55,8 @@ Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plu
 
 
 === Setting up the project in your computer
+
+After meeting the <<Prerequisites, prerequisites>>, follow these steps to set up the project on your computer:
 
 . Fork this repo, and clone the fork to your computer
 . Open IntelliJ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first)
@@ -69,6 +76,8 @@ This will generate all resources required by the application and tests.
 . <<Testing,Run the tests>> to ensure they all pass.
 
 === Configurations to do before writing code
+
+Configuring the coding style, documentation and continuous integration (CI) is recommended to maintain uniformity across contributions.
 
 ==== Configuring the coding style
 
@@ -108,9 +117,13 @@ When you are ready to start coding,
 1. Get some sense of the overall design by reading <<Design-Architecture>>.
 2. Take a look at <<GetStartedProgramming>>.
 
-== Design
+<<top,Back to top>>
 
+== Design
 [[Design-Architecture]]
+
+The following sections describe the architecture of the system, with details about each component.
+
 === Architecture
 
 .Architecture Diagram
@@ -459,8 +472,7 @@ Pros: The page can be linked to the person.
 Hard to maintain the hard code URL.
 
 == Documentation
-
-We use asciidoc for writing documentation.
+This project maintains documentation in the docs folder, also accessible through the readme. This documentation is written and maintained using *asciidoc*.
 
 [NOTE]
 We chose asciidoc over Markdown because asciidoc, although a bit more complex than Markdown, provides more flexibility in formatting.
@@ -490,6 +502,7 @@ image::chrome_save_as_pdf.png[width="300"]
 
 [[Testing]]
 == Testing
+The Infinity Book project maintains GUI and non-GUI tests. Instructions on writing and running tests, and details about the nature of these tests are provided in this section.
 
 === Running Tests
 
