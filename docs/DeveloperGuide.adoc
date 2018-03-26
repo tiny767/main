@@ -15,7 +15,23 @@ endif::[]
 
 By: `Team JACKHA (W11-B3)`      Since: `Mar 2018`      Licence: `MIT`
 
+== Introduction
+Infinity Book (IB) is an address book application for Tech recruiters who *prefer to use a desktop app for managing candidates*.  +
+
+IB provides end-to-end support, from searching for candidates,to adding job postings and saving their resumes and interviews. +
+
+More importantly, IB is *optimized for those who prefer to work with a Command Line Interface* (link:#cli[CLI]) while still having the benefits of a Graphical User Interface (link:#gui[GUI]). If you can type fast, IB can get your candidates management tasks done faster than traditional GUI apps. +
+
+== About
+
+This Developer Guide provides details on setting up this project for development, compatibility, and architecture information about IB. Design and implementation specifications are specified below, followed by product management specifics. +
+
+Interested? +
+Jump to the <<Setting up, Setting up>> section to get started. Enjoy!
+
 == Setting up
+
+This section provides step-by-step instructions to set up Infinity Book for development on your computer. +
 
 === Prerequisites
 
