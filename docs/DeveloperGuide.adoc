@@ -892,7 +892,7 @@ Implementations needed:
 * In account of the multiple roles that each candidate might be suitable for, skills allow recruiter to choose the best match.
  This feature addresses this core need for recruiters.
 
-==== Huynh Thanh Duc Anh (@anh211)
+==== Huynh Thanh Duc Anh (@anh2111)
 ===== Major Enhancement: Data visualization
 This allows users to make data-driven decisions with the visualization of recruiting data.
 
