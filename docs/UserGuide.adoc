@@ -220,7 +220,7 @@ as `group` tags. +
 
 ==== Managing tag of a person: refer to `edit` command
 
-==== Adding a new report : `report -new`
+==== Adding a new report : `report -new` [coming in v1.4]
 
 * *Description:* Need to keep track certain information? Add new report using `report -new` command. +
 * *Format:*  `report -new POPULATION [GROUP 1] [GROUP 2] [GROUP 3]` +
@@ -228,11 +228,11 @@ This will create a new Report with name presented in the format: `POPULATION_[GR
 * *Examples:* `report -new SoftwareEngineerInterns screening interviewing accepted` +
 This should create a new report named `SoftwareEngineerInterns_screening_interviewing_accepted`.
 
-==== Removing a report : `report -remove`
+==== Removing a report : `report -remove` [coming in v1.4]
 * *Description:* To remove a report, use `report -remove` command
 * *Format:*  `report -remove REPORT_NAME`
 
-==== Saving the current state of report `report -freeze`
+==== Saving the current state of report `report -freeze` [coming in v1.4]
 * *Description:* To save the current state of a report persistently, use `report -freeze` command.
 * *Format:*  `report -freeze POPULATION [GROUP 1] [GROUP 2] [GROUP 3]`
 * *Examples:* `report -freeze SoftwareEngineerInterns_screening_interviewing_accepted` +
