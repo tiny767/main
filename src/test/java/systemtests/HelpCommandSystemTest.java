@@ -1,8 +1,8 @@
 package systemtests;
 
-
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+
 import guitests.GuiRobot;
 import guitests.guihandles.HelpWindowHandle;
 

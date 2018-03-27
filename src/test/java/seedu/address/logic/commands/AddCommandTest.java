@@ -148,7 +148,8 @@ public class AddCommandTest {
 
         @Override
         public ObservableList<Job> getFilteredJobList() {
-            fail("This method should not be called."); return null;
+            fail("This method should not be called.");
+            return null;
         }
 
     }
