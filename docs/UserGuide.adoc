@@ -211,6 +211,7 @@ Infinity Book proposes a workflow that helps you efficiently achieve these requi
 three `group` tags. Example:
 
 image::graph.png[width="500"]
+Figure 1: Data Visualization: Dashboard Reporting
 
 You are recruiting interns, and you can use this report to keep track of the number of candidates in each stage. This
 report is defined by  tag `SoftwareEngineerInterns` as `population` tag,  and `screening`, `interviewing`, `accepted`
@@ -241,9 +242,34 @@ number of candidates in each group.
 
 ==== List all available reports [coming in v2.0]
 
-=== Job Posting
-* *Description:* Add job requirements to find out qualified candidates.
-* *Format:* `addjob [SKILLS]`
+=== Managing Job Postings
+
+This section describes commands available for managing job postings in the Infinity Book.
+
+==== Post Job Command
+
+image::postJob.jpg[width="500"]
+Figure 2: PostJob Command adds Jobs into a new pane as shown.
+
+
+* *Description:* Add a job posting to Infinity Book to filter out qualified candidates.
+* *Format:* `postjob j/JOB TITLE l/LOCATION t/[TAGS] s/SKILLS`
+* *Examples:* `postjob j/Backend Engineer l/Singapore t/FreshGrad s/Java`
+
+==== Match Job Command
+
+image::matchJob.jpg[width="500"]
+Figure 1: MatchJob command filters the Candidates as per Job, as shown above.
+
+
+* *Description:* Match a job posting to list out the filtered candidates for this job.
+* *Format:* `matchjob INDEX`
+* *Example:* `matchjob 1`
+
+[NOTE]
+====
+Index to be used as displayed in the panel
+====
 
 === Miscellaneous
 
