@@ -88,12 +88,13 @@ public class Person {
             return false;
         }
 
+        //TODO: Update this with comparison with getskills as well.
         Person otherPerson = (Person) other;
         return otherPerson.getName().equals(this.getName())
                 && otherPerson.getPhone().equals(this.getPhone())
                 && otherPerson.getEmail().equals(this.getEmail())
-                && otherPerson.getAddress().equals(this.getAddress())
-                && otherPerson.getSkills().equals(this.getSkills());
+                && otherPerson.getAddress().equals(this.getAddress());
+        //&& otherPerson.getSkills().equals(this.getSkills());
     }
 
     @Override

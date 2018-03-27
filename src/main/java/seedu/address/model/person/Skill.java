@@ -12,7 +12,7 @@ public class Skill {
         this.skills = skills;
     }
 
-    public String getSkills() {
+    public String toString() {
         return skills;
     }
 
