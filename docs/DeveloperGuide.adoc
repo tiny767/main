@@ -422,7 +422,7 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
-=== Tag colors
+=== Tag colors [since v1.2]
 
 ==== Current Implementation
 
@@ -443,7 +443,7 @@ Use an array of pre-defined colors. +
 **Pros:** Number of different color is very big (i.e. there is less repetitive color used)   +
 **Cons:** The color for each tag value might be different between app launchs +
 
-=== Add/Remove one Tag for a person
+=== Add/Remove one Tag for a person [since v1.2]
 
 As Person may have a long list of tags, we need to have a convenient way to update them.+
 Command syntax: EDIT [-OPTIONS] [PARAMETERS]…​, where: +
@@ -466,7 +466,7 @@ PARAMETERS provide information for the Edit command to be executed with.
 **Pros:** Keep the Edit Command logic   +
 **Cons:** Have to rely on Model, which is not flexible.
 
-=== Display relevant Github or resume page.
+=== Display relevant Github or resume page. [coming in v1.4]
 As a candidate may have linked online resume or github page. The recruiter may want
 to consider these pages.
 Aspects: Implementation of removing/adding a linked page.
