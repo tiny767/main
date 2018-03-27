@@ -63,7 +63,7 @@ public class AddressBookParser {
             return new PostJobCommandParser().parse(arguments);
 
         case MatchJobCommand.COMMAND_WORD:
-            return new JobMatchCommandParser().parse(arguments);
+            return new MatchJobCommandParser().parse(arguments);
 
         case EditCommand.COMMAND_ALIAS:
             return new EditCommandParser().parse(arguments);

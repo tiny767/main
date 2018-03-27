@@ -14,28 +14,32 @@ import seedu.address.model.person.Person;
 
 public class PersonMatchesJobPredicate implements Predicate<Person> {
     private final List<String> keywords;
+    private final boolean notLocationBound;
 
     public PersonMatchesJobPredicate(Job job) {
         this.keywords = new ArrayList<String>();
         this.keywords.addAll(Arrays.asList(job.getSkills().toString().split(",")));
         this.keywords.addAll(Arrays.asList(job.getLocation().toString().split(" ")));
-    }
 
-    public PersonMatchesJobPredicate(List<String> keywords) {
-        this.keywords = keywords;
+        notLocationBound = (job.getLocation().toString().compareTo("##") == 0);
     }
 
     @Override
     public boolean test(Person person) {
+        String toMatchPerson = person.getAddress().toString();
+        toMatchPerson.concat(person.getSkills().toString());
+        toMatchPerson.concat(person.getTags().toString());
+
+
         return keywords.stream()
-                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getAddress().value, keyword));
+                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(toMatchPerson, keyword));
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof seedu.address.model.job.PersonMatchesJobPredicate// instanceof handles nulls
+                || (other instanceof PersonMatchesJobPredicate// instanceof handles nulls
                 && this.keywords.equals((
-                        (seedu.address.model.job.PersonMatchesJobPredicate) other).keywords)); // state check
+                        (PersonMatchesJobPredicate) other).keywords)); // state check
     }
 }

@@ -3,6 +3,7 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 
 import java.rmi.NoSuchObjectException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -65,6 +66,10 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.tags.setTags(tags);
     }
 
+    public void setJobs(List<Job> jobs) throws  DuplicateJobException {
+        this.jobs.setJobs(jobs);
+    }
+
     /**
      * Resets the existing data of this {@code AddressBook} with {@code newData}.
      */
@@ -77,8 +82,11 @@ public class AddressBook implements ReadOnlyAddressBook {
 
         try {
             setPersons(syncedPersonList);
+            setJobs(new ArrayList<Job>(newData.getJobList()));
         } catch (DuplicatePersonException e) {
             throw new AssertionError("AddressBooks should not have duplicate persons");
+        } catch (DuplicateJobException e) {
+            throw new AssertionError("AddressBooks should not have duplicate job postings");
         }
     }
 
@@ -233,14 +241,13 @@ public class AddressBook implements ReadOnlyAddressBook {
     @Override
     public String toString() {
         return persons.asObservableList().size() + " persons, " + tags.asObservableList().size() +  " tags";
-        // TODO: refine later
+        // TODO: update with number of job postings
     }
 
     @Override
     public ObservableList<Person> getPersonList() {
         return persons.asObservableList();
     }
-
     @Override
     public ObservableList<Job> getJobList() {
         return jobs.asObservableList();
@@ -250,6 +257,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         return tags.asObservableList();
     }
 
+    // TODO: Add job comparison below
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
@@ -261,6 +269,6 @@ public class AddressBook implements ReadOnlyAddressBook {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(persons, tags);
+        return Objects.hash(persons, jobs, tags);
     }
 }

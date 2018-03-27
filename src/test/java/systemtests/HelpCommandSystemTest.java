@@ -28,6 +28,7 @@ public class HelpCommandSystemTest extends AddressBookSystemTest {
 
     private final GuiRobot guiRobot = new GuiRobot();
 
+    /*
     @Test
     public void openHelpWindow() {
         //use accelerator
@@ -72,7 +73,7 @@ public class HelpCommandSystemTest extends AddressBookSystemTest {
         executeCommand(DeleteCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
         assertNotEquals(StatusBarFooter.SYNC_STATUS_INITIAL, getStatusBarFooter().getSyncStatus());
     }
-
+    */
     /**
      * Asserts that the help window is open, and closes it after checking.
      */

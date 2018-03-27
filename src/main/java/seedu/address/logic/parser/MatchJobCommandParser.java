@@ -10,11 +10,11 @@ import seedu.address.logic.parser.exceptions.ParseException;
 /***
  * TODO: Write a javadoc comment
  */
-public class JobMatchCommandParser implements Parser<MatchJobCommand> {
+public class MatchJobCommandParser implements Parser<MatchJobCommand> {
 
     /**
-     * Parses the given {@code String} of arguments in the context of the FindCommand
-     * and returns an FindCommand object for execution.
+     * Parses the given {@code String} of arguments in the context of the MatchJobCommand
+     * and returns an MatchJobCommand object for execution.
      * @throws ParseException if the user input does not conform the expected format
      */
     public MatchJobCommand parse(String args) throws ParseException {

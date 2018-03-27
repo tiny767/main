@@ -1,6 +1,9 @@
 package seedu.address.logic.commands;
 
+import java.util.ArrayList;
+
 import seedu.address.commons.core.index.Index;
+import seedu.address.model.job.Job;
 import seedu.address.model.job.PersonMatchesJobPredicate;
 
 /**
@@ -16,16 +19,17 @@ public class MatchJobCommand extends Command {
             + "Parameters: JOB INDEX...\n"
             + "Example: " + COMMAND_WORD + " 1";
 
-    private final PersonMatchesJobPredicate predicate;
+    private PersonMatchesJobPredicate predicate;
+    private final Index index;
 
     public MatchJobCommand(Index index) {
-        System.out.println(model.getFilteredJobList().get(index.getZeroBased()).toString());
-        this.predicate = new PersonMatchesJobPredicate(model.getFilteredJobList().get(index.getZeroBased()));
+        this.index = index;
     }
 
     @Override
     public CommandResult execute() {
-        System.out.println(model.getFilteredJobList().get(0).toString());
+        ArrayList<Job> listOfJobs = new ArrayList<>(model.getFilteredJobList());
+        this.predicate = new PersonMatchesJobPredicate(listOfJobs.get(index.getZeroBased()));
         model.updateFilteredPersonList(predicate);
         return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
     }
