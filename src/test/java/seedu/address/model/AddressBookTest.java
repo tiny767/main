@@ -135,7 +135,9 @@ public class AddressBookTest {
         }
 
         @Override
-        public ObservableList<Job> getJobList() { return jobs; }
+        public ObservableList<Job> getJobList() {
+            return jobs;
+        }
     }
 
 }
