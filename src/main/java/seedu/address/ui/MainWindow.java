@@ -232,13 +232,11 @@ public class MainWindow extends UiPart<Stage> {
 
     @Subscribe
     private void handleToggleBrowserPanelEvent(ToggleBrowserPanelEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
         switchToBrowserPanel();
     }
 
     @Subscribe
-    private void handleToggleStatisticsPanelEvent(ToggleReportPanelEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+    private void handleToggleReportPanelEvent(ToggleReportPanelEvent event) {
         switchToReportPanel();
     }
 }

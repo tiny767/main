@@ -2,10 +2,9 @@ package seedu.address.logic.commands;
 
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.ToggleReportPanelEvent;
-import seedu.address.logic.commands.exceptions.CommandException;
 
 /**
- * Displays the statistics of the address book to the user.
+ * Displays the report to the user.
  */
 public class ReportCommand extends Command {
     public static final String COMMAND_WORD = "report";
@@ -17,7 +16,7 @@ public class ReportCommand extends Command {
     public static final String MESSAGE_SUCCESS = "Displayed report";
 
     @Override
-    public CommandResult execute() throws CommandException {
+    public CommandResult execute() {
         EventsCenter.getInstance().post(new ToggleReportPanelEvent());
         return new CommandResult(MESSAGE_SUCCESS);
     }
