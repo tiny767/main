@@ -1,9 +1,9 @@
 package seedu.address.logic.commands;
 
-import org.junit.Test;
-
 import static org.junit.Assert.assertEquals;
 import static seedu.address.logic.commands.ReportCommand.MESSAGE_SUCCESS;
+
+import org.junit.Test;
 
 public class ReportCommandTest {
 
