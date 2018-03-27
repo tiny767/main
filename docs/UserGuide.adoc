@@ -260,7 +260,7 @@ Figure 2: PostJob Command adds Jobs into a new pane as shown.
 ==== Match Job Command
 
 image::matchJob.JPG[width="500"]
-Figure 1: MatchJob command filters the Candidates as per Job, as shown above.
+Figure 3: MatchJob command filters the Candidates as per Job, as shown above.
 
 
 * *Description:* Match a job posting to list out the filtered candidates for this job.
