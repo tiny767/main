@@ -140,6 +140,9 @@ public class MainWindow extends UiPart<Stage> {
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
     }
 
+    /**
+     * Replace the current panel by Report panel
+     */
     void switchToReportPanel() {
         reportPanel = new ReportPanel();
         browserOrReportPlaceholder.getChildren().clear();
@@ -147,6 +150,9 @@ public class MainWindow extends UiPart<Stage> {
         isReportPanelOpen = true;
     }
 
+    /**
+     * Replace the current panel by Browser panel
+     */
     void switchToBrowserPanel() {
         browserPanel = new BrowserPanel();
         browserOrReportPlaceholder.getChildren().clear();
