@@ -20,12 +20,13 @@ public class ThemeCommandParser implements Parser<ThemeCommand> {
     public ThemeCommand parse(String args) throws ParseException {
         requireNonNull(args);
         try {
-            if (!args.equalsIgnoreCase(ThemeCommand.LIGHT_THEME) ||
-                    !args.equalsIgnoreCase(ThemeCommand.DARK_THEME)) {
+            String trimmedArgs = args.trim();
+            if (!trimmedArgs.equalsIgnoreCase(ThemeCommand.LIGHT_THEME)
+                && !trimmedArgs.equalsIgnoreCase(ThemeCommand.DARK_THEME)) {
                 throw new IllegalValueException("");
 
             } else {
-                return new ThemeCommand(args);
+                return new ThemeCommand(trimmedArgs);
             }
         } catch (IllegalValueException ive) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,

@@ -31,7 +31,7 @@ public class ThemeCommand extends UndoableCommand {
     public CommandResult executeUndoableCommand() {
         if (theme.equalsIgnoreCase(ThemeCommand.LIGHT_THEME)) {
             UiStyle.getInstance().setToLightTheme();
-        } else {
+        } else if (theme.equalsIgnoreCase(ThemeCommand.DARK_THEME)) {
             UiStyle.getInstance().setToDarkTheme();
         }
 

@@ -6,6 +6,7 @@ import com.google.common.eventbus.Subscribe;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
@@ -69,6 +70,15 @@ public class MainWindow extends UiPart<Stage> {
         // Configure the UI
         setTitle(config.getAppTitle());
         setWindowDefaultSize(prefs);
+
+        Scene scene = primaryStage.getScene();
+
+        scene.getStylesheets().clear();
+
+        UiStyle.getInstance().setScene(scene);
+
+        primaryStage.setScene(scene);
+
 
         setAccelerators();
         registerAsAnEventHandler(this);

@@ -8,7 +8,6 @@ import javafx.scene.Scene;
 public class UiStyle {
     private static final String LIGHT_THEME_STYLE = "view/LightTheme.css";
     private static final String DARK_THEME_STYLE = "view/DarkTheme.css";
-
     private static Scene scene = null;
     private static UiStyle instance = null;
 
@@ -16,13 +15,13 @@ public class UiStyle {
         scene = s;
         setToDarkTheme();
     }
-
-    public static void setToDarkTheme() {
-        scene.getStylesheets().remove(DARK_THEME_STYLE);
+    public static void setToLightTheme() {
+        scene.getStylesheets().remove(
+                DARK_THEME_STYLE);
         scene.getStylesheets().add(LIGHT_THEME_STYLE);
     }
 
-    public static void setToLightTheme() {
+    public static void setToDarkTheme() {
         scene.getStylesheets().remove(LIGHT_THEME_STYLE);
         scene.getStylesheets().add(DARK_THEME_STYLE);
     }
