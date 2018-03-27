@@ -72,11 +72,7 @@ public class MainWindow extends UiPart<Stage> {
         setWindowDefaultSize(prefs);
 
         Scene scene = primaryStage.getScene();
-
-        scene.getStylesheets().clear();
-
         UiStyle.getInstance().setScene(scene);
-
         primaryStage.setScene(scene);
 
 

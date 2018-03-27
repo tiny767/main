@@ -5,7 +5,7 @@ import seedu.address.ui.UiStyle;
 /**
  * Change the theme of addressbook
  */
-public class ThemeCommand extends UndoableCommand {
+public class ThemeCommand extends Command {
 
     public static final String COMMAND_WORD = "theme";
     public static final String COMMAND_ALIAS = "t";
@@ -28,7 +28,7 @@ public class ThemeCommand extends UndoableCommand {
     }
 
     @Override
-    public CommandResult executeUndoableCommand() {
+    public CommandResult execute() {
         if (theme.equalsIgnoreCase(ThemeCommand.LIGHT_THEME)) {
             UiStyle.getInstance().setToLightTheme();
         } else if (theme.equalsIgnoreCase(ThemeCommand.DARK_THEME)) {
@@ -37,5 +37,22 @@ public class ThemeCommand extends UndoableCommand {
 
         return new CommandResult(MESSAGE_SUCCESS);
 
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        // short circuit if same object
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof ThemeCommand)) {
+            return false;
+        }
+
+        // state check
+        ThemeCommand t = (ThemeCommand) other;
+        return theme.equals(t.theme);
     }
 }

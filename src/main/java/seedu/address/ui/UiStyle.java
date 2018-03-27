@@ -13,17 +13,19 @@ public class UiStyle {
 
     public static void setScene(Scene s) {
         scene = s;
-        setToDarkTheme();
+        setDefaultTheme();
     }
+
+    private static void setDefaultTheme() {
+        scene.getStylesheets().add(DARK_THEME_STYLE);
+    }
+
     public static void setToLightTheme() {
-        scene.getStylesheets().remove(
-                DARK_THEME_STYLE);
-        scene.getStylesheets().add(LIGHT_THEME_STYLE);
+        scene.getStylesheets().setAll(LIGHT_THEME_STYLE);
     }
 
     public static void setToDarkTheme() {
-        scene.getStylesheets().remove(LIGHT_THEME_STYLE);
-        scene.getStylesheets().add(DARK_THEME_STYLE);
+        scene.getStylesheets().setAll(DARK_THEME_STYLE);
     }
 
     public static UiStyle getInstance() {
