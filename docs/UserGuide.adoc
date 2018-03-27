@@ -248,7 +248,7 @@ This section describes commands available for managing job postings in the Infin
 
 ==== Post Job Command
 
-image::postjob.jpg[width="500"]
+image::postjob.JPG[width="500"]
 
 Figure 2: PostJob Command adds Jobs into a new pane as shown.
 
@@ -259,7 +259,7 @@ Figure 2: PostJob Command adds Jobs into a new pane as shown.
 
 ==== Match Job Command
 
-image::matchJob.jpg[width="500"]
+image::matchJob.JPG[width="500"]
 Figure 1: MatchJob command filters the Candidates as per Job, as shown above.
 
 
