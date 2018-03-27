@@ -8,7 +8,7 @@ import seedu.address.model.job.PersonMatchesJobPredicate;
  * Keyword matching is case sensitive.
  */
 
-public class JobMatchCommand extends Command {
+public class MatchJobCommand extends Command {
     public static final String COMMAND_WORD = "matchjob";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Matches all persons whose profiles match job posting "
@@ -18,7 +18,7 @@ public class JobMatchCommand extends Command {
 
     private final PersonMatchesJobPredicate predicate;
 
-    public JobMatchCommand(Index index) {
+    public MatchJobCommand(Index index) {
         System.out.println(model.getFilteredJobList().get(index.getZeroBased()).toString());
         this.predicate = new PersonMatchesJobPredicate(model.getFilteredJobList().get(index.getZeroBased()));
     }
@@ -33,8 +33,8 @@ public class JobMatchCommand extends Command {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof JobMatchCommand // instanceof handles nulls
-                && this.predicate.equals(((JobMatchCommand) other).predicate)); // state check
+                || (other instanceof MatchJobCommand // instanceof handles nulls
+                && this.predicate.equals(((MatchJobCommand) other).predicate)); // state check
     }
 
 }
