@@ -134,7 +134,7 @@ public class AddressBookParser {
 
         case ReportCommand.COMMAND_WORD:
             return new ReportCommand();
-                
+
         case ReportCommand.COMMAND_ALIAS:
             return new ReportCommand();
 
