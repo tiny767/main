@@ -475,10 +475,30 @@ Aspects: Implementation of removing/adding a linked page.
 Add the view command to view a specific person, and view the linked page
 on the browser panel.
 Pros: The page can be linked to the person.
+
 **Alternative 2:** Add a new command to view specific page, which is hard code URL.
 Hard to maintain the hard code URL.
 
 link:#top[Back to top]
+
+=== Add and match job postings to candidates.
+As there might be several candidates with varying suitability for a position, the reccruiter should be able to
+filter candidates by ability, location and some other basic filters.
+
+Jobs may be added through the command `postjob j/JOB TITLE s/SKILLS t/TAGS l/LOCATION` ,
+and then might be matched with candidates using index displayed in the panel. This is implemented
+through the command `matchjob INDEX`, which displays the suitable candidates in the person panel.
+
+==== Design Considerations*
+**Aspect:** Implementation of Job-Person Matching +
+
+**Alternative 1 (current choice):** Match as many keywords in an OR search as possible +
+**Pros:** Maintains existing search predicates with minor modifications. +
+**Cons:** May not provide effective filtering. +
+
+**Alternative 2:** Indicate required and optional matches in job posting +
+**Pros:** Search can be customized to be as accurate as required. +
+**Cons:** Spelling differences may still cause diminished effectiveness.
 
 == Documentation
 This project maintains documentation in the docs folder, also accessible through the readme. This documentation is written and maintained using *asciidoc*.
