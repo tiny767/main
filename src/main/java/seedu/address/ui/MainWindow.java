@@ -16,7 +16,10 @@ import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
+import seedu.address.commons.events.ui.RefreshReportPanelEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
+import seedu.address.commons.events.ui.ToggleBrowserPanelEvent;
+import seedu.address.commons.events.ui.ToggleReportPanelEvent;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
 
@@ -35,12 +38,17 @@ public class MainWindow extends UiPart<Stage> {
 
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
+    private ReportPanel reportPanel;
     private PersonListPanel personListPanel;
     private Config config;
     private UserPrefs prefs;
+    private Boolean isReportPanelOpen;
 
     @FXML
-    private StackPane browserPlaceholder;
+    private StackPane browserOrReportPlaceholder;
+
+    @FXML
+    private StackPane reportPlaceholder;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -117,7 +125,7 @@ public class MainWindow extends UiPart<Stage> {
      */
     void fillInnerParts() {
         browserPanel = new BrowserPanel();
-        browserPlaceholder.getChildren().add(browserPanel.getRoot());
+        switchToBrowserPanel();
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
@@ -130,6 +138,27 @@ public class MainWindow extends UiPart<Stage> {
 
         CommandBox commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+    }
+
+    void switchToReportPanel() {
+        reportPanel = new ReportPanel();
+        browserOrReportPlaceholder.getChildren().clear();
+        browserOrReportPlaceholder.getChildren().add(reportPanel.getRoot());
+        isReportPanelOpen = true;
+    }
+
+    void switchToBrowserPanel() {
+        browserPanel = new BrowserPanel();
+        browserOrReportPlaceholder.getChildren().clear();
+        browserOrReportPlaceholder.getChildren().add(browserPanel.getRoot());
+        isReportPanelOpen = false;
+    }
+
+    @Subscribe
+    private void handleRefreshReportPanel(RefreshReportPanelEvent event) {
+        if (isReportPanelOpen) {
+            switchToReportPanel();
+        }
     }
 
     void hide() {
@@ -193,5 +222,17 @@ public class MainWindow extends UiPart<Stage> {
     private void handleShowHelpEvent(ShowHelpRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
+    }
+
+    @Subscribe
+    private void handleToggleBrowserPanelEvent(ToggleBrowserPanelEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        switchToBrowserPanel();
+    }
+
+    @Subscribe
+    private void handleToggleStatisticsPanelEvent(ToggleReportPanelEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        switchToReportPanel();
     }
 }
