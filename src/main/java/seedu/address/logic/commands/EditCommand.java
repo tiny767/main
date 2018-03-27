@@ -24,6 +24,7 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Remark;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
@@ -35,6 +36,8 @@ public class EditCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "edit";
     public static final String COMMAND_ALIAS = "e";
+    public static final String COMMAND_OPTION_ADD_TAG = "add-tag";
+    public static final String COMMAND_OPTION_DELETE_TAG = "delete-tag";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the person identified "
             + "by the index number used in the last person listing. "
@@ -93,23 +96,7 @@ public class EditCommand extends UndoableCommand {
         }
 
         personToEdit = lastShownList.get(index.getZeroBased());
-        editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
-    }
-
-    /**
-     * Creates and returns a {@code Person} with the details of {@code personToEdit}
-     * edited with {@code editPersonDescriptor}.
-     */
-    private static Person createEditedPerson(Person personToEdit, EditPersonDescriptor editPersonDescriptor) {
-        assert personToEdit != null;
-
-        Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
-        Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
-        Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
-        Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
-        Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
-
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags);
+        editedPerson = editPersonDescriptor.createEditedPerson(personToEdit);
     }
 
     @Override
@@ -141,6 +128,8 @@ public class EditCommand extends UndoableCommand {
         private Email email;
         private Address address;
         private Set<Tag> tags;
+        private Set<Tag> newTags;
+        private Set<Tag> deletedTags;
 
         public EditPersonDescriptor() {}
 
@@ -154,13 +143,16 @@ public class EditCommand extends UndoableCommand {
             setEmail(toCopy.email);
             setAddress(toCopy.address);
             setTags(toCopy.tags);
+            setNewTags(toCopy.newTags);
+            setDeletedTags(toCopy.deletedTags);
         }
 
         /**
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email, this.address, this.tags);
+            return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email, this.address,
+                    this.tags, this.newTags, this.deletedTags);
         }
 
         public void setName(Name name) {
@@ -204,12 +196,91 @@ public class EditCommand extends UndoableCommand {
         }
 
         /**
+         * Add  {@code newTags} to this object's {@code newTags}.
+         * A defensive copy of {@code newTags} is used internally.
+         */
+        public void setNewTags(Set<Tag> newTags) {
+            this.newTags = (newTags != null) ? new HashSet<>(newTags) : null;
+        }
+
+        /**
+         * Add  {@code newTags} to this object's {@code tags}.
+         * A defensive copy of {@code newTags} is used internally.
+         */
+        public void setDeletedTags(Set<Tag> deletedTags) {
+            this.deletedTags = (deletedTags != null) ? new HashSet<>(deletedTags) : null;
+        }
+
+        /**
          * Returns an unmodifiable tag set, which throws {@code UnsupportedOperationException}
          * if modification is attempted.
          * Returns {@code Optional#empty()} if {@code tags} is null.
          */
         public Optional<Set<Tag>> getTags() {
             return (tags != null) ? Optional.of(Collections.unmodifiableSet(tags)) : Optional.empty();
+        }
+
+        /**
+         * Returns an unmodifiable tag set, which throws {@code UnsupportedOperationException}
+         * if modification is attempted.
+         * Returns {@code Optional#empty()} if {@code newTags} is null.
+         */
+        public Optional<Set<Tag>> getNewTags() {
+            return (newTags != null) ? Optional.of(Collections.unmodifiableSet(newTags)) : Optional.empty();
+        }
+
+        /**
+         * Returns an unmodifiable tag set, which throws {@code UnsupportedOperationException}
+         * if modification is attempted.
+         * Returns {@code Optional#empty()} if {@code deletedTags} is null.
+         */
+        public Optional<Set<Tag>> getDeletedTags() {
+            return (deletedTags != null) ? Optional.of(Collections.unmodifiableSet(deletedTags)) : Optional.empty();
+        }
+
+        /**
+         * Creates and returns a {@code Person} with the details of {@code personToEdit}
+         * edited with {@code editPersonDescriptor}.
+         */
+        public Person createEditedPerson(Person personToEdit) {
+            boolean isTagsChanged = getTags().isPresent();
+            boolean isNewTagsChanged = getNewTags().isPresent();
+            boolean isDeletedTagsChanged = getDeletedTags().isPresent();
+
+            boolean isMultipleTagsChanged = (isTagsChanged && isNewTagsChanged)
+                    || (isTagsChanged && isDeletedTagsChanged) || (isDeletedTagsChanged && isNewTagsChanged);
+            assert !isMultipleTagsChanged;
+
+            assert personToEdit != null;
+
+            Name updatedName = getName().orElse(personToEdit.getName());
+            Phone updatedPhone = getPhone().orElse(personToEdit.getPhone());
+            Email updatedEmail = getEmail().orElse(personToEdit.getEmail());
+            Remark updatedRemark = personToEdit.getRemark();
+            Address updatedAddress = getAddress().orElse(personToEdit.getAddress());
+
+            Set<Tag> updatedTags;
+            Set<Tag> personTags = new HashSet<>(personToEdit.getTags());
+            if (isTagsChanged) {
+                updatedTags = getTags().orElse(null);
+            } else if (isNewTagsChanged) {
+                if (personTags.isEmpty()) {
+                    updatedTags = getNewTags().orElse(null);
+                } else {
+                    updatedTags = personTags;
+                    updatedTags.addAll(getNewTags().orElse(null));
+                }
+            } else if (isDeletedTagsChanged) {
+                updatedTags = personTags;
+                if (personTags.isEmpty()) {
+                    updatedTags.removeAll(getDeletedTags().orElse(null));
+                }
+            } else {
+                updatedTags = personTags;
+            }
+
+
+            return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedRemark, updatedTags);
         }
 
         @Override
