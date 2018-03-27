@@ -1,5 +1,6 @@
 = Infinity Book - User Guide
 :toc:
+:toclevels: 3
 :toc-title:
 :toc-placement: preamble
 :sectnums:
@@ -13,36 +14,57 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/CS2103JAN2018-W11-B3/main
 
-By: `Team CS2103JAN2018-W11-B3`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team JACKHA (CS2103JAN2018-W11-B3)`      Since: `Jun 2016`      Licence: `MIT`
 
 == Introduction
 
-AddressBook Level 4 (AB4) is for those who *prefer to use a desktop app for managing contacts*. More importantly, AB4 is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, AB4 can get your contact management tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
+Infinity Book (IB) is for those Tech recruiters who *prefer to use a desktop app for managing candidates*.  +
+
+More importantly, IB is *optimized for those who prefer to work with a Command Line Interface* (link:#cli[CLI]) while still having the benefits of a Graphical User Interface (link:#gui[GUI]). If you can type fast, IB can get your candidates management tasks done faster than traditional GUI apps. +
+
+Interested? +
+Jump to the <<Quick Start>> to get started. Enjoy!
+
+== About
+
+This User Guide introduces a user to Infinity Book, provides set up instructions and details the features of the product.
+This document does not assume any prior knowledge, and the glossary explains any technical terms.
+
+[NOTE]
+For information about implementation and architecture, please refer to the Developer Guide.
 
 == Quick Start
+If you are a first time user, this section will help you get started with Infinity Book in 5 easy steps:
 
 .  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
 +
 [NOTE]
 Having any Java 8 version is not enough. +
-This app will not work with earlier versions of Java 8.
+This app will not work with earlier versions of Java 8. +
+Refer to <<FAQ>> for instructions to check Java version.
 +
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
+.  Download the latest `infinitybook.jar` link:{repoURL}/releases[here].
 .  Copy the file to the folder you want to use as the home folder for your Address Book.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
+.The User Interface.
 image::Ui.png[width="790"]
 +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
-.  Some example commands you can try:
+.  Set up is now complete. You should see the interface as shown in Figure 1. Try some example commands shown here:
 
 * *`list`* : lists all contacts
 * **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
 * **`delete`**`3` : deletes the 3rd contact shown in the current list
 * *`exit`* : exits the app
 
-.  Refer to <<Features>> for details of each command.
+[NOTE]
+====
+The User Interface might appear mildly different for different versions of the product.
+====
+
+.  Refer to <<Features>> for details of each command and for more commands.
 
 [[Features]]
 == Features
@@ -56,32 +78,31 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
 
-=== Viewing help : `help`
+=== Managing Candidates' Information
 
-Format: `help`
+==== Adding a person: `add`
 
-=== Adding a person: `add`
+* *Description:* Adds a person to the address book +
 
-Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+* *Format:* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
 
-[TIP]
+* *Examples:* +
+- `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
+- `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+
+[NOTE]
 A person can have any number of tags (including 0)
 
-Examples:
+==== Editing a person : `edit`
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* *Description:* Edits an existing person in the address book. +
+* *Format:* `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
 
-=== Listing all persons : `list`
-
-Shows a list of all persons in the address book. +
-Format: `list`
-
-=== Editing a person : `edit`
-
-Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+* *Examples:* +
+- `edit 1 p/91234567 e/johndoe@example.com` +
+Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
+- `edit 2 n/Betsy Crower t/` +
+Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -91,17 +112,47 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
 * You can remove all the person's tags by typing `t/` without specifying any tags after it.
 ****
 
-Examples:
+==== Deleting a person : `delete`
 
-* `edit 1 p/91234567 e/johndoe@example.com` +
-Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-* `edit 2 n/Betsy Crower t/` +
-Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+* *Description:* Deletes the specified person from the address book. +
+* *Format:* `delete INDEX`
+* *Examples:*
 
-=== Locating persons by name: `find`
+- `list` +
+`delete 2` +
+Deletes the 2nd person in the address book.
+- `find Betsy` +
+`delete 1` +
+Deletes the 1st person in the results of the `find` command.
 
-Finds persons whose names contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]`
+****
+* Deletes the person at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+==== Clearing all entries : `clear`
+
+* *Description:* Clears all entries from the address book. +
+* *Format:* `clear`
+
+=== Navigating Infinity Book
+
+==== Listing all persons : `list`
+
+* *Description:* Shows a list of all persons in the address book. +
+* *Format:* `list`
+
+
+==== Locating persons by name: `find`
+
+* *Description:* Finds persons whose names contain any of the given keywords. +
+* *Format:* `find KEYWORD [MORE_KEYWORDS]`
+* *Examples:*
+- `find John` +
+Returns `john` and `John Doe`
+- `find Betsy Tim John` +
+Returns any person having names `Betsy`, `Tim`, or `John`
 
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
@@ -111,119 +162,145 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 * Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 ****
 
-Examples:
+==== Viewing a person: `view`
 
-* `find John` +
-Returns `john` and `John Doe`
-* `find Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
+* *Description:* Displays the person whose email is the same as given email. +
+* *Format:* `view email`
+* *Examples:* `view john@gmail.com`
+- Returns the person whose email is `john@gmail.com` +
+- Displays all the person's information and resume in the browser panel.
 
-=== Viewing a person: `view`
-Views the person whose email is the same as given email. +
-Format: `view email`
 ****
 * The email needs to be correct format.
 * Only one person returned since email is unique.
 ****
 
-Examples: `view john@gmail.com`
+==== Selecting a person : `select`
 
-Return the person whose email is `john@gmail.com` +
-Display all the information about this person and display the resume on browser panel.
+* *Description:* Selects the person identified by the index number used in the last person listing. +
+* *Format:* `select INDEX`
+* *Examples:*
 
-=== Deleting a person : `delete`
-
-Deletes the specified person from the address book. +
-Format: `delete INDEX`
-
-****
-* Deletes the person at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
-****
-
-Examples:
-
-* `list` +
-`delete 2` +
-Deletes the 2nd person in the address book.
-* `find Betsy` +
-`delete 1` +
-Deletes the 1st person in the results of the `find` command.
-
-=== Selecting a person : `select`
-
-Selects the person identified by the index number used in the last person listing. +
-Format: `select INDEX`
-
+- `list` +
+`select 2` +
+Selects the 2nd person in the address book.
+- `find Betsy` +
+`select 1` +
+Selects the 1st person in the results of the `find` command.
 ****
 * Selects the person and loads the Google search page the person at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* `1, 2, 3, ...`
 ****
 
-Examples:
+=== Dashboard Reporting
 
-* `list` +
-`select 2` +
-Selects the 2nd person in the address book.
-* `find Betsy` +
-`select 1` +
-Selects the 1st person in the results of the `find` command.
+==== Understanding The Workflow
 
-=== Listing entered commands : `history`
+As a recruiter, your work mainly involves monitoring the progress of open jobs. Imagining a working day, you have to
+keep track of the number of new candidates, interviewees, and accepted offer, which is time-consuming given there is a
+significant number of candidates. Furthermore, you may want to analyze the productivity of your recruiting team in the
+last week, month, and quarter. Keeping track of historical data becomes necessary here. +
 
-Lists all the commands that you have entered in reverse chronological order. +
-Format: `history`
+Infinity Book proposes a workflow that helps you efficiently achieve these requirements: +
 
-[NOTE]
-====
-Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
-====
+1. Summarize each candidate by a few keywords using `Tagging` feature. Example: `new`, `interviewing`, `offering`,
+`accepted`, ... +
+
+2. Define a pie-chart report tailored to your specific goals. A report is defined by one `population` tag and at most
+three `group` tags. Example:
+
+image::graph.png[width="500"]
+
+You are recruiting interns, and you can use this report to keep track of the number of candidates in each stage. This
+report is defined by  tag `SoftwareEngineerInterns` as `population` tag,  and `screening`, `interviewing`, `accepted`
+as `group` tags. +
+
+3.Save the current state of report persistently so that you can retrieve it in the future.
+
+==== Managing tag of a person: refer to `edit` command
+
+==== Adding a new report : `report -new`
+
+* *Description:* Need to keep track certain information? Add new report using `report -new` command. +
+* *Format:*  `report -new POPULATION [GROUP 1] [GROUP 2] [GROUP 3]` +
+This will create a new Report with name presented in the format: `POPULATION_[GROUP 1]_[GROUP 2]_[GROUP 3]` +
+* *Examples:* `report -new SoftwareEngineerInterns screening interviewing accepted` +
+This should create a new report named `SoftwareEngineerInterns_screening_interviewing_accepted`.
+
+==== Removing a report : `report -remove`
+* *Description:* To remove a report, use `report -remove` command
+* *Format:*  `report -remove REPORT_NAME`
+
+==== Saving the current state of report `report -freeze`
+* *Description:* To save the current state of a report persistently, use `report -freeze` command.
+* *Format:*  `report -freeze POPULATION [GROUP 1] [GROUP 2] [GROUP 3]`
+* *Examples:* `report -freeze SoftwareEngineerInterns_screening_interviewing_accepted` +
+This will add an entry to report `SoftwareEngineerInterns_screening_interviewing_accepted` including list of emails and
+number of candidates in each group.
+
+==== List all available reports [coming in v2.0]
+
+=== Job Posting
+* *Description:* Add job requirements to find out qualified candidates.
+* *Format:* `addjob [SKILLS]`
+
+=== Miscellaneous
+
+==== Viewing help : `help`
+* *Description:* Opens the User Guide in a new window +
+* *Format:* `help`p
+
+==== Listing entered commands : `history`
+
+* *Description:* Lists all the commands that you have entered in reverse chronological order. +
+* *Format:* `history`
+
+****
+* Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
+****
 
 // tag::undoredo[]
-=== Undoing previous command : `undo`
+==== Undoing previous command : `undo`
 
-Restores the address book to the state before the previous _undoable_ command was executed. +
-Format: `undo`
+* *Description:* Restores the address book to the state before the previous _undoable_ command was executed. +
+* *Format:* `undo`
+* *Examples:*
+
+- `delete 1` +
+`list` +
+`undo` (reverses the `delete 1` command) +
+
+- `select 1` +
+`list` +
+`undo` +
+The `undo` command fails as there are no undoable commands executed previously.
+
+- `delete 1` +
+`clear` +
+`undo` (reverses the `clear` command) +
+`undo` (reverses the `delete 1` command) +
 
 [NOTE]
 ====
 Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
 ====
+==== Redoing the previously undone command : `redo`
 
-Examples:
+* *Description:* Reverses the most recent `undo` command. +
+* *Format:* `redo`
 
-* `delete 1` +
-`list` +
-`undo` (reverses the `delete 1` command) +
+* *Examples:*
 
-* `select 1` +
-`list` +
-`undo` +
-The `undo` command fails as there are no undoable commands executed previously.
-
-* `delete 1` +
-`clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
-
-=== Redoing the previously undone command : `redo`
-
-Reverses the most recent `undo` command. +
-Format: `redo`
-
-Examples:
-
-* `delete 1` +
+- `delete 1` +
 `undo` (reverses the `delete 1` command) +
 `redo` (reapplies the `delete 1` command) +
 
-* `delete 1` +
+- `delete 1` +
 `redo` +
 The `redo` command fails as there are no `undo` commands executed previously.
 
-* `delete 1` +
+- `delete 1` +
 `clear` +
 `undo` (reverses the `clear` command) +
 `undo` (reverses the `delete 1` command) +
@@ -231,65 +308,74 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
-=== Clearing all entries : `clear`
+==== Exiting the program : `exit`
 
-Clears all entries from the address book. +
-Format: `clear`
+* *Description:* Exits the program. +
+* *Format:* `exit`
 
-=== Exiting the program : `exit`
-
-Exits the program. +
-Format: `exit`
-
-=== Saving the data
+==== Saving the data
 
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
-
-=== Data visualization
-Make data-driven decisions with recruiting analytics
-
-image::graph.png[width="500"]
-
-Format: `draw [t/TAG]...`
-
-=== Job Posting
-Add job requirements to find out qualified candidates.
-
-Format: `addjob [SKILLS]`
-
-=== Resume Auto Scanning
-Easily filter candidates whose resume having desirable keywords. +
-
-Format: `scanresume [KEYWORD]`
-
-=== LinkedIn Integration
-Reduced clicks, and continuously updated information of candidates.
-
-View LinkedIn profile of the person identified by the index number used in the last person listing. +
-Format: `viewlinkedin [INDEX]`
-
-=== Encrypting data files `[coming in v2.0]`
-// end::dataencryption[]
 
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
 *A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
 
+*Q*: How do I check if Infinity Book is compatible with my computer? +
+*A*: Infinity Book is compatible with Windows, Mac OS and Ubuntu with Java `1.8.0_60` or later installed. Compatibility with other link:#unix[UNIX] distributions is not guaranteed. +
+
+****
+To check your Java Version:
+
+* MAC OS/ OS-X Users: +
+1. Open Spotlight using Command + Space
+2. Search for `Terminal` and open the application
+3. In the terminal, copy paste the following command without enclosing double quotes to find your Java version:
+ `"/Library/Internet\ Plug-Ins/JavaAppletPlugin.plugin/Contents/Home/bin/java -version"`
+* Windows users: +
+1. Open Run using Windows Key + R
+2. Type `cmd` and press enter to open Command Prompt
+3. In Command Prompt, enter the following command without enclosing double quotes to find your Java version:
+`"java -showversion"`
+* Ubuntu users: +
+1. Open Terminal using Ctrl + Alt + T
+2. In the terminal copy paste the following command without enclosing double quotes to find your Java vesion:
+`"java -v"`
+****
+
 == Command Summary
+
+The following table summarises Infinity Book commands with suitable examples:
+
 [width="100%",cols="10%,<45%,<45%",options="header",]
 |=====================================================================================================
 |Command |Command Format |Example
 |Add |`add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` | `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-|Clear |`clear`|
+|Clear |`clear`| `clear`
 |Delete |`delete INDEX` |`delete 3`
 |Edit |`edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` |`edit 2 n/James Lee e/jameslee@example.com`
 |Find |`find KEYWORD [MORE_KEYWORDS]` |`find James Jake`
-|List | `list`|
-|Help |`help` |
+|Help |`help` |`help`
+|History |`history` | `history`
+|List | `list`|`list`
+|Redo |`redo`|`redo`
 |Select |`select INDEX` |`select 2`
-|History |`history` |
-|Undo |`undo` |
-|Redo |`redo`|
+|Undo |`undo` |`undo`
 |=====================================================================================================
+
+[appendix]
+
+== Glossary +
+* The following are some terms referenced in the User Guide: +
+** [#unix]*UNIX*: Unix  is a family of multitasking, multiuser computer operating systems. Common UNIX operating systems include Linux, Fedora and MAC OS.
+** [#cli]*Command Line Interface*: A user interface in which the user executes and responds to an application through a specified text input where commands are typed.
+** [#gui]*Graphical User Interface*: A user interface in which the user interacts with the application through visual representations through menus, text, images, etc.
+
+
+
+
+
+
+
