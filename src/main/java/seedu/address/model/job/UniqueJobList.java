@@ -21,6 +21,7 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
  * @see Job#equals(Object)
  */
 public class UniqueJobList implements Iterable<Job> {
+
     private final ObservableList<Job> internalList = FXCollections.observableArrayList();
 
     /***
@@ -39,7 +40,6 @@ public class UniqueJobList implements Iterable<Job> {
     public void add(Job toAdd) throws DuplicateJobException {
         requireNonNull(toAdd);
         if (contains(toAdd)) {
-            // TODO: Replace with new exception
             throw new DuplicateJobException();
         }
         internalList.add(toAdd);

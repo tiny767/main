@@ -1,12 +1,10 @@
-package seedu.address.model.job;
+package seedu.address.model.person;
 
 /***
  * TODO: write javadoc for this
  */
 public class Skill {
     // TODO: Write the messages and regex here.
-
-    public static final String MESSAGE_SKILL_CONSTRAINTS = "Job skills can take any values, and it should not be blank";
 
     private final String skills;
 

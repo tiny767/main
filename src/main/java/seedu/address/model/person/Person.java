@@ -19,6 +19,8 @@ public class Person {
     private final Phone phone;
     private final Email email;
     private final Address address;
+    private final Skill skills;
+
     private final Remark remark;
 
     private final UniqueTagList tags;
@@ -33,6 +35,7 @@ public class Person {
         this.email = email;
         this.address = address;
         this.remark = remark;
+        this.skills = new Skill("");
         // protect internal tags from changes in the arg list
         this.tags = new UniqueTagList(tags);
     }
@@ -51,6 +54,10 @@ public class Person {
 
     public Address getAddress() {
         return address;
+    }
+
+    public Skill getSkills() {
+        return skills;
     }
 
     public Remark getRemark() {
@@ -75,17 +82,19 @@ public class Person {
             return false;
         }
 
+        //TODO: Update this with comparison with getskills as well.
         Person otherPerson = (Person) other;
         return otherPerson.getName().equals(this.getName())
                 && otherPerson.getPhone().equals(this.getPhone())
                 && otherPerson.getEmail().equals(this.getEmail())
                 && otherPerson.getAddress().equals(this.getAddress());
+        //&& otherPerson.getSkills().equals(this.getSkills());
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags);
+        return Objects.hash(name, phone, email, address, skills, tags);
     }
 
     @Override
@@ -98,6 +107,8 @@ public class Person {
                 .append(getEmail())
                 .append(" Address: ")
                 .append(getAddress())
+                .append(" Skills: ")
+                .append(getSkills())
                 .append(" Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();

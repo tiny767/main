@@ -41,6 +41,7 @@ public class MainWindow extends UiPart<Stage> {
     private BrowserPanel browserPanel;
     private ReportPanel reportPanel;
     private PersonListPanel personListPanel;
+    private JobListPanel jobListPanel;
     private Config config;
     private UserPrefs prefs;
     private Boolean isReportPanelOpen;
@@ -59,6 +60,9 @@ public class MainWindow extends UiPart<Stage> {
 
     @FXML
     private StackPane personListPanelPlaceholder;
+
+    @FXML
+    private StackPane jobListPanelPlaceholder;
 
     @FXML
     private StackPane resultDisplayPlaceholder;
@@ -135,6 +139,9 @@ public class MainWindow extends UiPart<Stage> {
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+
+        jobListPanel = new JobListPanel(logic.getFilteredJobList());
+        jobListPanelPlaceholder.getChildren().add(jobListPanel.getRoot());
 
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
