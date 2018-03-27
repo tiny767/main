@@ -72,10 +72,10 @@ public class Person {
 
     public Skill getSkills() {
         return skills;
-
+    }
+    
     public Remark getRemark() {
         return remark;
-
     }
 
     /**
