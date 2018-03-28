@@ -9,6 +9,8 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
+
+import seedu.address.logic.CommandCorrection;
 import seedu.address.logic.ListElementPointer;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.CommandResult;
@@ -55,6 +57,10 @@ public class CommandBox extends UiPart<Region> {
             keyEvent.consume();
             navigateToNextInput();
             break;
+        case SPACE:
+            keyEvent.consume();
+            navigateToLikelyCommand();
+            break;
         default:
             // let JavaFx handle the keypress
         }
@@ -84,6 +90,21 @@ public class CommandBox extends UiPart<Region> {
         }
 
         replaceText(historySnapshot.next());
+    }
+
+    /**
+     * TODO: Write Javadoc comment.
+     *
+     */
+    private void navigateToLikelyCommand() {
+        // TODO: Check if the command is actually wrong
+        CommandCorrection.createDictionary();
+        if (CommandCorrection.isCorrectCommand(commandTextField.getText())) {
+            return;
+        }
+
+        String textToCorrect = commandTextField.getText();
+        replaceText(CommandCorrection.nearestCorrection(textToCorrect));
     }
 
     /**
