@@ -426,10 +426,9 @@ Certain properties of the application can be controlled (e.g App name, logging l
 
 ==== Current Implementation
 
-The colors for tags are fixed for each tag with the same name upon start up of the application.
-Make sure of hash code to ensure that the color is consistent each time the app is launched.
-(e.g. red,blue,green) and selecting from the array of colors. +
-Use an array of pre-defined colors. +
+Use different colors for different tags inside person cards. For example, `friends` tags can be all in red and `colleagues` tags can be all in blue
+Pre-defined colors are included in `DarkTheme.css` and `LightTheme.css`
+We use hash code of the tag names to generate a color. This is deliberately designed to ensure consistent colors each time the application runs.
 
 ==== Design considerations
 
@@ -1058,8 +1057,6 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |User |Hide <<private-contact-detail,private>> contact details by default |Minimize chance of someone else seeing them by accident
 
-|`* *` |User with multiple address books |Export my contacts |Import into another address book application
-
 |`* *` |User who views contacts |List frequently viewed candidates |To select the most probable candidates
 
 |`* *` |User with interest in recruitment |View candidates' LinkedIn profiles from commandline |To know about their work profiles
@@ -1071,8 +1068,6 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`* *` |User who is recruiting |Search by graduation year |To find suitable full/part time candidates
 
 |`* *` |User interested in checking projects |Access contacts' Github repositories |easily view and evaluate projects
-
-|`* *` |User who uses many applications |Export search result to CSV/JSON |import them into other applications
 
 |`* *` |With many contacts |Set profile pictures for contacts |identify and remember them
 
@@ -1100,7 +1095,7 @@ link:#top[Back to top]
 [appendix]
 == Use Cases
 
-(For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+(For all use cases below, the *System* is the `InfinityBook` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
 === Use case: Delete person
@@ -1108,9 +1103,9 @@ link:#top[Back to top]
 *MSS*
 
 1.  User requests to list persons
-2.  AddressBook shows a list of persons
+2.  InfinityBook shows a list of persons
 3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+4.  InfinityBook deletes the person
 +
 Use case ends.
 
@@ -1124,7 +1119,7 @@ Use case ends.
 * 3a. The given index is invalid.
 +
 [none]
-** 3a1. AddressBook shows an error message.
+** 3a1. InfinityBook shows an error message.
 +
 Use case resumes at step 2.
 
