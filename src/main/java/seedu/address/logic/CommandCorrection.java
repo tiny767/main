@@ -1,7 +1,9 @@
 package seedu.address.logic;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 import seedu.address.logic.commands.AddCommand;
@@ -29,11 +31,25 @@ import seedu.address.logic.commands.ViewCommand;
 public class CommandCorrection {
     private static Set<String> commandDictionary;
     private static String commandParameters;
+    private static int tabCounter = 0;
+    private static String commandWord;
+    private static ArrayList<String> latestSuggestionsList;
     private static final int NUMBER_ALPHABET = 26;
     private static final int START_INDEX = 0;
 
     public CommandCorrection() {
         createDictionary();
+        latestSuggestionsList = new ArrayList<String>();
+    }
+
+    public static int getTabCounter() {
+        return tabCounter;
+    }
+
+    public static void setUpCommandCorrection() {
+        createDictionary();
+        latestSuggestionsList = new ArrayList<String>();
+        commandWord = " ";
     }
 
     /***
@@ -173,28 +189,43 @@ public class CommandCorrection {
     }
 
     /***
+     * TODO: Write a javadoc comment
+     */
+    public static void updateSuggestionsList(String commandText) {
+        if (commandText.compareTo(commandWord) == 0) {
+            tabCounter++;
+        } else {
+            latestSuggestionsList.clear();
+            tabCounter = 0;
+        }
+    }
+
+    /***
      * Function attempts to complete command that is consistent with the text already typed.
      * @param commandText
      * @return
      */
-    public static String completeCommand(String commandText) {
+    public static List<String> completeCommand(String commandText) {
+        updateSuggestionsList(commandText);
 
         if (isCorrectCommand(commandText)) {
-            return commandText.concat(" ");
+            latestSuggestionsList.add(commandText.concat(" "));
+            return latestSuggestionsList;
         }
 
         int commandTextLength = commandText.length();
         Iterator<String> iterator = commandDictionary.iterator();
+
         while (iterator.hasNext()) {
             String nextCommand = iterator.next();
             int nextCommandLength = nextCommand.length();
             if (nextCommandLength > commandTextLength) {
                 String nextCommandSnippet = nextCommand.substring(START_INDEX, commandTextLength);
                 if (nextCommandSnippet.compareTo(commandText) == 0) {
-                    return nextCommand.concat(" ");
+                    latestSuggestionsList.add(nextCommand.concat(" "));
                 }
             }
         }
-        return commandText;
+        return latestSuggestionsList;
     }
 }

@@ -1,5 +1,6 @@
 package seedu.address.ui;
 
+import java.util.ArrayList;
 import java.util.logging.Logger;
 
 import javafx.collections.ObservableList;
@@ -101,7 +102,7 @@ public class CommandBox extends UiPart<Region> {
      */
     private void navigateToLikelyCommand() {
         // TODO: Check if the command is actually wrong
-        CommandCorrection.createDictionary();
+        CommandCorrection.setUpCommandCorrection();
         if (CommandCorrection.isCorrectCommand(commandTextField.getText())) {
             return;
         }
@@ -116,10 +117,13 @@ public class CommandBox extends UiPart<Region> {
      */
     private void navigateToCompletedCommand() {
         // TODO: Check if the command is actually wrong
-        CommandCorrection.createDictionary();
+        CommandCorrection.setUpCommandCorrection();
 
         String textToComplete = commandTextField.getText();
-        replaceText(CommandCorrection.completeCommand(textToComplete));
+        int suggestionToChoose = CommandCorrection.getTabCounter();
+        ArrayList<String> suggestions = new ArrayList<String>(CommandCorrection.completeCommand(textToComplete));
+        suggestionToChoose = suggestionToChoose % suggestions.size();
+        replaceText(suggestions.get(suggestionToChoose));
     }
 
     /**
