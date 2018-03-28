@@ -14,10 +14,36 @@ endif::[]
 :repoURL: https://github.com/CS2103JAN2018-W11-B3/main
 
 By: `Team JACKHA (W11-B3)`      Since: `Mar 2018`      Licence: `MIT`
+[[top]]
+
+== Introduction
+Infinity Book (IB) is an address book application for Tech recruiters who *prefer to use a desktop app for managing candidates*.  +
+
+IB provides end-to-end support, from searching for candidates,to adding job postings and saving their resumes and interviews. +
+
+More importantly, IB is *optimized for those who prefer to work with a Command Line Interface* (link:#cli[CLI]) while still having the benefits of a Graphical User Interface (link:#gui[GUI]). If you can type fast, IB can get your candidates management tasks done faster than traditional GUI apps. +
+
+link:#top[Back to top]
+
+== About
+
+This Developer Guide provides details on setting up this project for development, compatibility, and architecture information about IB. Design and implementation specifications are specified below, followed by product management specifics. +
+
+For information about application usage, refer to the link:https://github.com/CS2103JAN2018-W11-B3/main/blob/master/docs/UserGuide.adoc[User Guide]
+Interested? +
+Jump to the <<Setting up, Setting up>> section to get started. Enjoy!
+
+link:#top[Back to top]
 
 == Setting up
 
+This section provides step-by-step instructions to set up Infinity Book for development on your computer. +
+
+link:#top[Back to top]
+
 === Prerequisites
+
+To continue development, the following two prerequisites are recommended to be met:
 
 . *JDK `1.8.0_60`* or later
 +
@@ -34,6 +60,8 @@ Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plu
 
 
 === Setting up the project in your computer
+
+After meeting the <<Prerequisites, prerequisites>>, follow these steps to set up the project on your computer:
 
 . Fork this repo, and clone the fork to your computer
 . Open IntelliJ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first)
@@ -53,6 +81,8 @@ This will generate all resources required by the application and tests.
 . <<Testing,Run the tests>> to ensure they all pass.
 
 === Configurations to do before writing code
+
+Configuring the coding style, documentation and continuous integration (CI) is recommended to maintain uniformity across contributions.
 
 ==== Configuring the coding style
 
@@ -92,9 +122,13 @@ When you are ready to start coding,
 1. Get some sense of the overall design by reading <<Design-Architecture>>.
 2. Take a look at <<GetStartedProgramming>>.
 
-== Design
+<<top,Back to top>>
 
+== Design
 [[Design-Architecture]]
+
+The following sections describe the architecture of the system, with details about each component.
+
 === Architecture
 
 .Architecture Diagram
@@ -226,6 +260,8 @@ The `Storage` component,
 === Common classes
 
 Classes used by multiple components are in the `seedu.addressbook.commons` package.
+
+link:#top[Back to top]
 
 == Implementation
 
@@ -362,7 +398,7 @@ image::UndoRedoActivityDiagram.png[width="650"]
 // tag::dataencryption[]
 === [Proposed] Data Encryption
 
-_{Explain here how the data encryption feature will be implemented}_
+Data is to be encrypted to protect the Infinity Book data from unauthorized access.
 
 // end::dataencryption[]
 
@@ -386,14 +422,13 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
-=== Tag colors
+=== Tag colors [since v1.0]
 
 ==== Current Implementation
 
-The colors for tags are fixed for each tag with the same name upon start up of the application.
-Make sure of hash code to ensure that the color is consistent each time the app is launched.
-(e.g. red,blue,green) and selecting from the array of colors. +
-Use an array of pre-defined colors. +
+Use different colors for different tags inside person cards. For example, `friends` tags can be all in red and `colleagues` tags can be all in blue
+Pre-defined colors are included in `DarkTheme.css` and `LightTheme.css`
+We use hash code of the tag names to generate a color. This is deliberately designed to ensure consistent colors each time the application runs.
 
 ==== Design considerations
 
@@ -407,7 +442,7 @@ Use an array of pre-defined colors. +
 **Pros:** Number of different color is very big (i.e. there is less repetitive color used)   +
 **Cons:** The color for each tag value might be different between app launchs +
 
-=== Add/Remove one Tag for a person
+=== Add/Remove one Tag for a person [since v1.2]
 
 As Person may have a long list of tags, we need to have a convenient way to update them.+
 Command syntax: EDIT [-OPTIONS] [PARAMETERS]…​, where: +
@@ -430,9 +465,91 @@ PARAMETERS provide information for the Edit command to be executed with.
 **Pros:** Keep the Edit Command logic   +
 **Cons:** Have to rely on Model, which is not flexible.
 
-== Documentation
+=== Display relevant Github or resume page. [coming in v1.4]
+As a candidate may have linked online resume or github page. The recruiter may want
+to consider these pages.
+Aspects: Implementation of removing/adding a linked page.
 
-We use asciidoc for writing documentation.
+**Alternative 1:** (current choice): Each person has a page, which is resume or github.
+Add the view command to view a specific person, and view the linked page
+on the browser panel.
+Pros: The page can be linked to the person.
+
+**Alternative 2:** Add a new command to view specific page, which is hard code URL.
+Hard to maintain the hard code URL.
+
+link:#top[Back to top]
+
+=== Add and match job postings to candidates. [Since v1.3]
+As there might be several candidates with varying suitability for a position, the reccruiter should be able to
+filter candidates by ability, location and some other basic filters.
+
+Jobs may be added through the command `postjob j/JOB TITLE s/SKILLS t/TAGS l/LOCATION` ,
+and then might be matched with candidates using index displayed in the panel. This is implemented
+through the command `matchjob INDEX`, which displays the suitable candidates in the person panel.
+
+==== Design Considerations*
+**Aspect:** Implementation of Job-Person Matching +
+
+**Alternative 1 (current choice):** Match as many keywords in an OR search as possible +
+**Pros:** Maintains existing search predicates with minor modifications. +
+**Cons:** May not provide effective filtering. +
+
+**Alternative 2:** Indicate required and optional matches in job posting expected in v1.4 +
+**Pros:** Search can be customized to be as accurate as required. +
+**Cons:** Spelling differences may still cause diminished effectiveness.
+
+=== Theming Mechanism [since v1.3]
+
+The theme mechanism is facilitated by a singleton class `UiStyle` which will be called inside the `MainWindow` constructor where it passes its `scene` into the `UiStyle` class.
+The `scene` is necessary for changing the CSS at runtime.
+
+The class `UiStyle` requires the scene to be set at `MainWindow` class so that it can be used to edit themes.
+
+
+----
+public class UiStyle {
+    ...
+    private static Scene scene = null;
+
+    public static void setScene(Scene s) {
+        scene = s;
+        setDefaultTheme();
+    }
+
+    private static void setDefaultTheme() {
+        scene.getStylesheets().add(DARK_THEME_STYLE);
+    }
+
+    public static void setToLightTheme() {
+        scene.getStylesheets().setAll(LIGHT_THEME_STYLE);
+    }
+
+    public static void setToDarkTheme() {
+        scene.getStylesheets().setAll(DARK_THEME_STYLE);
+    }
+    ...
+}
+----
+
+Example of calling the application to change to light theme:
+
+----
+UiStyle.getInstance().setToLightTheme();
+----
+
+==== Design Considerations
+
+**Aspect:** Ways to change the application theme +
+**Alternative 1 (current choice):** Use a dedicated singleton class `UiStyle` to change the theme +
+**Pros:** Provide a dedicated class that manages all the changing of themes. `UiStyle` can contain many CSS theme file paths and thus the theme mechanism is more scalable . It is easier for `ThemeCommand` class to call `UiStyle` instance and use its methods directly. +
+**Cons:** Increases coupling +
+**Alternative 2:** Change the themes in `MainWindow` class directly +
+**Pros:** Decreases coupling +
+**Cons:** Violates the single responsibility principle since `MainWindow` class also controls the changing of theme. It is harder for `ThemeCommand` class to access the methods from `MainWindow` to change theme +
+
+== Documentation
+This project maintains documentation in the docs folder, also accessible through the readme. This documentation is written and maintained using *asciidoc*.
 
 [NOTE]
 We chose asciidoc over Markdown because asciidoc, although a bit more complex than Markdown, provides more flexibility in formatting.
@@ -460,8 +577,11 @@ Here are the steps to convert the project documentation files to PDF format.
 .Saving documentation as PDF files in Chrome
 image::chrome_save_as_pdf.png[width="300"]
 
+link:#top[Back to top]
+
 [[Testing]]
 == Testing
+The Infinity Book project maintains GUI and non-GUI tests. Instructions on writing and running tests, and details about the nature of these tests are provided in this section.
 
 === Running Tests
 
@@ -510,6 +630,8 @@ e.g. `seedu.address.logic.LogicManagerTest`
 * Reason: One of its dependencies, `UserGuide.html` in `src/main/resources/docs` is missing.
 * Solution: Execute Gradle task `processResources`.
 
+link:#top[Back to top]
+
 == Dev Ops
 
 === Build Automation
@@ -541,6 +663,8 @@ Here are the steps to create a new release.
 A project often depends on third-party libraries. For example, Address Book depends on the http://wiki.fasterxml.com/JacksonHome[Jackson library] for XML parsing. Managing these _dependencies_ can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than these alternatives. +
 a. Include those libraries in the repo (this bloats the repo size) +
 b. Require developers to download those libraries manually (this creates extra work for developers)
+
+link:#top[Back to top]
 
 [[GetStartedProgramming]]
 [appendix]
@@ -822,6 +946,8 @@ We now have everything set up... but we still can't modify the remarks. Let's fi
 
 See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-by-step solution.
 
+link:#top[Back to top]
+
 [appendix]
 == Product Scope
 
@@ -833,7 +959,7 @@ Tech recruiters who have the need for finding and acquiring skilled Computing st
 * find students whose skill set is suitable for available positions
 * Keep track of student’s past interactions with the company: internship, coding challenges, interview,...
 
-=== Feature contribution:
+=== Feature contributions
 ==== Sashankh Chengavalli Kumar (@ChengSashankh)
 ===== Major Enhancement: Adding job postings
 This allows the user to add job postings and receive suggestions about most suitable candidates based on various parameters.
@@ -851,7 +977,7 @@ Implementations needed:
 * In account of the multiple roles that each candidate might be suitable for, skills allow recruiter to choose the best match.
  This feature addresses this core need for recruiters.
 
-==== Huynh Thanh Duc Anh (@anh211)
+==== Huynh Thanh Duc Anh (@anh2111)
 ===== Major Enhancement: Data visualization
 This allows users to make data-driven decisions with the visualization of recruiting data.
 
@@ -873,18 +999,20 @@ Implementations needed:
  Hence, users should be able to search by other fields so that it's easier for them to locate a person.
 
 ==== Nguyen Thi Viet Ha (@deeheenguyen)
-===== Major Enhancement: Candidates Comparison
-This allows users to make compare the potential between candidates based on the skills.
-Can list all the high-performance candidates with specific skills.
+===== Major Enhancement: Adding Interview
+This allows the recruiters maintain a list of interview. Each Interview is linked to a
+person. The recruiters can search about the interview based on the candidates.
 
 Implementation needed:
 
-. Make a new Compare Command to compare between two candidates based on skills, education.
-. Display the github page on browser panel and the display the skills on the person card.
+. Make a interview model
+. Add a interview command
+. Make the interview searchable.
 
 ===== Minor Enhancement: View Command
-. View specific persons with emailID.
+. Given a list of candidates, the recruiters can view a specific person by emailID.
 . Display all the information in the person card.
+. If there is a linked page to the person, it will be displayed on the brower panel.
 
 ==== Nguyen Dinh Dung (@tiny767)
 ===== Major Enhancement: Make several enhancements to the UI so that it is much more user-friendly.
@@ -901,6 +1029,8 @@ Implementations needed:
 * Allow users to add remarks for people in their address books.
 * This allows tech recruiters to have a more flexible field to use for their candidates
 
+link:#top[Back to top]
+
 [appendix]
 == User Stories
 
@@ -909,64 +1039,63 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [width="59%",cols="22%,<23%,<25%,<30%",options="header",]
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
-|`* * *` |user |add a new person |
+|`* * *` |User |Add a new person |
 
-|`* * *` |user |delete a person |remove entries that I no longer need
+|`* * *` |User |Delete a person |Remove entries that I no longer need
 
-|`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
+|`* * *` |User |Find a person by name |Locate details of persons without having to go through the entire list
 
-|`* * *` |user who wants to record notes |add a note entry for a person |record more information about the person
+|`* * *` |User who wants to record notes |Add a note entry for a person |Record more information about the person
 
-|`* * *` |user interested in a contact's skills |get the technical skills of a candidate |to find suitable candidates
+|`* * *` |User interested in a contact's skills |Get the technical skills of a candidate |to find suitable candidates
 
-|`* * *` |user who saves many resumes |open candidates' resumes from commandline |to quickly view their profiles
+|`* * *` |User who saves many resumes |Open candidates' resumes from commandline |to quickly view their profiles
 
-|`* * *` |User |delete a tag from address book |to remove tags I am no longer interested in
+|`* * *` |User |Delete a tag from address book |To remove tags I am no longer interested in
 
-|`* *` |user |hide private contact details by default |minimize chance of someone else seeing them by accident
+|`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
-|`* *` |user with multiple address books |export my contacts |import into another address book application
+|`* *` |User |Hide <<private-contact-detail,private>> contact details by default |Minimize chance of someone else seeing them by accident
 
-|`* *` |user who views contacts |list frequently viewed candidates |to select the most probable candidates
+|`* *` |User who views contacts |List frequently viewed candidates |To select the most probable candidates
 
-|`* *` |User with interest in recruitment |view candidates' LinkedIn profiles from commandline |to know about their work profiles
+|`* *` |User with interest in recruitment |View candidates' LinkedIn profiles from commandline |To know about their work profiles
 
-|`* *` |User |view my search history |to keep track of my previous searches
+|`* *` |User |View my search history |To keep track of my previous searches
 
-|`* *` |user interested in specific skills |search candidates by skill |to find suitable candidates easily
+|`* *` |User interested in specific skills |Search candidates by skill |To find suitable candidates easily
 
-|`* *` |user who is recruiting |search by graduation year |to find suitable full/part time candidates
+|`* *` |User who is recruiting |Search by graduation year |To find suitable full/part time candidates
 
-|`* *` |user interested in checking projects |access contacts' Github repositories |easily view and evaluate projects
+|`* *` |User interested in checking projects |Access contacts' Github repositories |easily view and evaluate projects
 
-|`* *` |user who uses many applications |export search result to CSV/JSON |import them into other applications
+|`* *` |With many contacts |Set profile pictures for contacts |identify and remember them
 
-|`* *` |with many contacts |set profile pictures for contacts |identify and remember them |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
+|`* *` |User |read all notes about a contact |Remember my past interactions and research about the contact
 
-|`* *` |user |read all notes about a contact |remember my past interactions and research about the contact
+|`* *` |User with multiple address books |Export my contacts |Import into another address book application
 
-|`* *` |user with multiple address books |export my contacts |import into another address book application
+|`* *` |User with multiple devices |Back up my address book in the cloud |Data is accessible from other devices
 
-|`* *` |user with multiple devices |back up my address book in the cloud |data is accessible from other devices
+|`*` |User with many persons in the address book |Sort persons by name |Locate a person easily
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|`*` |User concerned about confidentiality |Set a password for the AddressBook |My address book will be secure
 
-|`*` |user concerned about confidentiality |set a password for the AddressBook |My address book will be secure
+|`*` |User with frequently changing contacts |Clear the entire address book |To start with new candidates when required
 
-|`*` |user with frequently changing contacts |clear the entire address book |to start with new candidates when required
+|`*` |User who frequently emails contacts |Open an email link to the contact directly |Quickly email candidates with copying their addresses
 
-|`*` |user who frequently emails contacts |open an email link to the contact directly |quickly email candidates with copying their addresses
-
-|`*` |user who types many commands |get autocomplete suggestion |quickly complete command
+|`*` |User who types many commands |Get autocomplete suggestion |Quickly complete command
 
 |=======================================================================
 
-_{More to be added}_
+
+link:#top[Back to top]
 
 [appendix]
 == Use Cases
 
-(For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+(For all use cases below, the *System* is the `InfinityBook` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
 === Use case: Delete person
@@ -974,9 +1103,9 @@ _{More to be added}_
 *MSS*
 
 1.  User requests to list persons
-2.  AddressBook shows a list of persons
+2.  InfinityBook shows a list of persons
 3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+4.  InfinityBook deletes the person
 +
 Use case ends.
 
@@ -990,7 +1119,7 @@ Use case ends.
 * 3a. The given index is invalid.
 +
 [none]
-** 3a1. AddressBook shows an error message.
+** 3a1. InfinityBook shows an error message.
 +
 Use case resumes at step 2.
 
@@ -1024,7 +1153,8 @@ Use case ends.
 .  Project should not require updates to remain functional.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
 
-_{More to be added}_
+
+link:#top[Back to top]
 
 [appendix]
 == Glossary
@@ -1035,22 +1165,27 @@ Windows, Linux, Unix, OS-X
 [[private-contact-detail]] Private contact detail::
 A contact detail that is not meant to be shared with others
 
+link:#top[Back to top]
+
 [appendix]
 == Product Survey
 
-*Product Name*
+*Infinity Book*
 
-Author: ...
+Author: Sashankh Chengavalli Kumar
 
 Pros:
 
-* ...
-* ...
+* Allows recruiters to collate all candidate details in one location
+* Allows for quick management of data using a Desktop Application
+* End-to-end support for recruiters from viewing candidates to inviting to interviews.
 
 Cons:
 
-* ...
-* ...
+* Synchronization across multiple devices/cloud not possible.
+* Mobile client not available to enable remote access to Infinity Book.
+
+link:#top[Back to top]
 
 [appendix]
 == Instructions for Manual Testing
@@ -1074,8 +1209,6 @@ These instructions only provide a starting point for testers to work on; testers
 .. Re-launch the app by double-clicking the jar file. +
    Expected: The most recent window size and location is retained.
 
-_{ more test cases ... }_
-
 === Deleting a person
 
 . Deleting a person while all persons are listed
@@ -1085,15 +1218,18 @@ _{ more test cases ... }_
    Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
 .. Test case: `delete 0` +
    Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
-.. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size) _{give more}_ +
+.. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size) +
    Expected: Similar to previous.
 
-_{ more test cases ... }_
+// TODO: Give more incorrect commands to try.
 
 === Saving data
 
 . Dealing with missing/corrupted data files
+.. Missing data cannot be replaced selectively.
+// TODO: read the comments originally placed here and update this section
+// .. _{explain how to simulate a missing/corrupted file and the expected behavior}_
 
-.. _{explain how to simulate a missing/corrupted file and the expected behavior}_
+link:#top[Back to top]
 
-_{ more test cases ... }_
+

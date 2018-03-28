@@ -3,6 +3,7 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 
 import java.rmi.NoSuchObjectException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -12,8 +13,12 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import javafx.collections.ObservableList;
+
 import seedu.address.model.interview.Interview;
 import seedu.address.model.interview.UniqueInterviewList;
+import seedu.address.model.job.Job;
+import seedu.address.model.job.UniqueJobList;
+import seedu.address.model.job.exceptions.DuplicateJobException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -30,6 +35,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     private final UniquePersonList persons;
     private final UniqueTagList tags;
     private final UniqueInterviewList interviews;
+    private final UniqueJobList jobs;
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -42,6 +48,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons = new UniquePersonList();
         tags = new UniqueTagList();
         interviews = new UniqueInterviewList();
+        jobs = new UniqueJobList();
     }
 
     public AddressBook() {}
@@ -64,6 +71,10 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.tags.setTags(tags);
     }
 
+    public void setJobs(List<Job> jobs) throws  DuplicateJobException {
+        this.jobs.setJobs(jobs);
+    }
+
     /**
      * Resets the existing data of this {@code AddressBook} with {@code newData}.
      */
@@ -76,8 +87,11 @@ public class AddressBook implements ReadOnlyAddressBook {
 
         try {
             setPersons(syncedPersonList);
+            setJobs(new ArrayList<Job>(newData.getJobList()));
         } catch (DuplicatePersonException e) {
             throw new AssertionError("AddressBooks should not have duplicate persons");
+        } catch (DuplicateJobException e) {
+            throw new AssertionError("AddressBooks should not have duplicate job postings");
         }
     }
 
@@ -220,24 +234,42 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void addInterview(Interview interview) {
 
     }
+    //// job methods
+
+    /**
+     * Adds a job to the address book.
+     *
+     * TODO: Write the javadoc comment
+     * TODO: Write the exception.
+     * @throws DuplicatePersonException if an equivalent person already exists.
+     */
+    public void addJob(Job j) throws DuplicateJobException {
+        // TODO: Mimic the implementation of the addperson method.
+        jobs.add(j);
+    }
+
     //// util methods
 
     @Override
     public String toString() {
         return persons.asObservableList().size() + " persons, " + tags.asObservableList().size() +  " tags";
-        // TODO: refine later
+        // TODO: update with number of job postings
     }
 
     @Override
     public ObservableList<Person> getPersonList() {
         return persons.asObservableList();
     }
-
+    @Override
+    public ObservableList<Job> getJobList() {
+        return jobs.asObservableList();
+    }
     @Override
     public ObservableList<Tag> getTagList() {
         return tags.asObservableList();
     }
 
+    // TODO: Add job comparison below
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
@@ -249,6 +281,6 @@ public class AddressBook implements ReadOnlyAddressBook {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(persons, tags);
+        return Objects.hash(persons, jobs, tags);
     }
 }

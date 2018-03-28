@@ -16,9 +16,14 @@ import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.ListJobsCommand;
+import seedu.address.logic.commands.MatchJobCommand;
+import seedu.address.logic.commands.PostJobCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemarkCommand;
+import seedu.address.logic.commands.ReportCommand;
 import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.ThemeCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.ViewCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -52,11 +57,29 @@ public class AddressBookParser {
         case RemarkCommand.COMMAND_WORD:
             return new RemarkCommandParser().parse(arguments);
 
+        case RemarkCommand.COMMAND_ALIAS:
+            return new RemarkCommandParser().parse(arguments);
+
+        case ThemeCommand.COMMAND_WORD:
+            return new ThemeCommandParser().parse(arguments);
+
+        case ThemeCommand.COMMAND_ALIAS:
+            return new ThemeCommandParser().parse(arguments);
+
         case AddCommand.COMMAND_ALIAS:
             return new AddCommandParser().parse(arguments);
 
         case AddCommand.COMMAND_WORD:
             return new AddCommandParser().parse(arguments);
+
+        case PostJobCommand.COMMAND_WORD:
+            return new PostJobCommandParser().parse(arguments);
+
+        case PostJobCommand.COMMAND_ALIAS:
+            return new PostJobCommandParser().parse(arguments);
+
+        case MatchJobCommand.COMMAND_WORD:
+            return new MatchJobCommandParser().parse(arguments);
 
         case EditCommand.COMMAND_ALIAS:
             return new EditCommandParser().parse(arguments);
@@ -91,6 +114,9 @@ public class AddressBookParser {
         case ListCommand.COMMAND_WORD:
             return new ListCommand();
 
+        case ListJobsCommand.COMMAND_WORD:
+            return new ListJobsCommand();
+
         case HistoryCommand.COMMAND_WORD:
             return new HistoryCommand();
 
@@ -105,6 +131,12 @@ public class AddressBookParser {
 
         case RedoCommand.COMMAND_WORD:
             return new RedoCommand();
+
+        case ReportCommand.COMMAND_WORD:
+            return new ReportCommand();
+
+        case ReportCommand.COMMAND_ALIAS:
+            return new ReportCommand();
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
