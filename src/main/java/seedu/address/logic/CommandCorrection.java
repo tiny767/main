@@ -32,10 +32,11 @@ public class CommandCorrection {
     private static Set<String> commandDictionary;
     private static String commandParameters;
     private static int tabCounter = 0;
-    private static String commandWord;
+    private static String commandInput;
     private static ArrayList<String> latestSuggestionsList;
     private static final int NUMBER_ALPHABET = 26;
     private static final int START_INDEX = 0;
+    private static boolean isFirstCall = true;
 
     public CommandCorrection() {
         createDictionary();
@@ -48,8 +49,14 @@ public class CommandCorrection {
 
     public static void setUpCommandCorrection() {
         createDictionary();
-        latestSuggestionsList = new ArrayList<String>();
-        commandWord = " ";
+    }
+
+    public static void setUpCommandCompletion() {
+        if (isFirstCall) {
+            commandInput = "";
+            isFirstCall = false;
+        }
+        createDictionary();
     }
 
     /***
@@ -75,6 +82,7 @@ public class CommandCorrection {
         commandDictionary.add(ThemeCommand.COMMAND_WORD);
         commandDictionary.add(UndoCommand.COMMAND_WORD);
         commandDictionary.add(ViewCommand.COMMAND_WORD);
+
     }
 
     /***
@@ -192,10 +200,11 @@ public class CommandCorrection {
      * TODO: Write a javadoc comment
      */
     public static void updateSuggestionsList(String commandText) {
-        if (commandText.compareTo(commandWord) == 0) {
+        if (commandText.compareTo(commandInput) == 0) {
+            latestSuggestionsList.clear();
             tabCounter++;
         } else {
-            latestSuggestionsList.clear();
+            latestSuggestionsList = new ArrayList<String>();
             tabCounter = 0;
         }
     }
@@ -206,7 +215,8 @@ public class CommandCorrection {
      * @return
      */
     public static List<String> completeCommand(String commandText) {
-        updateSuggestionsList(commandText);
+        //updateSuggestionsList(commandText);
+        commandInput = commandText;
 
         if (isCorrectCommand(commandText)) {
             latestSuggestionsList.add(commandText.concat(" "));

@@ -29,6 +29,8 @@ public class CommandBox extends UiPart<Region> {
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
     private final Logic logic;
     private ListElementPointer historySnapshot;
+    private String recentSuggestion;
+    private String recentInput;
 
     @FXML
     private TextField commandTextField;
@@ -39,6 +41,8 @@ public class CommandBox extends UiPart<Region> {
         // calls #setStyleToDefault() whenever there is a change to the text of the command box.
         commandTextField.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
         historySnapshot = logic.getHistorySnapshot();
+        recentSuggestion = "";
+        recentInput = "";
     }
 
     /**
@@ -117,13 +121,26 @@ public class CommandBox extends UiPart<Region> {
      */
     private void navigateToCompletedCommand() {
         // TODO: Check if the command is actually wrong
-        CommandCorrection.setUpCommandCorrection();
+        CommandCorrection.setUpCommandCompletion();
 
-        String textToComplete = commandTextField.getText();
+        String textToComplete = commandTextField.getText().trim();
+        if (textToComplete.compareTo(recentSuggestion.trim()) == 0) {
+            textToComplete = recentInput;
+            CommandCorrection.updateSuggestionsList(textToComplete);
+        } else {
+            CommandCorrection.updateSuggestionsList(commandTextField.getText().trim());
+        }
+
+        if (recentInput.compareTo("") == 0) {
+            recentInput = commandTextField.getText().trim();
+        }
         int suggestionToChoose = CommandCorrection.getTabCounter();
         ArrayList<String> suggestions = new ArrayList<String>(CommandCorrection.completeCommand(textToComplete));
-        suggestionToChoose = suggestionToChoose % suggestions.size();
-        replaceText(suggestions.get(suggestionToChoose));
+        if (suggestions.size() != 0) {
+            suggestionToChoose = suggestionToChoose % suggestions.size();
+        }
+        recentSuggestion = suggestions.get(suggestionToChoose);
+        replaceText(recentSuggestion);
     }
 
     /**
