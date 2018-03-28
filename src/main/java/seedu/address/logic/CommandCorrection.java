@@ -1,6 +1,7 @@
 package seedu.address.logic;
 
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 import seedu.address.logic.commands.AddCommand;
@@ -168,7 +169,32 @@ public class CommandCorrection {
                 return modifiedCommand;
             }
         }
-
         return null;
+    }
+
+    /***
+     * Function attempts to complete command that is consistent with the text already typed.
+     * @param commandText
+     * @return
+     */
+    public static String completeCommand(String commandText) {
+
+        if (isCorrectCommand(commandText)) {
+            return commandText.concat(" ");
+        }
+
+        int commandTextLength = commandText.length();
+        Iterator<String> iterator = commandDictionary.iterator();
+        while (iterator.hasNext()) {
+            String nextCommand = iterator.next();
+            int nextCommandLength = nextCommand.length();
+            if (nextCommandLength > commandTextLength) {
+                String nextCommandSnippet = nextCommand.substring(START_INDEX, commandTextLength);
+                if (nextCommandSnippet.compareTo(commandText) == 0) {
+                    return nextCommand.concat(" ");
+                }
+            }
+        }
+        return commandText;
     }
 }

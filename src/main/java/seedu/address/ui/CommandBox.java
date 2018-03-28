@@ -50,7 +50,6 @@ public class CommandBox extends UiPart<Region> {
             // As up and down buttons will alter the position of the caret,
             // consuming it causes the caret's position to remain unchanged
             keyEvent.consume();
-
             navigateToPreviousInput();
             break;
         case DOWN:
@@ -60,6 +59,10 @@ public class CommandBox extends UiPart<Region> {
         case SPACE:
             keyEvent.consume();
             navigateToLikelyCommand();
+            break;
+        case TAB:
+            keyEvent.consume();
+            navigateToCompletedCommand();
             break;
         default:
             // let JavaFx handle the keypress
@@ -105,6 +108,18 @@ public class CommandBox extends UiPart<Region> {
 
         String textToCorrect = commandTextField.getText();
         replaceText(CommandCorrection.nearestCorrection(textToCorrect));
+    }
+
+    /**
+     * TODO: Write Javadoc comment.
+     *
+     */
+    private void navigateToCompletedCommand() {
+        // TODO: Check if the command is actually wrong
+        CommandCorrection.createDictionary();
+
+        String textToComplete = commandTextField.getText();
+        replaceText(CommandCorrection.completeCommand(textToComplete));
     }
 
     /**
