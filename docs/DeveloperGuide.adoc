@@ -422,7 +422,7 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
-=== Tag colors [since v1.2]
+=== Tag colors [since v1.0]
 
 ==== Current Implementation
 
@@ -499,6 +499,55 @@ through the command `matchjob INDEX`, which displays the suitable candidates in 
 **Alternative 2:** Indicate required and optional matches in job posting expected in v1.4 +
 **Pros:** Search can be customized to be as accurate as required. +
 **Cons:** Spelling differences may still cause diminished effectiveness.
+
+=== Theming Mechanism [since v1.3]
+
+The theme mechanism is facilitated by a singleton class `UiStyle` which will be called inside the `MainWindow` constructor where it passes its `scene` into the `UiStyle` class.
+The `scene` is necessary for changing the CSS at runtime.
+
+The class `UiStyle` requires the scene to be set at `MainWindow` class so that it can be used to edit themes.
+
+
+----
+public class UiStyle {
+    ...
+    private static Scene scene = null;
+
+    public static void setScene(Scene s) {
+        scene = s;
+        setDefaultTheme();
+    }
+
+    private static void setDefaultTheme() {
+        scene.getStylesheets().add(DARK_THEME_STYLE);
+    }
+
+    public static void setToLightTheme() {
+        scene.getStylesheets().setAll(LIGHT_THEME_STYLE);
+    }
+
+    public static void setToDarkTheme() {
+        scene.getStylesheets().setAll(DARK_THEME_STYLE);
+    }
+    ...
+}
+----
+
+Example of calling the application to change to light theme:
+
+----
+UiStyle.getInstance().setToLightTheme();
+----
+
+==== Design Considerations
+
+**Aspect:** Ways to change the application theme +
+**Alternative 1 (current choice):** Use a dedicated singleton class `UiStyle` to change the theme +
+**Pros:** Provide a dedicated class that manages all the changing of themes. `UiStyle` can contain many CSS theme file paths and thus the theme mechanism is more scalable . It is easier for `ThemeCommand` class to call `UiStyle` instance and use its methods directly. +
+**Cons:** Increases coupling +
+**Alternative 2:** Change the themes in `MainWindow` class directly +
+**Pros:** Decreases coupling +
+**Cons:** Violates the single responsibility principle since `MainWindow` class also controls the changing of theme. It is harder for `ThemeCommand` class to access the methods from `MainWindow` to change theme +
 
 == Documentation
 This project maintains documentation in the docs folder, also accessible through the readme. This documentation is written and maintained using *asciidoc*.
