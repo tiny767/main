@@ -112,6 +112,24 @@ Edits the name of the 2nd person to be `Betsy Crower` and clears all existing ta
 * You can remove all the person's tags by typing `t/` without specifying any tags after it.
 ****
 
+==== Add a remark : `remark` [Since v1.1]
+//tag::remark[]
+Adds or edits remarks to the person identified by the INDEX
+
+  Format: remark INDEX r/[REMARK]
+
+  Alias: rm INDEX r/[REMARK]
+
+//end::remark[]
+
+[big green]#Examples#:
+
+* `remark 1 r/Likes to go swimming` +
+Edits the remark for the first person to Likes to drink coffee.
+
+* `remark 2 r/` +
+Removes the remark for the second person.
+
 ==== Deleting a person : `delete`
 
 * *Description:* Deletes the specified person from the address book. +
@@ -272,7 +290,29 @@ Figure 3: MatchJob command filters the Candidates as per Job, as shown above.
 Index to be used as displayed in the panel
 ====
 
+=== Social Media (FB, Linkedin) Integration [Coming in v2.0]
+
 === Miscellaneous
+
+==== Change theme : `theme` [Since v1.3]
+To change the theme of InfinityBook, use the `theme` command. +
+
+  Format: theme [THEME_NAME]
+
+  Alias: t [THEME_NAME]
+
+[big green]#Examples#:
+
+* `theme` light
+* `t` dark
+
+Current available themes:
+
+* light
+
+* dark
+
+You should see the user interface change according the specified theme.
 
 ==== Viewing help : `help`
 * *Description:* Opens the User Guide in a new window +
