@@ -28,6 +28,8 @@ import seedu.address.logic.commands.ViewCommand;
  * TODO: Add Javadoc comment here.
  */
 public class CommandCorrection {
+    public static final String FEEDBACK_TO_USER = "Auto-corrected to: %1$s";
+
     private static Set<String> commandDictionary;
     private static String commandParameters;
     private static int tabCounter = 0;
@@ -36,6 +38,8 @@ public class CommandCorrection {
     private static final int NUMBER_ALPHABET = 26;
     private static final int START_INDEX = 0;
     private static boolean isFirstCall = true;
+
+
 
     public CommandCorrection() {
         createDictionary();

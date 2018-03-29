@@ -9,6 +9,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.CommandCorrectedEvent;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
 
 import seedu.address.logic.CommandCorrection;
@@ -160,10 +161,11 @@ public class CommandBox extends UiPart<Region> {
         return (textToComplete.equals(""));
     }
 
-    /**
+    /***
      * TODO: Write Javadoc comment.
      *
      */
+
     private void navigateToCompletedCommand() {
         // TODO: Check if the command is actually wrong
         CommandCorrection.setUpCommandCompletion();
@@ -182,6 +184,7 @@ public class CommandBox extends UiPart<Region> {
         ArrayList<String> suggestions = CommandCorrection.getSuggestions(textToComplete);
         String chosenString = chooseSuggestion(suggestions, suggestionToChoose, commandTextField.getText());
 
+        raise(new CommandCorrectedEvent(String.format(CommandCorrection.FEEDBACK_TO_USER, chosenString)));
         replaceText(chosenString);
     }
 
