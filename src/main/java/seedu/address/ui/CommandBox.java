@@ -127,20 +127,25 @@ public class CommandBox extends UiPart<Region> {
         if (textToComplete.compareTo(recentSuggestion.trim()) == 0) {
             textToComplete = recentInput;
             CommandCorrection.updateSuggestionsList(textToComplete);
+            CommandCorrection.incrementTabCounter();
         } else {
             CommandCorrection.updateSuggestionsList(commandTextField.getText().trim());
+            CommandCorrection.resetTabCounter();
         }
 
+        int suggestionToChoose = CommandCorrection.getTabCounter();
+        /*
         if (recentInput.compareTo("") == 0) {
             recentInput = commandTextField.getText().trim();
         }
-        int suggestionToChoose = CommandCorrection.getTabCounter();
+        */
+        recentInput = textToComplete;
         ArrayList<String> suggestions = new ArrayList<String>(CommandCorrection.completeCommand(textToComplete));
         if (suggestions.size() != 0) {
             suggestionToChoose = suggestionToChoose % suggestions.size();
+            recentSuggestion = suggestions.get(suggestionToChoose);
+            replaceText(recentSuggestion);
         }
-        recentSuggestion = suggestions.get(suggestionToChoose);
-        replaceText(recentSuggestion);
     }
 
     /**

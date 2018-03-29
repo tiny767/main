@@ -64,6 +64,10 @@ public class CommandCorrection {
      */
     public static void createDictionary() {
         commandDictionary = new HashSet<>();
+        commandDictionary.add("comm1");
+        commandDictionary.add("comm1111");
+        commandDictionary.add("comm111");
+        commandDictionary.add("comm11");
         commandDictionary.add(AddCommand.COMMAND_WORD);
         commandDictionary.add(ClearCommand.COMMAND_WORD);
         commandDictionary.add(DeleteCommand.COMMAND_WORD);
@@ -196,35 +200,24 @@ public class CommandCorrection {
         return null;
     }
 
+    public static void resetTabCounter() {
+        tabCounter = 0;
+    }
+
+    public static void incrementTabCounter() {
+        tabCounter++;
+    }
+
     /***
      * TODO: Write a javadoc comment
      */
     public static void updateSuggestionsList(String commandText) {
-        if (commandText.compareTo(commandInput) == 0) {
-            latestSuggestionsList.clear();
-            tabCounter++;
-        } else {
-            latestSuggestionsList = new ArrayList<String>();
-            tabCounter = 0;
+        if (commandText.equals(commandInput)) {
+            return;
         }
-    }
-
-    /***
-     * Function attempts to complete command that is consistent with the text already typed.
-     * @param commandText
-     * @return
-     */
-    public static List<String> completeCommand(String commandText) {
-        //updateSuggestionsList(commandText);
-        commandInput = commandText;
-
-        if (isCorrectCommand(commandText)) {
-            latestSuggestionsList.add(commandText.concat(" "));
-            return latestSuggestionsList;
-        }
-
-        int commandTextLength = commandText.length();
+        latestSuggestionsList = new ArrayList<String>();
         Iterator<String> iterator = commandDictionary.iterator();
+        int commandTextLength = commandText.length();
 
         while (iterator.hasNext()) {
             String nextCommand = iterator.next();
@@ -236,6 +229,24 @@ public class CommandCorrection {
                 }
             }
         }
+
+        latestSuggestionsList.sort((string1, string2) -> string1.compareToIgnoreCase(string2));
+    }
+
+    /***
+     * Function attempts to complete command that is consistent with the text already typed.
+     * @param commandText
+     * @return
+     */
+    public static List<String> completeCommand(String commandText) {
+        updateSuggestionsList(commandText);
+        commandInput = commandText;
+
+        if (isCorrectCommand(commandText)) {
+            latestSuggestionsList.add(commandText.concat(" "));
+            return latestSuggestionsList;
+        }
+
         return latestSuggestionsList;
     }
 }
