@@ -9,6 +9,7 @@ import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
+import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
@@ -67,10 +68,6 @@ public class CommandCorrection {
      */
     public static void createDictionary() {
         commandDictionary = new HashSet<>();
-        commandDictionary.add("comm1");
-        commandDictionary.add("comm1111");
-        commandDictionary.add("comm111");
-        commandDictionary.add("comm11");
         commandDictionary.add(AddCommand.COMMAND_WORD);
         commandDictionary.add(ClearCommand.COMMAND_WORD);
         commandDictionary.add(DeleteCommand.COMMAND_WORD);
@@ -89,7 +86,7 @@ public class CommandCorrection {
         commandDictionary.add(ThemeCommand.COMMAND_WORD);
         commandDictionary.add(UndoCommand.COMMAND_WORD);
         commandDictionary.add(ViewCommand.COMMAND_WORD);
-
+        commandDictionary.add(ExitCommand.COMMAND_WORD);
     }
 
     /***
