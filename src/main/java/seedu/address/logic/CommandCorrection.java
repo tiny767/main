@@ -3,7 +3,6 @@ package seedu.address.logic;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
 
 import seedu.address.logic.commands.AddCommand;
@@ -112,7 +111,7 @@ public class CommandCorrection {
     /***
      * Finds the nearest correction that is found. If no correction is found the text is returned as is.
      * @param commandText
-     * @returns corrected String according the rules.
+     * @return corrected String according the rules.
      */
     public static String nearestCorrection(String commandText) {
 
@@ -141,7 +140,7 @@ public class CommandCorrection {
     /***
      * TODO: Write javadoc comment here.
      * @param commandText
-     * @return
+     * @return corrected word after removing one character
      */
     public static String removeOneCharacter(String commandText) {
         for (int index = 0; index < commandText.length(); index++) {
@@ -238,7 +237,7 @@ public class CommandCorrection {
      * @param commandText
      * @return
      */
-    public static List<String> completeCommand(String commandText) {
+    public static ArrayList<String> getSuggestions(String commandText) {
         updateSuggestionsList(commandText);
         commandInput = commandText;
 

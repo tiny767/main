@@ -25,12 +25,12 @@ public class CommandBox extends UiPart<Region> {
 
     public static final String ERROR_STYLE_CLASS = "error";
     private static final String FXML = "CommandBox.fxml";
+    private static String recentInput;
+    private static String recentSuggestion;
 
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
     private final Logic logic;
     private ListElementPointer historySnapshot;
-    private String recentSuggestion;
-    private String recentInput;
 
     @FXML
     private TextField commandTextField;
@@ -115,6 +115,51 @@ public class CommandBox extends UiPart<Region> {
         replaceText(CommandCorrection.nearestCorrection(textToCorrect));
     }
 
+    /***
+     * TODO:Write javadoc comment
+     * @param suggestions
+     * @param suggestionToChoose
+     * @param commandText
+     * @return
+     */
+    public static String chooseSuggestion(ArrayList<String> suggestions, int suggestionToChoose, String commandText) {
+        if (suggestions.size() != 0) {
+            suggestionToChoose = suggestionToChoose % suggestions.size();
+            recentSuggestion = suggestions.get(suggestionToChoose);
+            return recentSuggestion;
+        }
+        return commandText;
+    }
+
+    /***
+     * TODO: Write a javadoc comment
+     * @param textToComplete
+     */
+    private void updateTabCounter(String textToComplete) {
+        if (textToComplete.compareTo(recentSuggestion.trim()) == 0) {
+            CommandCorrection.incrementTabCounter();
+        } else {
+            CommandCorrection.resetTabCounter();
+        }
+    }
+
+    /***
+     * TODO: Write a javadoc comment
+     * @param textToComplete
+     * @return
+     */
+    private String updateTextToComplete(String textToComplete) {
+        if (textToComplete.compareTo(recentSuggestion.trim()) == 0) {
+            return recentInput;
+        } else {
+            return textToComplete;
+        }
+    }
+
+    private boolean noTextToComplete(String textToComplete) {
+        return (textToComplete.equals(""));
+    }
+
     /**
      * TODO: Write Javadoc comment.
      *
@@ -122,30 +167,22 @@ public class CommandBox extends UiPart<Region> {
     private void navigateToCompletedCommand() {
         // TODO: Check if the command is actually wrong
         CommandCorrection.setUpCommandCompletion();
-
         String textToComplete = commandTextField.getText().trim();
-        if (textToComplete.compareTo(recentSuggestion.trim()) == 0) {
-            textToComplete = recentInput;
-            CommandCorrection.updateSuggestionsList(textToComplete);
-            CommandCorrection.incrementTabCounter();
-        } else {
-            CommandCorrection.updateSuggestionsList(commandTextField.getText().trim());
-            CommandCorrection.resetTabCounter();
-        }
 
-        int suggestionToChoose = CommandCorrection.getTabCounter();
-        /*
-        if (recentInput.compareTo("") == 0) {
-            recentInput = commandTextField.getText().trim();
+        if (noTextToComplete(textToComplete)) {
+            return;
         }
-        */
+        updateTabCounter(textToComplete);
+        textToComplete = updateTextToComplete(textToComplete);
+
+        CommandCorrection.updateSuggestionsList(textToComplete);
         recentInput = textToComplete;
-        ArrayList<String> suggestions = new ArrayList<String>(CommandCorrection.completeCommand(textToComplete));
-        if (suggestions.size() != 0) {
-            suggestionToChoose = suggestionToChoose % suggestions.size();
-            recentSuggestion = suggestions.get(suggestionToChoose);
-            replaceText(recentSuggestion);
-        }
+        int suggestionToChoose = CommandCorrection.getTabCounter();
+
+        ArrayList<String> suggestions = CommandCorrection.getSuggestions(textToComplete);
+        String chosenString = chooseSuggestion(suggestions, suggestionToChoose, commandTextField.getText());
+
+        replaceText(chosenString);
     }
 
     /**
