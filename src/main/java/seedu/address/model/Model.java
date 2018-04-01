@@ -8,6 +8,8 @@ import seedu.address.model.job.exceptions.DuplicateJobException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.report.Report;
+import seedu.address.model.report.exceptions.DuplicateReportException;
 
 /**
  * The API of the Model component.
@@ -62,4 +64,6 @@ public interface Model {
      */
     void updateFilteredJobList(Predicate<Job> predicate);
 
+    /** Adds the given report */
+    void addReport(Report report) throws DuplicateReportException;
 }

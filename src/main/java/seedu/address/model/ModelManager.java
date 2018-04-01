@@ -17,6 +17,8 @@ import seedu.address.model.job.exceptions.DuplicateJobException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.report.Report;
+import seedu.address.model.report.exceptions.DuplicateReportException;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -82,6 +84,12 @@ public class ModelManager extends ComponentManager implements Model {
         requireAllNonNull(target, editedPerson);
 
         addressBook.updatePerson(target, editedPerson);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public synchronized void addReport(Report report) throws DuplicateReportException {
+        addressBook.addReport(report);
         indicateAddressBookChanged();
     }
     //=========== Filtered Job List Accessors =============================================================
