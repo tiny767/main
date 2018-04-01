@@ -76,6 +76,10 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.jobs.setJobs(jobs);
     }
 
+    public void setInterviews(List<Interview> interviews) throws DuplicateInterviewException {
+        this.interviews.setInterviews(interviews);
+    }
+
     /**
      * Resets the existing data of this {@code AddressBook} with {@code newData}.
      */
@@ -89,10 +93,13 @@ public class AddressBook implements ReadOnlyAddressBook {
         try {
             setPersons(syncedPersonList);
             setJobs(new ArrayList<Job>(newData.getJobList()));
+            setInterviews(new ArrayList<Interview>(newData.getInterviewList()));
         } catch (DuplicatePersonException e) {
             throw new AssertionError("AddressBooks should not have duplicate persons");
         } catch (DuplicateJobException e) {
             throw new AssertionError("AddressBooks should not have duplicate job postings");
+        } catch (DuplicateInterviewException e){
+            throw new AssertionError("AddressBooks should not have duplicate interviews ");
         }
     }
 
@@ -268,6 +275,10 @@ public class AddressBook implements ReadOnlyAddressBook {
     @Override
     public ObservableList<Tag> getTagList() {
         return tags.asObservableList();
+    }
+    @Override
+    public ObservableList<Interview> getInterviewList() {
+        return interviews.asObservableList();
     }
 
     // TODO: Add job comparison below

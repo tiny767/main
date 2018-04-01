@@ -13,13 +13,13 @@ public class Interview {
     private Name interviewee;
     private Date date;
     private ArrayList<Quest> listQuestions;
-    private InterviewLocation location;
+    private InterviewLocation interviewLocation;
 
     public Interview(InterviewTitle title, Name interviewee, Date date, InterviewLocation location) {
         this.title = title;
         this.interviewee = interviewee;
         this.date = date;
-        this.location = location;
+        this.interviewLocation = location;
     }
 
     public InterviewTitle getInterviewTitle(){
@@ -35,7 +35,7 @@ public class Interview {
     }
 
     public InterviewLocation getLocation() {
-        return this.location;
+        return this.interviewLocation;
     }
 
     public ArrayList<Quest> getListQuestions(){

@@ -111,7 +111,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public void addInterview(Interview interivew) throws DuplicateInterviewException {
+        public void addInterview(Interview interview) throws DuplicateInterviewException {
             fail("This method should not be called.");
         }
 
@@ -157,6 +157,17 @@ public class AddCommandTest {
         public ObservableList<Job> getFilteredJobList() {
             fail("This method should not be called.");
             return null;
+        }
+
+        @Override
+        public ObservableList<Interview> getFilteredInterviewList() {
+            fail("this method should not be called");
+            return null;
+        }
+
+        @Override
+        public void updateFilteredInterviewList(Predicate<Interview> predicate) {
+            fail("This method should not be called.");
         }
 
     }

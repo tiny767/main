@@ -40,6 +40,7 @@ public class MainWindow extends UiPart<Stage> {
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
     private ReportPanel reportPanel;
+    private InterviewListPanel interviewListPanel;
     private PersonListPanel personListPanel;
     private JobListPanel jobListPanel;
     private Config config;
@@ -63,6 +64,9 @@ public class MainWindow extends UiPart<Stage> {
 
     @FXML
     private StackPane jobListPanelPlaceholder;
+
+    @FXML
+    private StackPane interviewListPanelPlaceholder;
 
     @FXML
     private StackPane resultDisplayPlaceholder;
@@ -142,6 +146,9 @@ public class MainWindow extends UiPart<Stage> {
 
         jobListPanel = new JobListPanel(logic.getFilteredJobList());
         jobListPanelPlaceholder.getChildren().add(jobListPanel.getRoot());
+
+        interviewListPanel = new InterviewListPanel(logic.getFilteredInterviewList());
+        interviewListPanelPlaceholder.getChildren().add(interviewListPanel.getRoot());
 
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());

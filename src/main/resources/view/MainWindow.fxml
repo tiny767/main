@@ -60,6 +60,13 @@
             <StackPane fx:id="jobListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
           </VBox>
 
+          <VBox fx:id="interviewList" minWidth="340" prefWidth="340" SplitPane.resizableWithParent="false">
+            <padding>
+              <Insets top="10" right="10" bottom="10" left="10" />
+            </padding>
+            <StackPane fx:id="interviewListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
+          </VBox>
+
           <StackPane fx:id="browserOrReportPlaceholder" prefWidth="340" >
             <padding>
               <Insets top="10" right="10" bottom="10" left="10" />
