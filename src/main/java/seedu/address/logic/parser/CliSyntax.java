@@ -18,6 +18,7 @@ public class CliSyntax {
     public static final Prefix PREFIX_OPTION = new Prefix("-");
     public static final Prefix PREFIX_REMARK = new Prefix("r/");
     public static final Prefix PREFIX_LINK = new Prefix("l/");
-
+    public static final Prefix PREFIX_INTERVIEW = new Prefix("i/");
+    public static final Prefix PREFIX_DATE = new Prefix("d/");
 
 }

@@ -16,6 +16,7 @@ import javafx.collections.ObservableList;
 
 import seedu.address.model.interview.Interview;
 import seedu.address.model.interview.UniqueInterviewList;
+import seedu.address.model.interview.exceptions.DuplicateInterviewException;
 import seedu.address.model.job.Job;
 import seedu.address.model.job.UniqueJobList;
 import seedu.address.model.job.exceptions.DuplicateJobException;
@@ -231,8 +232,8 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     //// interview-level operations
 
-    public void addInterview(Interview interview) {
-
+    public void addInterview(Interview interview) throws DuplicateInterviewException {
+        interviews.add(interview);
     }
     //// job methods
 

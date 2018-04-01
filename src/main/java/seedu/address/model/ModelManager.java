@@ -12,6 +12,8 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.model.interview.Interview;
+import seedu.address.model.interview.exceptions.DuplicateInterviewException;
 import seedu.address.model.job.Job;
 import seedu.address.model.job.exceptions.DuplicateJobException;
 import seedu.address.model.person.Person;
@@ -144,4 +146,11 @@ public class ModelManager extends ComponentManager implements Model {
                 && filteredJobs.equals(other.filteredJobs);
     }
 
+    //=========== Filtered Interview List Accessors =============================================================
+    @Override
+    public synchronized void addInterview(Interview interview) throws DuplicateInterviewException {
+        addressBook.addInterview(interview);
+      //  updateFilteredJobList(PREDICATE_SHOW_ALL_JOBS);
+      //  indicateAddressBookChanged();
+    }
 }

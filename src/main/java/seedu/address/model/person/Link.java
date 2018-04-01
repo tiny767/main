@@ -8,7 +8,7 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
  */
 public class Link {
 
-    public static final String MESSAGE_LINK_CONSTRAINTS = "Tags names should be start with http";
+    public static final String MESSAGE_LINK_CONSTRAINTS = "Link should be start with http";
     public static final String LINK_VALIDATION_REGEX =
             "^(https?:\\\\/\\\\/)?(www\\.)?([\\\\w]+\\\\.)+[\u200C\u200B\\\\w]{2,63}\\\\/?";
 

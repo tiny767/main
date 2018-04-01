@@ -3,6 +3,8 @@ package seedu.address.model;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
+import seedu.address.model.interview.Interview;
+import seedu.address.model.interview.exceptions.DuplicateInterviewException;
 import seedu.address.model.job.Job;
 import seedu.address.model.job.exceptions.DuplicateJobException;
 import seedu.address.model.person.Person;
@@ -62,4 +64,6 @@ public interface Model {
      */
     void updateFilteredJobList(Predicate<Job> predicate);
 
+    /* Adds the give interview. */
+    void addInterview(Interview interview) throws DuplicateInterviewException;
 }
