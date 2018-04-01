@@ -22,15 +22,15 @@ public class Interview {
         this.interviewLocation = location;
     }
 
-    public InterviewTitle getInterviewTitle(){
+    public InterviewTitle getInterviewTitle() {
         return this.title;
     }
 
-    public Name getInterviewee(){
+    public Name getInterviewee() {
         return this.interviewee;
     }
 
-    public Date getDate(){
+    public Date getDate() {
         return this.date;
     }
 
@@ -38,7 +38,7 @@ public class Interview {
         return this.interviewLocation;
     }
 
-    public ArrayList<Quest> getListQuestions(){
+    public ArrayList<Quest> getListQuestions() {
         return this.listQuestions;
     }
 

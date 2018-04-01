@@ -13,8 +13,9 @@ import seedu.address.logic.commands.AddInterviewCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.interview.Date;
 import seedu.address.model.interview.Interview;
-import seedu.address.model.interview.InterviewTitle;
 import seedu.address.model.interview.InterviewLocation;
+import seedu.address.model.interview.InterviewTitle;
+
 import seedu.address.model.person.Name;
 
 /***

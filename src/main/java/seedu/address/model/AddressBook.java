@@ -98,7 +98,7 @@ public class AddressBook implements ReadOnlyAddressBook {
             throw new AssertionError("AddressBooks should not have duplicate persons");
         } catch (DuplicateJobException e) {
             throw new AssertionError("AddressBooks should not have duplicate job postings");
-        } catch (DuplicateInterviewException e){
+        } catch (DuplicateInterviewException e) {
             throw new AssertionError("AddressBooks should not have duplicate interviews ");
         }
     }

@@ -11,8 +11,8 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.model.interview.Date;
-import seedu.address.model.interview.InterviewTitle;
 import seedu.address.model.interview.InterviewLocation;
+import seedu.address.model.interview.InterviewTitle;
 import seedu.address.model.job.JobTitle;
 import seedu.address.model.job.Location;
 import seedu.address.model.job.Skill;
@@ -288,7 +288,8 @@ public class ParserUtil {
      * Parses a {@code Optional<String> string} into an {@code Optional<Location>} if {@code string} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<InterviewLocation> parseInterviewLocation(Optional<String> string) throws IllegalValueException {
+    public static Optional<InterviewLocation> parseInterviewLocation(Optional<String> string)
+            throws IllegalValueException {
         requireNonNull(string);
         return string.isPresent() ? Optional.of(parseInterviewLocation(string.get())) : Optional.empty();
     }
@@ -336,7 +337,8 @@ public class ParserUtil {
      * Parses a {@code Optional<String> link} into an {@code Optional<Link>} if {@code link} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<InterviewTitle> parseInterviewTitle(Optional<String> interviewTitle) throws IllegalValueException {
+    public static Optional<InterviewTitle> parseInterviewTitle(Optional<String> interviewTitle)
+                throws IllegalValueException {
         requireNonNull(interviewTitle);
         return interviewTitle.isPresent() ? Optional.of(parseInterviewTitle(interviewTitle.get())) : Optional.empty();
     }
