@@ -3,6 +3,11 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -12,13 +17,16 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.util.StringUtil;
 import seedu.address.model.job.Job;
 import seedu.address.model.job.exceptions.DuplicateJobException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.report.Proportion;
 import seedu.address.model.report.Report;
 import seedu.address.model.report.exceptions.DuplicateReportException;
+import seedu.address.model.tag.Tag;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -26,10 +34,12 @@ import seedu.address.model.report.exceptions.DuplicateReportException;
  */
 public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
+    private static final Tag defaultPopulation = new Tag("anh");
 
     private final AddressBook addressBook;
     private final FilteredList<Person> filteredPersons;
     private final FilteredList<Job> filteredJobs;
+    private final List<Proportion> allProportions;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -43,6 +53,8 @@ public class ModelManager extends ComponentManager implements Model {
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
         filteredJobs = new FilteredList<>(this.addressBook.getJobList());
+        allProportions =  new ArrayList<Proportion>();
+        this.updateReport(defaultPopulation);
     }
 
     public ModelManager() {
@@ -133,6 +145,40 @@ public class ModelManager extends ComponentManager implements Model {
         filteredPersons.setPredicate(predicate);
     }
 
+    //=========== Report Accessors =============================================================
+
+    @Override
+    public ObservableList<Proportion> getAllProportions() {
+        return FXCollections.unmodifiableObservableList(FXCollections.observableArrayList(allProportions));
+    }
+
+    @Override
+    public void updateReport(Tag population) {
+        FilteredList<Person> allPersonList = new FilteredList<>(this.addressBook.getPersonList());
+        Predicate<Person> personContainsPopulationTagPredicate =
+            new Predicate<Person>() {
+                @Override
+                public boolean test(Person person) {
+                    return person.getTags().stream()
+                            .anyMatch(tag -> StringUtil.containsWordIgnoreCase(tag.tagName, population.tagName));
+                }
+            };
+        allPersonList.setPredicate(personContainsPopulationTagPredicate);
+
+        Map<String, Integer> counts = new HashMap<>();
+        allPersonList.forEach((p) -> {
+            Set<Tag> allTags = p.getTags();
+            for (Tag t : allTags) {
+                counts.merge(t.tagName, 1, Integer::sum);
+            }
+        });
+
+        allProportions.clear();
+        for (Map.Entry<String, Integer> entry : counts.entrySet()) {
+            allProportions.add(new Proportion(entry.getKey(), entry.getValue()));
+        }
+    }
+    
     @Override
     public boolean equals(Object obj) {
         // short circuit if same object
