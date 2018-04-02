@@ -21,11 +21,11 @@ import seedu.address.logic.commands.MatchJobCommand;
 import seedu.address.logic.commands.PostJobCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemarkCommand;
-import seedu.address.logic.commands.ReportCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.ThemeCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.ViewCommand;
+import seedu.address.logic.commands.ViewReportCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
@@ -132,11 +132,11 @@ public class AddressBookParser {
         case RedoCommand.COMMAND_WORD:
             return new RedoCommand();
 
-        case ReportCommand.COMMAND_WORD:
-            return new ReportCommand();
+        case ViewReportCommand.COMMAND_WORD:
+            return new ViewReportCommandParser().parse(arguments);
 
-        case ReportCommand.COMMAND_ALIAS:
-            return new ReportCommand();
+        case ViewReportCommand.COMMAND_ALIAS:
+            return new ViewReportCommandParser().parse(arguments);
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
