@@ -178,7 +178,7 @@ public class ModelManager extends ComponentManager implements Model {
             allProportions.add(new Proportion(entry.getKey(), entry.getValue()));
         }
     }
-    
+
     @Override
     public boolean equals(Object obj) {
         // short circuit if same object
