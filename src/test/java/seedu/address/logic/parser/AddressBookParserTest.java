@@ -29,7 +29,6 @@ import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemarkCommand;
-import seedu.address.logic.commands.ReportCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.ViewCommand;
@@ -183,12 +182,6 @@ public class AddressBookParserTest {
 
         assertEquals(command, new RemarkCommand(INDEX_FIRST_PERSON, remark));
 
-    }
-
-    @Test
-    public void parseCommand_report() throws Exception {
-        assertTrue(parser.parseCommand(ReportCommand.COMMAND_WORD) instanceof ReportCommand);
-        assertTrue(parser.parseCommand(ReportCommand.COMMAND_ALIAS) instanceof ReportCommand);
     }
 
     @Test

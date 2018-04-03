@@ -439,10 +439,3 @@ The following table summarises Infinity Book commands with suitable examples:
 ** [#unix]*UNIX*: Unix  is a family of multitasking, multiuser computer operating systems. Common UNIX operating systems include Linux, Fedora and MAC OS.
 ** [#cli]*Command Line Interface*: A user interface in which the user executes and responds to an application through a specified text input where commands are typed.
 ** [#gui]*Graphical User Interface*: A user interface in which the user interacts with the application through visual representations through menus, text, images, etc.
-
-
-
-
-
-
-
