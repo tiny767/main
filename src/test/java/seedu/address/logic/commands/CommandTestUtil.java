@@ -43,7 +43,7 @@ public class CommandTestUtil {
     public static final String VALID_TAG_HUSBAND = "husband";
     public static final String VALID_TAG_FRIEND = "friend";
     public static final String VALID_TAG_NONEXISTENT = "nonexistent";
-    public static final String VALID_LINK = "https://github.com/CS2103JAN2018-W11-B3/main";
+    public static final String VALID_LINK = "https://www.google.com.sg/";
 
 
     public static final String NAME_DESC_AMY = " " + PREFIX_NAME + VALID_NAME_AMY;
@@ -57,6 +57,7 @@ public class CommandTestUtil {
     public static final String TAG_DESC_FRIEND = " " + PREFIX_TAG + VALID_TAG_FRIEND;
     public static final String TAG_DESC_HUSBAND = " " + PREFIX_TAG + VALID_TAG_HUSBAND;
     public static final String LINK_DESC_AMY = " " + PREFIX_LINK + VALID_LINK;
+    public static final String LINK_DESC_BOB = " " + PREFIX_LINK + VALID_LINK;
 
     public static final String INVALID_NAME_DESC = " " + PREFIX_NAME + "James&"; // '&' not allowed in names
     public static final String INVALID_PHONE_DESC = " " + PREFIX_PHONE + "911a"; // 'a' not allowed in phones
