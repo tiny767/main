@@ -19,7 +19,6 @@ import seedu.address.logic.commands.MatchJobCommand;
 import seedu.address.logic.commands.PostJobCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemarkCommand;
-import seedu.address.logic.commands.ReportCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.ThemeCommand;
 import seedu.address.logic.commands.UndoCommand;
@@ -81,7 +80,6 @@ public class CommandCorrection {
         commandDictionary.add(PostJobCommand.COMMAND_WORD);
         commandDictionary.add(RedoCommand.COMMAND_WORD);
         commandDictionary.add(RemarkCommand.COMMAND_WORD);
-        commandDictionary.add(ReportCommand.COMMAND_WORD);
         commandDictionary.add(SelectCommand.COMMAND_WORD);
         commandDictionary.add(ThemeCommand.COMMAND_WORD);
         commandDictionary.add(UndoCommand.COMMAND_WORD);
