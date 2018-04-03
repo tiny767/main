@@ -23,6 +23,7 @@ public class XmlSerializableAddressBook {
     private List<XmlAdaptedTag> tags;
     @XmlElement
     private List<XmlAdaptedJob> jobs;
+    private List<XmlAdaptedTag> reports;
 
     /**
      * Creates an empty XmlSerializableAddressBook.
@@ -32,6 +33,7 @@ public class XmlSerializableAddressBook {
         persons = new ArrayList<>();
         tags = new ArrayList<>();
         jobs = new ArrayList<>();
+        reports = new ArrayList<>();
     }
 
     /**
@@ -42,6 +44,7 @@ public class XmlSerializableAddressBook {
         persons.addAll(src.getPersonList().stream().map(XmlAdaptedPerson::new).collect(Collectors.toList()));
         tags.addAll(src.getTagList().stream().map(XmlAdaptedTag::new).collect(Collectors.toList()));
         jobs.addAll(src.getJobList().stream().map(XmlAdaptedJob::new).collect(Collectors.toList()));
+        reports.addAll(src.getTagList().stream().map(XmlAdaptedTag::new).collect(Collectors.toList()));
     }
 
     /**

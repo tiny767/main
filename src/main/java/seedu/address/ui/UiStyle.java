@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 public class UiStyle {
     private static final String LIGHT_THEME_STYLE = "view/LightTheme.css";
     private static final String DARK_THEME_STYLE = "view/DarkTheme.css";
+    private static final String MORNING_THEME_STYLE = "view/MorningTheme.css";
     private static Scene scene = null;
     private static UiStyle instance = null;
 
@@ -17,7 +18,7 @@ public class UiStyle {
     }
 
     private static void setDefaultTheme() {
-        scene.getStylesheets().add(DARK_THEME_STYLE);
+        scene.getStylesheets().add(MORNING_THEME_STYLE);
     }
 
     public static void setToLightTheme() {
@@ -26,6 +27,10 @@ public class UiStyle {
 
     public static void setToDarkTheme() {
         scene.getStylesheets().setAll(DARK_THEME_STYLE);
+    }
+
+    public static void setToMorningTheme() {
+        scene.getStylesheets().add(MORNING_THEME_STYLE);
     }
 
     public static UiStyle getInstance() {

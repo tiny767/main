@@ -24,6 +24,9 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.report.Report;
+import seedu.address.model.report.UniqueReportList;
+import seedu.address.model.report.exceptions.DuplicateReportException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -37,6 +40,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     private final UniqueTagList tags;
     private final UniqueInterviewList interviews;
     private final UniqueJobList jobs;
+    private final UniqueReportList reports;
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -50,6 +54,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         tags = new UniqueTagList();
         interviews = new UniqueInterviewList();
         jobs = new UniqueJobList();
+        reports = new UniqueReportList();
     }
 
     public AddressBook() {}
@@ -76,8 +81,13 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.jobs.setJobs(jobs);
     }
 
+
     public void setInterviews(List<Interview> interviews) throws DuplicateInterviewException {
         this.interviews.setInterviews(interviews);
+    }
+
+    public void setReports(List<Report> reports)  throws  DuplicateReportException {
+        this.reports.setReports(reports);
     }
 
     /**
@@ -94,12 +104,15 @@ public class AddressBook implements ReadOnlyAddressBook {
             setPersons(syncedPersonList);
             setJobs(new ArrayList<Job>(newData.getJobList()));
             setInterviews(new ArrayList<Interview>(newData.getInterviewList()));
+            setReports(new ArrayList<Report>(newData.getReportList()));
         } catch (DuplicatePersonException e) {
             throw new AssertionError("AddressBooks should not have duplicate persons");
         } catch (DuplicateJobException e) {
             throw new AssertionError("AddressBooks should not have duplicate job postings");
         } catch (DuplicateInterviewException e) {
             throw new AssertionError("AddressBooks should not have duplicate interviews ");
+        } catch (DuplicateReportException e) {
+            throw new AssertionError("AddressBooks should not have duplicate reports.");
         }
     }
 
@@ -256,11 +269,22 @@ public class AddressBook implements ReadOnlyAddressBook {
         jobs.add(j);
     }
 
+    //// report methods
+    /**
+     * Adds a report to the address book.
+     *
+     * @throws DuplicateReportException if an equivalent report already exists.
+     */
+    public void addReport(Report r) throws DuplicateReportException {
+        reports.add(r);
+    }
+
     //// util methods
 
     @Override
     public String toString() {
-        return persons.asObservableList().size() + " persons, " + tags.asObservableList().size() +  " tags";
+        return persons.asObservableList().size() + " persons, " + tags.asObservableList().size() +  " tags"
+                + reports.asObservableList().size() + " reports.";
         // TODO: update with number of job postings
     }
 
@@ -281,7 +305,12 @@ public class AddressBook implements ReadOnlyAddressBook {
         return interviews.asObservableList();
     }
 
+    public ObservableList<Report> getReportList() {
+        return reports.asObservableList();
+    }
+
     // TODO: Add job comparison below
+
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
@@ -293,6 +322,6 @@ public class AddressBook implements ReadOnlyAddressBook {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(persons, jobs, tags);
+        return Objects.hash(persons, jobs, reports, tags);
     }
 }

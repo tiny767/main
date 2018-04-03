@@ -1,5 +1,6 @@
 package seedu.address.ui;
 
+import java.util.ArrayList;
 import java.util.logging.Logger;
 
 import javafx.collections.ObservableList;
@@ -8,7 +9,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.CommandCorrectedEvent;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
+
+import seedu.address.logic.CommandCorrection;
 import seedu.address.logic.ListElementPointer;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.CommandResult;
@@ -22,6 +26,8 @@ public class CommandBox extends UiPart<Region> {
 
     public static final String ERROR_STYLE_CLASS = "error";
     private static final String FXML = "CommandBox.fxml";
+    private static String recentInput;
+    private static String recentSuggestion;
 
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
     private final Logic logic;
@@ -36,6 +42,8 @@ public class CommandBox extends UiPart<Region> {
         // calls #setStyleToDefault() whenever there is a change to the text of the command box.
         commandTextField.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
         historySnapshot = logic.getHistorySnapshot();
+        recentSuggestion = "";
+        recentInput = "";
     }
 
     /**
@@ -48,12 +56,19 @@ public class CommandBox extends UiPart<Region> {
             // As up and down buttons will alter the position of the caret,
             // consuming it causes the caret's position to remain unchanged
             keyEvent.consume();
-
             navigateToPreviousInput();
             break;
         case DOWN:
             keyEvent.consume();
             navigateToNextInput();
+            break;
+        case SPACE:
+            keyEvent.consume();
+            navigateToLikelyCommand();
+            break;
+        case TAB:
+            keyEvent.consume();
+            navigateToCompletedCommand();
             break;
         default:
             // let JavaFx handle the keypress
@@ -84,6 +99,93 @@ public class CommandBox extends UiPart<Region> {
         }
 
         replaceText(historySnapshot.next());
+    }
+
+    /**
+     * TODO: Write Javadoc comment.
+     *
+     */
+    private void navigateToLikelyCommand() {
+        // TODO: Check if the command is actually wrong
+        CommandCorrection.setUpCommandCorrection();
+        if (CommandCorrection.isCorrectCommand(commandTextField.getText())) {
+            return;
+        }
+
+        String textToCorrect = commandTextField.getText();
+        replaceText(CommandCorrection.nearestCorrection(textToCorrect));
+    }
+
+    /***
+     * TODO:Write javadoc comment
+     * @param suggestions
+     * @param suggestionToChoose
+     * @param commandText
+     * @return
+     */
+    public static String chooseSuggestion(ArrayList<String> suggestions, int suggestionToChoose, String commandText) {
+        if (suggestions.size() != 0) {
+            suggestionToChoose = suggestionToChoose % suggestions.size();
+            recentSuggestion = suggestions.get(suggestionToChoose);
+            return recentSuggestion;
+        }
+        return commandText;
+    }
+
+    /***
+     * TODO: Write a javadoc comment
+     * @param textToComplete
+     */
+    private void updateTabCounter(String textToComplete) {
+        if (textToComplete.compareTo(recentSuggestion.trim()) == 0) {
+            CommandCorrection.incrementTabCounter();
+        } else {
+            CommandCorrection.resetTabCounter();
+        }
+    }
+
+    /***
+     * TODO: Write a javadoc comment
+     * @param textToComplete
+     * @return
+     */
+    private String updateTextToComplete(String textToComplete) {
+        if (textToComplete.compareTo(recentSuggestion.trim()) == 0) {
+            return recentInput;
+        } else {
+            return textToComplete;
+        }
+    }
+
+    private boolean noTextToComplete(String textToComplete) {
+        return (textToComplete.equals(""));
+    }
+
+    /***
+     * TODO: Write Javadoc comment.
+     *
+     */
+
+    private void navigateToCompletedCommand() {
+        // TODO: Check if the command is actually wrong
+        CommandCorrection.setUpCommandCompletion();
+        String textToComplete = commandTextField.getText().trim();
+
+        if (noTextToComplete(textToComplete)) {
+            return;
+        }
+        updateTabCounter(textToComplete);
+        textToComplete = updateTextToComplete(textToComplete);
+
+        CommandCorrection.updateSuggestionsList(textToComplete);
+        recentInput = textToComplete;
+        int suggestionToChoose = CommandCorrection.getTabCounter();
+
+        ArrayList<String> suggestions = CommandCorrection.getSuggestions(textToComplete);
+        String chosenString = chooseSuggestion(suggestions, suggestionToChoose, commandTextField.getText());
+
+        raise(new CommandCorrectedEvent(String.format(CommandCorrection.FEEDBACK_TO_USER, chosenString)));
+        replaceText(chosenString);
     }
 
     /**

@@ -14,6 +14,7 @@ import seedu.address.model.Model;
 import seedu.address.model.interview.Interview;
 import seedu.address.model.job.Job;
 import seedu.address.model.person.Person;
+import seedu.address.model.report.Proportion;
 
 /**
  * The main LogicManager of the app.
@@ -50,6 +51,11 @@ public class LogicManager extends ComponentManager implements Logic {
     @Override
     public ObservableList<Person> getFilteredPersonList() {
         return model.getFilteredPersonList();
+    }
+
+    @Override
+    public ObservableList<Proportion> getAllProportions() {
+        return this.model.getAllProportions();
     }
 
     @Override
