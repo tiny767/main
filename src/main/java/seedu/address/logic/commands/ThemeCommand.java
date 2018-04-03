@@ -11,9 +11,10 @@ public class ThemeCommand extends Command {
     public static final String COMMAND_ALIAS = "t";
     public static final String LIGHT_THEME = "light";
     public static final String DARK_THEME = "dark";
+    public static final String MORNING_THEME = "morning";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Changes theme to. "
-            + "Parameters: light/dark";
+            + "Parameters: morning/light/dark";
 
 
     public static final String MESSAGE_SUCCESS = "Theme has been changed successfully";
@@ -33,6 +34,8 @@ public class ThemeCommand extends Command {
             UiStyle.getInstance().setToLightTheme();
         } else if (theme.equalsIgnoreCase(ThemeCommand.DARK_THEME)) {
             UiStyle.getInstance().setToDarkTheme();
+        } else if (theme.equalsIgnoreCase(ThemeCommand.MORNING_THEME)) {
+            UiStyle.getInstance().setToMorningTheme();
         }
 
         return new CommandResult(MESSAGE_SUCCESS);
