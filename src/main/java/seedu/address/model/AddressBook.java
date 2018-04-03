@@ -13,6 +13,10 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import javafx.collections.ObservableList;
+
+import seedu.address.model.interview.Interview;
+import seedu.address.model.interview.UniqueInterviewList;
+import seedu.address.model.interview.exceptions.DuplicateInterviewException;
 import seedu.address.model.job.Job;
 import seedu.address.model.job.UniqueJobList;
 import seedu.address.model.job.exceptions.DuplicateJobException;
@@ -34,6 +38,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     private final UniquePersonList persons;
     private final UniqueTagList tags;
+    private final UniqueInterviewList interviews;
     private final UniqueJobList jobs;
     private final UniqueReportList reports;
 
@@ -47,6 +52,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     {
         persons = new UniquePersonList();
         tags = new UniqueTagList();
+        interviews = new UniqueInterviewList();
         jobs = new UniqueJobList();
         reports = new UniqueReportList();
     }
@@ -75,6 +81,10 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.jobs.setJobs(jobs);
     }
 
+    public void setInterviews(List<Interview> interviews) throws DuplicateInterviewException {
+        this.interviews.setInterviews(interviews);
+    }
+
     public void setReports(List<Report> reports)  throws  DuplicateReportException {
         this.reports.setReports(reports);
     }
@@ -92,11 +102,14 @@ public class AddressBook implements ReadOnlyAddressBook {
         try {
             setPersons(syncedPersonList);
             setJobs(new ArrayList<Job>(newData.getJobList()));
+            setInterviews(new ArrayList<Interview>(newData.getInterviewList()));
             setReports(new ArrayList<Report>(newData.getReportList()));
         } catch (DuplicatePersonException e) {
             throw new AssertionError("AddressBooks should not have duplicate persons");
         } catch (DuplicateJobException e) {
             throw new AssertionError("AddressBooks should not have duplicate job postings");
+        } catch (DuplicateInterviewException e) {
+            throw new AssertionError("AddressBooks should not have duplicate interviews ");
         } catch (DuplicateReportException e) {
             throw new AssertionError("AddressBooks should not have duplicate reports.");
         }
@@ -159,7 +172,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         personTags.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
         return new Person(
                 person.getName(), person.getPhone(), person.getEmail(), person.getAddress(),
-                person.getRemark(), correctTagReferences);
+                person.getRemark(), person.getLink(), correctTagReferences);
     }
 
     /**
@@ -188,7 +201,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
         Person modifiedPerson =
                 new Person(person.getName(), person.getPhone(), person.getEmail(), person.getAddress(),
-                        person.getRemark(), modifiedTags);
+                        person.getRemark(), person.getLink(), modifiedTags);
 
         try {
             updatePerson(person, modifiedPerson);
@@ -236,6 +249,11 @@ public class AddressBook implements ReadOnlyAddressBook {
         return false;
     }
 
+    //// interview-level operations
+
+    public void addInterview(Interview interview) throws DuplicateInterviewException {
+        interviews.add(interview);
+    }
     //// job methods
 
     /**
@@ -282,6 +300,10 @@ public class AddressBook implements ReadOnlyAddressBook {
         return tags.asObservableList();
     }
     @Override
+    public ObservableList<Interview> getInterviewList() {
+        return interviews.asObservableList();
+    }
+
     public ObservableList<Report> getReportList() {
         return reports.asObservableList();
     }

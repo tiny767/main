@@ -21,6 +21,8 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.interview.Interview;
+import seedu.address.model.interview.exceptions.DuplicateInterviewException;
 import seedu.address.model.job.Job;
 import seedu.address.model.job.exceptions.DuplicateJobException;
 import seedu.address.model.person.Person;
@@ -113,7 +115,12 @@ public class AddCommandTest {
         }
 
         @Override
+        public void addInterview(Interview interview) throws DuplicateInterviewException {
+            fail("This method should not be called.");
+        }
+        @Override
         public void addReport(Report report) throws DuplicateReportException {
+
             fail("This method should not be called.");
         }
 
@@ -170,6 +177,17 @@ public class AddCommandTest {
         public ObservableList<Job> getFilteredJobList() {
             fail("This method should not be called.");
             return null;
+        }
+
+        @Override
+        public ObservableList<Interview> getFilteredInterviewList() {
+            fail("this method should not be called");
+            return null;
+        }
+
+        @Override
+        public void updateFilteredInterviewList(Predicate<Interview> predicate) {
+            fail("This method should not be called.");
         }
 
     }

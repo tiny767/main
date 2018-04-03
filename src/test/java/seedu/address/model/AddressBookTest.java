@@ -22,6 +22,7 @@ import org.junit.rules.ExpectedException;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.address.model.interview.Interview;
 import seedu.address.model.job.Job;
 import seedu.address.model.person.Person;
 import seedu.address.model.report.Report;
@@ -112,6 +113,7 @@ public class AddressBookTest {
         private final ObservableList<Person> persons = FXCollections.observableArrayList();
         private final ObservableList<Tag> tags = FXCollections.observableArrayList();
         private final ObservableList<Job> jobs = FXCollections.observableArrayList();
+        private final ObservableList<Interview> interviews = FXCollections.observableArrayList();
         private final ObservableList<Report> reports = FXCollections.observableArrayList();
 
         AddressBookStub(Collection<Person> persons, Collection<? extends Tag> tags) {
@@ -145,6 +147,10 @@ public class AddressBookTest {
         public ObservableList<Report> getReportList() {
             return reports;
         }
-    }
 
+        @Override
+        public ObservableList<Interview> getInterviewList() {
+            return interviews;
+        }
+    }
 }

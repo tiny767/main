@@ -3,6 +3,8 @@ package seedu.address.model;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
+import seedu.address.model.interview.Interview;
+import seedu.address.model.interview.exceptions.DuplicateInterviewException;
 import seedu.address.model.job.Job;
 import seedu.address.model.job.exceptions.DuplicateJobException;
 import seedu.address.model.person.Person;
@@ -22,6 +24,9 @@ public interface Model {
 
     /** {@code Predicate} that always evaluate to true */
     Predicate<Job> PREDICATE_SHOW_ALL_JOBS = unused -> true;
+
+    /** {@code Predicate} that always evaluate to true */
+    Predicate<Interview> PREDICATE_SHOW_ALL_INTERVIEWS = unused -> true;
 
     /** Clears existing backing model and replaces with the provided new data. */
     void resetData(ReadOnlyAddressBook newData);
@@ -51,6 +56,9 @@ public interface Model {
     /** Returns an unmodifiable view of the filtered job list */
     ObservableList<Job> getFilteredJobList();
 
+    /** Returns an unmodifiable view of the filtered interview list */
+    ObservableList<Interview> getFilteredInterviewList();
+
     /**
      * Updates the filter of the filtered person list to filter by the given {@code predicate}.
      * @throws NullPointerException if {@code predicate} is null.
@@ -65,6 +73,15 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredJobList(Predicate<Job> predicate);
+
+    /* Adds the give interview. */
+    void addInterview(Interview interview) throws DuplicateInterviewException;
+
+    /**
+     * Updates the filter of the filtered interview list to filter by the given {@code predicate}.
+     * @throws NullPointerException if {@code predicate} is null.
+     */
+    void updateFilteredInterviewList(Predicate<Interview> predicate);
 
     /** Adds the given report */
     void addReport(Report report) throws DuplicateReportException;

@@ -4,6 +4,7 @@ import javafx.collections.ObservableList;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.interview.Interview;
 import seedu.address.model.job.Job;
 import seedu.address.model.person.Person;
 import seedu.address.model.report.Proportion;
@@ -29,6 +30,9 @@ public interface Logic {
 
     /** Returns an unmodifiable view of the filtered list of jobs */
     ObservableList<Job> getFilteredJobList();
+
+    /** Returns an unmodifiable view of the filtered list of interviews */
+    ObservableList<Interview> getFilteredInterviewList();
 
     /** Returns the list of input entered by the user, encapsulated in a {@code ListElementPointer} object */
     ListElementPointer getHistorySnapshot();
