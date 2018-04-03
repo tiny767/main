@@ -307,6 +307,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     public ObservableList<Report> getReportList() {
         return reports.asObservableList();
     }
+
     // TODO: Add job comparison below
 
     @Override

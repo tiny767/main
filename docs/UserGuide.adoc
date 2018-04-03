@@ -84,11 +84,13 @@ The User Interface might appear mildly different for different versions of the p
 
 * *Description:* Adds a person to the address book +
 
-* *Format:* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+* *Format:* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS l/LINK[t/TAG]...`
 
 * *Examples:* +
-- `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-- `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+- `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123,
+#01-01 l/https://nus-cs2103-ay1718s2.github.io/website/`
+- `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate
+ Prison p/1234567 l/https://nus-cs2103-ay1718s2.github.io/website/ t/criminal`
 
 [NOTE]
 A person can have any number of tags (including 0)
@@ -289,6 +291,18 @@ Figure 3: MatchJob command filters the Candidates as per Job, as shown above.
 ====
 Index to be used as displayed in the panel
 ====
+
+=== Managing Interview
+This section describes command available for managing interview in the Infinity Book.
+
+==== Add Interview Command
+* *Description:* Add a Interview to Infinity Book.
+* *Format:* `addInterview n/Interviewee l/LOCATION d/DATE`
+* *Examples:* `addInterview n/John l/One North d/30.1.2018`
+
+==== List Interview [Coming in v1.5]
+
+==== Add Question [Coming in v1.5]
 
 === Social Media (FB, Linkedin) Integration [Coming in v2.0]
 

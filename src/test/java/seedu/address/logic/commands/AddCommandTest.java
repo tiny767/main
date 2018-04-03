@@ -118,6 +118,7 @@ public class AddCommandTest {
         public void addInterview(Interview interview) throws DuplicateInterviewException {
             fail("This method should not be called.");
         }
+
         @Override
         public void addReport(Report report) throws DuplicateReportException {
 

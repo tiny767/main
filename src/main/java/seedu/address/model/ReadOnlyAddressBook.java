@@ -35,6 +35,7 @@ public interface ReadOnlyAddressBook {
      * This list will not contain any duplicate interviews.
      */
     ObservableList<Interview> getInterviewList();
+
     /**
      * Returns an unmodifiable view of the reports list.
      * This list will not contain any duplicate reports;
