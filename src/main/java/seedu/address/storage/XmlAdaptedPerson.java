@@ -121,6 +121,10 @@ public class XmlAdaptedPerson {
             throw new IllegalValueException(Address.MESSAGE_ADDRESS_CONSTRAINTS);
         }
 
+        if (this.link == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Link.class.getSimpleName()));
+        }
+
         if (!Link.isValidLink(this.link)) {
             throw new IllegalValueException(Link.MESSAGE_LINK_CONSTRAINTS);
         }
