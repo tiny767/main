@@ -121,6 +121,7 @@ public class AddCommandTest {
 
         @Override
         public void addReport(Report report) throws DuplicateReportException {
+
             fail("This method should not be called.");
         }
 

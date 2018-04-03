@@ -81,7 +81,6 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.jobs.setJobs(jobs);
     }
 
-
     public void setInterviews(List<Interview> interviews) throws DuplicateInterviewException {
         this.interviews.setInterviews(interviews);
     }

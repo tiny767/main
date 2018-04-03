@@ -74,9 +74,8 @@ public interface Model {
      */
     void updateFilteredJobList(Predicate<Job> predicate);
 
-    /**
-     *  Adds the give interview.
-     */
+
+    /* Adds the give interview. */
     void addInterview(Interview interview) throws DuplicateInterviewException;
 
     /**

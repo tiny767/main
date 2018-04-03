@@ -131,6 +131,7 @@ public class EditCommand extends UndoableCommand {
         private Phone phone;
         private Email email;
         private Address address;
+        private Link link;
         private Set<Tag> tags;
         private Set<Tag> newTags;
         private Set<Tag> deletedTags;
@@ -146,6 +147,7 @@ public class EditCommand extends UndoableCommand {
             setPhone(toCopy.phone);
             setEmail(toCopy.email);
             setAddress(toCopy.address);
+            setLink(toCopy.link);
             setTags(toCopy.tags);
             setNewTags(toCopy.newTags);
             setDeletedTags(toCopy.deletedTags);
@@ -189,6 +191,14 @@ public class EditCommand extends UndoableCommand {
 
         public Optional<Address> getAddress() {
             return Optional.ofNullable(address);
+        }
+
+        public void setLink(Link link) {
+            this.link = link;
+        }
+
+        public Optional<Link> getLink() {
+            return Optional.ofNullable(link);
         }
 
         /**
@@ -308,6 +318,7 @@ public class EditCommand extends UndoableCommand {
                     && getPhone().equals(e.getPhone())
                     && getEmail().equals(e.getEmail())
                     && getAddress().equals(e.getAddress())
+                    && getLink().equals(e.getLink())
                     && getTags().equals(e.getTags());
         }
     }
