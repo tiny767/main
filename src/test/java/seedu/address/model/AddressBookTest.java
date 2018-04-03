@@ -144,9 +144,7 @@ public class AddressBookTest {
         }
 
         @Override
-
-        public ObservableList<Interview> getInterviewList() { return interviews; }
-
+        
         public ObservableList<Report> getReportList() {
             return reports;
         }
