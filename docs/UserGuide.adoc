@@ -308,7 +308,8 @@ This section describes command available for managing interview in the Infinity 
 
 ==== Facebook integration
 
- Connecting to Facebook [Since v1.2]: `facebooklogin`
+Connecting to Facebook [Since v1.2]: `facebooklogin`
+
 To connect your Facebook account to KayPoh, use the `facebookconnect` command.
 
 ====
@@ -318,7 +319,7 @@ To connect your Facebook account to KayPoh, use the `facebookconnect` command.
 
 You will be prompted by a Facebook authorization page (displayed in the browser panel)
 
-You can key in your facebook credentials. InfinityBook is then connected to that facebook account and you can use other
+You can key in your facebook credentials. Infinity Book is then connected to that facebook account and you can use other
 features
 
 === Miscellaneous
