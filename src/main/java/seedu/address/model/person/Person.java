@@ -92,7 +92,8 @@ public class Person {
         return otherPerson.getName().equals(this.getName())
                 && otherPerson.getPhone().equals(this.getPhone())
                 && otherPerson.getEmail().equals(this.getEmail())
-                && otherPerson.getAddress().equals(this.getAddress());
+                && otherPerson.getAddress().equals(this.getAddress())
+                && otherPerson.getLink().equals(this.getLink());
         //&& otherPerson.getSkills().equals(this.getSkills());
     }
 
@@ -112,7 +113,7 @@ public class Person {
                 .append(getEmail())
                 .append(" Address: ")
                 .append(getAddress())
-                .append("Link: ")
+                .append(" Link: ")
                 .append(getLink())
                 .append(" Skills: ")
                 .append(getSkills())
