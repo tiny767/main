@@ -29,7 +29,6 @@ public class PersonCardHandle extends NodeHandle<Node> {
 
     public PersonCardHandle(Node cardNode) {
         super(cardNode);
-
         this.idLabel = getChildNode(ID_FIELD_ID);
         this.nameLabel = getChildNode(NAME_FIELD_ID);
         this.addressLabel = getChildNode(ADDRESS_FIELD_ID);

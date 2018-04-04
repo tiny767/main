@@ -13,6 +13,7 @@ import javafx.scene.web.WebView;
 import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
+import seedu.address.logic.commands.FacebookLoginCommand;
 import seedu.address.model.person.Person;
 
 /**
@@ -22,7 +23,7 @@ public class BrowserPanel extends UiPart<Region> {
 
     public static final String DEFAULT_PAGE = "default.html";
     public static final String SEARCH_PAGE_URL =
-            "https://se-edu.github.io/addressbook-level4/DummySearchPage.html?name=";
+            "https://www.google.com.sg/";
 
     private static final String FXML = "BrowserPanel.fxml";
 
@@ -37,12 +38,22 @@ public class BrowserPanel extends UiPart<Region> {
         // To prevent triggering events for typing inside the loaded Web page.
         getRoot().setOnKeyPressed(Event::consume);
 
+        FacebookLoginCommand.setWebEngine(browser.getEngine());
+
         loadDefaultPage();
         registerAsAnEventHandler(this);
     }
 
+    /**
+     * Loading the personal page with the given url
+     * If @param person is null. Return default page.
+    */
     private void loadPersonPage(Person person) {
-        loadPage(SEARCH_PAGE_URL + person.getName().fullName);
+        if (person.getLink() == null) {
+            loadPage(SEARCH_PAGE_URL);
+        } else {
+            loadPage(person.getLink().value);
+        }
     }
 
     public void loadPage(String url) {
@@ -69,4 +80,5 @@ public class BrowserPanel extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadPersonPage(event.getNewSelection().person);
     }
+
 }

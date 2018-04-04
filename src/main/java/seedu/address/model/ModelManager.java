@@ -19,6 +19,8 @@ import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.util.StringUtil;
+import seedu.address.model.interview.Interview;
+import seedu.address.model.interview.exceptions.DuplicateInterviewException;
 import seedu.address.model.job.Job;
 import seedu.address.model.job.exceptions.DuplicateJobException;
 import seedu.address.model.person.Person;
@@ -41,6 +43,7 @@ public class ModelManager extends ComponentManager implements Model {
     private final FilteredList<Person> filteredPersons;
     private final FilteredList<Job> filteredJobs;
     private Report report;
+    private final FilteredList<Interview> filteredInterviews;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -54,6 +57,8 @@ public class ModelManager extends ComponentManager implements Model {
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
         filteredJobs = new FilteredList<>(this.addressBook.getJobList());
+        filteredInterviews = new FilteredList<>(this.addressBook.getInterviewList());
+        allProportions =  new ArrayList<Proportion>();
         this.updateReport(defaultPopulation);
     }
 
@@ -199,6 +204,29 @@ public class ModelManager extends ComponentManager implements Model {
         return addressBook.equals(other.addressBook)
                 && filteredPersons.equals(other.filteredPersons)
                 && filteredJobs.equals(other.filteredJobs);
+    }
+
+    //=========== Filtered Interview List Accessors =============================================================
+    @Override
+    public synchronized void addInterview(Interview interview) throws DuplicateInterviewException {
+        addressBook.addInterview(interview);
+        updateFilteredInterviewList(PREDICATE_SHOW_ALL_INTERVIEWS);
+        indicateAddressBookChanged();
+    }
+
+    /**
+     * Returns an unmodifiable view of the list of {@code Interview} backed by the internal list of
+     * {@code addressBook}
+     */
+    @Override
+    public ObservableList<Interview> getFilteredInterviewList() {
+        return FXCollections.unmodifiableObservableList(filteredInterviews);
+    }
+
+    @Override
+    public void updateFilteredInterviewList(Predicate<Interview> predicate) {
+        requireNonNull(predicate);
+        filteredInterviews.setPredicate(predicate);
     }
 
 }

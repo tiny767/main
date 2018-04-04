@@ -11,6 +11,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.AddressBookParser;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
+import seedu.address.model.interview.Interview;
 import seedu.address.model.job.Job;
 import seedu.address.model.person.Person;
 import seedu.address.model.report.Report;
@@ -55,6 +56,11 @@ public class LogicManager extends ComponentManager implements Logic {
     @Override
     public ObservableList<Job> getFilteredJobList() {
         return model.getFilteredJobList();
+    }
+
+    @Override
+    public ObservableList<Interview> getFilteredInterviewList() {
+        return model.getFilteredInterviewList();
     }
 
     @Override

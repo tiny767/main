@@ -1,6 +1,7 @@
 package seedu.address.model;
 
 import javafx.collections.ObservableList;
+import seedu.address.model.interview.Interview;
 import seedu.address.model.job.Job;
 import seedu.address.model.person.Person;
 import seedu.address.model.report.Report;
@@ -28,6 +29,12 @@ public interface ReadOnlyAddressBook {
      * This list will not contain any duplicate jobs.
      */
     ObservableList<Job> getJobList();
+
+    /**
+     * Returns an unmodifiable view of the interviews list.
+     * This list will not contain any duplicate interviews.
+     */
+    ObservableList<Interview> getInterviewList();
 
     /**
      * Returns an unmodifiable view of the reports list.

@@ -84,11 +84,13 @@ The User Interface might appear mildly different for different versions of the p
 
 * *Description:* Adds a person to the address book +
 
-* *Format:* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+* *Format:* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS l/LINK[t/TAG]...`
 
 * *Examples:* +
-- `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-- `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+- `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123,
+#01-01 l/https://nus-cs2103-ay1718s2.github.io/website/`
+- `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate
+ Prison p/1234567 l/https://nus-cs2103-ay1718s2.github.io/website/ t/criminal`
 
 [NOTE]
 A person can have any number of tags (including 0)
@@ -211,6 +213,23 @@ Selects the 1st person in the results of the `find` command.
 * The index *must be a positive integer* `1, 2, 3, ...`
 ****
 
+==== Auto-correct and auto-complete
+
+* *Description:* Spell corrects and completes command words being typed into Infinity Book +
+* *Format:* `TAB` keypress auto-completes and `SPACE` autocorrects
+* *Example:*
+
+- `li` + `TAB` key press +
+Completes to command word to `list`
+
+- `lsit` + `SPACE` key press +
+Corrects command word to `list`.
+
+****
+* Auto-correct only corrects one edit distance errors.
+* When completions are available, use `TAB` to toggle through options.
+****
+
 === Dashboard Reporting
 
 ==== Understanding The Workflow
@@ -290,7 +309,35 @@ Figure 3: MatchJob command filters the Candidates as per Job, as shown above.
 Index to be used as displayed in the panel
 ====
 
-=== Social Media (FB, Linkedin) Integration [Coming in v2.0]
+=== Managing Interview
+This section describes command available for managing interview in the Infinity Book.
+
+==== Add Interview Command
+* *Description:* Add a Interview to Infinity Book.
+* *Format:* `addInterview n/Interviewee l/LOCATION d/DATE`
+* *Examples:* `addInterview n/John l/One North d/30.1.2018`
+
+==== List Interview [Coming in v1.5]
+
+==== Add Question [Coming in v1.5]
+
+=== Social Media (FB, Linkedin) Integration [Since v1.4]
+
+==== Facebook integration
+
+Connecting to Facebook [Since v1.4]: `facebooklogin`
+
+To connect your Facebook account to Infinity Book, use the `facebooklogin` command.
+
+====
+*Command format*: `[red]#facebooklogin#` +
+*Alias*: `[red]#fb#` +
+====
+
+You will be prompted by a Facebook authorization page (displayed in the browser panel)
+
+You can key in your facebook credentials. Infinity Book is then connected to that facebook account and you can use other
+features that Infinity Book offers.
 
 === Miscellaneous
 

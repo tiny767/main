@@ -11,6 +11,7 @@ import javax.xml.bind.annotation.XmlElement;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.Link;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
@@ -34,7 +35,8 @@ public class XmlAdaptedPerson {
     private String address;
     @XmlElement(required = true)
     private String remark;
-
+    @XmlElement(required = true)
+    private String link;
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
 
@@ -47,11 +49,13 @@ public class XmlAdaptedPerson {
     /**
      * Constructs an {@code XmlAdaptedPerson} with the given person details.
      */
-    public XmlAdaptedPerson(String name, String phone, String email, String address, List<XmlAdaptedTag> tagged) {
+    public XmlAdaptedPerson(String name, String phone, String email, String address,
+                            String link, List<XmlAdaptedTag> tagged) {
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
+        this.link = link;
         if (tagged != null) {
             this.tagged = new ArrayList<>(tagged);
         }
@@ -68,6 +72,7 @@ public class XmlAdaptedPerson {
         email = source.getEmail().value;
         address = source.getAddress().value;
         remark = source.getRemark().value;
+        link = source.getLink().value;
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
@@ -115,12 +120,24 @@ public class XmlAdaptedPerson {
         if (!Address.isValidAddress(this.address)) {
             throw new IllegalValueException(Address.MESSAGE_ADDRESS_CONSTRAINTS);
         }
+
+        if (this.link == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Link.class.getSimpleName()));
+        }
+
+        if (!Link.isValidLink(this.link)) {
+            throw new IllegalValueException(Link.MESSAGE_LINK_CONSTRAINTS);
+        }
+
         final Address address = new Address(this.address);
 
         final Remark remark = new Remark(this.remark);
 
         final Set<Tag> tags = new HashSet<>(personTags);
-        return new Person(name, phone, email, address, remark, tags);
+
+        final Link link = new Link(this.link);
+
+        return new Person(name, phone, email, address, remark, link, tags);
     }
 
     @Override

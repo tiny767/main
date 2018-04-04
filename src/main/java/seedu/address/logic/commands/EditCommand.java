@@ -23,6 +23,7 @@ import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.Link;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
@@ -130,6 +131,7 @@ public class EditCommand extends UndoableCommand {
         private Phone phone;
         private Email email;
         private Address address;
+        private Link link;
         private Set<Tag> tags;
         private Set<Tag> newTags;
         private Set<Tag> deletedTags;
@@ -145,6 +147,7 @@ public class EditCommand extends UndoableCommand {
             setPhone(toCopy.phone);
             setEmail(toCopy.email);
             setAddress(toCopy.address);
+            setLink(toCopy.link);
             setTags(toCopy.tags);
             setNewTags(toCopy.newTags);
             setDeletedTags(toCopy.deletedTags);
@@ -188,6 +191,14 @@ public class EditCommand extends UndoableCommand {
 
         public Optional<Address> getAddress() {
             return Optional.ofNullable(address);
+        }
+
+        public void setLink(Link link) {
+            this.link = link;
+        }
+
+        public Optional<Link> getLink() {
+            return Optional.ofNullable(link);
         }
 
         /**
@@ -260,6 +271,7 @@ public class EditCommand extends UndoableCommand {
             Phone updatedPhone = getPhone().orElse(personToEdit.getPhone());
             Email updatedEmail = getEmail().orElse(personToEdit.getEmail());
             Remark updatedRemark = personToEdit.getRemark();
+            Link updatedLink = personToEdit.getLink();
             Address updatedAddress = getAddress().orElse(personToEdit.getAddress());
 
             Set<Tag> updatedTags;
@@ -283,7 +295,8 @@ public class EditCommand extends UndoableCommand {
             }
 
 
-            return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedRemark, updatedTags);
+            return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedRemark,
+                    updatedLink, updatedTags);
         }
 
         @Override
@@ -305,6 +318,7 @@ public class EditCommand extends UndoableCommand {
                     && getPhone().equals(e.getPhone())
                     && getEmail().equals(e.getEmail())
                     && getAddress().equals(e.getAddress())
+                    && getLink().equals(e.getLink())
                     && getTags().equals(e.getTags());
         }
     }
