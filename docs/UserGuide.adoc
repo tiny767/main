@@ -304,7 +304,23 @@ This section describes command available for managing interview in the Infinity 
 
 ==== Add Question [Coming in v1.5]
 
-=== Social Media (FB, Linkedin) Integration [Coming in v2.0]
+=== Social Media (FB, Linkedin) Integration [Since v1.4]
+
+==== Facebook integration
+
+Connecting to Facebook [Since v1.4]: `facebooklogin`
+
+To connect your Facebook account to Infinity Book, use the `facebooklogin` command.
+
+====
+*Command format*: `[red]#facebooklogin#` +
+*Alias*: `[red]#fb#` +
+====
+
+You will be prompted by a Facebook authorization page (displayed in the browser panel)
+
+You can key in your facebook credentials. Infinity Book is then connected to that facebook account and you can use other
+features that Infinity Book offers.
 
 === Miscellaneous
 
