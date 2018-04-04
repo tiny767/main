@@ -157,7 +157,7 @@ public class MainWindow extends UiPart<Stage> {
      * Replace the current panel by Report panel
      */
     void switchToReportPanel() {
-        reportPanel = new ReportPanel(logic.getAllProportions());
+        reportPanel = new ReportPanel(logic.getReport());
         browserOrReportPlaceholder.getChildren().clear();
         browserOrReportPlaceholder.getChildren().add(reportPanel.getRoot());
         isReportPanelOpen = true;

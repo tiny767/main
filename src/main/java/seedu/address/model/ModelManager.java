@@ -14,6 +14,7 @@ import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+import javafx.util.Pair;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
@@ -39,7 +40,7 @@ public class ModelManager extends ComponentManager implements Model {
     private final AddressBook addressBook;
     private final FilteredList<Person> filteredPersons;
     private final FilteredList<Job> filteredJobs;
-    private final List<Proportion> allProportions;
+    private Report report;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -53,7 +54,6 @@ public class ModelManager extends ComponentManager implements Model {
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
         filteredJobs = new FilteredList<>(this.addressBook.getJobList());
-        allProportions =  new ArrayList<Proportion>();
         this.updateReport(defaultPopulation);
     }
 
@@ -148,8 +148,8 @@ public class ModelManager extends ComponentManager implements Model {
     //=========== Report Accessors =============================================================
 
     @Override
-    public ObservableList<Proportion> getAllProportions() {
-        return FXCollections.unmodifiableObservableList(FXCollections.observableArrayList(allProportions));
+    public Report getReport() {
+        return report;
     }
 
     @Override
@@ -165,18 +165,21 @@ public class ModelManager extends ComponentManager implements Model {
             };
         allPersonList.setPredicate(personContainsPopulationTagPredicate);
 
-        Map<String, Integer> counts = new HashMap<>();
+        Map<String, Pair<Integer, Integer>> counts = new HashMap<>();
         allPersonList.forEach((p) -> {
             Set<Tag> allTags = p.getTags();
             for (Tag t : allTags) {
-                counts.merge(t.tagName, 1, Integer::sum);
+                counts.merge(t.tagName, new Pair<>(1, 1), (a, b) ->
+                    new Pair(a.getKey() + b.getKey(), a.getValue() + b.getValue()));
             }
         });
 
-        allProportions.clear();
-        for (Map.Entry<String, Integer> entry : counts.entrySet()) {
-            allProportions.add(new Proportion(entry.getKey(), entry.getValue()));
+        List<Proportion> allProportions = new ArrayList<>();
+        for (Map.Entry<String, Pair<Integer, Integer>> entry : counts.entrySet()) {
+            allProportions.add(new Proportion(entry.getKey(), entry.getValue().getKey(), entry.getValue().getValue()));
         }
+
+        report = new Report(population, allProportions, allPersonList.size());
     }
 
     @Override

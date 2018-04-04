@@ -2,12 +2,13 @@ package seedu.address.model.report;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.util.Collections;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import seedu.address.model.tag.Tag;
-import seedu.address.model.tag.UniqueTagList;
 
 /**
  * Represents a Report in the address book.
@@ -15,41 +16,43 @@ import seedu.address.model.tag.UniqueTagList;
 public class Report {
 
     private final Tag population;
-    private final UniqueTagList groups;
-    private final String name;
-    private final int maxNumberOfGroups = 3;
+    private final List<Proportion> allProportions;
+    private final int totalTags;
+    private final int totalPersons;
 
     /**
      * Every field must be present and not null.
      */
-    public Report(Tag population, Set<Tag> groups) {
-        requireAllNonNull(population, groups);
+    public Report(Tag population, List<Proportion> allProportions, int totalPersons) {
+        requireAllNonNull(population, allProportions);
 
         this.population = population;
-        // protect internal tags from changes in the arg list
-        this.groups = new UniqueTagList(groups);
+        // protect internal allProportions from changes in the arg list
+        this.allProportions = new ArrayList<>(allProportions);
 
-        String name = population.tagName;
-        for (Tag s : this.groups.toSet()) {
-            name = name + "_" + s.tagName;
+        int sum = 0;
+        for (Proportion p : allProportions) {
+            sum += p.value;
         }
-        this.name = name;
-    }
+        this.totalTags = sum;
 
-    public String getName() {
-        return name;
+        this.totalPersons = totalPersons;
     }
 
     public Tag getPopulation() {
         return population;
     }
 
-    /**
-     * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
-     * if modification is attempted.
-     */
-    public Set<Tag> getGroups() {
-        return Collections.unmodifiableSet(groups.toSet());
+    public ObservableList<Proportion> getAllProportions() {
+        return FXCollections.unmodifiableObservableList(FXCollections.observableArrayList(allProportions));
+    }
+
+    public int getTotalTags() {
+        return totalTags;
+    }
+
+    public int getTotalPersons() {
+        return totalPersons;
     }
 
     @Override
@@ -63,20 +66,20 @@ public class Report {
         }
 
         Report otherPerson = (Report) other;
-        return otherPerson.getName().equals(this.getName())
-                && otherPerson.getGroups().equals(this.getGroups())
+        return otherPerson.getPopulation().equals(this.getPopulation())
+                && otherPerson.getAllProportions().equals(this.getAllProportions())
                 && otherPerson.getPopulation().equals(this.getPopulation());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name);
+        return Objects.hash(population, allProportions);
     }
 
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append(getName());
+        builder.append(population.tagName);
         return builder.toString();
     }
 
