@@ -28,7 +28,6 @@ import seedu.address.model.job.exceptions.DuplicateJobException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
-import seedu.address.model.report.Proportion;
 import seedu.address.model.report.Report;
 import seedu.address.model.report.exceptions.DuplicateReportException;
 import seedu.address.model.tag.Tag;
@@ -159,7 +158,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public ObservableList<Proportion> getAllProportions() {
+        public Report getReport() {
             fail("This method should not be called.");
             return null;
         };

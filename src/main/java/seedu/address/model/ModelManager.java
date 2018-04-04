@@ -58,7 +58,6 @@ public class ModelManager extends ComponentManager implements Model {
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
         filteredJobs = new FilteredList<>(this.addressBook.getJobList());
         filteredInterviews = new FilteredList<>(this.addressBook.getInterviewList());
-        allProportions =  new ArrayList<Proportion>();
         this.updateReport(defaultPopulation);
     }
 
