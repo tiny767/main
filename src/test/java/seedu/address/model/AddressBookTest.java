@@ -144,7 +144,6 @@ public class AddressBookTest {
         }
 
         @Override
-        
         public ObservableList<Report> getReportList() {
             return reports;
         }

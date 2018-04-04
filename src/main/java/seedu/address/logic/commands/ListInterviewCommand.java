@@ -1,3 +1,4 @@
+//@@author deeheenguyen
 package seedu.address.logic.commands;
 
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_INTERVIEWS;
@@ -16,4 +17,4 @@ public class ListInterviewCommand extends Command {
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }
-
+//@@author deeheenguyen
