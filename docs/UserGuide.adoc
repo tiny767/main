@@ -320,7 +320,7 @@ To connect your Facebook account to KayPoh, use the `facebookconnect` command.
 You will be prompted by a Facebook authorization page (displayed in the browser panel)
 
 You can key in your facebook credentials. Infinity Book is then connected to that facebook account and you can use other
-features
+features that Infinity Book offers.
 
 === Miscellaneous
 
