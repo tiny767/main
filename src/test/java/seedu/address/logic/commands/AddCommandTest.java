@@ -159,7 +159,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public ObservableList<Proportion> getAllProportions() {
+        public Report getReport() {
             fail("This method should not be called.");
             return null;
         };

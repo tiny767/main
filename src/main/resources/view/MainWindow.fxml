@@ -46,28 +46,28 @@
         </StackPane>
 
         <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4" VBox.vgrow="ALWAYS">
-          <VBox fx:id="personList" minWidth="340" prefWidth="340" SplitPane.resizableWithParent="false">
+          <VBox fx:id="personList" minWidth="300" prefWidth="300" SplitPane.resizableWithParent="false">
             <padding>
               <Insets top="10" right="5" bottom="20" left="20" />
             </padding>
             <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
           </VBox>
 
-          <VBox fx:id="jobList" minWidth="340" prefWidth="340" SplitPane.resizableWithParent="false">
+          <VBox fx:id="jobList" minWidth="200" prefWidth="200" SplitPane.resizableWithParent="false">
             <padding>
               <Insets top="10" right="5" bottom="20" left="5" />
             </padding>
             <StackPane fx:id="jobListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
           </VBox>
 
-          <VBox fx:id="interviewList" minWidth="340" prefWidth="340" SplitPane.resizableWithParent="false">
+          <VBox fx:id="interviewList" minWidth="200" prefWidth="200" SplitPane.resizableWithParent="false">
             <padding>
-              <Insets top="10" right="10" bottom="10" left="10" />
+              <Insets top="10" right="5" bottom="20" left="5" />
             </padding>
             <StackPane fx:id="interviewListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
           </VBox>
 
-          <StackPane fx:id="browserOrReportPlaceholder" prefWidth="340" >
+          <StackPane fx:id="browserOrReportPlaceholder" prefWidth="250" >
             <padding>
               <Insets top="10" right="20" bottom="20" left="5" />
             </padding>
