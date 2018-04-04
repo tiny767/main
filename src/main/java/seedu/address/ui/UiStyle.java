@@ -30,7 +30,7 @@ public class UiStyle {
     }
 
     public static void setToMorningTheme() {
-        scene.getStylesheets().add(MORNING_THEME_STYLE);
+        scene.getStylesheets().setAll(MORNING_THEME_STYLE);
     }
 
     public static UiStyle getInstance() {

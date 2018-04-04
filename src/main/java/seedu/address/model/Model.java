@@ -10,7 +10,6 @@ import seedu.address.model.job.exceptions.DuplicateJobException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
-import seedu.address.model.report.Proportion;
 import seedu.address.model.report.Report;
 import seedu.address.model.report.exceptions.DuplicateReportException;
 import seedu.address.model.tag.Tag;
@@ -87,11 +86,13 @@ public interface Model {
     /** Adds the given report */
     void addReport(Report report) throws DuplicateReportException;
 
-    /** Returns an unmodifiable view of all proportions */
-    ObservableList<Proportion> getAllProportions();
-
     /**
      * Updates the {@code population} of the report.
      */
     void updateReport(Tag population);
+
+    /**
+     * Get the report of the AddressBook.
+     */
+    Report getReport();
 }

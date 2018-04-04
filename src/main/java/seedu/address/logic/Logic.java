@@ -7,7 +7,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.interview.Interview;
 import seedu.address.model.job.Job;
 import seedu.address.model.person.Person;
-import seedu.address.model.report.Proportion;
+import seedu.address.model.report.Report;
 
 /**
  * API of the Logic component
@@ -22,8 +22,8 @@ public interface Logic {
      */
     CommandResult execute(String commandText) throws CommandException, ParseException;
 
-    /** Returns an unmodifiable view of all proportions*/
-    ObservableList<Proportion> getAllProportions();
+    /** Returns the report. */
+    Report getReport();
 
     /** Returns an unmodifiable view of the filtered list of persons */
     ObservableList<Person> getFilteredPersonList();

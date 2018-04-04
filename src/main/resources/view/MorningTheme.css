@@ -1,5 +1,6 @@
+/* @@author anh2111 */
 .background {
-    background-color: #f4f4f4;
+    background-color: white;
 }
 
 .center {
@@ -137,6 +138,16 @@
     -fx-border-color: #f4f4f4;
 }
 
+.report-pane {
+    -fx-background-color: white;
+    -fx-border-color: white;
+    -fx-padding-color:white;
+}
+
+.report-pane .viewport {
+    -fx-background-color: white;
+}
+
 /* Result Display Box */
 
 .result-display {
@@ -220,7 +231,7 @@
 /* Scroll Bar */
 
 .scroll-bar {
-    -fx-background-color: #f4f4f4;
+    -fx-background-color: white;
 }
 
 .scroll-bar .thumb {
@@ -249,7 +260,7 @@
 
 #commandTextField {
     -fx-padding: 10;
-    -fx-background-color: linear-gradient(to right, #FF5F6D, #FFC371);
+    -fx-background-color: linear-gradient(to right, #4568DC, #B06AB3);
     -fx-font-family: 'Arial', Arial, sans-serif;
     -fx-font-weight: bold;
     -fx-font-size: 12pt;
@@ -278,17 +289,41 @@
 }
 
 /* In this theme, red, blue, pink indicate different colors */
+#tags .pink{
+   -fx-background-color: linear-gradient(to right, #7474BF, #348AC7);
+    -fx-text-fill: white;
+}
+
 #tags .red{
-    -fx-background-color:  linear-gradient(to right, #DCE35B, #45B649);
+    -fx-background-color:  linear-gradient(to right, #36D1DC, #5B86E5);
     -fx-text-fill: white;
 }
 
 #tags .blue{
-    -fx-background-color: linear-gradient(to right, #56ab2f, #a8e063);
+    -fx-background-color: linear-gradient(to right, #B3FFAB, #12FFF7);
     -fx-text-fill: white;
 }
 
-#tags .pink{
-   -fx-background-color: linear-gradient(to right, #00b09b, #96c93d);
-    -fx-text-fill: white;
+/* Pie Chart */
+
+#pieChart .default-color0.chart-pie { -fx-pie-color: #cee8c9; }
+#pieChart .default-color1.chart-pie { -fx-pie-color: #90d1ce; }
+#pieChart .default-color2.chart-pie { -fx-pie-color: #56bad4; }
+#pieChart .default-color3.chart-pie { -fx-pie-color: #3e96c4; }
+#pieChart .default-color4.chart-pie { -fx-pie-color: #326eac; }
+#pieChart .default-color5.chart-pie { -fx-pie-color: #264595; }
+#pieChart .default-color6.chart-pie { -fx-pie-color: #191a7e; }
+#pieChart .default-color7.chart-pie { -fx-pie-color: #121256; }
+
+#pieChart.chart-pie-label {
+    -fx-font-size: 0em;
 }
+
+#pieChart {
+    -fx-padding: 20 5 5 5;
+}
+
+#barChart .default-color0.chart-bar {
+    -fx-bar-fill: #516395;
+}
+/* @@author */
