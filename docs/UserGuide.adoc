@@ -213,6 +213,23 @@ Selects the 1st person in the results of the `find` command.
 * The index *must be a positive integer* `1, 2, 3, ...`
 ****
 
+==== Auto-correct and auto-complete
+
+* *Description:* Spell corrects and completes command words being typed into Infinity Book +
+* *Format:* `TAB` keypress auto-completes and `SPACE` autocorrects
+* *Example:*
+
+- `li` + `TAB` key press +
+Completes to command word to `list`
+
+- `lsit` + `SPACE` key press +
+Corrects command word to `list`.
+
+****
+* Auto-correct only corrects one edit distance errors.
+* When completions are available, use `TAB` to toggle through options.
+****
+
 === Dashboard Reporting
 
 ==== Understanding The Workflow
