@@ -1,3 +1,4 @@
+//@@author anh2111
 package seedu.address.model.report;
 
 import static java.util.Objects.requireNonNull;
@@ -42,6 +43,6 @@ public class Proportion {
         return Objects.hash(tagName, value, totalPersons);
     }
 }
-
+//@@author
 
 
