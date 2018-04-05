@@ -174,7 +174,7 @@ public class ModelManager extends ComponentManager implements Model {
         allPersonList.forEach((p) -> {
             Set<Tag> allTags = p.getTags();
             for (Tag t : allTags) {
-                if (!t.equals(population)) {
+                if (!t.tagName.equalsIgnoreCase(population.tagName)) {
                     counts.merge(t.tagName, new Pair<>(1, 1), (a, b) ->
                             new Pair(a.getKey() + b.getKey(), a.getValue() + b.getValue()));
                 }

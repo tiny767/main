@@ -36,7 +36,7 @@ public class Tag {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof Tag // instanceof handles nulls
-                && this.tagName.equalsIgnoreCase(((Tag) other).tagName)); //ame comparision should be case-insensitive
+                && this.tagName.equals(((Tag) other).tagName));
     }
 
     @Override
