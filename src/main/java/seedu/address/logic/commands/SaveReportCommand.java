@@ -5,26 +5,28 @@ import seedu.address.commons.events.ui.ToggleReportPanelEvent;
 import seedu.address.model.tag.Tag;
 
 /**
- * Displays the report to the user.
+ * Adds a report to the address book.
  */
-public class ViewReportCommand extends Command {
-    public static final String COMMAND_WORD = "viewreport";
-    public static final String COMMAND_ALIAS = "vr";
+public class SaveReportCommand extends Command {
+    public static final String COMMAND_WORD = "savereport";
+    public static final String COMMAND_ALIAS = "sr";
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": view the report for candidates tagged with #POPULATION_TAG\n"
+            + ": Save report at the current state.\n"
             + "Parameters: pop/POPULATION_TAG\n"
             + "Example: " + COMMAND_WORD + " pop/SEIntern OR " + COMMAND_ALIAS + " pop/SEIntern";
-    public static final String MESSAGE_SUCCESS = "Displayed report for #";
+    public static final String MESSAGE_SUCCESS = "Saved report for #";
     public final Tag population;
 
-    public ViewReportCommand(Tag population) {
+    public SaveReportCommand(Tag population) {
         this.population = population;
     }
 
     @Override
     public CommandResult execute() {
         model.updateReport(population);
+        model.addReport(model.getReport());
         EventsCenter.getInstance().post(new ToggleReportPanelEvent());
+
         return new CommandResult(MESSAGE_SUCCESS + population.tagName);
     }
 }

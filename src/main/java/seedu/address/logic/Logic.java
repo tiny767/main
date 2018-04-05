@@ -25,6 +25,9 @@ public interface Logic {
     /** Returns the report. */
     Report getReport();
 
+    /** Returns the saved history of the report. */
+    ObservableList<Report> getReportHistory();
+
     /** Returns an unmodifiable view of the filtered list of persons */
     ObservableList<Person> getFilteredPersonList();
 

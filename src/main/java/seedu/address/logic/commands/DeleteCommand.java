@@ -42,6 +42,7 @@ public class DeleteCommand extends UndoableCommand {
         requireNonNull(personToDelete);
         try {
             model.deletePerson(personToDelete);
+            model.refreshReport();
             EventsCenter.getInstance().post(new RefreshReportPanelEvent());
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("The target person cannot be missing");

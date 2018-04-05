@@ -26,7 +26,6 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.report.Report;
 import seedu.address.model.report.UniqueReportList;
-import seedu.address.model.report.exceptions.DuplicateReportException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -85,7 +84,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.interviews.setInterviews(interviews);
     }
 
-    public void setReports(List<Report> reports)  throws  DuplicateReportException {
+    public void setReports(List<Report> reports) {
         this.reports.setReports(reports);
     }
 
@@ -110,8 +109,6 @@ public class AddressBook implements ReadOnlyAddressBook {
             throw new AssertionError("AddressBooks should not have duplicate job postings");
         } catch (DuplicateInterviewException e) {
             throw new AssertionError("AddressBooks should not have duplicate interviews ");
-        } catch (DuplicateReportException e) {
-            throw new AssertionError("AddressBooks should not have duplicate reports.");
         }
     }
 
@@ -272,9 +269,8 @@ public class AddressBook implements ReadOnlyAddressBook {
     /**
      * Adds a report to the address book.
      *
-     * @throws DuplicateReportException if an equivalent report already exists.
      */
-    public void addReport(Report r) throws DuplicateReportException {
+    public void addReport(Report r) {
         reports.add(r);
     }
 

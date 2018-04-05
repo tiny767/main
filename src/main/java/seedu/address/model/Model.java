@@ -11,7 +11,6 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.report.Report;
-import seedu.address.model.report.exceptions.DuplicateReportException;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -56,6 +55,9 @@ public interface Model {
     ObservableList<Job> getFilteredJobList();
 
     /** Returns an unmodifiable view of the filtered interview list */
+    ObservableList<Report> getReportHistory();
+
+    /** Returns an unmodifiable view of the filtered interview list */
     ObservableList<Interview> getFilteredInterviewList();
 
     /**
@@ -84,12 +86,17 @@ public interface Model {
     void updateFilteredInterviewList(Predicate<Interview> predicate);
 
     /** Adds the given report */
-    void addReport(Report report) throws DuplicateReportException;
+    void addReport(Report report);
 
     /**
      * Updates the {@code population} of the report.
      */
     void updateReport(Tag population);
+
+    /**
+     * refresh the report of the AddressBook.
+     */
+    void refreshReport();
 
     /**
      * Get the report of the AddressBook.

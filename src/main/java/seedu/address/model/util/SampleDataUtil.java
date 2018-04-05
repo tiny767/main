@@ -1,7 +1,10 @@
 package seedu.address.model.util;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
@@ -18,6 +21,8 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Remark;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.report.Proportion;
+import seedu.address.model.report.Report;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -36,33 +41,85 @@ public class SampleDataUtil {
         return new Person[] {
             new Person(new Name("Alex Yeoh"), new Phone("87438807"), new Email("alexyeoh@example.com"),
                        new Address("Blk 30 Geylang Street 29, #06-40"), EMPTY_REMARK, INIT_LINK,
-                       getTagSet("FreshGrad")),
+                       getTagSet("FreshGrad", "Computing")),
             new Person(new Name("Bernice Yu"), new Phone("99272758"), new Email("berniceyu@example.com"),
                        new Address("Blk 30 Lorong 3 Serangoon Gardens, #07-18"), EMPTY_REMARK, INIT_LINK,
-                       getTagSet("FreshGrad")),
+                       getTagSet("FreshGrad", "Business")),
             new Person(new Name("Charlotte Oliveiro"), new Phone("93210283"), new Email("charlotte@example.com"),
                        new Address("Blk 11 Ang Mo Kio Street 74, #11-04"), EMPTY_REMARK, INIT_LINK,
-                       getTagSet("Intern")),
+                       getTagSet("SEIntern", "Interviewing")),
             new Person(new Name("David Li"), new Phone("91031282"), new Email("lidavid@example.com"),
                        new Address("Blk 436 Serangoon Gardens Street 26, #16-43"), EMPTY_REMARK, INIT_LINK,
-                       getTagSet("Intern")),
+                       getTagSet("SEIntern", "Offered")),
             new Person(new Name("Irfan Ibrahim"), new Phone("92492021"), new Email("irfan@example.com"),
                        new Address("Blk 47 Tampines Street 20, #17-35"), EMPTY_REMARK, INIT_LINK,
-                       getTagSet("Intern")),
-            new Person(new Name("Roy Balakrishnan"), new Phone("92624417"), new Email("royb@example.com"),
+                       getTagSet("SEIntern", "Screening")),
+            new Person(new Name("Clinton Francis Barton"), new Phone("92624417"), new Email("royb@example.com"),
                        new Address("Blk 45 Aljunied Street 85, #11-31"), SAMPLE_REMARK, INIT_LINK,
-                       getTagSet("Intern"))
+                       getTagSet("SEIntern", "Screening")),
+            new Person(new Name("Roy Balakrishnan"), new Phone("92624417"), new Email("a@example.com"),
+                    new Address("Blk 45 Aljunied Street 85, #11-31"), SAMPLE_REMARK, INIT_LINK,
+                    getTagSet("SEIntern", "Screening")),
+            new Person(new Name("Roy Doe"), new Phone("92624417"), new Email("b@example.com"),
+                    new Address("Blk 45 Aljunied Street 85, #11-31"), SAMPLE_REMARK, INIT_LINK,
+                    getTagSet("SEIntern", "Rejected")),
+            new Person(new Name("Sam Balakrishnan"), new Phone("92624417"), new Email("c@example.com"),
+                    new Address("Blk 45 Aljunied Street 85, #11-31"), SAMPLE_REMARK, INIT_LINK,
+                    getTagSet("SEIntern", "Offered")),
+            new Person(new Name("Alex Smith"), new Phone("92624417"), new Email("d@example.com"),
+                    new Address("Blk 45 Aljunied Street 85, #11-31"), SAMPLE_REMARK, INIT_LINK,
+                    getTagSet("SEIntern", "Interviewing")),
+            new Person(new Name("Jacques Duquesne"), new Phone("92624417"), new Email("e@example.com"),
+                    new Address("Blk 45 Aljunied Street 85, #11-31"), SAMPLE_REMARK, INIT_LINK,
+                    getTagSet("SEIntern", "Interviewing")),
+            new Person(new Name("Pietro Maximoff"), new Phone("92624417"), new Email("f@example.com"),
+                    new Address("Blk 45 Aljunied Street 85, #11-31"), SAMPLE_REMARK, INIT_LINK,
+                    getTagSet("SEIntern", "Screening")),
+            new Person(new Name("Wanda Maximoff"), new Phone("92624417"), new Email("j@example.com"),
+                    new Address("Blk 45 Aljunied Street 85, #11-31"), SAMPLE_REMARK, INIT_LINK,
+                    getTagSet("SEIntern", "Screening"))
         };
     }
 
     public static Job[] getSampleJobs() {
         return new Job[] {
             new Job(new JobTitle("Backend Engineer"), new Location("Geylang"), new Skill("Java,SQL"),
-                    getTagSet("Intern")),
+                    getTagSet("SEIntern")),
             new Job(new JobTitle("Frontend Engineer"), new Location("Serangoon"), new Skill("JavaScript,CSS,HTML"),
                     getTagSet("FreshGrad")),
             new Job(new JobTitle("Data Scientist"), new Location("Ang Mo Kio"), new Skill("Python, R"),
                     getTagSet("Experienced"))
+        };
+    }
+
+    public static Report[] getSampleReports() throws InterruptedException {
+        ArrayList<Report> sampleHistory = new ArrayList<>();
+
+        Tag samplePopulation = new Tag("SEIntern");
+
+        List<Proportion> sampleListA = new ArrayList<>();
+        sampleListA.add(new Proportion("Screening", 10, 10));
+        sampleListA.add(new Proportion("Interviewing", 1, 1));
+        Report reportA = new Report(samplePopulation, sampleListA, 11);
+
+        TimeUnit.SECONDS.sleep(2); // to make the data more reasonable
+
+        List<Proportion> sampleListB = new ArrayList<>();
+        sampleListB.add(new Proportion("Screening", 9, 9));
+        sampleListB.add(new Proportion("Interviewing", 2, 2));
+        Report reportB = new Report(samplePopulation, sampleListB, 11);
+
+        TimeUnit.SECONDS.sleep(2); // to make the data more reasonable
+
+        List<Proportion> sampleListC = new ArrayList<>();
+        sampleListC.add(new Proportion("Screening", 8, 8));
+        sampleListC.add(new Proportion("Interviewing", 3, 3));
+        Report reportC = new Report(samplePopulation, sampleListC, 11);
+
+        return new Report[] {
+            reportA,
+            reportB,
+            reportC
         };
     }
 
@@ -75,11 +132,16 @@ public class SampleDataUtil {
             for (Job sampleJob : getSampleJobs()) {
                 sampleAb.addJob(sampleJob);
             }
+            for (Report sampleReport : getSampleReports()) {
+                sampleAb.addReport(sampleReport);
+            }
             return sampleAb;
         } catch (DuplicatePersonException e) {
             throw new AssertionError("sample data cannot contain duplicate persons", e);
         } catch (DuplicateJobException e) {
             throw new AssertionError("sample data cannot contain duplicate jobs", e);
+        } catch (InterruptedException e) {
+            throw new Error("error in generating sample reports", e);
         }
     }
 

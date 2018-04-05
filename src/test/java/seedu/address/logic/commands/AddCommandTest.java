@@ -29,7 +29,6 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.report.Report;
-import seedu.address.model.report.exceptions.DuplicateReportException;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.PersonBuilder;
 
@@ -119,7 +118,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public void addReport(Report report) throws DuplicateReportException {
+        public void addReport(Report report) {
 
             fail("This method should not be called.");
         }
@@ -162,6 +161,17 @@ public class AddCommandTest {
             fail("This method should not be called.");
             return null;
         };
+
+        @Override
+        public void refreshReport() {
+            fail("This method should not be called.");
+        };
+
+        @Override
+        public ObservableList<Report> getReportHistory() {
+            fail("This method should not be called.");
+            return null;
+        }
 
         @Override
         public void updateFilteredPersonList(Predicate<Person> predicate) {
@@ -218,6 +228,9 @@ public class AddCommandTest {
             requireNonNull(person);
             personsAdded.add(person);
         }
+
+        @Override
+        public void refreshReport() { }
 
         @Override
         public ReadOnlyAddressBook getAddressBook() {

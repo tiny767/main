@@ -153,7 +153,6 @@
 .result-display {
     -fx-background-color: transparent;
     -fx-font-family: 'Arial', Arial, sans-serif;
-    -fx-font-weight: light;
     -fx-font-size: 10pt;
         -fx-padding: 0;
     -fx-text-fill: #2d3436;
@@ -212,7 +211,7 @@
 
 .menu-bar .label {
     -fx-font-size: 10pt;
-    -fx-font-family: "Arial"
+    -fx-font-family: "Arial";
     -fx-text-fill: #b2bec3;
 }
 

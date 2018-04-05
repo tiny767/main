@@ -28,7 +28,6 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.report.Proportion;
 import seedu.address.model.report.Report;
-import seedu.address.model.report.exceptions.DuplicateReportException;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -37,13 +36,14 @@ import seedu.address.model.tag.Tag;
  */
 public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
-    private static final Tag defaultPopulation = new Tag("anh");
+    private static final Tag defaultPopulation = new Tag("SEIntern");
 
     private final AddressBook addressBook;
     private final FilteredList<Person> filteredPersons;
     private final FilteredList<Job> filteredJobs;
     private Report report;
     private final FilteredList<Interview> filteredInterviews;
+    private final FilteredList<Report> reportList;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -58,6 +58,7 @@ public class ModelManager extends ComponentManager implements Model {
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
         filteredJobs = new FilteredList<>(this.addressBook.getJobList());
         filteredInterviews = new FilteredList<>(this.addressBook.getInterviewList());
+        reportList = new FilteredList<>(this.addressBook.getReportList());
         this.updateReport(defaultPopulation);
     }
 
@@ -104,7 +105,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public synchronized void addReport(Report report) throws DuplicateReportException {
+    public synchronized void addReport(Report report) {
         addressBook.addReport(report);
         indicateAddressBookChanged();
     }
@@ -173,8 +174,10 @@ public class ModelManager extends ComponentManager implements Model {
         allPersonList.forEach((p) -> {
             Set<Tag> allTags = p.getTags();
             for (Tag t : allTags) {
-                counts.merge(t.tagName, new Pair<>(1, 1), (a, b) ->
-                    new Pair(a.getKey() + b.getKey(), a.getValue() + b.getValue()));
+                if (!t.tagName.equalsIgnoreCase(population.tagName)) {
+                    counts.merge(t.tagName, new Pair<>(1, 1), (a, b) ->
+                            new Pair(a.getKey() + b.getKey(), a.getValue() + b.getValue()));
+                }
             }
         });
 
@@ -184,6 +187,11 @@ public class ModelManager extends ComponentManager implements Model {
         }
 
         report = new Report(population, allProportions, allPersonList.size());
+    }
+
+    @Override
+    public void refreshReport() {
+        this.updateReport(this.report.getPopulation());
     }
 
     @Override
@@ -220,6 +228,21 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public ObservableList<Interview> getFilteredInterviewList() {
         return FXCollections.unmodifiableObservableList(filteredInterviews);
+    }
+
+    /**
+     * Returns an unmodifiable view of the list of {@code Report} backed by the internal list of
+     * {@code addressBook}
+     */
+    @Override
+    public ObservableList<Report> getReportHistory() {
+        reportList.setPredicate(new Predicate<Report>() {
+            @Override
+            public boolean test(Report oldReport) {
+                return oldReport.getPopulation().equals(report.getPopulation());
+            }
+        });
+        return FXCollections.unmodifiableObservableList(reportList);
     }
 
     @Override
