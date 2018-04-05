@@ -36,7 +36,7 @@ import seedu.address.model.tag.Tag;
  */
 public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
-    private static final Tag defaultPopulation = new Tag("anh");
+    private static final Tag defaultPopulation = new Tag("SEIntern");
 
     private final AddressBook addressBook;
     private final FilteredList<Person> filteredPersons;
@@ -178,9 +178,10 @@ public class ModelManager extends ComponentManager implements Model {
         });
 
         List<Proportion> allProportions = new ArrayList<>();
-        for (Map.Entry<String, Pair<Integer, Integer>> entry : counts.entrySet()) {
-            allProportions.add(new Proportion(entry.getKey(), entry.getValue().getKey(), entry.getValue().getValue()));
-        }
+        for (Map.Entry<String, Pair<Integer, Integer>> entry : counts.entrySet())
+            if (!entry.getKey().equals(population.tagName)) { //Skip the population tag
+                allProportions.add(new Proportion(entry.getKey(), entry.getValue().getKey(), entry.getValue().getValue()));
+            }
 
         report = new Report(population, allProportions, allPersonList.size());
     }

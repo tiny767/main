@@ -1,5 +1,6 @@
 package seedu.address.ui;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
@@ -14,6 +15,8 @@ import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.report.Proportion;
 import seedu.address.model.report.Report;
+
+import javax.xml.soap.Text;
 
 /**
  * The Report Panel of the App.
@@ -35,14 +38,16 @@ public class ReportPanel extends UiPart<Region> {
         super(FXML);
         pReport = report;
 
-        pieChart.setTitle("In Total "  + report.getTotalTags() + " Tags");
+        pieChart.setTitle("In " + report.getTotalTags() + " Tags");
         pieChart.setData(tabulateData());
         pieChart.setLabelsVisible(false);
 
-        barChart.setTitle("In Total " + report.getTotalPersons() + " People");
+        String barChartTitle = "STATISTICS OF #" + report.getPopulation().tagName + " CANDIDATES\n"
+                + "\n"
+                + "In " + report.getTotalPersons() + " candidates";
+        barChart.setTitle(barChartTitle);
         barChart.setData(tabulateBarChartData());
         barChart.setBarGap(CHART_BAR_GAP);
-
     }
 
     /**
@@ -66,7 +71,7 @@ public class ReportPanel extends UiPart<Region> {
     private ObservableList<XYChart.Series<String, Integer>> tabulateBarChartData() {
         ObservableList<XYChart.Series<String, Integer>> data = FXCollections.observableArrayList();
         XYChart.Series<String, Integer> series = new XYChart.Series<String, Integer>();
-        series.setName("Number of People Having The Tag");
+        series.setName("Number of Candidates Having The Tag");
 
         for (Proportion p : pReport.getAllProportions()) {
             series.getData().add(new XYChart.Data(p.tagName, new Integer(p.totalPersons)));

@@ -7,6 +7,9 @@
 <?import javafx.scene.chart.BarChart?>
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Label?>
 <ScrollPane styleClass="report-pane">
     <GridPane xmlns="http://javafx.com/javafx"
               xmlns:fx="http://javafx.com/fxml"
@@ -17,6 +20,7 @@
             <ColumnConstraints percentWidth="100" hgrow="NEVER"/>
         </columnConstraints>
         <rowConstraints>
+            <RowConstraints vgrow="SOMETIMES" />
             <RowConstraints vgrow="SOMETIMES" />
             <RowConstraints vgrow="SOMETIMES" />
         </rowConstraints>
