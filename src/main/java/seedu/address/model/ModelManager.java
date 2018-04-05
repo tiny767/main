@@ -28,7 +28,6 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.report.Proportion;
 import seedu.address.model.report.Report;
-import seedu.address.model.report.exceptions.DuplicateReportException;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -104,7 +103,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public synchronized void addReport(Report report) throws DuplicateReportException {
+    public synchronized void addReport(Report report) {
         addressBook.addReport(report);
         indicateAddressBookChanged();
     }
@@ -184,6 +183,11 @@ public class ModelManager extends ComponentManager implements Model {
         }
 
         report = new Report(population, allProportions, allPersonList.size());
+    }
+
+    @Override
+    public void refreshReport() {
+        this.updateReport(this.report.getPopulation());
     }
 
     @Override

@@ -11,7 +11,6 @@ import java.util.Set;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.CollectionUtil;
-import seedu.address.model.report.exceptions.DuplicateReportException;
 
 /**
  * A list of reports that enforces no nulls and uniqueness between its elements.
@@ -53,7 +52,7 @@ public class UniqueReportList implements Iterable<Report> {
         this.internalList.setAll(replacement.internalList);
     }
 
-    public void setReports(List<Report>  reports) throws DuplicateReportException {
+    public void setReports(List<Report>  reports) {
         requireAllNonNull(reports);
         final UniqueReportList replacement = new UniqueReportList();
         for (final Report report : reports) {
@@ -73,13 +72,9 @@ public class UniqueReportList implements Iterable<Report> {
     /**
      * Adds a Tag to the list.
      *
-     * @throws DuplicateReportException if the Tag to add is a duplicate of an existing Tag in the list.
      */
-    public void add(Report toAdd) throws DuplicateReportException {
+    public void add(Report toAdd) {
         requireNonNull(toAdd);
-        if (contains(toAdd)) {
-            throw new DuplicateReportException();
-        }
         internalList.add(toAdd);
 
         assert CollectionUtil.elementsAreUnique(internalList);
