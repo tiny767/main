@@ -15,6 +15,7 @@ import seedu.address.model.interview.Interview;
 import seedu.address.model.job.Job;
 import seedu.address.model.person.Person;
 import seedu.address.model.report.Report;
+import seedu.address.model.report.UniqueReportList;
 
 /**
  * The main LogicManager of the app.
@@ -61,6 +62,11 @@ public class LogicManager extends ComponentManager implements Logic {
     @Override
     public ObservableList<Interview> getFilteredInterviewList() {
         return model.getFilteredInterviewList();
+    }
+
+    @Override
+    public ObservableList<Report> getReportHistory() {
+        return model.getReportHistory();
     }
 
     @Override

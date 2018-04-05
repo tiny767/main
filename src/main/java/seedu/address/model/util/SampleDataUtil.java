@@ -1,7 +1,10 @@
 package seedu.address.model.util;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
@@ -18,6 +21,8 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Remark;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.report.Proportion;
+import seedu.address.model.report.Report;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -87,6 +92,37 @@ public class SampleDataUtil {
         };
     }
 
+    public static Report[] getSampleReports() throws InterruptedException {
+        ArrayList<Report> sampleHistory = new ArrayList<>();
+
+        Tag samplePopulation = new Tag("SEIntern");
+
+        List<Proportion> sampleListA = new ArrayList<>();
+        sampleListA.add(new Proportion("Screening", 10, 10));
+        sampleListA.add(new Proportion("Interviewing", 1, 1));
+        Report reportA = new Report(samplePopulation, sampleListA, 11);
+
+        TimeUnit.SECONDS.sleep(2); // to make the data more reasonable
+
+        List<Proportion> sampleListB = new ArrayList<>();
+        sampleListB.add(new Proportion("Screening", 9, 9));
+        sampleListB.add(new Proportion("Interviewing", 2, 2));
+        Report reportB = new Report(samplePopulation, sampleListB, 11);
+
+        TimeUnit.SECONDS.sleep(2); // to make the data more reasonable
+
+        List<Proportion> sampleListC = new ArrayList<>();
+        sampleListC.add(new Proportion("Screening", 8, 8));
+        sampleListC.add(new Proportion("Interviewing", 3, 3));
+        Report reportC = new Report(samplePopulation, sampleListC, 11);
+
+        return new Report[] {
+            reportA,
+            reportB,
+            reportC
+        };
+    }
+
     public static ReadOnlyAddressBook getSampleAddressBook() {
         try {
             AddressBook sampleAb = new AddressBook();
@@ -96,11 +132,16 @@ public class SampleDataUtil {
             for (Job sampleJob : getSampleJobs()) {
                 sampleAb.addJob(sampleJob);
             }
+            for (Report sampleReport : getSampleReports()) {
+                sampleAb.addReport(sampleReport);
+            }
             return sampleAb;
         } catch (DuplicatePersonException e) {
             throw new AssertionError("sample data cannot contain duplicate persons", e);
         } catch (DuplicateJobException e) {
             throw new AssertionError("sample data cannot contain duplicate jobs", e);
+        } catch (InterruptedException e) {
+            throw new Error("error in generating sample reports", e);
         }
     }
 

@@ -41,7 +41,7 @@ public class ReportCard extends UiPart<Region> {
         this.report = report;
         totalPersons.setText("Total number of people: " + report.getTotalPersons());
         totalTags.setText("Total number of tags: " + report.getTotalTags());
-        date.setText(report.getDate());
+        date.setText("Statistics at " + report.getDate());
 
         initTags(report);
     }

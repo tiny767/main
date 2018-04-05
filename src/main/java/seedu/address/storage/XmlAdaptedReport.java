@@ -1,5 +1,6 @@
 package seedu.address.storage;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -35,7 +36,7 @@ public class XmlAdaptedReport {
     @XmlElement
     private List<XmlAdaptedProportion> proportions = new ArrayList<>();
     @XmlElement
-    private String test;
+    private String date;
 
     /**
      * Constructs an XmlAdaptedReport.
@@ -47,11 +48,12 @@ public class XmlAdaptedReport {
      * Constructs an {@code XmlAdaptedReport} with the given Report details.
      */
     public XmlAdaptedReport(XmlAdaptedTag population, int totalTags, int totalPersons,
-                                List<XmlAdaptedProportion> proportions) {
+                                List<XmlAdaptedProportion> proportions, String date) {
         this.population = population;
         this.totalPersons = totalPersons;
         this.totalTags = totalTags;
         this.proportions = proportions;
+        this.date = date;
     }
 
     /**
@@ -67,7 +69,7 @@ public class XmlAdaptedReport {
         for (Proportion p : source.getAllProportions()) {
             proportions.add(new XmlAdaptedProportion(p));
         }
-        test = source.getPopulation().tagName;
+        date = source.getDate();
     }
 
     /**
@@ -75,17 +77,15 @@ public class XmlAdaptedReport {
      *
      * @throws IllegalValueException if there were any data constraints violated in the adapted Proportion
      */
-    public Report toModelType() throws IllegalValueException {
+    public Report toModelType() throws IllegalValueException, ParseException {
         final List<Proportion> proportions = new ArrayList<>();
         for (XmlAdaptedProportion p : this.proportions) {
             proportions.add(p.toModelType());
         }
 
         final Tag population = this.population.toModelType();
-        System.out.println("Created a xml model.");
 
-//        return new Report(population, proportions, totalPersons);
-        return new Report(new Tag(test), new ArrayList<>(), 0);
+        return new Report(population, proportions, totalPersons, date);
     }
 
     @Override
@@ -99,10 +99,9 @@ public class XmlAdaptedReport {
         }
 
         XmlAdaptedReport otherReport = (XmlAdaptedReport) other;
-        return false;
-//        return Objects.equals(population, otherReport.population)
-//                && proportions.equals(otherReport.proportions)
-//                && totalPersons == otherReport.totalPersons
-//                && totalTags == otherReport.totalTags;
+        return Objects.equals(population, otherReport.population)
+                && proportions.equals(otherReport.proportions)
+                && totalPersons == otherReport.totalPersons
+                && totalTags == otherReport.totalTags;
     }
 }

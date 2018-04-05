@@ -43,6 +43,7 @@ public class ModelManager extends ComponentManager implements Model {
     private final FilteredList<Job> filteredJobs;
     private Report report;
     private final FilteredList<Interview> filteredInterviews;
+    private final FilteredList<Report> reportList;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -57,6 +58,7 @@ public class ModelManager extends ComponentManager implements Model {
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
         filteredJobs = new FilteredList<>(this.addressBook.getJobList());
         filteredInterviews = new FilteredList<>(this.addressBook.getInterviewList());
+        reportList = new FilteredList<>(this.addressBook.getReportList());
         this.updateReport(defaultPopulation);
     }
 
@@ -225,6 +227,21 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public ObservableList<Interview> getFilteredInterviewList() {
         return FXCollections.unmodifiableObservableList(filteredInterviews);
+    }
+
+    /**
+     * Returns an unmodifiable view of the list of {@code Report} backed by the internal list of
+     * {@code addressBook}
+     */
+    @Override
+    public ObservableList<Report> getReportHistory() {
+        reportList.setPredicate(new Predicate<Report>() {
+            @Override
+            public boolean test(Report oldReport) {
+                return oldReport.getPopulation().equals(report.getPopulation());
+            }
+        });
+        return FXCollections.unmodifiableObservableList(reportList);
     }
 
     @Override

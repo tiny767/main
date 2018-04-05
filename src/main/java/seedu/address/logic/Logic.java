@@ -8,6 +8,7 @@ import seedu.address.model.interview.Interview;
 import seedu.address.model.job.Job;
 import seedu.address.model.person.Person;
 import seedu.address.model.report.Report;
+import seedu.address.model.report.UniqueReportList;
 
 /**
  * API of the Logic component
@@ -24,6 +25,9 @@ public interface Logic {
 
     /** Returns the report. */
     Report getReport();
+
+    /** Returns the saved history of the report. */
+    ObservableList<Report> getReportHistory();
 
     /** Returns an unmodifiable view of the filtered list of persons */
     ObservableList<Person> getFilteredPersonList();

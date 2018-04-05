@@ -18,6 +18,7 @@ import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.report.Proportion;
 import seedu.address.model.report.Report;
+import seedu.address.model.report.UniqueReportList;
 
 import javax.xml.soap.Text;
 
@@ -30,6 +31,7 @@ public class ReportPanel extends UiPart<Region> {
     private static final Double CHART_BAR_GAP = 0.1;
 
     private Report pReport;
+    private ObservableList<Report> reportHistory;
 
     @FXML
     private PieChart pieChart;
@@ -40,9 +42,10 @@ public class ReportPanel extends UiPart<Region> {
     @FXML
     private ListView<ReportCard> reportListView;
 
-    public ReportPanel(Report report) {
+    public ReportPanel(Report report, ObservableList<Report> reportHistory) {
         super(FXML);
         pReport = report;
+        this.reportHistory = reportHistory;
 
         setupPieChart();
         setupBarChart();
@@ -67,12 +70,9 @@ public class ReportPanel extends UiPart<Region> {
 
     private void setupHistoryTable() {
         ObservableList<ReportCard> mappedList = EasyBind.map(
-                FXCollections.observableArrayList(pReport.getHistory()), (p) -> new ReportCard(p));
+                reportHistory, (p) -> new ReportCard(p));
         reportListView.setItems(mappedList);
         reportListView.setCellFactory(listView -> new ReportPanel.ReportListViewCell());
-
-
-
     }
 
     /**

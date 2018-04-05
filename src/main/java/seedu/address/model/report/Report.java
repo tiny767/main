@@ -3,7 +3,12 @@ package seedu.address.model.report;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -20,12 +25,34 @@ public class Report {
     private final List<Proportion> allProportions;
     private final int totalTags;
     private final int totalPersons;
+    private final Date date;
 
     /**
      * Every field must be present and not null.
      */
     public Report(Tag population, List<Proportion> allProportions, int totalPersons) {
         requireAllNonNull(population, allProportions);
+
+        this.date = Calendar.getInstance().getTime();
+        this.population = population;
+        // protect internal allProportions from changes in the arg list
+        this.allProportions = new ArrayList<>(allProportions);
+
+        int sum = 0;
+        for (Proportion p : allProportions) {
+            sum += p.value;
+        }
+        this.totalTags = sum;
+
+        this.totalPersons = totalPersons;
+    }
+
+    public Report(Tag population, List<Proportion> allProportions, int totalPersons, String date)
+            throws ParseException {
+        requireAllNonNull(population, allProportions);
+
+        DateFormat formater = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+        this.date = formater.parse(date);
 
         this.population = population;
         // protect internal allProportions from changes in the arg list
@@ -56,28 +83,10 @@ public class Report {
         return totalPersons;
     }
 
-    public List<Report> getHistory() {
-        ArrayList<Report> sampleHistory = new ArrayList<>();
-
-        Tag samplePopulation = new Tag("SEIntern");
-
-        Proportion sampleFirstProportion = new Proportion("Screening", 10, 10);
-        Proportion sampleSecondProportion = new Proportion("Interviewing", 1, 1);
-        List<Proportion> sampleList = new ArrayList<>();
-        sampleList.add(sampleFirstProportion);
-        sampleList.add(sampleSecondProportion);
-
-        int sampleTotalPersons = 11;
-
-        Report sampleReport = new Report(samplePopulation, sampleList, sampleTotalPersons);
-
-        sampleHistory.add(sampleReport);
-        sampleHistory.add(sampleReport);
-        return sampleHistory;
-    }
-
     public String getDate() {
-        return "100";
+        DateFormat formater = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+
+        return formater.format(date);
     }
 
     @Override

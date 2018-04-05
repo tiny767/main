@@ -55,6 +55,9 @@ public interface Model {
     ObservableList<Job> getFilteredJobList();
 
     /** Returns an unmodifiable view of the filtered interview list */
+    ObservableList<Report> getReportHistory();
+
+    /** Returns an unmodifiable view of the filtered interview list */
     ObservableList<Interview> getFilteredInterviewList();
 
     /**
