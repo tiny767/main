@@ -171,17 +171,17 @@ public class ModelManager extends ComponentManager implements Model {
         Map<String, Pair<Integer, Integer>> counts = new HashMap<>();
         allPersonList.forEach((p) -> {
             Set<Tag> allTags = p.getTags();
-            for (Tag t : allTags) {
-                counts.merge(t.tagName, new Pair<>(1, 1), (a, b) ->
-                    new Pair(a.getKey() + b.getKey(), a.getValue() + b.getValue()));
-            }
+            for (Tag t : allTags)
+                if (!t.equals(population)) {
+                    counts.merge(t.tagName, new Pair<>(1, 1), (a, b) ->
+                        new Pair(a.getKey() + b.getKey(), a.getValue() + b.getValue()));
+                }
         });
 
         List<Proportion> allProportions = new ArrayList<>();
-        for (Map.Entry<String, Pair<Integer, Integer>> entry : counts.entrySet())
-            if (!entry.getKey().equals(population.tagName)) { //Skip the population tag
-                allProportions.add(new Proportion(entry.getKey(), entry.getValue().getKey(), entry.getValue().getValue()));
-            }
+        for (Map.Entry<String, Pair<Integer, Integer>> entry : counts.entrySet()) {
+            allProportions.add(new Proportion(entry.getKey(), entry.getValue().getKey(), entry.getValue().getValue()));
+        }
 
         report = new Report(population, allProportions, allPersonList.size());
     }

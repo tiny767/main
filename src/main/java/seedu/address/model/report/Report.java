@@ -56,6 +56,30 @@ public class Report {
         return totalPersons;
     }
 
+    public List<Report> getHistory() {
+        ArrayList<Report> sampleHistory = new ArrayList<>();
+
+        Tag samplePopulation = new Tag("SEIntern");
+
+        Proportion sampleFirstProportion = new Proportion("Screening", 10, 10);
+        Proportion sampleSecondProportion = new Proportion("Interviewing", 1, 1);
+        List<Proportion> sampleList = new ArrayList<>();
+        sampleList.add(sampleFirstProportion);
+        sampleList.add(sampleSecondProportion);
+
+        int sampleTotalPersons = 11;
+
+        Report sampleReport = new Report(samplePopulation, sampleList, sampleTotalPersons);
+
+        sampleHistory.add(sampleReport);
+        sampleHistory.add(sampleReport);
+        return sampleHistory;
+    }
+
+    public String getDate() {
+        return "100";
+    }
+
     @Override
     public boolean equals(Object other) {
         if (other == this) {

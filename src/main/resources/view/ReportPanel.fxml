@@ -7,22 +7,20 @@
 <?import javafx.scene.chart.BarChart?>
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.chart.CategoryAxis?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <ScrollPane styleClass="report-pane">
     <GridPane xmlns="http://javafx.com/javafx"
               xmlns:fx="http://javafx.com/fxml"
-              prefHeight="800.0" prefWidth="400.0"
+              prefHeight="1000" prefWidth="400.0"
               minWidth="400.0"
               styleClass="report-pane">
         <columnConstraints>
             <ColumnConstraints percentWidth="100" hgrow="NEVER"/>
         </columnConstraints>
         <rowConstraints>
-            <RowConstraints vgrow="SOMETIMES" />
-            <RowConstraints vgrow="SOMETIMES" />
-            <RowConstraints vgrow="SOMETIMES" />
+            <RowConstraints percentHeight="32" vgrow="ALWAYS" />
+            <RowConstraints percentHeight="32" vgrow="ALWAYS" />
+            <RowConstraints percentHeight="36" vgrow="ALWAYS" />
         </rowConstraints>
         <children>
             <BarChart id="barChart" fx:id="barChart"
@@ -40,6 +38,11 @@
                       GridPane.columnIndex="0"
                       GridPane.columnSpan="1"
                       GridPane.rowIndex="1"
+            />
+            <ListView fx:id="reportListView"
+                      GridPane.columnIndex="0"
+                      GridPane.columnSpan="1"
+                      GridPane.rowIndex="2"
             />
         </children>
     </GridPane>

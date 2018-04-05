@@ -10,7 +10,10 @@ import javafx.fxml.FXML;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
+import org.fxmisc.easybind.EasyBind;
 import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.report.Proportion;
@@ -34,20 +37,42 @@ public class ReportPanel extends UiPart<Region> {
     @FXML
     private BarChart barChart;
 
+    @FXML
+    private ListView<ReportCard> reportListView;
+
     public ReportPanel(Report report) {
         super(FXML);
         pReport = report;
 
-        pieChart.setTitle("In " + report.getTotalTags() + " Tags");
+        setupPieChart();
+        setupBarChart();
+        setupHistoryTable();
+    }
+
+    private void setupPieChart() {
+        pieChart.setTitle("In " + pReport.getTotalTags() + " Tags");
         pieChart.setData(tabulateData());
         pieChart.setLabelsVisible(false);
+    }
 
-        String barChartTitle = "STATISTICS OF #" + report.getPopulation().tagName + " CANDIDATES\n"
-                + "\n"
-                + "In " + report.getTotalPersons() + " candidates";
-        barChart.setTitle(barChartTitle);
+    private void setupBarChart() {
+        String paneTitle =  "Statistics of #" + pReport.getPopulation().tagName + " candidates\n\n";
+        String barChartTitle = "In " + pReport.getTotalPersons() + " candidates";
+        int indentation = Math.max((int)((paneTitle.length() - barChartTitle.length()) * 0.8), 0);
+        String spacesInTitle = new String(new char[indentation]).replace('\0', ' ');
+        barChart.setTitle(paneTitle + spacesInTitle + barChartTitle);
         barChart.setData(tabulateBarChartData());
         barChart.setBarGap(CHART_BAR_GAP);
+    }
+
+    private void setupHistoryTable() {
+        ObservableList<ReportCard> mappedList = EasyBind.map(
+                FXCollections.observableArrayList(pReport.getHistory()), (p) -> new ReportCard(p));
+        reportListView.setItems(mappedList);
+        reportListView.setCellFactory(listView -> new ReportPanel.ReportListViewCell());
+
+
+
     }
 
     /**
@@ -79,5 +104,23 @@ public class ReportPanel extends UiPart<Region> {
         data.addAll(series);
 
         return data;
+    }
+
+    /**
+     * Custom {@code ListCell} that displays the graphics of a {@code ReportCard}.
+     */
+    class ReportListViewCell extends ListCell<ReportCard> {
+
+        @Override
+        protected void updateItem(ReportCard r, boolean empty) {
+            super.updateItem(r, empty);
+
+            if (empty || r == null) {
+                setGraphic(null);
+                setText(null);
+            } else {
+                setGraphic(r.getRoot());
+            }
+        }
     }
 }
