@@ -230,6 +230,9 @@ public class AddCommandTest {
         }
 
         @Override
+        public void refreshReport() { }
+
+        @Override
         public ReadOnlyAddressBook getAddressBook() {
             return new AddressBook();
         }
