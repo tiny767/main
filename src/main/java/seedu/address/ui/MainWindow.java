@@ -139,7 +139,6 @@ public class MainWindow extends UiPart<Stage> {
      */
     void fillInnerParts() {
         switchToBrowserPanel();
-        
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
