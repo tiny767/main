@@ -173,11 +173,12 @@ public class ModelManager extends ComponentManager implements Model {
         Map<String, Pair<Integer, Integer>> counts = new HashMap<>();
         allPersonList.forEach((p) -> {
             Set<Tag> allTags = p.getTags();
-            for (Tag t : allTags)
+            for (Tag t : allTags) {
                 if (!t.equals(population)) {
                     counts.merge(t.tagName, new Pair<>(1, 1), (a, b) ->
-                        new Pair(a.getKey() + b.getKey(), a.getValue() + b.getValue()));
+                            new Pair(a.getKey() + b.getKey(), a.getValue() + b.getValue()));
                 }
+            }
         });
 
         List<Proportion> allProportions = new ArrayList<>();

@@ -1,11 +1,13 @@
 package seedu.address.ui;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
+import org.fxmisc.easybind.EasyBind;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+
 import javafx.fxml.FXML;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.PieChart;
@@ -13,14 +15,17 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
-import org.fxmisc.easybind.EasyBind;
+
 import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.report.Proportion;
 import seedu.address.model.report.Report;
-import seedu.address.model.report.UniqueReportList;
 
-import javax.xml.soap.Text;
+
+
+
+
+
 
 /**
  * The Report Panel of the App.
@@ -61,7 +66,7 @@ public class ReportPanel extends UiPart<Region> {
     private void setupBarChart() {
         String paneTitle =  "Statistics of #" + pReport.getPopulation().tagName + " candidates\n\n";
         String barChartTitle = "In " + pReport.getTotalPersons() + " candidates";
-        int indentation = Math.max((int)((paneTitle.length() - barChartTitle.length()) * 0.8), 0);
+        int indentation = Math.max((int) ((paneTitle.length() - barChartTitle.length()) * 0.8), 0);
         String spacesInTitle = new String(new char[indentation]).replace('\0', ' ');
         barChart.setTitle(paneTitle + spacesInTitle + barChartTitle);
         barChart.setData(tabulateBarChartData());

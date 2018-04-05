@@ -1,11 +1,9 @@
 package seedu.address.storage;
 
+import javax.xml.bind.annotation.XmlElement;
+
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.report.Proportion;
-import seedu.address.model.tag.Tag;
-
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlValue;
 
 /**
  * JAXB-friendly adapted version of the Proportion.

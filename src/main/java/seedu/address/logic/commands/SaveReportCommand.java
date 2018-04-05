@@ -4,6 +4,9 @@ import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.ToggleReportPanelEvent;
 import seedu.address.model.tag.Tag;
 
+/**
+ * Adds a report to the address book.
+ */
 public class SaveReportCommand extends Command {
     public static final String COMMAND_WORD = "savereport";
     public static final String COMMAND_ALIAS = "sr";

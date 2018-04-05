@@ -62,7 +62,8 @@ public class StorageManager extends ComponentManager implements Storage {
     }
 
     @Override
-    public Optional<ReadOnlyAddressBook> readAddressBook(String filePath) throws DataConversionException, IOException, ParseException {
+    public Optional<ReadOnlyAddressBook> readAddressBook(String filePath) throws DataConversionException, IOException,
+            ParseException {
         logger.fine("Attempting to read data from file: " + filePath);
         return addressBookStorage.readAddressBook(filePath);
     }
