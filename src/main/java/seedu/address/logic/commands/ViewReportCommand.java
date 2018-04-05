@@ -11,10 +11,10 @@ public class ViewReportCommand extends Command {
     public static final String COMMAND_WORD = "viewreport";
     public static final String COMMAND_ALIAS = "vr";
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            //TODO: update report messages
-            + ": Managing reports.\n"
-            + "Example: " + COMMAND_WORD;
-    public static final String MESSAGE_SUCCESS = "Displayed report";
+            + ": view the report for candidates tagged with #POPULATION_TAG\n"
+            + "Parameters: pop/POPULATION_TAG\n"
+            + "Example: " + COMMAND_WORD + " pop/SEIntern OR " + COMMAND_ALIAS + " pop/SEIntern";
+    public static final String MESSAGE_SUCCESS = "Displayed report for #";
     public final Tag population;
 
     public ViewReportCommand(Tag population) {
@@ -25,6 +25,6 @@ public class ViewReportCommand extends Command {
     public CommandResult execute() {
         model.updateReport(population);
         EventsCenter.getInstance().post(new ToggleReportPanelEvent());
-        return new CommandResult(MESSAGE_SUCCESS);
+        return new CommandResult(MESSAGE_SUCCESS + population.tagName);
     }
 }
