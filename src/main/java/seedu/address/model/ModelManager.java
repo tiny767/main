@@ -239,7 +239,7 @@ public class ModelManager extends ComponentManager implements Model {
         reportList.setPredicate(new Predicate<Report>() {
             @Override
             public boolean test(Report oldReport) {
-                return oldReport.getPopulation().equals(report.getPopulation());
+                return oldReport.getPopulation().tagName.equalsIgnoreCase(report.getPopulation().tagName);
             }
         });
         return FXCollections.unmodifiableObservableList(reportList);
