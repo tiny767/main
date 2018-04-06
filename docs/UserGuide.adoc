@@ -48,8 +48,10 @@ Refer to <<FAQ>> for instructions to check Java version.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
 .The User Interface.
+
 image::Ui.png[width="790"]
 +
+
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Set up is now complete. You should see the interface as shown in Figure 1. Try some example commands shown here:
@@ -132,7 +134,7 @@ Tag name comparision is case sensitive.
 Adds tag `Year2` and `SpeakVietnamese` to the first person.
 
 image::addtag.png[width="600"]
-_Figure. Added new tags to the first person.
+_Figure._ Added new tags to the first person.
 
 ==== Delete tags from a person : `edit -delete-tag`
 
@@ -150,7 +152,7 @@ Tag name comparision is case sensitive.
 Deletes tag `Year2` and `SpeakVietnamese` from the first person.
 
 image::deletetag.png[width="600"]
-_Figure. Deleted tags from the first person.
+_Figure._ Deleted tags from the first person.
 
 ==== Add a remark : `remark` [Since v1.1]
 //tag::remark[]
@@ -329,7 +331,7 @@ Want to have bird's view statistics of a certain group of candidates? View a rep
 image::viewreport.png[width="600"]
 _Figure._ Report with population Tag `SEIntern` is displayed.
 
-==== Saveing a report : `savereport` or `sr` [Since v1.4]
+==== Saving a report : `savereport` or `sr` [Since v1.4]
 
 Wish to save the current statistics for future reference? Saving the report using `savereport` or `sr` command. +
 *Format:*  `savereport pop/REPORT_NAME`  `sr pop/REPORT_NAME`
