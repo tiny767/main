@@ -72,6 +72,8 @@ The User Interface might appear mildly different for different versions of the p
 ====
 *Command Format*
 
+* Command starts with a `COMMAND WORD` to specify the command you want to perform.
+* Words prefixed with a dash (optional) are `COMMAND OPTION` e.g. in `edit -add-tag t/TAG`, `-add-tag` is a command option.
 * Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
 * Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
 * Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
@@ -82,7 +84,7 @@ The User Interface might appear mildly different for different versions of the p
 
 ==== Adding a person: `add`
 
-* *Description:* Adds a person to the address book +
+* *Description:* Adds a person to the Infinity Book +
 
 * *Format:* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS l/LINK[t/TAG]...`
 
@@ -97,7 +99,7 @@ A person can have any number of tags (including 0)
 
 ==== Editing a person : `edit`
 
-* *Description:* Edits an existing person in the address book. +
+* *Description:* Edits an existing person in Infinity Book. +
 * *Format:* `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
 
 * *Examples:* +
@@ -113,6 +115,42 @@ Edits the name of the 2nd person to be `Betsy Crower` and clears all existing ta
 * When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
 * You can remove all the person's tags by typing `t/` without specifying any tags after it.
 ****
+
+==== Add new tags to a person : `edit -add-tag`
+
+To add new tags to an existing person in Infinity Book, use the edit -add-tag command.
+
+*Format:* `edit -add-tag INDEX [t/TAG]...`
+
+[NOTE]
+====
+Tag name comparision is case sensitive.
+====
+
+*Example:* +
+`edit -add-tag 1 t/Year2 t/SpeakVietnamese` +
+Adds tag `Year2` and `SpeakVietnamese` to the first person.
+
+image::addtag.png[width="600"]
+_Figure. Added new tags to the first person.
+
+==== Delete tags from a person : `edit -delete-tag`
+
+To remove tags from an existing person in Infinity Book, use the edit -delete-tag command.
+
+*Format:* `edit -delete-tag INDEX [t/TAG]...`
+
+[NOTE]
+====
+Tag name comparision is case sensitive.
+====
+
+*Example:* +
+`edit -delete-tag 1 t/Year2 t/SpeakVietnamese` +
+Deletes tag `Year2` and `SpeakVietnamese` from the first person.
+
+image::deletetag.png[width="600"]
+_Figure. Deleted tags from the first person.
 
 ==== Add a remark : `remark` [Since v1.1]
 //tag::remark[]
@@ -134,13 +172,13 @@ Removes the remark for the second person.
 
 ==== Deleting a person : `delete`
 
-* *Description:* Deletes the specified person from the address book. +
+* *Description:* Deletes the specified person from the Infinity Book. +
 * *Format:* `delete INDEX`
 * *Examples:*
 
 - `list` +
 `delete 2` +
-Deletes the 2nd person in the address book.
+Deletes the 2nd person in the Infinity Book.
 - `find Betsy` +
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
@@ -153,34 +191,37 @@ Deletes the 1st person in the results of the `find` command.
 
 ==== Clearing all entries : `clear`
 
-* *Description:* Clears all entries from the address book. +
+* *Description:* Clears all entries from the Infinity Book. +
 * *Format:* `clear`
 
 === Navigating Infinity Book
 
 ==== Listing all persons : `list`
 
-* *Description:* Shows a list of all persons in the address book. +
+* *Description:* Shows a list of all persons in the Infinity Book. +
 * *Format:* `list`
 
 
-==== Locating persons by name: `find`
+==== Locating persons by name, phone, email, and tags: `find`
 
-* *Description:* Finds persons whose names contain any of the given keywords. +
-* *Format:* `find KEYWORD [MORE_KEYWORDS]`
-* *Examples:*
-- `find John` +
-Returns `john` and `John Doe`
-- `find Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
+Finds persons whose names, phone numbers, emails, or tags contain any of the given keywords. +
+
+*Format:* `find KEYWORD [MORE_KEYWORDS]` +
 
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
+* Only the name, phone number, email, and tags are searched.
 * Only full words will be matched e.g. `Han` will not match `Hans`
 * Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 ****
+
+*Examples:*
+- `find Alex 93210283` +
+Returns `Alex Yeoh`, `Charlotte Oliveiro`, and `Alex Smith` whose names and phone numbers match with the given keywords.
+
+image::Find.png[width="300"]
+_Figure._ Person list after finding with keywords `Alex` and `93210283`.
 
 ==== Viewing a person: `view`
 
@@ -203,7 +244,7 @@ Returns any person having names `Betsy`, `Tim`, or `John`
 
 - `list` +
 `select 2` +
-Selects the 2nd person in the address book.
+Selects the 2nd person in the Infinity Book.
 - `find Betsy` +
 `select 1` +
 Selects the 1st person in the results of the `find` command.
@@ -232,52 +273,73 @@ Corrects command word to `list`.
 
 === Dashboard Reporting
 
-==== Understanding The Workflow
+Infinity Book is tailored for people who are obsessed with speed. Aligning with this vision, our Report feature enables
+you to get insights of your huge list of contacts in a few keystrokes.
 
-As a recruiter, your work mainly involves monitoring the progress of open jobs. Imagining a working day, you have to
-keep track of the number of new candidates, interviewees, and accepted offer, which is time-consuming given there is a
-significant number of candidates. Furthermore, you may want to analyze the productivity of your recruiting team in the
-last week, month, and quarter. Keeping track of historical data becomes necessary here. +
+Each report is identified with a Population Tag: +
 
-Infinity Book proposes a workflow that helps you efficiently achieve these requirements: +
+* Represented with the prefix `pop/` followed by the tag name of the population tag. Example: `pop/SEIntern`.
+* The population tag name must be an alphanumeric string.
 
-1. Summarize each candidate by a few keywords using `Tagging` feature. Example: `new`, `interviewing`, `offering`,
-`accepted`, ... +
+In the report, you will find statistics of the group of all Persons tagged with `POPULATION TAG`: +
 
-2. Define a pie-chart report tailored to your specific goals. A report is defined by one `population` tag and at most
-three `group` tags. Example:
+* A bar chart showing all other Tags owned by this group and number of owners for each Tag.
+* A pie chart illustrating the numerical proportion of each Tag.
+* A history panel listing statistics of this group at earlier points of time.
 
-image::graph.png[width="500"]
-Figure 1: Data Visualization: Dashboard Reporting
+*An example usage:*
 
-You are recruiting interns, and you can use this report to keep track of the number of candidates in each stage. This
-report is defined by  tag `SoftwareEngineerInterns` as `population` tag,  and `screening`, `interviewing`, `accepted`
-as `group` tags. +
+You are recruiting Software Engineering interns, and you want to keep track of the number of candidates in each stage:
+Screening, Interviewing, Offered, or Rejected. Given the a significant pool of applicants, this task is tedious, and
+our Report feature is a solution.   +
 
-3.Save the current state of report persistently so that you can retrieve it in the future.
+Using our Report with population tag `SEIntern`, +
 
-==== Managing tag of a person: refer to `edit` command
+* You can monitor recruiting pipeline:
 
-==== Adding a new report : `report -new` [coming in v1.4]
+image::barchart.png[width="400"]
 
-* *Description:* Need to keep track certain information? Add new report using `report -new` command. +
-* *Format:*  `report -new POPULATION [GROUP 1] [GROUP 2] [GROUP 3]` +
-This will create a new Report with name presented in the format: `POPULATION_[GROUP 1]_[GROUP 2]_[GROUP 3]` +
-* *Examples:* `report -new SoftwareEngineerInterns screening interviewing accepted` +
-This should create a new report named `SoftwareEngineerInterns_screening_interviewing_accepted`.
+_Figure._ Bar chart in `SEIntern` report +
+_Explanation:_ there are 11 candidates tagged with `SEIntern` in which 5 of them are tagged with `Screening`, 3 of them
+are tagged with `Interviewing`, 1 of them is tagged with `Rejected`, and 2 of them are tagged with `Offered`.
 
-==== Removing a report : `report -remove` [coming in v1.4]
-* *Description:* To remove a report, use `report -remove` command
-* *Format:*  `report -remove REPORT_NAME`
+* You can evaluate the amount of workload:
 
-==== Saving the current state of report `report -freeze` [coming in v1.4]
-* *Description:* To save the current state of a report persistently, use `report -freeze` command.
-* *Format:*  `report -freeze POPULATION [GROUP 1] [GROUP 2] [GROUP 3]`
-* *Examples:* `report -freeze SoftwareEngineerInterns_screening_interviewing_accepted` +
-This will add an entry to report `SoftwareEngineerInterns_screening_interviewing_accepted` including list of emails and
-number of candidates in each group.
+image::piechart.png[width="400"]
 
-==== List all available reports [coming in v2.0]
+_Figure._ Pie chart in `SEIntern` report +
+_Explanation:_ there are 11 tags that candidates tagged with `SEIntern` has in total, and 45% of them are `Screening`,
+27% are `Interviewing`, 18% are `Offered`, and 9% are `Rejected`.
+
+* You can track of the progress of your team:
+
+image::history.png[width="400"]
+
+_Figure._ History panel in `SEIntern` report +
+
+==== Viewing a report : `viewreport` or `vr` [Since v1.4]
+
+Want to have bird's view statistics of a certain group of candidates? View a report using `viewreport` or `vr` command.+
+
+*Format:*  `viewreport pop/POPULATION_TAG` or `vr pop/POPULATION_TAG`
+
+*Example:*
+`viewreport pop/SEIntern`
+
+image::viewreport.png[width="600"]
+_Figure._ Report with population Tag `SEIntern` is displayed.
+
+==== Saveing a report : `savereport` or `sr` [Since v1.4]
+
+Wish to save the current statistics for future reference? Saving the report using `savereport` or `sr` command. +
+*Format:*  `savereport pop/REPORT_NAME`  `sr pop/REPORT_NAME`
+
+*Example:*
+`savereport pop/SEIntern`
+Saves the current statistics of the report. A new entry will be added at the end of history panel in the report.
+
+image::savereport.png[width="600"]
+_Figure._ Report with population Tag `SEIntern` is saved.
 
 === Managing Job Postings
 
@@ -341,25 +403,18 @@ features that Infinity Book offers.
 
 === Miscellaneous
 
-==== Change theme : `theme` [Since v1.3]
+==== Changing theme : `theme` [Since v1.3]
 To change the theme of InfinityBook, use the `theme` command. +
 
-  Format: theme [THEME_NAME]
+*Format:* `theme [THEME_NAME]` or `t [THEME_NAME]`
 
-  Alias: t [THEME_NAME]
+`THEME_NAME` can be `morning`, `dark`, or `light`.
 
-[big green]#Examples#:
+*Examples*:
 
 * `theme` light
-* `t` dark
 
-Current available themes:
-
-* light
-
-* dark
-
-You should see the user interface change according the specified theme.
+You should see the user interface change to theme Light.
 
 ==== Viewing help : `help`
 * *Description:* Opens the User Guide in a new window +
@@ -377,7 +432,7 @@ You should see the user interface change according the specified theme.
 // tag::undoredo[]
 ==== Undoing previous command : `undo`
 
-* *Description:* Restores the address book to the state before the previous _undoable_ command was executed. +
+* *Description:* Restores the Infinity Book to the state before the previous _undoable_ command was executed. +
 * *Format:* `undo`
 * *Examples:*
 
@@ -397,7 +452,7 @@ The `undo` command fails as there are no undoable commands executed previously.
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
+Undoable commands: those commands that modify the Infinity Book's content (`add`, `delete`, `edit` and `clear`).
 ====
 ==== Redoing the previously undone command : `redo`
 
@@ -470,6 +525,8 @@ The following table summarises Infinity Book commands with suitable examples:
 |Clear |`clear`| `clear`
 |Delete |`delete INDEX` |`delete 3`
 |Edit |`edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` |`edit 2 n/James Lee e/jameslee@example.com`
+|Add new tags to a person |`edit -add-tag INDEX [t/TAG]...` |`edit -add-tag 2 t/Computing`
+|Delete tags from a person |`edit -delete-tag INDEX [t/TAG]...` |`edit -delete-tag 2 t/Computing`
 |Find |`find KEYWORD [MORE_KEYWORDS]` |`find James Jake`
 |Help |`help` |`help`
 |History |`history` | `history`
@@ -477,6 +534,8 @@ The following table summarises Infinity Book commands with suitable examples:
 |Redo |`redo`|`redo`
 |Select |`select INDEX` |`select 2`
 |Undo |`undo` |`undo`
+|View Report |`viewreport pop/[POPULATION_TAG]` |`viewreport pop/SEIntern`
+|Save Report |`savereport pop/[POPULATION_TAG]` |`savereport pop/SEIntern`
 |=====================================================================================================
 
 [appendix]

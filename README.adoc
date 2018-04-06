@@ -1,4 +1,4 @@
-= Infinity Book
+image::docs/images/logo.png[width="300"]
 ifdef::env-github,env-browser[:relfileprefix: docs/]
 
 https://travis-ci.org/CS2103JAN2018-W11-B3/main/[image:https://api.travis-ci.org/CS2103JAN2018-W11-B3/main.svg?branch=master[Build Status]]
