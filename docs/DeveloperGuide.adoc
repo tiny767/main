@@ -588,7 +588,8 @@ answer of each interview.
 Aspects: Implementation of adding question/answer:
 
 **Alternative 1:** (current choice) create two new command for adding question/answer +
-**Pros:** It can be added the interview questions first and answer later+
+**Pros:** It can be added the interview questions first and answer later. It can be
+conducted interview in anytime. +
 **Cons:** Create new addtional command.
 
 **Alternative 2:** + combining into one command questions/answer +
