@@ -465,7 +465,7 @@ PARAMETERS provide information for the Edit command to be executed with.
 **Pros:** Keep the Edit Command logic   +
 **Cons:** Have to rely on Model, which is not flexible.
 
-=== Display relevant Github or resume page. [coming in v1.4]
+=== Display relevant Github or resume page. [Since v1.4]
 As a candidate may have linked online resume or github page. The recruiter may want
 to consider these pages.
 Aspects: Implementation of removing/adding a linked page.
@@ -547,6 +547,54 @@ UiStyle.getInstance().setToLightTheme();
 **Alternative 2:** Change the themes in `MainWindow` class directly +
 **Pros:** Decreases coupling +
 **Cons:** Violates the single responsibility principle since `MainWindow` class also controls the changing of theme. It is harder for `ThemeCommand` class to access the methods from `MainWindow` to change theme +
+
+=== Interview Management
+
+==== Adding an interview (Since v1.4)
+The recruiter may want to conduct an interview with candidates, and maintain
+an interview lists.
+
+Aspects: Implementation of removing/add interview with candidates.
+
+**Alternative 1:** (current choice): Add a new model interview including many
+sub fields such as Date, Location, List of Questions. +
+**Pros:** It is easier to implement other commands such as find Interview, delete
+Interview, add questions. +
+**Cons:** It takes time to create new model.
+
+**Alternative 2:** Add a new field interview to each candidates and maintain
+according to each candidates. +
+**Pros:** It is easier to implement. +
+**Cons:** It is difficult to search specific interview effectively.
+
+==== List interview (coming v1.5)
+The recruiter may want to take a look at all of the interviews.
+
+Aspects: Implementation of listing all the interviews.
+
+**Alternative 1:** (current choice) create a new command to listing all the interview. +
+**Pros:** It is easier to use and modify. +
+**Cons:** Have to create new comamnd.
+
+**Alternative 2:** each candidate has been linked to an interview, listing all the
+interview when listing all candidates. +
+**Pros:** No need to create new command, just need to edit current list comamnd +
+**Cons:** It increases coupling and it is harder to implement.
+
+==== Adding question/answer (coming v2.0)
+The recruiter may want to maintain a list of questions and keep track of candidate's
+answer of each interview.
+
+Aspects: Implementation of adding question/answer:
+
+**Alternative 1:** (current choice) create two new command for adding question/answer +
+**Pros:** It can be added the interview questions first and answer later. It can be
+conducted interview in anytime. +
+**Cons:** Create new addtional command.
+
+**Alternative 2:** + combining into one command questions/answer +
+**Pros:** It is easier to maintain list answer with respect to questions +
+**Cons:** Cannot add the answer and interview separately.
 
 == Documentation
 This project maintains documentation in the docs folder, also accessible through the readme. This documentation is written and maintained using *asciidoc*.
