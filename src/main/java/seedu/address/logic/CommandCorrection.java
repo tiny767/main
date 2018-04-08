@@ -9,7 +9,9 @@ import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.AddInterviewCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.DeleteJobCommand;
 import seedu.address.logic.commands.EditCommand;
+import seedu.address.logic.commands.EditJobCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FacebookLoginCommand;
 import seedu.address.logic.commands.FindCommand;
@@ -99,6 +101,8 @@ public class CommandCorrection {
         commandDictionary.add(UndoCommand.COMMAND_WORD);
         commandDictionary.add(ViewReportCommand.COMMAND_WORD);
         commandDictionary.add(SaveReportCommand.COMMAND_WORD);
+        commandDictionary.add(DeleteJobCommand.COMMAND_WORD);
+        commandDictionary.add(EditJobCommand.COMMAND_WORD);
     }
 
     /***
