@@ -25,6 +25,8 @@ public class XmlSerializableAddressBook {
     @XmlElement
     private List<XmlAdaptedJob> jobs;
     @XmlElement
+    private List<XmlAdaptedInterview> interviews;
+    @XmlElement
     private List<XmlAdaptedReport> reports;
 
     /**
@@ -35,6 +37,7 @@ public class XmlSerializableAddressBook {
         persons = new ArrayList<>();
         tags = new ArrayList<>();
         jobs = new ArrayList<>();
+        interviews = new ArrayList<>();
         reports = new ArrayList<>();
     }
 
@@ -46,6 +49,7 @@ public class XmlSerializableAddressBook {
         persons.addAll(src.getPersonList().stream().map(XmlAdaptedPerson::new).collect(Collectors.toList()));
         tags.addAll(src.getTagList().stream().map(XmlAdaptedTag::new).collect(Collectors.toList()));
         jobs.addAll(src.getJobList().stream().map(XmlAdaptedJob::new).collect(Collectors.toList()));
+        interviews.addAll(src.getInterviewList().stream().map(XmlAdaptedInterview::new).collect(Collectors.toList()));
         reports.addAll(src.getReportList().stream().map(XmlAdaptedReport::new).collect(Collectors.toList()));
     }
 
@@ -65,6 +69,9 @@ public class XmlSerializableAddressBook {
         }
         for (XmlAdaptedJob j : jobs) {
             addressBook.addJob(j.toModelType());
+        }
+        for (XmlAdaptedInterview i: interviews) {
+            addressBook.addInterview(i.toModelType());
         }
         for (XmlAdaptedReport p : reports) {
             addressBook.addReport(p.toModelType());

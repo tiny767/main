@@ -1,3 +1,4 @@
+//@@author deeheenguyen
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
@@ -63,3 +64,4 @@ public class AddInterviewCommand extends UndoableCommand {
                 && toAdd.equals(((AddInterviewCommand) other).toAdd));
     }
 }
+//author@@ deeheenguyen
