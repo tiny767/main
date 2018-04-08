@@ -120,6 +120,15 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public void updateJob(Job target, Job editedJob)
+            throws DuplicateJobException, JobNotFoundException {
+        requireAllNonNull(target, editedJob);
+
+        addressBook.updateJob(target, editedJob);
+        indicateAddressBookChanged();
+    }
+
+    @Override
     public void updateFilteredJobList(Predicate<Job> predicate) {
         requireNonNull(predicate);
         filteredJobs.setPredicate(predicate);

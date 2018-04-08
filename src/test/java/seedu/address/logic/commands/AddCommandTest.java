@@ -196,6 +196,12 @@ public class AddCommandTest {
         }
 
         @Override
+        public void updateJob(Job target, Job editedJob)
+                throws DuplicateJobException {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public ObservableList<Interview> getFilteredInterviewList() {
             fail("this method should not be called");
             return null;

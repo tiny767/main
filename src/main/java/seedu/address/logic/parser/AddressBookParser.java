@@ -13,6 +13,7 @@ import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.DeleteJobCommand;
 import seedu.address.logic.commands.EditCommand;
+import seedu.address.logic.commands.EditJobCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FacebookLoginCommand;
 import seedu.address.logic.commands.FindCommand;
@@ -93,6 +94,9 @@ public class AddressBookParser {
 
         case EditCommand.COMMAND_ALIAS:
             return new EditCommandParser().parse(arguments);
+
+        case EditJobCommand.COMMAND_WORD:
+            return new EditJobCommandParser().parse(arguments);
 
         case EditCommand.COMMAND_WORD:
             return new EditCommandParser().parse(arguments);

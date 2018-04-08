@@ -74,6 +74,16 @@ public interface Model {
     void deleteJob(Job target) throws JobNotFoundException;
 
     /**
+     * Replaces the given job {@code target} with {@code editedJob}.
+     *
+     * @throws DuplicateJobException if updating the job's details causes the job to be equivalent to
+     *      another existing person in the list.
+     * @throws JobNotFoundException if {@code target} could not be found in the list.
+     */
+    void updateJob(Job target, Job editedJob)
+            throws DuplicateJobException, JobNotFoundException;
+
+    /**
      * Updates the filter of the filtered job list to filter by the given {@code predicate}.
      * @throws NullPointerException if {@code predicate} is null.
      */
