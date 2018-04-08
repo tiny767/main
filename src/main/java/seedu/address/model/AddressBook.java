@@ -257,8 +257,6 @@ public class AddressBook implements ReadOnlyAddressBook {
     /**
      * Adds a job to the address book.
      *
-     * TODO: Write the javadoc comment
-     * TODO: Write the exception.
      * @throws DuplicatePersonException if an equivalent person already exists.
      */
     public void addJob(Job j) throws DuplicateJobException {
@@ -313,8 +311,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     @Override
     public String toString() {
         return persons.asObservableList().size() + " persons, " + tags.asObservableList().size() +  " tags"
-                + reports.asObservableList().size() + " reports.";
-        // TODO: update with number of job postings
+                + reports.asObservableList().size() + " reports" + jobs.asObservableList().size() + " jobs.";
     }
 
     @Override

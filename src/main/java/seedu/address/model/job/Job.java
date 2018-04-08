@@ -8,7 +8,8 @@ import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
 /***
- * TODO: Write javadoc commenet
+ * Represents a Job in the address book.
+ * Guarantees: details are present and not null, field values are validated, immutable.
  */
 public class Job {
     private final JobTitle jobTitle;

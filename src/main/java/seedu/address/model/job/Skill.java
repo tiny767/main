@@ -1,7 +1,8 @@
 package seedu.address.model.job;
 
 /***
- * TODO: write javadoc for this
+ * Represents a Job's required Skills in the Infinity Book.
+ * Guarantees: is valid as declared in {@link #isValidSkill(String)}
  */
 public class Skill {
     // TODO: Write the messages and regex here.
@@ -19,13 +20,12 @@ public class Skill {
     }
 
     /***
-     * TODO: Write javadoc comment
-     * @param test
-     * @return
+     * Checks if a given string is a valid Skill.
+     * @param test is the String to be tested for validity
+     * @return true if it is a valid skill.
      */
     public static boolean isValidSkill(String test) {
         // TODO: Write this based on REGEX
         return true;
-
     }
 }
