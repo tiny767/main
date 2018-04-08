@@ -74,6 +74,8 @@ public class LogicManager extends ComponentManager implements Logic {
     }
 
     @Override
-    public Report getReport() { return model.getReport(); }
+    public Report getReport() {
+        return model.getReport();
+    }
 
 }

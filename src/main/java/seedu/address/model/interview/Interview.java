@@ -9,21 +9,21 @@ import seedu.address.model.person.Name;
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
 public class Interview {
-    private InterviewTitle title;
+    private InterviewTitle interviewTitle;
     private Name interviewee;
     private Date date;
     private ArrayList<Quest> listQuestions;
     private InterviewLocation interviewLocation;
 
-    public Interview(InterviewTitle title, Name interviewee, Date date, InterviewLocation location) {
-        this.title = title;
+    public Interview(InterviewTitle interviewTitle, Name interviewee, Date date, InterviewLocation location) {
+        this.interviewTitle = interviewTitle;
         this.interviewee = interviewee;
         this.date = date;
         this.interviewLocation = location;
     }
 
     public InterviewTitle getInterviewTitle() {
-        return this.title;
+        return this.interviewTitle;
     }
 
     public Name getInterviewee() {

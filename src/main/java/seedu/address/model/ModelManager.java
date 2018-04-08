@@ -230,6 +230,12 @@ public class ModelManager extends ComponentManager implements Model {
         return FXCollections.unmodifiableObservableList(filteredInterviews);
     }
 
+    @Override
+    public void updateFilteredInterviewList(Predicate<Interview> predicate) {
+        requireNonNull(predicate);
+        filteredInterviews.setPredicate(predicate);
+    }
+
     /**
      * Returns an unmodifiable view of the list of {@code Report} backed by the internal list of
      * {@code addressBook}
@@ -243,12 +249,6 @@ public class ModelManager extends ComponentManager implements Model {
             }
         });
         return FXCollections.unmodifiableObservableList(reportList);
-    }
-
-    @Override
-    public void updateFilteredInterviewList(Predicate<Interview> predicate) {
-        requireNonNull(predicate);
-        filteredInterviews.setPredicate(predicate);
     }
 
 }
