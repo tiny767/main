@@ -17,7 +17,7 @@ import seedu.address.model.job.exceptions.JobNotFoundException;
  * Deletes a job identified using it's last displayed index from the address book.
  */
 public class DeleteJobCommand extends UndoableCommand {
-    public static final String COMMAND_WORD = "deleteJob";
+    public static final String COMMAND_WORD = "deletejob";
     public static final String COMMAND_ALIAS = "dj";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD

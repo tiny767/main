@@ -304,9 +304,21 @@ Figure 3: MatchJob command filters the Candidates as per Job, as shown above.
 * *Format:* `matchjob INDEX`
 * *Example:* `matchjob 1`
 
+==== Edit Job Command
+
+* *Description:* Edits an existing job posting in the Infinity Book.
+* *Format:* ` editjob INDEX [j/JOBTITLE] [l/LOCATION] [s/SKILLS] [t/TAG]`
+* *Examples:* ` editjob 1 j/Backend Engineer l/Singapore`
+
+==== Delete Job Command
+
+* *Description:* Remove a job posting from Infinity Book using the index from latest listing.
+* *Format:* `deletejob INDEX`
+* *Examples:* `deletejob 1`
+
 [NOTE]
 ====
-Index to be used as displayed in the panel
+Index to be used as displayed in the panel.
 ====
 
 === Managing Interview
