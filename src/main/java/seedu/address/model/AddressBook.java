@@ -20,6 +20,7 @@ import seedu.address.model.interview.exceptions.DuplicateInterviewException;
 import seedu.address.model.job.Job;
 import seedu.address.model.job.UniqueJobList;
 import seedu.address.model.job.exceptions.DuplicateJobException;
+import seedu.address.model.job.exceptions.JobNotFoundException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -263,6 +264,18 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void addJob(Job j) throws DuplicateJobException {
         // TODO: Mimic the implementation of the addperson method.
         jobs.add(j);
+    }
+
+    /**
+     * Removes {@code key} from this {@code AddressBook}.
+     * @throws JobNotFoundException if the {@code key} is not in this {@code AddressBook}.
+     */
+    public boolean removeJob(Job key) throws JobNotFoundException {
+        if (jobs.remove(key)) {
+            return true;
+        } else {
+            throw new JobNotFoundException();
+        }
     }
 
     //// report methods

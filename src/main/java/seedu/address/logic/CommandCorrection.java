@@ -29,7 +29,7 @@ import seedu.address.logic.commands.ViewCommand;
 import seedu.address.logic.commands.ViewReportCommand;
 
 /***
- * TODO: Add Javadoc comment here.
+ * Auto-correct and auto-completing the command words being typed by the user in the command box.
  */
 public class CommandCorrection {
     public static final String MATCH_FOUND_FEEDBACK_TO_USER = "Auto-corrected to: %1$s";

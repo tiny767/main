@@ -7,6 +7,7 @@ import seedu.address.model.interview.Interview;
 import seedu.address.model.interview.exceptions.DuplicateInterviewException;
 import seedu.address.model.job.Job;
 import seedu.address.model.job.exceptions.DuplicateJobException;
+import seedu.address.model.job.exceptions.JobNotFoundException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -68,6 +69,9 @@ public interface Model {
 
     /* Adds the given job. */
     void addJob(Job j) throws DuplicateJobException;
+
+    /** Deletes the given job. */
+    void deleteJob(Job target) throws JobNotFoundException;
 
     /**
      * Updates the filter of the filtered job list to filter by the given {@code predicate}.
