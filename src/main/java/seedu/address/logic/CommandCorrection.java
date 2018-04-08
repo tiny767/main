@@ -28,7 +28,9 @@ import seedu.address.logic.commands.ViewCommand;
  * TODO: Add Javadoc comment here.
  */
 public class CommandCorrection {
-    public static final String FEEDBACK_TO_USER = "Auto-corrected to: %1$s";
+    public static final String MATCH_FOUND_FEEDBACK_TO_USER = "Auto-corrected to: %1$s";
+    public static final String NO_MATCHES_FEEDBACK_TO_USER = "No matching command completion found. "
+            + "Try SPACE key for auto-correct.";
 
     private static Set<String> commandDictionary;
     private static String commandParameters;

@@ -183,8 +183,13 @@ public class CommandBox extends UiPart<Region> {
 
         ArrayList<String> suggestions = CommandCorrection.getSuggestions(textToComplete);
         String chosenString = chooseSuggestion(suggestions, suggestionToChoose, commandTextField.getText());
-
-        raise(new CommandCorrectedEvent(String.format(CommandCorrection.FEEDBACK_TO_USER, chosenString)));
+        if (suggestions.isEmpty()) {
+            raise(new CommandCorrectedEvent(
+                    String.format(CommandCorrection.NO_MATCHES_FEEDBACK_TO_USER, chosenString)));
+        } else {
+            raise(new CommandCorrectedEvent(
+                    String.format(CommandCorrection.MATCH_FOUND_FEEDBACK_TO_USER, chosenString)));
+        }
         replaceText(chosenString);
     }
 
