@@ -15,10 +15,6 @@ public class ListCommand extends Command {
     @Override
     public CommandResult execute() {
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        if (model.getFilteredJobList().isEmpty()) {
-            return new CommandResult(MESSAGE_EMPTY_LIST);
-        } else {
-            return new CommandResult(MESSAGE_SUCCESS);
-        }
+        return new CommandResult(MESSAGE_SUCCESS);
     }
 }
