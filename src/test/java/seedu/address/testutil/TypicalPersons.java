@@ -22,7 +22,6 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 
 
-
 /**
  * A utility class containing a list of {@code Person} objects to be used in tests.
  */

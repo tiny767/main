@@ -8,24 +8,27 @@ public class Skill {
 
     public static final String MESSAGE_SKILL_CONSTRAINTS = "Job skills can take any values, and it should not be blank";
 
-    private final String skills;
+    /*
+     * The first character of the skill  must not be a whitespace,
+     * otherwise " " (a blank string) becomes a valid input.
+     */
+    public static final String SKILL_VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
+
+    public final String value;
 
     public Skill(String skills) {
-        this.skills = skills;
+        this.value = skills;
     }
 
     public String toString() {
-        return skills;
+        return value;
     }
 
-    /***
-     * TODO: Write javadoc comment
-     * @param test
-     * @return
+    /**
+     * Returns true if a given string is a valid person.
      */
     public static boolean isValidSkill(String test) {
-        // TODO: Write this based on REGEX
-        return true;
-
+        return test.matches(SKILL_VALIDATION_REGEX);
     }
+
 }
