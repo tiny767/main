@@ -9,14 +9,14 @@ public class Skill {
 
     public static final String MESSAGE_SKILL_CONSTRAINTS = "Job skills can take any values, and it should not be blank";
 
-    private final String skills;
+    public final String value;
 
     public Skill(String skills) {
-        this.skills = skills;
+        this.value = skills;
     }
 
     public String toString() {
-        return skills;
+        return value;
     }
 
     /***

@@ -44,7 +44,6 @@ public class JobCard extends UiPart<Region> {
         jobTitle.setText(job.getJobTitle().fullTitle);
         jobLocation.setText(job.getLocation().value);
         jobSkills.setText(job.getSkills().toString());
-        job.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
         initTags(job);
     }
 
