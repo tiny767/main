@@ -25,7 +25,6 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.job.Job;
 import seedu.address.model.job.JobMatchesKeywordsPredicate;
-import seedu.address.model.job.PersonMatchesJobPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.PersonContainsKeywordsPredicate;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -91,7 +90,8 @@ public class CommandTestUtil {
     public static final String INVALID_LINK = " " + PREFIX_LINK + "abc.com"; // 'should start with https'
 
     // TODO: Create correct invalid descriptors
-    public static final String INVALID_JOBTITLE_DESC = " " + PREFIX_JOBTITLE + "SoftwareEngineer%"; // '%' is not allowed in job title
+    public static final String INVALID_JOBTITLE_DESC = " " + PREFIX_JOBTITLE + "SoftwareEngineer%";
+    // '%' is not allowed in job title
     public static final String INVALID_LOCATION_DESC = " " + PREFIX_LOCATION + " "; // Location shouls not be empty
     public static final String INVALID_SKILL_DESC =  " " + PREFIX_SKILLS + ""; // Alphanumeric skills are expected
 

@@ -8,6 +8,9 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import seedu.address.logic.commands.PostJobCommand;
 import seedu.address.model.job.Job;
 
+/***
+ * A utility class for Job.
+ */
 public class JobUtil {
 
     /**
@@ -25,9 +28,7 @@ public class JobUtil {
         sb.append(PREFIX_JOBTITLE + job.getJobTitle().fullTitle + " ");
         sb.append(PREFIX_LOCATION + job.getLocation().value + " ");
         sb.append(PREFIX_SKILLS + job.getSkills().value + " ");
-        job.getTags().stream().forEach(
-                s -> sb.append(PREFIX_TAG + s.tagName + " ")
-        );
+        job.getTags().stream().forEach(s -> sb.append(PREFIX_TAG + s.tagName + " "));
         return sb.toString();
     }
 }
