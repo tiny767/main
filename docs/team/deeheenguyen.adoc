@@ -25,7 +25,8 @@ find interview command, listing interview command.
 ** Highlights: This enhancement affects existing commands and commands to be added in future. It required an in-depth analysis of design alternatives. The implementation too was challenging as it required changes to existing commands.
 
 
-* *Code contributed*: [https://github.com/CS2103JAN2018-W11-B3/main/blob/master/collated/functional/deeheenguyen.md[Functional code]] [https://github.com[Test code]] _{give links to collated code files}_
+* *Code contributed*: [https://github.com/CS2103JAN2018-W11-B3/main/blob/master/collated/functional/deeheenguyen.md[Functional code]]
+[https://github.com/CS2103JAN2018-W11-B3/main/blob/master/collated/test/deeheenguyen.md[Test code]] _{give links to collated code files}_
 
 * *Other contributions*:
 
