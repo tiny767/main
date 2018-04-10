@@ -1,3 +1,4 @@
+//author@@ deeheenguyen
 package seedu.address.model.interview;
 
 import java.util.ArrayList;
@@ -84,4 +85,4 @@ public class Interview {
         return builder.toString();
     }
 }
-
+//author@@ deeheenguyen
