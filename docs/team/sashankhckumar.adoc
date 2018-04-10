@@ -1,0 +1,74 @@
+= Sashankh Chengavalli Kumar - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: Infinity Book - Level 4
+
+---
+
+== Overview
+
+Infinity Book (IB) is an address book application for Tech recruiters who prefer to use a desktop app for managing candidates. +
+
+IB provides *end-to-end support*, from searching for candidates,to adding job postings and saving their resumes and interviews.
+
+== Summary of contributions
+
+* *Major enhancement*: added *the ability to add job postings*
+** What it does: allows the recruiter to add a job posting along with preferred location, skills, tags and position title.
+** Justification: This feature makes all the information in the Infinity Book useful to a recruiter by providing a direct method to match and access relevant data on the Infinity Book for their job.
+** Highlights: This enhancement modifies the structure of the model and data handling in the entire application was modified to suit an additional primary data list. Implementation required many changes to the testing tools of the Infinity Book as well.
+
+* *Minor enhancement*: implemented an auto-correct and auto-complete feature that assists users enter the correct commands in the Infinity Book, catching one edit distance corrections.
+
+* *Minor enhancement*: implemented a skills command and introduced an additional skills field for each candidate in the Infinity Book to allows users to store more relevant information about each candidate.
+
+* *Code contributed*: [https://github.com/CS2103JAN2018-W11-B3/main/blob/master/collated/functional/ChengSashankh.md[Functional code]] [https://github.com/CS2103JAN2018-W11-B3/main/blob/master/collated/test/ChengSashankh.md[Test code]]
+
+* *Other contributions*:
+
+** Project management:
+*** Managed releases `v1.3` `v1.4.1` (2 releases) on GitHub
+** Enhancements to existing features:
+*** Updated the GUI color scheme (Pull requests https://github.com[#33], https://github.com[#34])
+*** Wrote additional tests for existing features to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
+** Documentation:
+*** Did cosmetic tweaks to existing contents of the User Guide: https://github.com[#14]
+** Community:
+*** PRs reviewed (with non-trivial review comments): https://github.com[#12], https://github.com[#32], https://github.com[#19], https://github.com[#42]
+*** Contributed to forum discussions (examples:  https://github.com[1], https://github.com[2], https://github.com[3], https://github.com[4])
+*** Reported bugs and suggestions for other teams in the class (examples:  https://github.com[1], https://github.com[2], https://github.com[3])
+*** Some parts of the history feature I added was adopted by several other class mates (https://github.com[1], https://github.com[2])
+** Tools:
+*** Integrated a third party library (Natty) to the project (https://github.com[#42])
+*** Integrated a new Github plugin (CircleCI) to the team repo
+
+_{you can add/remove categories in the list above}_
+
+== Contributions to the User Guide
+
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=undoredo]
+
+include::../UserGuide.adoc[tag=dataencryption]
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=undoredo]
+
+include::../DeveloperGuide.adoc[tag=dataencryption]
+
+
+== PROJECT: PowerPointLabs
+
+---
+
+_{Optionally, you may include other projects in your portfolio.}_
