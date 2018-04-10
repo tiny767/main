@@ -422,6 +422,7 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
+// tag::findall[]
 === Search by Name, Tags, Email, and Phone (Since v1.2)
 
 This `find` command allows the user to search through the list of all candidates and output all whose  `Name`, `Tags`, `Email`, and `Phone` match with the given keywords.
@@ -612,6 +613,8 @@ if (argWithOption.isOption(EditCommand.COMMAND_OPTION_ADD_TAG)) {
     parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editPersonDescriptor::setNewTags);
 }
 ----
+
+// end::findall[]
 
 === Report
 
