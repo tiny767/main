@@ -17,4 +17,3 @@ public class ListInterviewCommand extends Command {
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }
-//@@author deeheenguyen
