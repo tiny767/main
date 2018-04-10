@@ -11,7 +11,7 @@ import seedu.address.model.job.Job;
 import seedu.address.model.job.exceptions.DuplicateJobException;
 
 /***
- * TODO: Javadoc comment required here.
+ * Adds a job posting to the infinity book.
  */
 public class PostJobCommand extends UndoableCommand {
 

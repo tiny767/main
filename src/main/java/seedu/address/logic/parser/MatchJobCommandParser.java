@@ -8,7 +8,7 @@ import seedu.address.logic.commands.MatchJobCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /***
- * TODO: Write a javadoc comment
+ * Matches a job posting to candidates and returns the list of candidates
  */
 public class MatchJobCommandParser implements Parser<MatchJobCommand> {
 

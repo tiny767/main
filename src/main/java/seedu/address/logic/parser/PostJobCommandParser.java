@@ -19,7 +19,7 @@ import seedu.address.model.job.Skill;
 import seedu.address.model.tag.Tag;
 
 /***
- * TODO: Write a javadoc comment
+ * Parses input arguments and creates a new PostJobCommand object
  */
 
 public class PostJobCommandParser implements Parser<PostJobCommand> {

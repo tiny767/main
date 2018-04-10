@@ -44,13 +44,12 @@ public class JobCard extends UiPart<Region> {
         jobTitle.setText(job.getJobTitle().fullTitle);
         jobLocation.setText(job.getLocation().value);
         jobSkills.setText(job.getSkills().toString());
-        job.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
         initTags(job);
     }
 
     /**
-     * TODO: Add comment!!
-     * @param job
+     * Creates colored tags for each tag assigned to the {@code Job}.
+     * @param job is the job for which the tags are being populated.
      */
     private void initTags(Job job) {
         job.getTags().forEach(tag -> {
@@ -61,9 +60,9 @@ public class JobCard extends UiPart<Region> {
     }
 
     /**
-     * TODO: Add comment!!
-     * @param tagName
-     * @return
+     * Chooses a color for the tag based on hashcode
+     * @param tagName for which color is chosen.
+     * @return string containing the color name.
      */
     private String getTagColorFor(String tagName) {
         //some explanation

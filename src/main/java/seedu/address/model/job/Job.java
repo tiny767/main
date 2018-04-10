@@ -1,5 +1,6 @@
 package seedu.address.model.job;
 
+import java.util.Collections;
 import java.util.Objects;
 import java.util.Set;
 
@@ -7,7 +8,8 @@ import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
 /***
- * TODO: Write javadoc commenet
+ * Represents a Job in the address book.
+ * Guarantees: details are present and not null, field values are validated, immutable.
  */
 public class Job {
     private final JobTitle jobTitle;
@@ -34,8 +36,8 @@ public class Job {
         return skills;
     }
 
-    public UniqueTagList getTags() {
-        return tags;
+    public Set<Tag> getTags() {
+        return Collections.unmodifiableSet(tags.toSet());
     }
 
     @Override
