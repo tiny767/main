@@ -13,7 +13,7 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/CS2103JAN2018-W11-B3/main
 
-By: `Team JACKHA (W11-B3)`      Since: `Mar 2018`      Licence: `MIT`
+By: `Team JACKHA (W11-B3)`      Since: `Jun 2016`      Licence: `MIT`
 [[top]]
 
 == Introduction
@@ -422,6 +422,217 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
+// tag::findall[]
+=== Search by Name, Tags, Email, and Phone (Since v1.2)
+
+This `find` command allows the user to search through the list of all candidates and output all whose  `Name`, `Tags`, `Email`, and `Phone` match with the given keywords.
+
+==== Implementation Details
+
+During execution of this command, IB will do the following:
+
+. `FindCommandParser` class will extract keywords from user input, form a predicate, then pass it to `FindCommand` class.
+. `FindCommand` will take in the predicate and update the list of Persons accordingly.
+
+The condition for a Person to be matched with given keywords is defined in `PersonContainsKeywordsPredicate`.
+
+[source, java]
+----
+keywords.stream()
+    .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getName().fullName, keyword)
+    || StringUtil.containsWordIgnoreCase(person.getEmail().toString(), keyword)
+    || StringUtil.containsWordIgnoreCase(person.getPhone().toString(), keyword)
+    || person.getTags().stream()
+    .anyMatch(tag -> StringUtil.containsWordIgnoreCase(tag.tagName, keyword)));
+----
+
+==== Design Considerations
+
+**Aspect:** How user should specify the field to search +
+**Alternative 1 (current choice):** Search for all `Name`, `Tags`, `Email`, and `Phone` +
+**Pros:** User does not need to learn additional commands. +
+**Cons:** There can be unintended results, but since the set of keywords to search for each field does not overlap with each other, so such unintended results are very rare. +
+**Alternative 2:** Allow users to opt searching for one field in `Name`, `Tags`, `Email`, or `Phone`  +
+**Pros:** User can narrow down the search result. +
+**Cons:** User has to remember additional syntax.
+
+---
+
+**Aspect:**  The matching condition +
+**Alternative 1 (current choice):** Return Persons whose `Name`, `Tags`, `Email`, or `Phone` have at least one keyword in the input keywords. +
+**Pros:** User can do a wider search when he or she does not remember candidates' information clearly. +
+**Cons:** User hardly does a detailed search. +
+**Alternative 2:** Return Persons whose `Name`, `Tags`, `Email`, or `Phone` have all input keywords. +
+**Pros:** User can narrow down the search results. +
+**Cons:** In some cases, user cannot do a more general search.
+
+=== Add/Remove Tags (Since v1.3)
+
+The mechanics of `EditCommand` is that a new `Person` will be first created with the same information as the `Person` to edit.
+Then edited fields of the new `Person` will be determined based on user inputs, then it will be used to update the persons list of IB.
+
+[source, java]
+----
+personToEdit = lastShownList.get(index.getZeroBased());
+editedPerson = editPersonDescriptor.createEditedPerson(personToEdit);
+
+try {
+    model.updatePerson(personToEdit, editedPerson);
+}
+----
+
+From v1.0, user can overwrite any field of a person using `edit` command. Enhancing on top of this, the creation of the new `Person` is updated
+so that user can add new tags by `edit -add-tag INDEX [t/TAG]...` command and remove existing tags by `edit -delete-tag [t/TAG]...` command.
+
+The code snippet below shows the updated creation of new `Person`.
+
+[source, java]
+----
+/**
+ * Creates and returns a {@code Person} with the details of {@code personToEdit}
+ * edited with {@code editPersonDescriptor}.
+ */
+public Person createEditedPerson(Person personToEdit) {
+    boolean isTagsChanged = getTags().isPresent();
+    boolean isNewTagsChanged = getNewTags().isPresent();
+    boolean isDeletedTagsChanged = getDeletedTags().isPresent();
+
+    boolean isMultipleTagsChanged = (isTagsChanged && isNewTagsChanged)
+            || (isTagsChanged && isDeletedTagsChanged) || (isDeletedTagsChanged && isNewTagsChanged);
+    assert !isMultipleTagsChanged;
+
+    assert personToEdit != null;
+
+    Name updatedName = getName().orElse(personToEdit.getName());
+    Phone updatedPhone = getPhone().orElse(personToEdit.getPhone());
+    Email updatedEmail = getEmail().orElse(personToEdit.getEmail());
+    Remark updatedRemark = personToEdit.getRemark();
+    Address updatedAddress = getAddress().orElse(personToEdit.getAddress());
+
+    Set<Tag> updatedTags;
+    Set<Tag> personTags = new HashSet<>(personToEdit.getTags());
+    if (isTagsChanged) {
+        updatedTags = getTags().orElse(null);
+    } else if (isNewTagsChanged) {
+        if (personTags.isEmpty()) {
+            updatedTags = getNewTags().orElse(null);
+        } else {
+            updatedTags = personTags;
+            updatedTags.addAll(getNewTags().orElse(null));
+        }
+    } else if (isDeletedTagsChanged) {
+        updatedTags = personTags;
+        if (personTags.isEmpty()) {
+            updatedTags.removeAll(getDeletedTags().orElse(null));
+        }
+    } else {
+        updatedTags = personTags;
+    }
+
+
+    return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedRemark, updatedTags);
+}
+----
+
+==== Design Considerations*
+**Aspect:** Implementation of removing/adding tags +
+**Alternative 1 (current choice):** Modify `EditPersonDescriptor` in `EditCommand` +
+**Pros:** Prevent overlapping codes. +
+**Cons:** Modify other details (e.g. Name, Phone, Address,...) apart from Tags. +
+**Alternative 2:** Write a new EditPersonDescriptor for this command +
+**Pros:** Maintain the current `edit` logic and behaviour. +
+**Cons:** Duplicate the exact code, which may cause a lot of hassles in future development.
+
+---
+
+**Aspect:** Choosing command to add or remove tags +
+**Alternative 1 (current choice):** Add `COMMAND_OPTION` (`-add-tag` and `-delete-tag`) to the current `edit` command. +
+**Pros:** Adding or removing tags is indeed editing a Person's details, so it makes complete sense to perform this action using `edit` command and reduces the number of commands that user has to remember.  +
+**Cons:** Have to modify the parser so that it can extract the option. +
+**Alternative 2:** Using two new commands for adding and removing tags +
+**Pros:** It is easier to parse the command.   +
+**Cons:** User has to remember more commands.
+
+=== Accept Option for Commands (Since v1.2)
+
+To reduce the number of commands that user needs to learn, functions having similar behaviours can be grouped under one `COMMAND_WORD`, and each function in the group can be specified by `COMMAND_OPTION` by the user.
+
+The command format is thus: `COMMAND_WORD [-COMMAND_OPTION] [PARAMETERS]...`
+
+==== Implementation Details
+
+Arguments including option are wrapped with the `ArgumentWithOption` class shown in the below code snippet.
+
+[source, java]
+----
+/**
+ *  ArgumentWithOption class encapsulates an argument in the format: [OPTION] ARGS, and handles the parsing, extracting
+ *  option from the argument.
+ */
+
+public class ArgumentWithOption {
+
+    private static final Pattern ARGUMENT_FORMAT =
+            Pattern.compile("(?<commandOption>" + PREFIX_OPTION.getPrefix() + "\\S+)?(?<arguments>.*)");
+    private String rawArgs;
+    private final String option;
+    private String args;
+
+    public ArgumentWithOption(String rawArgs) throws ParseException {
+        this.rawArgs = rawArgs.trim();
+
+        final Matcher matcher = ARGUMENT_FORMAT.matcher(this.rawArgs);
+        if (!matcher.matches()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
+        }
+        this.args = matcher.group("arguments");
+
+        String rawOption = matcher.group("commandOption");
+        this.option = (rawOption != null) ?  rawOption.substring(PREFIX_OPTION.getPrefix().length()) : "";
+    }
+
+    public boolean isOption(String toCheck) {
+        return toCheck.equals(option);
+    }
+
+    public String getArgs() {
+        return args;
+    }
+}
+----
+
+The following snippet shows how `ArgumentWithOption` may be used
+
+[source, java]
+----
+ArgumentWithOption argWithOption = new ArgumentWithOption(args);
+// Get arguments
+args = argWithOption.getArgs();
+// Check for option
+if (argWithOption.isOption(EditCommand.COMMAND_OPTION_ADD_TAG)) {
+    parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editPersonDescriptor::setNewTags);
+}
+----
+
+// end::findall[]
+
+=== Report
+
+=== Report Panel (Since v1.4)
+
+`viewreport pop/[t/TAG]` command allows the user to view statistics of the current contacts list.
+
+'ReportPanel' extends `UiPart<Region>` and shares the same region with `BrowserPanel`. When `viewreport` or `savereport` is executed, `MainWindow` class will swap out the `BrowserPanel` for the `ReportPanel`.
+
+
+Figure. Triggering
+
+
+
+'ReportPanel' takes report data from a `Report` instance and history data from a `ObservableList<Report>`, both of which can be obtained from `Logic` model.
+
+=== Report History (Since v1.5rc)
+
 === Tag colors [since v1.0]
 
 ==== Current Implementation
@@ -442,30 +653,8 @@ We use hash code of the tag names to generate a color. This is deliberately desi
 **Pros:** Number of different color is very big (i.e. there is less repetitive color used)   +
 **Cons:** The color for each tag value might be different between app launchs +
 
-=== Add/Remove one Tag for a person [since v1.2]
+=== Display relevant Github or resume page.[coming in v1.4]
 
-As Person may have a long list of tags, we need to have a convenient way to update them.+
-Command syntax: EDIT [-OPTIONS] [PARAMETERS]…​, where: +
-
-The EDIT specifies the edit action to be performed, +
-
-OPTIONS are prefixed with a dash: `add-tag` to add new tags the current list of tags and
-`delete-tag` to delete tags from the current list of tags.
-
-PARAMETERS provide information for the Edit command to be executed with.
-
-==== Design Considerations*
-**Aspect:** Implementation of removing/adding a single tag +
-
-**Alternative 1 (current choice):** Modify EditPersonDescriptor +
-**Pros:** Maintain the current structure and coupling. +
-**Cons:** May cause conflicts with other features. +
-
-**Alternative 2:** Retrieve the list of tags then modify it +
-**Pros:** Keep the Edit Command logic   +
-**Cons:** Have to rely on Model, which is not flexible.
-
-=== Display relevant Github or resume page. [Since v1.4]
 As a candidate may have linked online resume or github page. The recruiter may want
 to consider these pages.
 Aspects: Implementation of removing/adding a linked page.

@@ -275,6 +275,8 @@ Corrects command word to `list`.
 * When completions are available, use `TAB` to toggle through options.
 ****
 
+// tag::report[]
+
 === Dashboard Reporting
 
 Infinity Book is tailored for people who are obsessed with speed. Aligning with this vision, our Report feature enables
@@ -344,6 +346,8 @@ Saves the current statistics of the report. A new entry will be added at the end
 
 image::savereport.png[width="600"]
 _Figure._ Report with population Tag `SEIntern` is saved.
+
+// end::report[]
 
 === Managing Job Postings
 
