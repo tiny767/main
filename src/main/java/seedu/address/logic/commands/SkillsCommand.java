@@ -18,7 +18,6 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
  * Add a list of skills to a chosen person from the address book.
  */
 public class SkillsCommand extends UndoableCommand {
-    // TODO: Add a command alias
     public static final String COMMAND_WORD = "skills";
     public static final String COMMAND_ALIAS = "sk";
     public static final String MESSAGE_SUCCESS = "Skills have been added!";
@@ -35,7 +34,7 @@ public class SkillsCommand extends UndoableCommand {
     private Person personToAddSkills;
     private Person personWithSkills;
 
-    // TODO: Create a skillsCommandDescriptor to contain the skills as obejects later
+    // TODO: Create a skillsCommandDescriptor to contain the skills as objects later
     public SkillsCommand(Index index, seedu.address.model.job.Skill skill) {
         requireNonNull(index);
         requireNonNull(skill);
