@@ -613,6 +613,23 @@ if (argWithOption.isOption(EditCommand.COMMAND_OPTION_ADD_TAG)) {
 }
 ----
 
+=== Report
+
+=== Report Panel (Since v1.4)
+
+`viewreport pop/[t/TAG]` command allows the user to view statistics of the current contacts list.
+
+'ReportPanel' extends `UiPart<Region>` and shares the same region with `BrowserPanel`. When `viewreport` or `savereport` is executed, `MainWindow` class will swap out the `BrowserPanel` for the `ReportPanel`.
+
+
+Figure. Triggering
+
+
+
+'ReportPanel' takes report data from a `Report` instance and history data from a `ObservableList<Report>`, both of which can be obtained from `Logic` model.
+
+=== Report History (Since v1.5rc)
+
 === Tag colors [since v1.0]
 
 ==== Current Implementation
