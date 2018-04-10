@@ -47,28 +47,72 @@ public class PersonMatchesJobPredicate implements Predicate<Person> {
 
     @Override
     public boolean test(Person person) {
-        String[] toMatchPersonAddressWords = person.getAddress().toString().split(",");
-
         StringBuilder stringBuilder = new StringBuilder();
-        for (String entry : toMatchPersonAddressWords) {
-            if (!(entry.compareTo("ALL") == 0)) {
-                entry = entry.trim();
-                stringBuilder.append(" " + entry + " ");
-            }
-        }
-        String toMatchPersonAddress = stringBuilder.toString();
+        String toMatchPersonAddress = setUpAddressSearch(person, stringBuilder);
 
         stringBuilder = new StringBuilder();
-        String[] toMatchPersonSkillsWords = person.getSkills().toString().split(",");
-        for (String entry : toMatchPersonSkillsWords) {
-            if (!(entry.compareTo("ALL") == 0)) {
-                entry = entry.trim();
-                stringBuilder.append(" " + entry + " ");
-            }
-        }
-        String toMatchPersonSkills = stringBuilder.toString();
+        String toMatchPersonSkills = setUpSkillsSearch(person, stringBuilder);
 
         stringBuilder = new StringBuilder();
+        String toMatchPersonTags = setUpTagsSearch(person, stringBuilder);
+
+        boolean locationMatch =
+                keywords.stream().anyMatch(keyword -> toMatchPersonAddress.contains(keyword));
+        boolean skillsMatch =
+                keywords.stream().anyMatch(keyword -> toMatchPersonSkills.contains(keyword));
+        boolean tagsMatch =
+                keywords.stream().anyMatch(keyword -> toMatchPersonTags.contains(keyword));
+
+        locationMatch = isLocationMatchSatisfied(locationMatch);
+        skillsMatch = isSkillsMatchSatisfied(skillsMatch);
+        tagsMatch = isTagsMatchSatisfied(tagsMatch);
+
+        return locationMatch && skillsMatch && tagsMatch;
+    }
+
+    /***
+     * Checks if tag match conditions are satisfied.
+     * @param tagsMatch is the boolean variable to be set
+     * @return appropriate value of tagsMatch
+     */
+    private boolean isTagsMatchSatisfied(boolean tagsMatch) {
+        if (notTagsBound) {
+            tagsMatch = true;
+        }
+        return tagsMatch;
+    }
+
+    /***
+     * Checks if skills match conditions are satisfied.
+     * @param skillsMatch is the boolean variable to be set
+     * @return appropriate value of skillsMatch
+     */
+    private boolean isSkillsMatchSatisfied(boolean skillsMatch) {
+        if (notSkillsBound) {
+            skillsMatch = true;
+        }
+        return skillsMatch;
+    }
+
+    /***
+     * Checks if location match conditions are satisfied.
+     * @param locationMatch is the boolean variable to be set
+     * @return appropriate value of locationMatch
+     */
+    private boolean isLocationMatchSatisfied(boolean locationMatch) {
+        if (notLocationBound) {
+            locationMatch = true;
+        }
+        return locationMatch;
+    }
+
+    /***
+     * Identifies the set of keywords to be matched for tags based matching of candidates.
+     * @param person who is tested for a match currently
+     * @param stringBuilder which accumulates the keyword string
+     * @return the complete keywords string
+     */
+    private String setUpTagsSearch(Person person, StringBuilder stringBuilder) {
         String[] toMatchPersonTagsWords = person.getTags().toString().split(",");
         for (String entry : toMatchPersonTagsWords) {
             if (!(entry.compareTo("ALL") == 0)) {
@@ -78,28 +122,41 @@ public class PersonMatchesJobPredicate implements Predicate<Person> {
                 stringBuilder.append(" " + entry + " ");
             }
         }
-        String toMatchPersonTags = stringBuilder.toString();
+        return stringBuilder.toString();
+    }
 
-        boolean locationMatch =
-                keywords.stream().anyMatch(keyword -> toMatchPersonAddress.contains(keyword));
-        boolean skillsMatch =
-                keywords.stream().anyMatch(keyword -> toMatchPersonSkills.contains(keyword));
-        boolean tagsMatch =
-                keywords.stream().anyMatch(keyword -> toMatchPersonTags.contains(keyword));
-
-        if (notLocationBound) {
-            locationMatch = true;
+    /***
+     * Identifies the set of keywords to be matched for skills based matching of candidates.
+     * @param person who is tested for a match currently
+     * @param stringBuilder which accumulates the keyword string
+     * @return the complete keywords string
+     */
+    private String setUpSkillsSearch(Person person, StringBuilder stringBuilder) {
+        String[] toMatchPersonSkillsWords = person.getSkills().toString().split(",");
+        for (String entry : toMatchPersonSkillsWords) {
+            if (!(entry.compareTo("ALL") == 0)) {
+                entry = entry.trim();
+                stringBuilder.append(" " + entry + " ");
+            }
         }
+        return stringBuilder.toString();
+    }
 
-        if (notSkillsBound) {
-            skillsMatch = true;
+    /***
+     * Identifies the set of keywords to be matched for location based matching of candidates.
+     * @param person who is tested for a match currently
+     * @param stringBuilder which accumulates the keyword string
+     * @return the complete keywords string
+     */
+    private String setUpAddressSearch(Person person, StringBuilder stringBuilder) {
+        String[] toMatchPersonAddressWords = person.getAddress().toString().split(",");
+        for (String entry : toMatchPersonAddressWords) {
+            if (!(entry.compareTo("ALL") == 0)) {
+                entry = entry.trim();
+                stringBuilder.append(" " + entry + " ");
+            }
         }
-
-        if (notTagsBound) {
-            tagsMatch = true;
-        }
-
-        return locationMatch && skillsMatch && tagsMatch;
+        return stringBuilder.toString();
     }
 
     @Override
