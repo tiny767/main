@@ -38,4 +38,3 @@ public class ViewCommand extends Command {
                 && this.predicate.equals(((ViewCommand) other).predicate)); // state check
     }
 }
-//@@author deeheenguyen

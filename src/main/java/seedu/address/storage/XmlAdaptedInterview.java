@@ -116,7 +116,4 @@ public class XmlAdaptedInterview {
                 && Objects.equals(date, otherInterview.date);
     }
 }
-//author@@ deeheenguyen
-
-
 

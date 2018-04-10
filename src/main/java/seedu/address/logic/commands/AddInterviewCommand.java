@@ -64,4 +64,3 @@ public class AddInterviewCommand extends UndoableCommand {
                 && toAdd.equals(((AddInterviewCommand) other).toAdd));
     }
 }
-//author@@ deeheenguyen

@@ -35,4 +35,3 @@ public class ViewCommandParserTest {
         assertParseSuccess(parser, "john@example.com", expectedViewCommand);
     }
 }
-//author@@ deeheenguyen
