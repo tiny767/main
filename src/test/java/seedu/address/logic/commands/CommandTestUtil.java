@@ -4,8 +4,11 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_INTERVIEW;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_LINK;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
@@ -66,6 +69,16 @@ public class CommandTestUtil {
     public static final String INVALID_ADDRESS_DESC = " " + PREFIX_ADDRESS; // empty string not allowed for addresses
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
     public static final String INVALID_LINK = " " + PREFIX_LINK + "abc.com"; // 'should start with https'
+
+    public static final String VALID_INTERVIEW_TITLE_SE = "SE INTERVIEW";
+    public static final String VALID_INTERVIEWEE_SE = "David";
+    public static final String VALID_INTERVIEW_LOCATION_SE = "NUS";
+    public static final String VALID_DATE_SE = "01.01.2018";
+
+    public static final String INTERVIEW_TITLE_DESC_SE = " " + PREFIX_INTERVIEW + VALID_INTERVIEW_TITLE_SE;
+    public static final String INTERVIEWEE_DESC_SE = " " + PREFIX_NAME + VALID_INTERVIEWEE_SE;
+    public static final String DATE_DESC_SE = " " + PREFIX_DATE + VALID_DATE_SE;
+    public static final String INTERVIEW_LOCATION_DESC_SE = " " + PREFIX_LOCATION + VALID_INTERVIEW_LOCATION_SE;
 
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
     public static final String PREAMBLE_NON_EMPTY = "NonEmptyPreamble";

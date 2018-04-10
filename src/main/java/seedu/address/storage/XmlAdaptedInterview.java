@@ -50,7 +50,7 @@ public class XmlAdaptedInterview {
      */
     public XmlAdaptedInterview(Interview source) {
         interviewTitle = source.getInterviewTitle().toString();
-        interviewLocation = source.getLocation().toString();
+        interviewLocation = source.getInterviewLocation().toString();
         interviewee = source.getInterviewee().toString();
         date = source.getDate().toString();
     }
@@ -116,5 +116,7 @@ public class XmlAdaptedInterview {
                 && Objects.equals(date, otherInterview.date);
     }
 }
+//author@@ deeheenguyen
+
 
 

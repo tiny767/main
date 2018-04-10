@@ -1,3 +1,4 @@
+//author@@ deeheenguyen
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
@@ -29,8 +30,9 @@ public class ViewCommandParserTest {
         // no leading and trailing whitespaces
         String example = "john@example.com";
         Email email = new Email(example);
-        ViewCommand expectedFindCommand =
+        ViewCommand expectedViewCommand =
                 new ViewCommand(new EmailFilter(email));
-        assertParseSuccess(parser, "john@example.com", expectedFindCommand);
+        assertParseSuccess(parser, "john@example.com", expectedViewCommand);
     }
 }
+//author@@ deeheenguyen

@@ -1,3 +1,4 @@
+//author@@ deeheenguyen
 package seedu.address.logic.commands;
 
 import java.util.function.Predicate;
@@ -35,3 +36,4 @@ public class FindInterviewCommand extends Command {
                 && this.predicate.equals(((FindInterviewCommand) other).predicate)); // state check
     }
 }
+//author@@deeheenguyen
