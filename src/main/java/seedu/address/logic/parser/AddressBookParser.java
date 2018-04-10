@@ -14,6 +14,7 @@ import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FacebookLoginCommand;
+import seedu.address.logic.commands.FacebookPostCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.FindInterviewCommand;
 import seedu.address.logic.commands.HelpCommand;
@@ -32,6 +33,7 @@ import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.ViewCommand;
 import seedu.address.logic.commands.ViewReportCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.ui.BrowserPanel;
 
 /**
  * Parses user input.
@@ -60,10 +62,20 @@ public class AddressBookParser {
         final String arguments = matcher.group("arguments");
         switch (commandWord) {
         case FacebookLoginCommand.COMMAND_WORD:
+            BrowserPanel.setProcessType(commandWord);
             return new FacebookLoginCommand();
 
         case FacebookLoginCommand.COMMAND_ALIAS:
+            BrowserPanel.setProcessType(commandWord);
             return new FacebookLoginCommand();
+
+        case FacebookPostCommand.COMMAND_WORD:
+            BrowserPanel.setProcessType(commandWord);
+            return new FacebookPostCommandParser().parse(arguments);
+
+        case FacebookPostCommand.COMMAND_ALIAS:
+            BrowserPanel.setProcessType(commandWord);
+            return new FacebookPostCommandParser().parse(arguments);
 
         case RemarkCommand.COMMAND_WORD:
             return new RemarkCommandParser().parse(arguments);
