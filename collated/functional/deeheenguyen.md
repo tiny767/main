@@ -66,7 +66,6 @@ public class AddInterviewCommand extends UndoableCommand {
                 && toAdd.equals(((AddInterviewCommand) other).toAdd));
     }
 }
-//author@@ deeheenguyen
 ```
 ###### \java\seedu\address\logic\commands\ListInterviewCommand.java
 ``` java
@@ -88,10 +87,6 @@ public class ListInterviewCommand extends Command {
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }
-```
-###### \java\seedu\address\logic\commands\ListInterviewCommand.java
-``` java
-
 ```
 ###### \java\seedu\address\logic\commands\ViewCommand.java
 ``` java
@@ -135,9 +130,145 @@ public class ViewCommand extends Command {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\ViewCommand.java
+###### \java\seedu\address\logic\parser\AddInterviewCommandParser.java
 ``` java
+package seedu.address.logic.parser;
 
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_INTERVIEW;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+
+import java.util.stream.Stream;
+
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.commands.AddInterviewCommand;
+import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.interview.Date;
+import seedu.address.model.interview.Interview;
+import seedu.address.model.interview.InterviewLocation;
+import seedu.address.model.interview.InterviewTitle;
+
+import seedu.address.model.person.Name;
+
+/***
+ * Parses input arguments and creates a new AddInterview1Command object
+ */
+
+public class AddInterviewCommandParser implements Parser<AddInterviewCommand> {
+    /**
+     * Parses the given {@code String} of arguments in the context of the AddInterviewCommand
+     * and returns an AddInterviewCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public AddInterviewCommand parse(String args) throws ParseException {
+        ArgumentMultimap argMultimap =
+                ArgumentTokenizer.tokenize(args, PREFIX_INTERVIEW, PREFIX_NAME, PREFIX_DATE, PREFIX_LOCATION);
+
+        if (!arePrefixesPresent(argMultimap, PREFIX_INTERVIEW, PREFIX_LOCATION)
+                || !argMultimap.getPreamble().isEmpty()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddInterviewCommand.MESSAGE_USAGE));
+        }
+
+        try {
+            InterviewTitle title = ParserUtil.parseInterviewTitle(argMultimap.getValue(PREFIX_INTERVIEW)).get();
+            Name interviewee = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME)).get();
+            Date date = ParserUtil.parseDate(argMultimap.getValue(PREFIX_DATE)).get();
+            InterviewLocation location = ParserUtil.parseInterviewLocation(argMultimap.getValue(PREFIX_LOCATION)).get();
+
+            Interview interview = new Interview(title, interviewee, date, location);
+            return new AddInterviewCommand(interview);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(ive.getMessage(), ive);
+        }
+    }
+
+    /**
+     * Returns true if none of the prefixes contains empty {@code Optional} values in the given
+     * {@code ArgumentMultimap}.
+     */
+    private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
+        return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
+    }
+
+}
+//author@@
+```
+###### \java\seedu\address\logic\parser\FindInterviewCommandParser.java
+``` java
+package seedu.address.logic.parser;
+
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+
+import seedu.address.logic.commands.FindInterviewCommand;
+import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.interview.InterviewMatchInterviewee;
+import seedu.address.model.person.Name;
+
+
+/**
+ * Parses input arguments and creates a new FindCommand object
+ */
+public class FindInterviewCommandParser implements Parser<FindInterviewCommand> {
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the FindInterviewCommand
+     * and returns an FindInterviewCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public FindInterviewCommand parse(String args) throws ParseException {
+        String trimmedArgs = args.trim();
+        if (trimmedArgs.isEmpty()) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindInterviewCommand.MESSAGE_USAGE));
+        }
+
+        String[] keywords = trimmedArgs.split("\\s+");
+        if (keywords.length > 1 || keywords.length == 0) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindInterviewCommand.MESSAGE_USAGE));
+        }
+        if (!Name.isValidName(keywords[0])) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindInterviewCommand.MESSAGE_USAGE));
+        }
+        return new FindInterviewCommand(new InterviewMatchInterviewee(keywords[0]));
+    }
+}
+```
+###### \java\seedu\address\logic\parser\ViewCommandParser.java
+``` java
+package seedu.address.logic.parser;
+
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+
+import seedu.address.logic.commands.ViewCommand;
+import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.person.Email;
+import seedu.address.model.person.EmailFilter;
+
+/**
+ * Parses input arguments and creates a new ViewCommand object
+ */
+public class ViewCommandParser implements Parser<ViewCommand> {
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the ViewCommand
+     * and returns an FindCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public ViewCommand parse(String args) throws ParseException {
+        String trimmedArgs = args.trim();
+        if (!Email.isValidEmail(trimmedArgs)) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, ViewCommand.MESSAGE_USAGE));
+        }
+
+        return new ViewCommand(new EmailFilter(new Email(trimmedArgs)));
+    }
+}
+//author@@ deeheenguyen
 ```
 ###### \java\seedu\address\storage\XmlAdaptedInterview.java
 ``` java
@@ -258,8 +389,5 @@ public class XmlAdaptedInterview {
                 && Objects.equals(date, otherInterview.date);
     }
 }
-//author@@ deeheenguyen
-
-
 
 ```
