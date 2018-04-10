@@ -1,3 +1,4 @@
+//author@@ deeheenguyen
 package seedu.address.model.interview;
 
 import static java.util.Objects.requireNonNull;
@@ -46,7 +47,7 @@ public class InterviewTitle {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof seedu.address.model.job.JobTitle // instanceof handles nulls
+                || (other instanceof seedu.address.model.interview.InterviewTitle // instanceof handles nulls
                 && this.fullTitle.equals(((InterviewTitle) other).fullTitle)); // state check
     }
 
@@ -55,3 +56,4 @@ public class InterviewTitle {
         return fullTitle.hashCode();
     }
 }
+//author@@ deeheenguyen

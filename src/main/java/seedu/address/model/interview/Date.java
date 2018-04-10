@@ -1,3 +1,4 @@
+//author@@ deeheenguyen
 package seedu.address.model.interview;
 
 import static java.util.Objects.requireNonNull;
@@ -37,7 +38,6 @@ public class Date {
      * Returns true if a given string is a valid interview location.
      */
     public static boolean isValidDate(String test) {
-        System.out.println(test);
         return test.matches(DATE_VALIDATION_REGEX);
     }
 
@@ -59,3 +59,4 @@ public class Date {
     }
 
 }
+//author@@ deeheenguyen

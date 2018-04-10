@@ -11,13 +11,17 @@ import seedu.address.logic.commands.AddInterviewCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.DeleteJobCommand;
 import seedu.address.logic.commands.EditCommand;
+import seedu.address.logic.commands.EditJobCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FacebookLoginCommand;
 import seedu.address.logic.commands.FindCommand;
+import seedu.address.logic.commands.FindInterviewCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.ListInterviewCommand;
 import seedu.address.logic.commands.ListJobsCommand;
 import seedu.address.logic.commands.MatchJobCommand;
 import seedu.address.logic.commands.PostJobCommand;
@@ -25,6 +29,7 @@ import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemarkCommand;
 import seedu.address.logic.commands.SaveReportCommand;
 import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.SkillsCommand;
 import seedu.address.logic.commands.ThemeCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.ViewCommand;
@@ -93,6 +98,9 @@ public class AddressBookParser {
         case EditCommand.COMMAND_ALIAS:
             return new EditCommandParser().parse(arguments);
 
+        case EditJobCommand.COMMAND_WORD:
+            return new EditJobCommandParser().parse(arguments);
+
         case EditCommand.COMMAND_WORD:
             return new EditCommandParser().parse(arguments);
 
@@ -104,6 +112,12 @@ public class AddressBookParser {
 
         case DeleteCommand.COMMAND_ALIAS:
             return new DeleteCommandParser().parse(arguments);
+
+        case DeleteJobCommand.COMMAND_WORD:
+            return new DeleteJobCommandParser().parse(arguments);
+
+        case DeleteJobCommand.COMMAND_ALIAS:
+            return new DeleteJobCommandParser().parse(arguments);
 
         case DeleteCommand.COMMAND_WORD:
             return new DeleteCommandParser().parse(arguments);
@@ -117,11 +131,17 @@ public class AddressBookParser {
         case FindCommand.COMMAND_WORD:
             return new FindCommandParser().parse(arguments);
 
+        case FindInterviewCommand.COMMAND_WORD:
+            return new FindInterviewCommandParser().parse(arguments);
+
         case ViewCommand.COMMAND_WORD:
             return new ViewCommandParser().parse(arguments);
 
         case ListCommand.COMMAND_WORD:
             return new ListCommand();
+
+        case ListInterviewCommand.COMMAND_WORD:
+            return new ListInterviewCommand();
 
         case ListJobsCommand.COMMAND_WORD:
             return new ListJobsCommand();
@@ -152,6 +172,9 @@ public class AddressBookParser {
 
         case SaveReportCommand.COMMAND_ALIAS:
             return new SaveReportCommandParser().parse(arguments);
+
+        case SkillsCommand.COMMAND_WORD:
+            return new SkillsCommandParser().parse(arguments);
 
         case AddInterviewCommand.COMMAND_WORD :
             return new AddInterviewCommandParser().parse(arguments);

@@ -229,7 +229,9 @@ _Figure._ Person list after finding with keywords `Alex` and `93210283`.
 
 * *Description:* Displays the person whose email is the same as given email. +
 * *Format:* `view email`
-* *Examples:* `view john@gmail.com`
+* *Examples:* `view abcd@gmail.com`
+
+image::viewCommand.png[width="300"]
 - Returns the person whose email is `john@gmail.com` +
 - Displays all the person's information and resume in the browser panel.
 
@@ -368,9 +370,21 @@ Figure 3: MatchJob command filters the Candidates as per Job, as shown above.
 * *Format:* `matchjob INDEX`
 * *Example:* `matchjob 1`
 
+==== Edit Job Command
+
+* *Description:* Edits an existing job posting in the Infinity Book.
+* *Format:* ` editjob INDEX [j/JOBTITLE] [l/LOCATION] [s/SKILLS] [t/TAG]`
+* *Examples:* ` editjob 1 j/Backend Engineer l/Singapore`
+
+==== Delete Job Command
+
+* *Description:* Remove a job posting from Infinity Book using the index from latest listing.
+* *Format:* `deletejob INDEX`
+* *Examples:* `deletejob 1`
+
 [NOTE]
 ====
-Index to be used as displayed in the panel
+Index to be used as displayed in the panel.
 ====
 
 === Managing Interview
@@ -380,6 +394,10 @@ This section describes command available for managing interview in the Infinity 
 * *Description:* Add a Interview to Infinity Book.
 * *Format:* `addInterview n/Interviewee l/LOCATION d/DATE`
 * *Examples:* `addInterview n/John l/One North d/30.1.2018`
+
+image::viewCommand.png[width="300"]
+- Add the interview with predicate name, location, and date
+- Displays the added interview in list of Interview panel.
 
 ==== List Interview [Coming in v1.5]
 
