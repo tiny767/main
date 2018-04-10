@@ -1,11 +1,9 @@
 package seedu.address.model.job;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.function.Predicate;
 
-import seedu.address.commons.util.StringUtil;
 import seedu.address.model.person.Person;
 
 /**
@@ -20,26 +18,74 @@ public class PersonMatchesJobPredicate implements Predicate<Person> {
 
     public PersonMatchesJobPredicate(Job job) {
         this.keywords = new ArrayList<String>();
-        this.keywords.addAll(Arrays.asList(job.getSkills().toString().split(",")));
-        this.keywords.addAll(Arrays.asList(job.getLocation().toString().split(" ")));
 
-        notLocationBound = (job.getLocation().toString().equals("##"));
-        notTagsBound = (job.getTags().toString().equals("##"));
-        notSkillsBound = (job.getSkills().toString().equals("##"));
+        for (String entry : job.getSkills().getSkillSet()) {
+            if (!(entry.compareTo("ALL") == 0)) {
+                this.keywords.add(entry);
+            }
+        }
+
+        for (String entry : job.getLocation().toString().split(",")) {
+            if (!(entry.compareTo("ALL") == 0)) {
+                this.keywords.add(entry);
+            }
+        }
+
+        for (String entry : job.getTags().toString().split(",")) {
+            if (!(entry.compareTo("ALL") == 0)) {
+                entry = entry.trim();
+                entry = entry.replaceAll("\\[", "");
+                entry = entry.replaceAll("\\]", "");
+                this.keywords.add(entry);
+            }
+        }
+
+        notLocationBound = (job.getLocation().toString().equals("ALL"));
+        notTagsBound = (job.getTags().toString().contains("ALL"));
+        notSkillsBound = (job.getSkills().toString().equals("ALL"));
     }
 
     @Override
     public boolean test(Person person) {
-        String toMatchPersonAddress = person.getAddress().toString();
-        String toMatchPersonSkills = person.getSkills().toString();
-        String toMatchPersonTags = person.getTags().toString();
+        String[] toMatchPersonAddressWords = person.getAddress().toString().split(",");
+
+        StringBuilder stringBuilder = new StringBuilder();
+        for (String entry : toMatchPersonAddressWords) {
+            if (!(entry.compareTo("ALL") == 0)) {
+                entry = entry.trim();
+                stringBuilder.append(" " + entry + " ");
+            }
+        }
+        String toMatchPersonAddress = stringBuilder.toString();
+
+        stringBuilder = new StringBuilder();
+        String[] toMatchPersonSkillsWords = person.getSkills().toString().split(",");
+        for (String entry : toMatchPersonSkillsWords) {
+            if (!(entry.compareTo("ALL") == 0)) {
+                entry = entry.trim();
+                stringBuilder.append(" " + entry + " ");
+            }
+        }
+        String toMatchPersonSkills = stringBuilder.toString();
+
+        stringBuilder = new StringBuilder();
+        String[] toMatchPersonTagsWords = person.getTags().toString().split(",");
+        for (String entry : toMatchPersonTagsWords) {
+            if (!(entry.compareTo("ALL") == 0)) {
+                entry = entry.trim();
+                entry = entry.replaceAll("\\[", "");
+                entry = entry.replaceAll("\\]", "");
+                stringBuilder.append(" " + entry + " ");
+            }
+        }
+        String toMatchPersonTags = stringBuilder.toString();
 
         boolean locationMatch =
-                keywords.stream().anyMatch(keyword -> StringUtil.containsWordIgnoreCase(toMatchPersonAddress, keyword));
+                keywords.stream().anyMatch(keyword -> toMatchPersonAddress.contains(keyword));
         boolean skillsMatch =
-                keywords.stream().anyMatch(keyword -> StringUtil.containsWordIgnoreCase(toMatchPersonSkills, keyword));
+                keywords.stream().anyMatch(keyword -> toMatchPersonSkills.contains(keyword));
         boolean tagsMatch =
-                keywords.stream().anyMatch(keyword -> StringUtil.containsWordIgnoreCase(toMatchPersonTags, keyword));
+                keywords.stream().anyMatch(keyword -> toMatchPersonTags.contains(keyword));
 
         if (notLocationBound) {
             locationMatch = true;
