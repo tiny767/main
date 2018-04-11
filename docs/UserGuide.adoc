@@ -427,6 +427,22 @@ You will be prompted by a Facebook authorization page (displayed in the browser 
 You can key in your facebook credentials. Infinity Book is then connected to that facebook account and you can use other
 features that Infinity Book offers.
 
+==== Make a post to facebook wall: `facebookpost` [Since v1.5rc]
+
+*Command format*: `facebookpost` [MESSAGE] +
+*Alias*: `fbpost` [MESSAGE] +
+
+[MESSAGE] is the message that users wants to post
+
+*Examples*:
+
+* `facebookpost` Good morning!
+
+Note that if you are not yet logged in to facebook (by using the command `facebooklogin`), you will be
+asked to login.
+
+Otherwise,  the post will be made to facebook wall and you will see a success message
+
 // end::facebook[]
 
 === Miscellaneous
