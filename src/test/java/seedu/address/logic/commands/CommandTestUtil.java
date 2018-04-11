@@ -160,6 +160,32 @@ public class CommandTestUtil {
     }
 
     /**
+     * Updates {@code model}'s filtered list to show only the person at the given {@code targetIndex} in the
+     * {@code model}'s address book.
+     */
+    public static void showInterviewAtIndex(Model model, Index targetIndex) {
+        assertTrue(targetIndex.getZeroBased() < model.getFilteredPersonList().size());
+
+        Person person = model.getFilteredPersonList().get(targetIndex.getZeroBased());
+        final String[] splitName = person.getName().fullName.split("\\s+");
+        model.updateFilteredPersonList(new PersonContainsKeywordsPredicate(Arrays.asList(splitName[0])));
+
+        assertEquals(1, model.getFilteredPersonList().size());
+    }
+
+    /**
+     * Deletes the first person in {@code model}'s filtered list from {@code model}'s address book.
+     */
+    public static void deleteFirstInterview (Model model) {
+        Interview firstInterview = model.getFilteredPersonList().get(0);
+        try {
+            model.deletePerson(firstPerson);
+        } catch (PersonNotFoundException pnfe) {
+            throw new AssertionError("Person in filtered list must exist in model.", pnfe);
+        }
+    }
+
+    /**
      * Returns an {@code UndoCommand} with the given {@code model} and {@code undoRedoStack} set.
      */
     public static UndoCommand prepareUndoCommand(Model model, UndoRedoStack undoRedoStack) {
