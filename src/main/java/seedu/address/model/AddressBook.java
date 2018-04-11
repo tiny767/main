@@ -17,6 +17,7 @@ import javafx.collections.ObservableList;
 import seedu.address.model.interview.Interview;
 import seedu.address.model.interview.UniqueInterviewList;
 import seedu.address.model.interview.exceptions.DuplicateInterviewException;
+import seedu.address.model.interview.exceptions.InterviewNotFoundException;
 import seedu.address.model.job.Job;
 import seedu.address.model.job.UniqueJobList;
 import seedu.address.model.job.exceptions.DuplicateJobException;
@@ -251,6 +252,18 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     public void addInterview(Interview interview) throws DuplicateInterviewException {
         interviews.add(interview);
+    }
+
+    /**
+     * Removes {@code key} from this {@code AddressBook}.
+     * @throws InterviewNotFoundException if the {@code key} is not in this {@code AddressBook}.
+     */
+    public boolean removeInterview(Interview key) throws InterviewNotFoundException {
+        if (interviews.remove(key)) {
+            return true;
+        } else {
+            throw new InterviewNotFoundException();
+        }
     }
     //// job methods
 

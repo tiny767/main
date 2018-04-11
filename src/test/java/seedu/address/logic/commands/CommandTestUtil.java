@@ -23,6 +23,9 @@ import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
+import seedu.address.model.interview.Interview;
+import seedu.address.model.interview.InterviewMatchInterviewee;
+import seedu.address.model.interview.exceptions.InterviewNotFoundException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.PersonContainsKeywordsPredicate;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -155,6 +158,32 @@ public class CommandTestUtil {
         try {
             model.deletePerson(firstPerson);
         } catch (PersonNotFoundException pnfe) {
+            throw new AssertionError("Person in filtered list must exist in model.", pnfe);
+        }
+    }
+
+    /**
+     * Updates {@code model}'s filtered list to show only the interview at the given {@code targetIndex} in the
+     * {@code model}'s address book.
+     */
+    public static void showInterviewAtIndex(Model model, Index targetIndex) {
+        assertTrue(targetIndex.getZeroBased() < model.getFilteredInterviewList().size());
+
+        Interview interview = model.getFilteredInterviewList().get(targetIndex.getZeroBased());
+        final String splitName = interview.getInterviewee().fullName;
+        model.updateFilteredInterviewList(new InterviewMatchInterviewee(splitName));
+
+        assertEquals(1, model.getFilteredInterviewList().size());
+    }
+
+    /**
+     * Deletes the first person in {@code model}'s filtered list from {@code model}'s address book.
+     */
+    public static void deleteFirstInterview (Model model) {
+        Interview firstInterview = model.getFilteredInterviewList().get(0);
+        try {
+            model.deleteInterview(firstInterview);
+        } catch (InterviewNotFoundException pnfe) {
             throw new AssertionError("Person in filtered list must exist in model.", pnfe);
         }
     }

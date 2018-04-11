@@ -23,6 +23,7 @@ import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.interview.Interview;
 import seedu.address.model.interview.exceptions.DuplicateInterviewException;
+import seedu.address.model.interview.exceptions.InterviewNotFoundException;
 import seedu.address.model.job.Job;
 import seedu.address.model.job.exceptions.DuplicateJobException;
 import seedu.address.model.job.exceptions.JobNotFoundException;
@@ -115,6 +116,11 @@ public class AddCommandTest {
 
         @Override
         public void addInterview(Interview interview) throws DuplicateInterviewException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void deleteInterview(Interview target) throws InterviewNotFoundException {
             fail("This method should not be called.");
         }
 
