@@ -391,21 +391,23 @@ image::viewCommand.png[width="300"]
 
 ==== Add Question [Coming in v1.5]
 
-=== Social Media (FB, Linkedin) Integration
+=== Social Media (FB, Linkedin) Integration [Since v1.4]
 
-==== Facebook Log in [Since v1.4]
+==== Facebook integration
 
 Connecting to Facebook [Since v1.4]: `facebooklogin`
 
 To connect your Facebook account to Infinity Book, use the `facebooklogin` command.
 
-You can key in your facebook credentials. Infinity Book is then connected to that facebook account and you can use other
-features that Infinity Book offers.
-
 ====
 *Command format*: `[red]#facebooklogin#` +
 *Alias*: `[red]#fb#` +
 ====
+
+You will be prompted by a Facebook authorization page (displayed in the browser panel)
+
+You can key in your facebook credentials. Infinity Book is then connected to that facebook account and you can use other
+features that Infinity Book offers.
 
 ==== Make a post to facebook wall: `facebookpost` [Since v1.5rc]
 
@@ -423,7 +425,6 @@ asked to login.
 
 Otherwise,  the post will be made to facebook wall and you will see a success message
 
-You will be prompted by a Facebook authorization page (displayed in the browser panel)
 
 === Miscellaneous
 
