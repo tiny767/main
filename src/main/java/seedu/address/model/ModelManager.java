@@ -230,6 +230,7 @@ public class ModelManager extends ComponentManager implements Model {
                 && filteredJobs.equals(other.filteredJobs);
     }
 
+    //@@author deeheenguyen
     //=========== Filtered Interview List Accessors =============================================================
     @Override
     public synchronized void addInterview(Interview interview) throws DuplicateInterviewException {
@@ -258,6 +259,7 @@ public class ModelManager extends ComponentManager implements Model {
         requireNonNull(predicate);
         filteredInterviews.setPredicate(predicate);
     }
+    //@@author
 
     /**
      * Returns an unmodifiable view of the list of {@code Report} backed by the internal list of
