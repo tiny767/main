@@ -25,6 +25,7 @@ import seedu.address.model.interview.Interview;
 import seedu.address.model.interview.exceptions.DuplicateInterviewException;
 import seedu.address.model.job.Job;
 import seedu.address.model.job.exceptions.DuplicateJobException;
+import seedu.address.model.job.exceptions.JobNotFoundException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -187,6 +188,17 @@ public class AddCommandTest {
         public ObservableList<Job> getFilteredJobList() {
             fail("This method should not be called.");
             return null;
+        }
+
+        @Override
+        public void deleteJob(Job target) throws JobNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void updateJob(Job target, Job editedJob)
+                throws DuplicateJobException {
+            fail("This method should not be called.");
         }
 
         @Override

@@ -33,8 +33,8 @@ public class SampleDataUtil {
     public static final Remark SAMPLE_REMARK = new Remark("Like fishing");
 
     public static final Link INIT_LINK = new Link("https://www.google.com.sg/");
-    public static final seedu.address.model.person.Skill EMPTY_SKILL = new seedu.address.model.person.Skill("");
-    public static final seedu.address.model.person.Skill SAMPLE_SKILL = new seedu.address.model.person.Skill("Java");
+    public static final Skill EMPTY_SKILL = new Skill("");
+    public static final Skill SAMPLE_SKILL = new Skill("Java");
 
 
     public static Person[] getSamplePersons() {

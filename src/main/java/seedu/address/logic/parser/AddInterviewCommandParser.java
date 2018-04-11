@@ -1,3 +1,4 @@
+//@@author deeheenguyen
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
@@ -39,12 +40,11 @@ public class AddInterviewCommandParser implements Parser<AddInterviewCommand> {
 
         try {
             InterviewTitle title = ParserUtil.parseInterviewTitle(argMultimap.getValue(PREFIX_INTERVIEW)).get();
-            InterviewLocation location = ParserUtil.parseInterviewLocation(argMultimap.getValue(PREFIX_LOCATION)).get();
-            Date date = ParserUtil.parseDate(argMultimap.getValue(PREFIX_DATE)).get();
             Name interviewee = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME)).get();
+            Date date = ParserUtil.parseDate(argMultimap.getValue(PREFIX_DATE)).get();
+            InterviewLocation location = ParserUtil.parseInterviewLocation(argMultimap.getValue(PREFIX_LOCATION)).get();
 
             Interview interview = new Interview(title, interviewee, date, location);
-
             return new AddInterviewCommand(interview);
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
@@ -60,3 +60,4 @@ public class AddInterviewCommandParser implements Parser<AddInterviewCommand> {
     }
 
 }
+//author@@

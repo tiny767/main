@@ -1,4 +1,4 @@
-= deeheenguyen - Project Portfolio
+= tiny767 - Project Portfolio
 :imagesDir: ../images
 :stylesDir: ../stylesheets
 
@@ -12,21 +12,14 @@ Infinity Book is a desktop address book application used for HR management recru
 
 == Summary of contributions
 
-* *Major enhancement*: added the interview management.
-** What it does: allows the user to add the interview relevant command which are add interview command,
-find interview command, listing interview command.
-** Justification: This feature improves the product significantly since the application is for HR management recruiting candidates
-, they need to create and manage the list of interviews for candidates.
-** Highlights: This enhancement affects existing commands and commands to be added in future. It required an in-depth analysis of design alternatives. The implementation too was challenging as it required changes to existing model, ui, and storage.
+* *Major enhancement*: Facebook integration.
 
+* *Minor enhancement*: Added a command to change theme.
 
-* *Minor enhancement*: added the view command.
-** What it does: allows user to view a specific person by email ID and display the linked page of the person.
-** Highlights: This enhancement affects existing commands and commands to be added in future. It required an in-depth analysis of design alternatives. The implementation too was challenging as it required changes to existing commands.
+* *Minor enhancement*: Added a remark field to person.
 
-
-* *Code contributed*: [https://github.com/CS2103JAN2018-W11-B3/main/blob/master/collated/functional/deeheenguyen.md[Functional code]]
-[https://github.com/CS2103JAN2018-W11-B3/main/blob/master/collated/test/deeheenguyen.md[Test code]] _{give links to collated code files}_
+* *Code contributed*: [https://github.com/CS2103JAN2018-W11-B3/main/blob/master/collated/functional/tiny767.md[Functional code]]
+[https://github.com/CS2103JAN2018-W11-B3/main/blob/master/collated/test/tiny767.md[Test code]] _{give links to collated code files}_
 
 * *Other contributions*:
 
@@ -55,9 +48,7 @@ _{you can add/remove categories in the list above}_
 |_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
 |===
 
-include::../UserGuide.adoc[tag=undoredo]
-
-include::../UserGuide.adoc[tag=dataencryption]
+include::../UserGuide.adoc[tag=facebook]
 
 == Contributions to the Developer Guide
 
@@ -65,13 +56,6 @@ include::../UserGuide.adoc[tag=dataencryption]
 |_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
 |===
 
-include::../DeveloperGuide.adoc[tag=undoredo]
-
-include::../DeveloperGuide.adoc[tag=dataencryption]
-
-
-== PROJECT: PowerPointLabs
+include::../DeveloperGuide.adoc[tag=theme]
 
 ---
-
-_{Optionally, you may include other projects in your portfolio.}_

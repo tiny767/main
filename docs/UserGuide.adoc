@@ -275,6 +275,8 @@ Corrects command word to `list`.
 * When completions are available, use `TAB` to toggle through options.
 ****
 
+// tag::report[]
+
 === Dashboard Reporting
 
 Infinity Book is tailored for people who are obsessed with speed. Aligning with this vision, our Report feature enables
@@ -345,6 +347,8 @@ Saves the current statistics of the report. A new entry will be added at the end
 image::savereport.png[width="600"]
 _Figure._ Report with population Tag `SEIntern` is saved.
 
+// end::report[]
+
 === Managing Job Postings
 
 This section describes commands available for managing job postings in the Infinity Book.
@@ -370,9 +374,21 @@ Figure 3: MatchJob command filters the Candidates as per Job, as shown above.
 * *Format:* `matchjob INDEX`
 * *Example:* `matchjob 1`
 
+==== Edit Job Command
+
+* *Description:* Edits an existing job posting in the Infinity Book.
+* *Format:* ` editjob INDEX [j/JOBTITLE] [l/LOCATION] [s/SKILLS] [t/TAG]`
+* *Examples:* ` editjob 1 j/Backend Engineer l/Singapore`
+
+==== Delete Job Command
+
+* *Description:* Remove a job posting from Infinity Book using the index from latest listing.
+* *Format:* `deletejob INDEX`
+* *Examples:* `deletejob 1`
+
 [NOTE]
 ====
-Index to be used as displayed in the panel
+Index to be used as displayed in the panel.
 ====
 
 === Managing Interview
@@ -390,6 +406,8 @@ image::viewCommand.png[width="300"]
 ==== List Interview [Coming in v1.5]
 
 ==== Add Question [Coming in v1.5]
+
+// tag::facebook[]
 
 === Social Media (FB, Linkedin) Integration [Since v1.4]
 
@@ -425,6 +443,7 @@ asked to login.
 
 Otherwise,  the post will be made to facebook wall and you will see a success message
 
+// end::facebook[]
 
 === Miscellaneous
 

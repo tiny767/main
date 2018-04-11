@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.Objects;
 import java.util.Set;
 
+import seedu.address.model.job.Skill;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -19,8 +20,7 @@ public class Person {
     private final Phone phone;
     private final Email email;
     private final Address address;
-    private final Skill skills;
-
+    private final seedu.address.model.job.Skill skills;
     private final Remark remark;
     private final UniqueTagList tags;
     private final Link link;
@@ -36,10 +36,26 @@ public class Person {
         this.address = address;
         this.remark = remark;
         this.link = link;
-        this.skills = new Skill("");
+        this.skills = new seedu.address.model.job.Skill("");
         // protect internal tags from changes in the arg list
         this.tags = new UniqueTagList(tags);
     }
+
+    public Person(
+            Name name, Phone phone, Email email, Address address,
+            Remark remark, Link link, seedu.address.model.job.Skill skills, Set<Tag> tags) {
+        requireAllNonNull(name, phone, email, address, remark, tags);
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+        this.address = address;
+        this.remark = remark;
+        this.link = link;
+        this.skills = skills;
+        // protect internal tags from changes in the arg list
+        this.tags = new UniqueTagList(tags);
+    }
+
 
     public Name getName() {
         return name;

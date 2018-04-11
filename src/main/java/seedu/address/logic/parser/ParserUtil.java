@@ -99,6 +99,7 @@ public class ParserUtil {
     }
 
     /**
+     * TODO: Fix the javadoc comment
      * Parses a {@code String string} into a trimmed {@code JobTitle}.
      * Leading and trailing whitespaces will be trimmed.
      *
