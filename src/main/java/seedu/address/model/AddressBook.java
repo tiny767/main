@@ -249,7 +249,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     //// interview-level operations
-
+    //@@author deeheenguyen
     public void addInterview(Interview interview) throws DuplicateInterviewException {
         interviews.add(interview);
     }
@@ -265,6 +265,7 @@ public class AddressBook implements ReadOnlyAddressBook {
             throw new InterviewNotFoundException();
         }
     }
+    //@@author
     //// job methods
 
     /**

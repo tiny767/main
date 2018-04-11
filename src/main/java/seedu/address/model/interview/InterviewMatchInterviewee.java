@@ -1,4 +1,4 @@
-//author@@ deeheenguyen
+//@@author deeheenguyen
 package seedu.address.model.interview;
 
 import java.util.function.Predicate;
