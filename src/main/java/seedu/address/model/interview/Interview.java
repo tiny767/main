@@ -1,4 +1,4 @@
-//author@@ deeheenguyen
+//@@author deeheenguyen
 package seedu.address.model.interview;
 
 import java.util.ArrayList;
@@ -57,7 +57,6 @@ public class Interview {
         if (!(other instanceof Interview)) {
             return false;
         }
-
         Interview otherInterview = (Interview) other;
         return otherInterview.getInterviewTitle().equals(this.getInterviewTitle())
                 && otherInterview.getInterviewee().equals(this.getInterviewee())
@@ -85,4 +84,3 @@ public class Interview {
         return builder.toString();
     }
 }
-//author@@ deeheenguyen

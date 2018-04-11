@@ -24,7 +24,7 @@ public class DeleteInterviewCommand extends UndoableCommand {
     public static final String COMMAND_ALIAS = "di";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Deletes the job identified by the index number used in the last interview listing.\n"
+            + ": Deletes the interview identified by the index number used in the last interview listing.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
@@ -57,7 +57,7 @@ public class DeleteInterviewCommand extends UndoableCommand {
         List<Interview> lastShownList = model.getFilteredInterviewList();
 
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_JOB_DISPLAYED_INDEX);
+            throw new CommandException(Messages.MESSAGE_INVALID_INTERVIEW_DISPLAYED_INDEX);
         }
 
         interviewToDelete = lastShownList.get(targetIndex.getZeroBased());
