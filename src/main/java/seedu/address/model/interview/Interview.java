@@ -1,7 +1,6 @@
 //@@author deeheenguyen
 package seedu.address.model.interview;
 
-import java.util.ArrayList;
 import java.util.Objects;
 
 import seedu.address.model.person.Name;
@@ -14,7 +13,6 @@ public class Interview {
     private InterviewTitle interviewTitle;
     private Name interviewee;
     private Date date;
-    private ArrayList<Quest> listQuestions;
     private InterviewLocation interviewLocation;
 
     public Interview(InterviewTitle interviewTitle, Name interviewee, Date date, InterviewLocation location) {
@@ -38,14 +36,6 @@ public class Interview {
 
     public InterviewLocation getInterviewLocation() {
         return this.interviewLocation;
-    }
-
-    public ArrayList<Quest> getListQuestions() {
-        return this.listQuestions;
-    }
-
-    public void addQuestion(Quest question) {
-        listQuestions.add(question);
     }
 
     @Override

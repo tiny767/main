@@ -1,264 +1,223 @@
 # tiny767
-###### \java\seedu\address\logic\commands\RemarkCommand.java
+###### \java\seedu\address\commons\events\ui\BrowserUrlChangedEvent.java
 ``` java
-package seedu.address.logic.commands;
-
-import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.commands.AddCommand.MESSAGE_DUPLICATE_PERSON;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
-
-import java.util.List;
-
-import seedu.address.commons.core.Messages;
-import seedu.address.commons.core.index.Index;
-import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.Remark;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
-
 /**
- * Modifies the remark of a person in the address book
+ * Indicates that the browser has changed
  */
-public class RemarkCommand extends UndoableCommand {
+public class BrowserUrlChangedEvent extends BaseEvent {
+    private String processType;
 
-    public static final String COMMAND_WORD = "remark";
-    public static final String COMMAND_ALIAS = "rm";
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edit the remark of a person. "
-            + "Parameters: "
-            + "Parameters: INDEX (must be a positive integer) "
-            + PREFIX_REMARK + "[REMARK]\n"
-            + "Example: " + COMMAND_WORD + " 1 "
-            + PREFIX_REMARK + "Is a very good coder.";
+    public BrowserUrlChangedEvent(String processType) {
+        this.processType = processType;
+    }
 
-    public static final String MESSAGE_ADD_REMARK_SUCCESS = "Added remark to Person: %1$s";
-    public static final String MESSAGE_DELETE_REMARK_SUCCESS = "Removed remark from Person: %1$s";
-
-    private final Index index;
-    private final Remark remark;
-
-    private Person personToEdit;
-    private Person editedPerson;
-
-
-
-    /**
-     *
-     * @param index index of the person in the list to modify the remark
-     * @param remark content of the remark to be updated
-     */
-    public RemarkCommand(Index index, Remark remark) {
-        requireNonNull(index);
-        requireNonNull(remark);
-
-        this.index = index;
-        this.remark = remark;
-
+    public String getProcessType() {
+        return processType;
     }
 
     @Override
-    public CommandResult executeUndoableCommand() throws CommandException {
-        requireNonNull(personToEdit);
-        requireNonNull(editedPerson);
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+}
+```
+###### \java\seedu\address\logic\commands\FacebookLoginCommand.java
+``` java
+/**
+ * Connects the address book to a personal Facebook account.
+ */
+public class FacebookLoginCommand extends Command {
+    public static final String COMMAND_WORD = "facebooklogin";
+    public static final String COMMAND_ALIAS = "fblogin";
+    public static final String MESSAGE_LOGIN_INIT = "Initiating authentication. "
+            + "Please log into your Facebook account.";
+    public static final String MESSAGE_SUCCESS = "You are logged in to Facebook";
+    public static final String FACEBOOK_DOMAIN = "https://www.facebook.com/";
+    private static final String FACEBOOK_APP_ID = "199997423936335";
+
+    private static final String FACEBOOK_AUTH_URL =
+            "https://graph.facebook.com/oauth/authorize?type=user_agent&client_id=" + FACEBOOK_APP_ID
+                    + "&redirect_uri=" + FACEBOOK_DOMAIN;
+    private static final String FACEBOOK_PERMISSIONS = "user_about_me,email,publish_actions,user_birthday,"
+            + "user_education_history,user_friends,user_games_activity,user_hometown,user_likes,"
+            + "user_location,user_photos,user_posts,user_relationship_details,user_relationships,"
+            + "user_religion_politics,user_status,user_tagged_places,user_videos,user_website,user_work_history,"
+            + "ads_management,ads_read,business_management,manage_pages,pages_manage_cta,publish_pages,"
+            + "user_actions.books,user_actions.fitness,read_custom_friendlists,"
+            + "pages_messaging_phone_number,pages_messaging_subscriptions,pages_show_list,user_actions.music,"
+            + "user_actions.news,rsvp_event,user_events,user_managed_groups,"
+            + "pages_manage_instant_articles,user_actions.video,instagram_basic,instagram_manage_comments,"
+            + "instagram_manage_insights,read_audience_network_insights,read_insights";
+
+    private static WebEngine webEngine;
+
+    private static String accessToken;
+    private static String authenticatedUsername;
+    private static String authenticatedUserId;
+    private static boolean isAuthenticated = false;
+    private static String authenticatedUserPage;
+
+
+    private static DefaultFacebookClient fbClient;
+    private static User user;
+
+    public static DefaultFacebookClient getFbClient() {
+        return fbClient;
+    }
+
+
+    public static String getAuthenticatedUsername() {
+        return authenticatedUsername;
+    }
+
+    public static WebEngine getWebEngine() {
+        return webEngine;
+    }
+
+    public static String getAuthenticatedUserPage() {
+        return authenticatedUserPage;
+    }
+
+    public static boolean getAuthenticateState() {
+        return isAuthenticated;
+    }
+
+
+    /**
+     * Sets a WebEngine
+     */
+    public static void setWebEngine(WebEngine webEngine) {
+        FacebookLoginCommand.webEngine = webEngine;
+    }
+
+    /**
+     * Completes the authentication process by retrieving the token and setting up username and id
+     */
+    public static void completeAuth(String urlWithToken) throws CommandException {
+
+        accessToken = urlWithToken.replaceAll(".*#access_token=(.+)&.*", "$1");
+
+        fbClient = new DefaultFacebookClient(accessToken, Version.LATEST);
+        user = fbClient.fetchObject("me", User.class);
 
         try {
-            model.updatePerson(personToEdit, editedPerson);
-        } catch (DuplicatePersonException dpe) {
-            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
-        } catch (PersonNotFoundException pnfe) {
-            throw new AssertionError("The target person cannot be missing");
+            authenticatedUsername = user.getName();
+            authenticatedUserId = user.getId();
+        } catch (Exception e) {
+            throw new CommandException("Error in Facebook Authorisation");
         }
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        return new CommandResult(createSuccessMessage(editedPerson));
-    }
 
-    /**
-     *Generate an execution success message based on whether the remark is adding to or removing from
-     */
-    private String createSuccessMessage(Person editedPerson) {
-        String message = remark.value.isEmpty() ? MESSAGE_DELETE_REMARK_SUCCESS : MESSAGE_ADD_REMARK_SUCCESS;
-        return String.format(message, editedPerson);
+        if (accessToken != null) {
+            isAuthenticated = true;
+            authenticatedUserPage = "https://www.facebook.com/" + authenticatedUserId;
+            EventsCenter.getInstance().post(new NewResultAvailableEvent(
+                    MESSAGE_SUCCESS + " User name: " + authenticatedUsername));
+        } else {
+            throw new CommandException("Error in Facebook Authorisation");
+        }
     }
 
     @Override
-    protected void preprocessUndoableCommand() throws CommandException {
-        List<Person> lastShownList = model.getFilteredPersonList();
+    public CommandResult execute() throws CommandException {
+        webEngine.load(FACEBOOK_AUTH_URL);
 
-        if (index.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-        }
+        return new CommandResult(MESSAGE_LOGIN_INIT);
+    }
+}
+```
+###### \java\seedu\address\logic\commands\FacebookPostCommand.java
+``` java
+/**
+ * Posts a message to a personal Facebook account.
+ */
+public class FacebookPostCommand extends Command {
+    public static final String COMMAND_WORD = "facebookpost";
+    public static final String COMMAND_ALIAS = "fbpost";
+    public static final String EXAMPLE_POST = "Good morning!";
 
-        personToEdit = lastShownList.get(index.getZeroBased());
-        editedPerson = new Person(personToEdit.getName(),
-                personToEdit.getPhone(),
-                personToEdit.getEmail(),
-                personToEdit.getAddress(),
-                this.remark,
-                personToEdit.getTags());
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": make a post Facebook wall of user\n"
+            + "Alias: " + COMMAND_ALIAS + "\n"
+            + "Parameters: MESSAGE\n"
+            + "Example: " + COMMAND_WORD + " " + EXAMPLE_POST;
+
+    public static final String MESSAGE_FACEBOOK_POST_SUCCESS = "Posted to Facebook.";
+    public static final String MESSAGE_FACEBOOK_POST_LOGIN = "User has not been authenticated yet, please log in.";
+    public static final String MESSAGE_FACEBOOK_POST_FAIL = "There was an error posting to Facebook";
+
+    private static String currentPost;
+    private static WebEngine webEngine;
+
+    private String toPost;
+
+    /**
+     * Creates an FacebookPostCommand based on the message
+     */
+    public FacebookPostCommand(String message) {
+        currentPost = message;
+        toPost = message;
     }
 
+    /**
+     * Completes the post command
+     */
+    public void completePost() throws CommandException {
+
+        DefaultFacebookClient fbClient = FacebookLoginCommand.getFbClient();
+        try {
+            //fbClient.(currentPost);
+            fbClient.publish("me/feed", FacebookType.class, Parameter.with("message", currentPost));
+        } catch (Exception e) {
+            e.printStackTrace();
+            new CommandException(MESSAGE_FACEBOOK_POST_FAIL);
+        }
+        EventsCenter.getInstance().post(new NewResultAvailableEvent(MESSAGE_FACEBOOK_POST_SUCCESS
+                + " (to " + FacebookLoginCommand.getAuthenticatedUsername() + "'s page.)"));
+        webEngine = FacebookLoginCommand.getWebEngine();
+        webEngine.load(FacebookLoginCommand.getAuthenticatedUserPage());
+    }
+
+    @Override
+    public CommandResult execute() throws CommandException {
+        if (!FacebookLoginCommand.getAuthenticateState()) {
+            BrowserPanel.setProcessType(COMMAND_WORD);
+            FacebookLoginCommand fbLoginCommand = new FacebookLoginCommand();
+            fbLoginCommand.execute();
+            return new CommandResult(MESSAGE_FACEBOOK_POST_LOGIN);
+        } else {
+            completePost();
+            return new CommandResult(MESSAGE_FACEBOOK_POST_SUCCESS + " (to "
+                    + FacebookLoginCommand.getAuthenticatedUsername() + "'s page.)");
+        }
+    }
 
     @Override
     public boolean equals(Object other) {
-        // short circuit if same object
-        if (other == this) {
-            return true;
-        }
-
-        // instanceof handles nulls
-        if (!(other instanceof RemarkCommand)) {
-            return false;
-        }
-
-        // state check
-        RemarkCommand e = (RemarkCommand) other;
-        return index.equals(e.index)
-                && remark.equals(e.remark);
+        return other == this // short circuit if same object
+                || (other instanceof FacebookPostCommand // instanceof handles nulls
+                && toPost.equals(((FacebookPostCommand) other).toPost));
     }
-
 }
 ```
-###### \java\seedu\address\logic\commands\ThemeCommand.java
+###### \java\seedu\address\logic\parser\FacebookPostCommandParser.java
 ``` java
-package seedu.address.logic.commands;
-
-import seedu.address.ui.UiStyle;
-
 /**
- * Change the theme of addressbook
+ * Parses input arguments and creates a new FacebookPostCommand object
  */
-public class ThemeCommand extends Command {
-
-    public static final String COMMAND_WORD = "theme";
-    public static final String COMMAND_ALIAS = "t";
-    public static final String LIGHT_THEME = "light";
-    public static final String DARK_THEME = "dark";
-
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Changes theme to. "
-            + "Parameters: light/dark";
-
-
-    public static final String MESSAGE_SUCCESS = "Theme has been changed successfully";
-
-    private final String theme;
+public class FacebookPostCommandParser implements Parser<FacebookPostCommand> {
 
     /**
-     * Creates an AddCommand to add the specified {@code Person}
+     * Parses the given {@code String} of arguments in the context of the FacebookAddCommand
+     * and returns an FacebookAddCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
      */
-    public ThemeCommand(String theme) {
-        this.theme = theme;
-    }
-
     @Override
-    public CommandResult execute() {
-        if (theme.equalsIgnoreCase(ThemeCommand.LIGHT_THEME)) {
-            UiStyle.getInstance().setToLightTheme();
-        } else if (theme.equalsIgnoreCase(ThemeCommand.DARK_THEME)) {
-            UiStyle.getInstance().setToDarkTheme();
+    public FacebookPostCommand parse(String input) throws ParseException {
+        String trimmedInput = input.trim();
+        if (trimmedInput.isEmpty()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FacebookPostCommand.MESSAGE_USAGE));
         }
-
-        return new CommandResult(MESSAGE_SUCCESS);
-
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        // short circuit if same object
-        if (other == this) {
-            return true;
-        }
-
-        // instanceof handles nulls
-        if (!(other instanceof ThemeCommand)) {
-            return false;
-        }
-
-        // state check
-        ThemeCommand t = (ThemeCommand) other;
-        return theme.equals(t.theme);
-    }
-}
-```
-###### \java\seedu\address\logic\parser\ThemeCommandParser.java
-``` java
-package seedu.address.logic.parser;
-
-import static java.util.Objects.requireNonNull;
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-
-import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.logic.commands.ThemeCommand;
-import seedu.address.logic.parser.exceptions.ParseException;
-
-/**
- * Parses input arguments and creates a new EditCommand object
- */
-public class ThemeCommandParser implements Parser<ThemeCommand> {
-
-    /**
-     * Parses the given {@code String} of arguments in the context of the ThemeCommand
-     * and returns a ThemeCommand object for execution.
-         * @throws ParseException if the user input does not conform the expected format
-     */
-    public ThemeCommand parse(String args) throws ParseException {
-        requireNonNull(args);
-        try {
-            String trimmedArgs = args.trim();
-            if (!trimmedArgs.equalsIgnoreCase(ThemeCommand.LIGHT_THEME)
-                && !trimmedArgs.equalsIgnoreCase(ThemeCommand.DARK_THEME)) {
-                throw new IllegalValueException("");
-
-            } else {
-                return new ThemeCommand(trimmedArgs);
-            }
-        } catch (IllegalValueException ive) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                    ThemeCommand.MESSAGE_USAGE));
-        }
-
-    }
-
-}
-```
-###### \java\seedu\address\ui\UiStyle.java
-``` java
-package seedu.address.ui;
-
-import javafx.scene.Scene;
-
-/**
- * stores the styles that can be used for the interface
- */
-public class UiStyle {
-    private static final String LIGHT_THEME_STYLE = "view/LightTheme.css";
-    private static final String DARK_THEME_STYLE = "view/DarkTheme.css";
-    private static Scene scene = null;
-    private static UiStyle instance = null;
-
-    public static void setScene(Scene s) {
-        scene = s;
-        setDefaultTheme();
-    }
-
-    private static void setDefaultTheme() {
-        scene.getStylesheets().add(DARK_THEME_STYLE);
-    }
-
-    public static void setToLightTheme() {
-        scene.getStylesheets().setAll(LIGHT_THEME_STYLE);
-    }
-
-    public static void setToDarkTheme() {
-        scene.getStylesheets().setAll(DARK_THEME_STYLE);
-    }
-
-    public static UiStyle getInstance() {
-        if (instance == null) {
-            instance = new UiStyle();
-        }
-
-        return instance;
+        return new FacebookPostCommand(trimmedInput);
     }
 }
 ```
