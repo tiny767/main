@@ -688,6 +688,8 @@ through the command `matchjob INDEX`, which displays the suitable candidates in 
 **Pros:** Search can be customized to be as accurate as required. +
 **Cons:** Spelling differences may still cause diminished effectiveness.
 
+// tag::theme[]
+
 === Theming Mechanism [since v1.3]
 
 The theme mechanism is facilitated by a singleton class `UiStyle` which will be called inside the `MainWindow` constructor where it passes its `scene` into the `UiStyle` class.
@@ -736,6 +738,8 @@ UiStyle.getInstance().setToLightTheme();
 **Alternative 2:** Change the themes in `MainWindow` class directly +
 **Pros:** Decreases coupling +
 **Cons:** Violates the single responsibility principle since `MainWindow` class also controls the changing of theme. It is harder for `ThemeCommand` class to access the methods from `MainWindow` to change theme +
+
+// end::theme[]
 
 === Interview Management
 

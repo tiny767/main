@@ -407,6 +407,8 @@ image::viewCommand.png[width="300"]
 
 ==== Add Question [Coming in v1.5]
 
+// tag::facebook[]
+
 === Social Media (FB, Linkedin) Integration [Since v1.4]
 
 ==== Facebook integration
@@ -424,6 +426,8 @@ You will be prompted by a Facebook authorization page (displayed in the browser 
 
 You can key in your facebook credentials. Infinity Book is then connected to that facebook account and you can use other
 features that Infinity Book offers.
+
+// end::facebook[]
 
 === Miscellaneous
 
