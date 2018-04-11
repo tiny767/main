@@ -36,4 +36,3 @@ public class FindInterviewCommand extends Command {
                 && this.predicate.equals(((FindInterviewCommand) other).predicate)); // state check
     }
 }
-//author@@deeheenguyen

@@ -299,7 +299,7 @@
 }
 
 #tags .blue{
-    -fx-background-color: linear-gradient(to right, #B3FFAB, #12FFF7);
+    -fx-background-color: linear-gradient(to right, #00d2ff, #3a7bd5);
     -fx-text-fill: white;
 }
 

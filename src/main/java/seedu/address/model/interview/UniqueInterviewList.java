@@ -1,3 +1,4 @@
+//author@@ deeheenguyen
 package seedu.address.model.interview;
 
 import static java.util.Objects.requireNonNull;
@@ -117,3 +118,4 @@ public class UniqueInterviewList implements Iterable<Interview> {
         return internalList.hashCode();
     }
 }
+//author@@ deeheenguyen
