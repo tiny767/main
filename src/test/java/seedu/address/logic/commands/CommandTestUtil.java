@@ -49,7 +49,7 @@ public class CommandTestUtil {
     public static final String VALID_TAG_NONEXISTENT = "nonexistent";
     public static final String VALID_LINK_AMY = "https://www.google.com.sg/";
     public static final String VALID_LINK_BOB = "https://www.google.com.sg/";
-    public static final String VALID_SKILL_AMY = "HTML";
+    public static final String VALID_SKILL_AMY = "CSS";
     public static final String VALID_SKILL_BOB = "CSS";
 
 

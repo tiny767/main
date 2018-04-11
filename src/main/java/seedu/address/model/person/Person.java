@@ -43,7 +43,7 @@ public class Person {
 
     public Person(
             Name name, Phone phone, Email email, Address address,
-            Remark remark, Link link, seedu.address.model.job.Skill skills, Set<Tag> tags) {
+            Remark remark, Link link, Skill skills, Set<Tag> tags) {
         requireAllNonNull(name, phone, email, address, remark, tags);
         this.name = name;
         this.phone = phone;

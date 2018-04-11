@@ -15,6 +15,7 @@ import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.SKILL_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_AMY;
@@ -68,7 +69,8 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
          */
         Person toAdd = AMY;
         String command = "   " + AddCommand.COMMAND_WORD + "  " + NAME_DESC_AMY + "  " + PHONE_DESC_AMY + " "
-                + EMAIL_DESC_AMY + "   " + ADDRESS_DESC_AMY + "   " + LINK_DESC_AMY + "  " + TAG_DESC_FRIEND + " ";
+                + EMAIL_DESC_AMY + "   " + ADDRESS_DESC_AMY + "   " + LINK_DESC_AMY + "  " + SKILL_DESC_AMY + " "
+                + TAG_DESC_FRIEND + " ";
         assertCommandSuccess(command, toAdd);
 
         /* Case: undo adding Amy to the list -> Amy deleted */
