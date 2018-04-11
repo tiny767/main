@@ -30,8 +30,7 @@ IB provides *end-to-end support*, from searching for candidates,to adding job po
 ** Project management:
 *** Managed releases `v1.3` `v1.4.1` (2 releases) on GitHub
 ** Enhancements to existing features:
-*** Updated the GUI color scheme (Pull requests https://github.com[#33], https://github.com[#34])
-*** Wrote additional tests for existing features to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
+*** Updated the add and edit command to support the skills field(Pull requests https://github.com[#33], https://github.com[#34])
 ** Documentation:
 *** Did cosmetic tweaks to existing contents of the User Guide: https://github.com[#14]
 ** Community:
@@ -39,9 +38,6 @@ IB provides *end-to-end support*, from searching for candidates,to adding job po
 *** Contributed to forum discussions (examples:  https://github.com[1], https://github.com[2], https://github.com[3], https://github.com[4])
 *** Reported bugs and suggestions for other teams in the class (examples:  https://github.com[1], https://github.com[2], https://github.com[3])
 *** Some parts of the history feature I added was adopted by several other class mates (https://github.com[1], https://github.com[2])
-** Tools:
-*** Integrated a third party library (Natty) to the project (https://github.com[#42])
-*** Integrated a new Github plugin (CircleCI) to the team repo
 
 _{you can add/remove categories in the list above}_
 
@@ -52,9 +48,9 @@ _{you can add/remove categories in the list above}_
 |_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
 |===
 
-include::../UserGuide.adoc[tag=undoredo]
+include::../UserGuide.adoc[tag=jobposting]
 
-include::../UserGuide.adoc[tag=dataencryption]
+//include::../UserGuide.adoc[tag=]
 
 == Contributions to the Developer Guide
 
@@ -62,13 +58,8 @@ include::../UserGuide.adoc[tag=dataencryption]
 |_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
 |===
 
-include::../DeveloperGuide.adoc[tag=undoredo]
+include::../DeveloperGuide.adoc[tag=jobposting]
 
-include::../DeveloperGuide.adoc[tag=dataencryption]
-
-
-== PROJECT: PowerPointLabs
-
----
+//include::../DeveloperGuide.adoc[tag=]
 
 _{Optionally, you may include other projects in your portfolio.}_

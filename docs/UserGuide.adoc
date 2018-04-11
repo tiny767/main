@@ -345,6 +345,7 @@ Saves the current statistics of the report. A new entry will be added at the end
 image::savereport.png[width="600"]
 _Figure._ Report with population Tag `SEIntern` is saved.
 
+// tag::jobposting[]
 === Managing Job Postings
 
 This section describes commands available for managing job postings in the Infinity Book.
@@ -381,6 +382,8 @@ Figure 3: MatchJob command filters the Candidates as per Job, as shown above.
 * *Description:* Remove a job posting from Infinity Book using the index from latest listing.
 * *Format:* `deletejob INDEX`
 * *Examples:* `deletejob 1`
+
+// end::jobposting[]
 
 [NOTE]
 ====
