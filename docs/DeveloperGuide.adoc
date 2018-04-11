@@ -17,17 +17,17 @@ By: `Team JACKHA (W11-B3)`      Since: `Jun 2016`      Licence: `MIT`
 [[top]]
 
 == Introduction
-Infinity Book (IB) is an address book application for Tech recruiters who *prefer to use a desktop app for managing candidates*.  +
+Infinity Book is an Infinity Book application for Tech recruiters who *prefer to use a desktop app to keep track candidates' information, job postings, and interview*.  +
 
-IB provides end-to-end support, from searching for candidates,to adding job postings and saving their resumes and interviews. +
+Infinity Book provides end-to-end support, from searching for candidates,to adding job postings and saving their resumes and interviews. +
 
-More importantly, IB is *optimized for those who prefer to work with a Command Line Interface* (link:#cli[CLI]) while still having the benefits of a Graphical User Interface (link:#gui[GUI]). If you can type fast, IB can get your candidates management tasks done faster than traditional GUI apps. +
+More importantly, Infinity Book is *optimized for those who prefer to work with a Command Line Interface* (link:#cli[CLI]) while still having the benefits of a Graphical User Interface (link:#gui[GUI]). If you can type fast, Infinity Book can get your candidates management tasks done faster than traditional GUI apps. +
 
 link:#top[Back to top]
 
 == About
 
-This Developer Guide provides details on setting up this project for development, compatibility, and architecture information about IB. Design and implementation specifications are specified below, followed by product management specifics. +
+This Developer Guide provides details on setting up this project for development, compatibility, and architecture information about Infinity Book. Design and implementation specifications are specified below, followed by product management specifics. +
 
 For information about application usage, refer to the link:https://github.com/CS2103JAN2018-W11-B3/main/blob/master/docs/UserGuide.adoc[User Guide]
 Interested? +
@@ -175,7 +175,7 @@ The _Sequence Diagram_ below shows how the components interact for the scenario 
 image::SDforDeletePerson.png[width="800"]
 
 [NOTE]
-Note how the `Model` simply raises a `AddressBookChangedEvent` when the Address Book data are changed, instead of asking the `Storage` to save the updates to the hard disk.
+Note how the `Model` simply raises a `AddressBookChangedEvent` when the Infinity Book data are changed, instead of asking the `Storage` to save the updates to the hard disk.
 
 The diagram below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
 
@@ -239,7 +239,7 @@ image::ModelClassDiagram.png[width="800"]
 The `Model`,
 
 * stores a `UserPref` object that represents the user's preferences.
-* stores the Address Book data.
+* stores the Infinity Book data.
 * exposes an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 * does not depend on any of the other three components.
 
@@ -254,7 +254,7 @@ image::StorageClassDiagram.png[width="800"]
 The `Storage` component,
 
 * can save `UserPref` objects in json format and read it back.
-* can save the Address Book data in xml format and read it back.
+* can save the Infinity Book data in xml format and read it back.
 
 [[Design-Commons]]
 === Common classes
@@ -271,13 +271,13 @@ This section describes some noteworthy details on how certain features are imple
 === Undo/Redo feature
 ==== Current Implementation
 
-The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides inside `LogicManager`. It supports undoing and redoing of commands that modifies the state of the address book (e.g. `add`, `edit`). Such commands will inherit from `UndoableCommand`.
+The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides inside `LogicManager`. It supports undoing and redoing of commands that modifies the state of the Infinity Book (e.g. `add`, `edit`). Such commands will inherit from `UndoableCommand`.
 
 `UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead. The following diagram shows the inheritance diagram for commands:
 
 image::LogicCommandClassDiagram.png[width="800"]
 
-As you can see from the diagram, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the address book before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
+As you can see from the diagram, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the Infinity Book before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
 
 Commands that are not undoable are implemented this way:
 [source,java]
@@ -312,7 +312,7 @@ public class DeleteCommand extends UndoableCommand {
 
 Suppose that the user has just launched the application. The `UndoRedoStack` will be empty at the beginning.
 
-The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th person in the address book. The current state of the address book is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
+The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th candidate in the Infinity Book. The current state of the Infinity Book is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
 
 image::UndoRedoStartingStackDiagram.png[width="800"]
 
@@ -323,9 +323,9 @@ image::UndoRedoNewCommand1StackDiagram.png[width="800"]
 [NOTE]
 If a command fails its execution, it will not be pushed to the `UndoRedoStack` at all.
 
-The user now decides that adding the person was a mistake, and decides to undo that action using `undo`.
+The user now decides that adding the candidate was a mistake, and decides to undo that action using `undo`.
 
-We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore the address book to the state before the `add` command executed.
+We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore the Infinity Book to the state before the `add` command executed.
 
 image::UndoRedoExecuteUndoStackDiagram.png[width="800"]
 
@@ -336,7 +336,7 @@ The following sequence diagram shows how the undo operation works:
 
 image::UndoRedoSequenceDiagram.png[width="800"]
 
-The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores the address book to the state after the command is executed).
+The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores the Infinity Book to the state after the command is executed).
 
 [NOTE]
 If the `redoStack` is empty, then there are no other commands left to be redone, and an `Exception` will be thrown when popping the `redoStack`.
@@ -366,17 +366,17 @@ image::UndoRedoActivityDiagram.png[width="650"]
 
 ===== Aspect: How undo & redo executes
 
-* **Alternative 1 (current choice):** Saves the entire address book.
+* **Alternative 1 (current choice):** Saves the entire Infinity Book.
 ** Pros: Easy to implement.
 ** Cons: May have performance issues in terms of memory usage.
 * **Alternative 2:** Individual command knows how to undo/redo by itself.
-** Pros: Will use less memory (e.g. for `delete`, just save the person being deleted).
+** Pros: Will use less memory (e.g. for `delete`, just save the candidate being deleted).
 ** Cons: We must ensure that the implementation of each individual command are correct.
 
 
 ===== Aspect: Type of commands that can be undone/redone
 
-* **Alternative 1 (current choice):** Only include commands that modifies the address book (`add`, `clear`, `edit`).
+* **Alternative 1 (current choice):** Only include commands that modifies the Infinity Book (`add`, `clear`, `edit`).
 ** Pros: We only revert changes that are hard to change back (the view can easily be re-modified as no data are * lost).
 ** Cons: User might think that undo also applies when the list is modified (undoing filtering for example), * only to realize that it does not do that, after executing `undo`.
 * **Alternative 2:** Include all commands.
@@ -429,12 +429,12 @@ This `find` command allows the user to search through the list of all candidates
 
 ==== Implementation Details
 
-During execution of this command, IB will do the following:
+During execution of this command, Infinity Book will do the following:
 
 . `FindCommandParser` class will extract keywords from user input, form a predicate, then pass it to `FindCommand` class.
 . `FindCommand` will take in the predicate and update the list of Persons accordingly.
 
-The condition for a Person to be matched with given keywords is defined in `PersonContainsKeywordsPredicate`.
+The condition for a candidate to be matched with given keywords is defined in `PersonContainsKeywordsPredicate`.
 
 [source, java]
 ----
@@ -469,7 +469,7 @@ keywords.stream()
 === Add/Remove Tags (Since v1.3)
 
 The mechanics of `EditCommand` is that a new `Person` will be first created with the same information as the `Person` to edit.
-Then edited fields of the new `Person` will be determined based on user inputs, then it will be used to update the persons list of IB.
+Then edited fields of the new `Person` will be determined based on user inputs, then it will be used to update the persons list of Infinity Book.
 
 [source, java]
 ----
@@ -481,7 +481,7 @@ try {
 }
 ----
 
-From v1.0, user can overwrite any field of a person using `edit` command. Enhancing on top of this, the creation of the new `Person` is updated
+From v1.0, user can overwrite any field of a candidate using `edit` command. Enhancing on top of this, the creation of the new `Person` is updated
 so that user can add new tags by `edit -add-tag INDEX [t/TAG]...` command and remove existing tags by `edit -delete-tag [t/TAG]...` command.
 
 The code snippet below shows the updated creation of new `Person`.
@@ -616,22 +616,160 @@ if (argWithOption.isOption(EditCommand.COMMAND_OPTION_ADD_TAG)) {
 
 // end::findall[]
 
-=== Report
+=== Report (Since v1.4)
 
-=== Report Panel (Since v1.4)
+Each `Report` is identified with a `Tag population`:
 
-`viewreport pop/[t/TAG]` command allows the user to view statistics of the current contacts list.
+Represented with the prefix `pop/` followed by the `tagName` of the `Tag population`. Example: `pop/SEIntern`.
+
+In the report, you will find statistics of the group of all Persons tagged with `population`: +
+
+. A bar chart showing all other Tags owned by this group and number of owners for each Tag.
+. A pie chart illustrating the numerical proportion of each Tag.
+. A history panel listing statistics of this group at earlier points of time.
+
+User can view a report using `viewreport` command and save a report for future reference using `savereport` command.
+
+==== Implementation Details
+
+===== Model Component
+
+For each report, all statistics details are encapsulated within the `Report` class. We use one `UniqueReportList` to keep all `Report` that user has saved.
+
+image::report_model.jpg[width="700"]
+
+Figure 9. Report as a part in the structure of Model Component of Infinity Book
+
+**Calculating statistics:**
+
+Given the idea we use `UniqueReportList` to keep history, all `Report` instances in this list are immutable. There is no method to update instances in this list.
+We keep one `Report` instance in Infinity Book so that we can show to the user.
+This instance can be re-calculated via method `updateReport()` (implementation shown in the below snippet) in `Model` interface.
+
+[source, java]
+----
+public void updateReport(Tag population) {
+
+    // Get the list of `Person` tagged with `population`.
+
+    FilteredList<Person> allPersonList = new FilteredList<>(this.addressBook.getPersonList());
+    Predicate<Person> personContainsPopulationTagPredicate =
+        new Predicate<Person>() {
+            @Override
+            public boolean test(Person person) {
+                return person.getTags().stream()
+                        .anyMatch(tag -> StringUtil.containsWordIgnoreCase(tag.tagName, population.tagName));
+            }
+        };
+    allPersonList.setPredicate(personContainsPopulationTagPredicate);
+
+    // Calculate statistics of other `Tag` owned by `Person` in this list
+
+    Map<String, Pair<Integer, Integer>> counts = new HashMap<>();
+    allPersonList.forEach((p) -> {
+        Set<Tag> allTags = p.getTags();
+        for (Tag t : allTags) {
+            if (!t.tagName.equalsIgnoreCase(population.tagName)) {
+                counts.merge(t.tagName, new Pair<>(1, 1), (a, b) ->
+                        new Pair(a.getKey() + b.getKey(), a.getValue() + b.getValue()));
+            }
+        }
+    });
+
+    // Encapsulate statistics of each `Tag` in a `Proportion` instance
+
+    List<Proportion> allProportions = new ArrayList<>();
+    for (Map.Entry<String, Pair<Integer, Integer>> entry : counts.entrySet()) {
+        allProportions.add(new Proportion(entry.getKey(), entry.getValue().getKey(), entry.getValue().getValue()));
+    }
+
+    report = new Report(population, allProportions, allPersonList.size());
+}
+----
+
+===== Storage Component
+
+We keep `UniqueReportList` persistently in XML files.
+
+image::ReportStorageDiagram.jpg[width="700"]
+
+Figure 10. `XmlAdaptedReport` in the structure of Storage Component of Infinity Book.
+
+One example of `Report` details stored in xml file:
+
+[source, xml]
+----
+<reports>
+    <population>SEIntern</population>
+    <totalTags>11</totalTags>
+    <totalPersons>11</totalPersons>
+    <proportions>
+        <proportionName>Screening</proportionName>
+        <value>5</value>
+        <totalPersonsInProportion>5</totalPersonsInProportion>
+    </proportions>
+    <proportions>
+        <proportionName>Rejected</proportionName>
+        <value>1</value>
+        <totalPersonsInProportion>1</totalPersonsInProportion>
+    </proportions>
+    <proportions>
+        <proportionName>Offered</proportionName>
+        <value>2</value>
+        <totalPersonsInProportion>2</totalPersonsInProportion>
+    </proportions>
+    <proportions>
+        <proportionName>Interviewing</proportionName>
+        <value>3</value>
+        <totalPersonsInProportion>3</totalPersonsInProportion>
+    </proportions>
+    <date>04/06/2018 14:41:30</date>
+</reports>
+----
+
+===== Logic Component
+
+The below sequence diagram show interactions within `Logic` component when user executes `viewreport pop/CS`.
+
+image::ViewReportDiagram.jpg[width="700"]
+
+Figure. Interactions Inside the Logic Component for the `viewreport pop/CS` Command
+
+===== UI Component
 
 'ReportPanel' extends `UiPart<Region>` and shares the same region with `BrowserPanel`. When `viewreport` or `savereport` is executed, `MainWindow` class will swap out the `BrowserPanel` for the `ReportPanel`.
+We achieve this by posting `ToggleReportPanelEvent` (showing in the below sequence diagram).
 
+image::EventInteraction.jpg[width="700"]
 
-Figure. Triggering
+Figure. Posting event when we execute Report commands.
 
+The `EventsCenters` then handles this `Event` and then triggers the update of `Report` instance (as shown in the below seqence diagram).
 
+image::ComponentInteractions.jpg[width="700"]
 
-'ReportPanel' takes report data from a `Report` instance and history data from a `ObservableList<Report>`, both of which can be obtained from `Logic` model.
+Figure. Update `Report` instance after the `ToggleReportPanelEvent` is posted
 
-=== Report History (Since v1.5rc)
+==== Design Considerations
+**Aspect:** Where calculation of statistics in the `Report` should be placed +
+**Alternative 1 (current choice):** in `ModelManager` +
+**Pros:**
+Since the calculation requires fetching the list of all Persons in Infinity Book, Defining it in the `ModelManager` to reduce dependency among components. +
+**Cons:**
+Have to modify multiple components such as `LogicManager`, `ModelManager`, `Event`. +
+**Alternative 2:** in `Report` class itself +
+**Pros:** Do not require a `Report` instance in Infinity Book, which can be redundant when user does not use. +
+**Cons:** Have to write setter and getter to get the list of Persons from `Model`.
+
+---
+
+**Aspect:** Choosing the region to show `ReportPanel` +
+**Alternative 1 (current choice):** `ReportPanel` shares the same region with `BrowserPanel` +
+**Pros:** Do not take additional area +
+**Cons:** Have to implement `Event` handling to swap panel +
+**Alternative 2:** Use a new panel +
+**Pros:** User can view reports and the browser at the same time.   +
+**Cons:** Add one more panel to the interface. +
 
 === Tag colors [since v1.0]
 
@@ -901,7 +1039,7 @@ Here are the steps to create a new release.
 
 === Managing Dependencies
 
-A project often depends on third-party libraries. For example, Address Book depends on the http://wiki.fasterxml.com/JacksonHome[Jackson library] for XML parsing. Managing these _dependencies_ can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than these alternatives. +
+A project often depends on third-party libraries. For example, Infinity Book depends on the http://wiki.fasterxml.com/JacksonHome[Jackson library] for XML parsing. Managing these _dependencies_ can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than these alternatives. +
 a. Include those libraries in the repo (this bloats the repo size) +
 b. Require developers to download those libraries manually (this creates extra work for developers)
 
@@ -946,12 +1084,12 @@ Do take a look at <<Design-Logic>> before attempting to modify the `Logic` compo
 [discrete]
 ==== `Model` component
 
-*Scenario:* You are in charge of `model`. One day, the `logic`-in-charge approaches you for help. He wants to implement a command such that the user is able to remove a particular tag from everyone in the address book, but the model API does not support such a functionality at the moment. Your job is to implement an API method, so that your teammate can use your API to implement his command.
+*Scenario:* You are in charge of `model`. One day, the `logic`-in-charge approaches you for help. He wants to implement a command such that the user is able to remove a particular tag from everyone in the Infinity Book, but the model API does not support such a functionality at the moment. Your job is to implement an API method, so that your teammate can use your API to implement his command.
 
 [TIP]
 Do take a look at <<Design-Model>> before attempting to modify the `Model` component.
 
-. Add a `removeTag(Tag)` method. The specified tag will be removed from everyone in the address book.
+. Add a `removeTag(Tag)` method. The specified tag will be removed from everyone in the Infinity Book.
 +
 ****
 * Hints
@@ -970,12 +1108,12 @@ Do take a look at <<Design-Model>> before attempting to modify the `Model` compo
 [discrete]
 ==== `Ui` component
 
-*Scenario:* You are in charge of `ui`. During a beta testing session, your team is observing how the users use your address book application. You realize that one of the users occasionally tries to delete non-existent tags from a contact, because the tags all look the same visually, and the user got confused. Another user made a typing mistake in his command, but did not realize he had done so because the error message wasn't prominent enough. A third user keeps scrolling down the list, because he keeps forgetting the index of the last person in the list. Your job is to implement improvements to the UI to solve all these problems.
+*Scenario:* You are in charge of `ui`. During a beta testing session, your team is observing how the users use your Infinity Book application. You realize that one of the users occasionally tries to delete non-existent tags from a contact, because the tags all look the same visually, and the user got confused. Another user made a typing mistake in his command, but did not realize he had done so because the error message wasn't prominent enough. A third user keeps scrolling down the list, because he keeps forgetting the index of the last candidate in the list. Your job is to implement improvements to the UI to solve all these problems.
 
 [TIP]
 Do take a look at <<Design-Ui>> before attempting to modify the `UI` component.
 
-. Use different colors for different tags inside person cards. For example, `friends` tags can be all in brown, and `colleagues` tags can be all in yellow.
+. Use different colors for different tags inside candidate cards. For example, `friends` tags can be all in brown, and `colleagues` tags can be all in yellow.
 +
 **Before**
 +
@@ -1020,7 +1158,7 @@ image::getting-started-ui-result-after.png[width="200"]
 *** Do read the commits one at a time if you feel overwhelmed.
 ****
 
-. Modify the link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to show the total number of people in the address book.
+. Modify the link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to show the total number of people in the Infinity Book.
 +
 **Before**
 +
@@ -1033,7 +1171,7 @@ image::getting-started-ui-status-after.png[width="500"]
 ****
 * Hints
 ** link:{repoURL}/src/main/resources/view/StatusBarFooter.fxml[`StatusBarFooter.fxml`] will need a new `StatusBar`. Be sure to set the `GridPane.columnIndex` properly for each `StatusBar` to avoid misalignment!
-** link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] needs to initialize the status bar on application start, and to update it accordingly whenever the address book is updated.
+** link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] needs to initialize the status bar on application start, and to update it accordingly whenever the Infinity Book is updated.
 * Solution
 ** Modify the constructor of link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to take in the number of persons when the application just started.
 ** Use link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter#handleAddressBookChangedEvent(AddressBookChangedEvent)`] to update the number of persons whenever there are new changes to the addressbook.
@@ -1045,12 +1183,12 @@ image::getting-started-ui-status-after.png[width="500"]
 [discrete]
 ==== `Storage` component
 
-*Scenario:* You are in charge of `storage`. For your next project milestone, your team plans to implement a new feature of saving the address book to the cloud. However, the current implementation of the application constantly saves the address book after the execution of each command, which is not ideal if the user is working on limited internet connection. Your team decided that the application should instead save the changes to a temporary local backup file first, and only upload to the cloud after the user closes the application. Your job is to implement a backup API for the address book storage.
+*Scenario:* You are in charge of `storage`. For your next project milestone, your team plans to implement a new feature of saving the Infinity Book to the cloud. However, the current implementation of the application constantly saves the Infinity Book after the execution of each command, which is not ideal if the user is working on limited internet connection. Your team decided that the application should instead save the changes to a temporary local backup file first, and only upload to the cloud after the user closes the application. Your job is to implement a backup API for the Infinity Book storage.
 
 [TIP]
 Do take a look at <<Design-Storage>> before attempting to modify the `Storage` component.
 
-. Add a new method `backupAddressBook(ReadOnlyAddressBook)`, so that the address book can be saved in a fixed temporary location.
+. Add a new method `backupAddressBook(ReadOnlyAddressBook)`, so that the Infinity Book can be saved in a fixed temporary location.
 +
 ****
 * Hint
@@ -1068,13 +1206,13 @@ By creating this command, you will get a chance to learn how to implement a feat
 *Scenario:* You are a software maintainer for `addressbook`, as the former developer team has moved on to new projects. The current users of your application have a list of new feature requests that they hope the software will eventually have. The most popular request is to allow adding additional comments/notes about a particular contact, by providing a flexible `remark` field for each contact, rather than relying on tags alone. After designing the specification for the `remark` command, you are convinced that this feature is worth implementing. Your job is to implement the `remark` command.
 
 ==== Description
-Edits the remark for a person specified in the `INDEX`. +
+Edits the remark for a candidate specified in the `INDEX`. +
 Format: `remark INDEX r/[REMARK]`
 
 Examples:
 
 * `remark 1 r/Likes to drink coffee.` +
-Edits the remark for the first person to `Likes to drink coffee.`
+Edits the remark for the first candidate to `Likes to drink coffee.`
 * `remark 1 r/` +
 Removes the remark for the first person.
 
@@ -1110,7 +1248,7 @@ for `RemarkCommandParser`.
 . Modify link:{repoURL}/src/test/java/seedu/address/logic/parser/AddressBookParserTest.java[`AddressBookParserTest`] to test that the correct command is generated according to the user input.
 
 ===== [Step 3] Ui: Add a placeholder for remark in `PersonCard`
-Let's add a placeholder on all our link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] s to display a remark for each person later.
+Let's add a placeholder on all our link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] s to display a remark for each candidate later.
 
 **Main:**
 
@@ -1139,7 +1277,7 @@ Now we have the `Remark` class, we need to actually use it inside link:{repoURL}
 **Main:**
 
 . Add `getRemark()` in link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`].
-. You may assume that the user will not be able to use the `add` and `edit` commands to modify the remarks field (i.e. the person will be created without a remark).
+. You may assume that the user will not be able to use the `add` and `edit` commands to modify the remarks field (i.e. the candidate will be created without a remark).
 . Modify link:{repoURL}/src/main/java/seedu/address/model/util/SampleDataUtil.java/[`SampleDataUtil`] to add remarks for the sample data (delete your `addressBook.xml` so that the application will load the sample data when you launch it.)
 
 ===== [Step 6] Storage: Add `Remark` field to `XmlAdaptedPerson` class
@@ -1158,7 +1296,7 @@ Since `Person` can now have a `Remark`, we should add a helper method to link:{r
 
 **Tests:**
 
-. Add a new method `withRemark()` for link:{repoURL}/src/test/java/seedu/address/testutil/PersonBuilder.java[`PersonBuilder`]. This method will create a new `Remark` for the person that it is currently building.
+. Add a new method `withRemark()` for link:{repoURL}/src/test/java/seedu/address/testutil/PersonBuilder.java[`PersonBuilder`]. This method will create a new `Remark` for the candidate that it is currently building.
 . Try and use the method on any sample `Person` in link:{repoURL}/src/test/java/seedu/address/testutil/TypicalPersons.java[`TypicalPersons`].
 
 ===== [Step 7] Ui: Connect `Remark` field to `PersonCard`
@@ -1205,7 +1343,7 @@ Tech recruiters who have the need for finding and acquiring skilled Computing st
 ===== Major Enhancement: Adding job postings
 This allows the user to add job postings and receive suggestions about most suitable candidates based on various parameters.
 
-For example, when the need arises to hire a new fresh graduate for a backend software development role with proficiency in MYSQL and Javascript, with location restrictions as well, the user may create such a job posting. As candidates are added and removed, the application displays an updated list of matching candidates, until removed from address book.
+For example, when the need arises to hire a new fresh graduate for a backend software development role with proficiency in MYSQL and Javascript, with location restrictions as well, the user may create such a job posting. As candidates are added and removed, the application displays an updated list of matching candidates, until removed from Infinity Book.
 
 Implementations needed:
 
@@ -1257,7 +1395,7 @@ Implementation needed:
 
 ==== Nguyen Dinh Dung (@tiny767)
 ===== Major Enhancement: Make several enhancements to the UI so that it is much more user-friendly.
-This allows tech recruiters who need to manage big address books to save time by using the app more efficiently
+This allows tech recruiters who need to manage big Infinity Books to save time by using the app more efficiently
 and feel more comfortable.
 
 Implementations needed:
@@ -1267,7 +1405,7 @@ Implementations needed:
 * Provide usage syntax or syntax error in real time (e.g. display syntax for `add` when the users finish typing 'add'
 
 ===== Minor Enhancement: `remark` command
-* Allow users to add remarks for people in their address books.
+* Allow users to add remarks for people in their Infinity Books.
 * This allows tech recruiters to have a more flexible field to use for their candidates
 
 link:#top[Back to top]
@@ -1280,19 +1418,19 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [width="59%",cols="22%,<23%,<25%,<30%",options="header",]
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
-|`* * *` |User |Add a new person |
+|`* * *` |User |Add a new candidate |
 
-|`* * *` |User |Delete a person |Remove entries that I no longer need
+|`* * *` |User |Delete a candidate |Remove entries that I no longer need
 
-|`* * *` |User |Find a person by name |Locate details of persons without having to go through the entire list
+|`* * *` |User |Find a candidate by name |Locate details of persons without having to go through the entire list
 
-|`* * *` |User who wants to record notes |Add a note entry for a person |Record more information about the person
+|`* * *` |User who wants to record notes |Add a note entry for a candidate |Record more information about the person
 
 |`* * *` |User interested in a contact's skills |Get the technical skills of a candidate |to find suitable candidates
 
 |`* * *` |User who saves many resumes |Open candidates' resumes from commandline |to quickly view their profiles
 
-|`* * *` |User |Delete a tag from address book |To remove tags I am no longer interested in
+|`* * *` |User |Delete a tag from Infinity Book |To remove tags I am no longer interested in
 
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
@@ -1314,15 +1452,15 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |User |read all notes about a contact |Remember my past interactions and research about the contact
 
-|`* *` |User with multiple address books |Export my contacts |Import into another address book application
+|`* *` |User with multiple Infinity Books |Export my contacts |Import into another Infinity Book application
 
-|`* *` |User with multiple devices |Back up my address book in the cloud |Data is accessible from other devices
+|`* *` |User with multiple devices |Back up my Infinity Book in the cloud |Data is accessible from other devices
 
-|`*` |User with many persons in the address book |Sort persons by name |Locate a person easily
+|`*` |User with many persons in the Infinity Book |Sort persons by name |Locate a candidate easily
 
-|`*` |User concerned about confidentiality |Set a password for the AddressBook |My address book will be secure
+|`*` |User concerned about confidentiality |Set a password for the AddressBook |My Infinity Book will be secure
 
-|`*` |User with frequently changing contacts |Clear the entire address book |To start with new candidates when required
+|`*` |User with frequently changing contacts |Clear the entire Infinity Book |To start with new candidates when required
 
 |`*` |User who frequently emails contacts |Open an email link to the contact directly |Quickly email candidates with copying their addresses
 
@@ -1344,8 +1482,8 @@ link:#top[Back to top]
 *MSS*
 
 1.  User requests to list persons
-2.  InfinityBook shows a list of persons
-3.  User requests to delete a specific person in the list
+2.  Infinity Book shows a list of persons
+3.  User requests to delete a specific candidate in the list
 4.  InfinityBook deletes the person
 +
 Use case ends.
@@ -1360,25 +1498,25 @@ Use case ends.
 * 3a. The given index is invalid.
 +
 [none]
-** 3a1. InfinityBook shows an error message.
+** 3a1. Infinity Book shows an error message.
 +
 Use case resumes at step 2.
 
-=== Use case: Search a person by tag
+=== Use case: Search a candidate by tag
 *MSS*
 
 1. User requests to search and provides search params
-2. Addr	essBook shows a list of person fitting the given criteria
+2. Infinity Book shows a list of candidate fitting the given criteria
 +
 Use case ends.
 
 === Use case: View Linkedin profile of a person
 *MSS*
 
-1. User requests to search the person by name
-2. AddressBook shows a list of person
-3. User chooses a person by index in the list
-4. AddressBook shows the linkedin page of that person
+1. User requests to search the candidate by name
+2. Infinity Book shows a list of person
+3. User chooses a candidate by index in the list
+4. Infinity Book shows the linkedin page of that person
 +
 Use case ends.
 
@@ -1389,7 +1527,7 @@ Use case ends.
 .  Should be able to hold up to 1000 persons with a reponse time of less than 2 seconds for a command.
 .  Commands should ideally be less than 12 characters long to enable users with reasonable typing speed to use commands effectively.
 .  Should not use more than 11% CPU resources for executing commands
-.  Data storage for address book with 1000 contacts should not exceed 500 Gb
+.  Data storage for Infinity Book with 1000 contacts should not exceed 500 Gb
 .  Should be able to work even on older 32-bit system
 .  Project should not require updates to remain functional.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
