@@ -4,6 +4,8 @@ import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.ToggleReportPanelEvent;
 import seedu.address.model.tag.Tag;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * Displays the report to the user.
  */
@@ -18,6 +20,7 @@ public class ViewReportCommand extends Command {
     public final Tag population;
 
     public ViewReportCommand(Tag population) {
+        requireNonNull(population);
         this.population = population;
     }
 
