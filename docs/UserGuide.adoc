@@ -18,11 +18,10 @@ By: `Team JACKHA (CS2103JAN2018-W11-B3)`      Since: `Jun 2016`      Licence: `M
 
 == Introduction
 
-Infinity Book (IB) is for those Tech recruiters who *prefer to use a desktop app for managing candidates*.  +
+Infinity Book is a desktop application that provides Tech recruiters end-to-end support, from searching for candidates,to adding job postings and saving their resumes and interviews. +
 
-More importantly, IB is *optimized for those who prefer to work with a Command Line Interface* (link:#cli[CLI]) while still having the benefits of a Graphical User Interface (link:#gui[GUI]). If you can type fast, IB can get your candidates management tasks done faster than traditional GUI apps. +
+More importantly, IB is *optimized for those who prefer to work with a desktop Command Line Interface* (link:#cli[CLI]) while still having the benefits of a Graphical User Interface (link:#gui[GUI]). If you can type fast, IB can get your candidates management tasks done faster than traditional GUI apps. +
 
-Interested? +
 Jump to the <<Quick Start>> to get started. Enjoy!
 
 == About
