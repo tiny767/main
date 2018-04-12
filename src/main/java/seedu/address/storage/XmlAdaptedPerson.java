@@ -39,7 +39,7 @@ public class XmlAdaptedPerson {
     @XmlElement(required = true)
     private String link;
     @XmlElement(required = true)
-    private String skills;
+    private String skill;
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
 
@@ -59,7 +59,7 @@ public class XmlAdaptedPerson {
         this.email = email;
         this.address = address;
         this.link = link;
-        this.skills = skills;
+        this.skill = skills;
         if (tagged != null) {
             this.tagged = new ArrayList<>(tagged);
         }
@@ -77,7 +77,7 @@ public class XmlAdaptedPerson {
         address = source.getAddress().value;
         remark = source.getRemark().value;
         link = source.getLink().value;
-        skills = source.getSkills().value;
+        skill = source.getSkills().value;
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
@@ -135,14 +135,14 @@ public class XmlAdaptedPerson {
             throw new IllegalValueException(Link.MESSAGE_LINK_CONSTRAINTS);
         }
 
-        if (this.skills == null) {
+        if (this.skill == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Skill.class.getSimpleName()));
         }
-        if (!Skill.isValidSkill(this.skills)) {
+        if (!Skill.isValidSkill(this.skill)) {
             throw new IllegalValueException(Skill.MESSAGE_SKILL_CONSTRAINTS);
         }
 
-        final Skill skill = new Skill(this.skills);
+        final Skill skill = new Skill(this.skill);
 
         final Address address = new Address(this.address);
 

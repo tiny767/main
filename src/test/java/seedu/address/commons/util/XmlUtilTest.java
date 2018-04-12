@@ -40,7 +40,7 @@ public class XmlUtilTest {
     private static final String VALID_EMAIL = "hans@example";
     private static final String VALID_ADDRESS = "4th street";
     private static final String VALID_LINK = "https://www.google.com.sg/";
-    private static final String VALID_SKILL = "HTML,CSS";
+    private static final String VALID_SKILL = "HTML, CSS";
     private static final List<XmlAdaptedTag> VALID_TAGS = Collections.singletonList(new XmlAdaptedTag("friends"));
 
     @Rule
