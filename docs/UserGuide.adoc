@@ -380,7 +380,13 @@ _Figure._ Infinity Book has displayed Report with Population Tag `SEIntern` in t
 Regarding displaying the Report, +
 
 * In the right-most column, Infinity Book will show you a bar chart, a pie chart, and a history list.
+====
+
+[WARNING]
+====
 * If there are no candidates tagged with the Population Tag you provide, Inifinity Book will not show you the pie chart.
+* If you provide multiple `POPULATION_TAG`, Infinity Book will take the last one.
+For example, when you execute `viewreport pop/SEIntern pop/Computing`, Infinity Book will display the report for `Computing`.
 ====
 
 ==== Saving a report : `savereport` or `sr` [Since v1.4]
@@ -400,7 +406,15 @@ the history list includes all statistics you have saved.
 
 [NOTE]
 ====
-Date format is in **"hh/mm/ss mm/dd/yyyy""**.
+* Date format is in **"hh/mm/ss mm/dd/yyyy""**.
+* To keep transparency, saved reports in Inifnity Book are immutable,
+which means you cannot edit or delete saved reports. You also cannot undo `savereport` command.
+====
+
+[WARNING]
+====
+* If you provide multiple `POPULATION_TAG`, Infinity Book will take the last one.
+For example, when you execute `viewreport pop/SEIntern pop/Computing`, Infinity Book will save the report for `Computing`.
 ====
 
 // end::report[]
