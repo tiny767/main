@@ -129,7 +129,7 @@ public class AddressBookParserTest {
     public void parseCommand_viewreport() throws Exception {
         String populationTag = "SEIntern";
         ViewReportCommand command = (ViewReportCommand) parser.parseCommand(
-                ViewReportCommand.COMMAND_WORD + " " + PREFIX_POPULATION + "/" + populationTag);
+                ViewReportCommand.COMMAND_WORD + " " + PREFIX_POPULATION + populationTag);
         assertEquals(new ViewReportCommand(new Tag(populationTag)), command);
     }
 
@@ -137,7 +137,7 @@ public class AddressBookParserTest {
     public void parseCommand_savereport() throws Exception {
         String populationTag = "SEIntern";
         SaveReportCommand command = (SaveReportCommand) parser.parseCommand(
-                SaveReportCommand.COMMAND_WORD + " " + PREFIX_POPULATION + "/" + populationTag);
+                SaveReportCommand.COMMAND_WORD + " " + PREFIX_POPULATION + populationTag);
         assertEquals(new SaveReportCommand(new Tag(populationTag)), command);
     }
 
