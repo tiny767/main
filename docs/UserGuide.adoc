@@ -407,7 +407,7 @@ the history list includes all statistics you have saved.
 
 [NOTE]
 ====
-* Date format is in **"hh/mm/ss mm/dd/yyyy""**. 
+* Date format is in **"hh/mm/ss mm/dd/yyyy""**.
 
 * To keep transparency, saved reports in Inifnity Book are immutable,
 which means you cannot edit or delete saved reports. You also cannot undo `savereport` command.
