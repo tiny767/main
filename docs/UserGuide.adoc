@@ -131,7 +131,7 @@ A person can have any number of tags (including 0)
 
 ==== Editing a person : `edit`
 
-* *Description:* Edits an existing person in Infinity Book. +
+* *Description:* Edits an existing person's record in Infinity Book. +
 * *Format:* `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
 
 * *Examples:* +
@@ -204,7 +204,7 @@ Removes the remark for the second person.
 
 ==== Deleting a person : `delete`
 
-* *Description:* Deletes the specified person from the Infinity Book. +
+* *Description:* Deletes the specified person's record from the Infinity Book. +
 * *Format:* `delete INDEX`
 * *Examples:*
 
@@ -350,6 +350,7 @@ _Figure._ Report with population Tag `SEIntern` is displayed.
 ==== Saving a report : `savereport` or `sr` [Since v1.4]
 
 Wish to save the current statistics for future reference? Saving the report using `savereport` or `sr` command. +
+
 *Format:*  `savereport pop/REPORT_NAME`  `sr pop/REPORT_NAME`
 
 *Example:*
@@ -364,41 +365,63 @@ _Figure._ Report with population Tag `SEIntern` is saved.
 
 === Managing Job Postings
 
-This section describes commands available for managing job postings in the Infinity Book.
+In line with the vision of offering end to end support, Infinity Book offers recruiters a very efficient way to keep track of job vacancies and match candidates to these positions. +
+
+This section details commands for managing job postings.
 
 ==== Post Job Command
+Want to add a newly available job vacancy to IB and match candidates to this role? Add a job posting using the `postjob` command.
+
+*Format:* `postjob j/JOB TITLE l/LOCATION t/[TAGS] s/SKILLS`
+
+*Examples:* `postjob j/Backend Engineer l/Singapore t/FreshGrad s/Java`
+
+[NOTE]
+Job postings are matched to candidates on the basis of location, skills and tags. To neglect any of these during matching, set the field to 'ALL'.
+
 
 image::postjob.JPG[width="500"]
-
-Figure 2: PostJob Command adds Jobs into a new pane as shown.
-
-
-* *Description:* Add a job posting to Infinity Book to filter out qualified candidates.
-* *Format:* `postjob j/JOB TITLE l/LOCATION t/[TAGS] s/SKILLS`
-* *Examples:* `postjob j/Backend Engineer l/Singapore t/FreshGrad s/Java`
+Figure : PostJob Command adds Jobs into a new pane as shown.
 
 ==== Match Job Command
 
+To match an existing job posting to potential candidates, use the `matchjob` command to filter out candidates for the chosen job.
+
+Job matching is done on the basis of location, skills and tags. To disregard a parameter during matching, set it to 'ALL' using `postjob` or `editjob`.
+
+*Format:* `matchjob INDEX`
+
+*Example:* `matchjob 1`
+
 image::matchJob.JPG[width="500"]
-Figure 3: MatchJob command filters the Candidates as per Job, as shown above.
-
-
-* *Description:* Match a job posting to list out the filtered candidates for this job.
-* *Format:* `matchjob INDEX`
-* *Example:* `matchjob 1`
+Figure : MatchJob command filters the Candidates as per Job, as shown above.
 
 ==== Edit Job Command
 
-* *Description:* Edits an existing job posting in the Infinity Book.
-* *Format:* ` editjob INDEX [j/JOBTITLE] [l/LOCATION] [s/SKILLS] [t/TAG]`
-* *Examples:* ` editjob 1 j/Backend Engineer l/Singapore`
+Want to change the parameters of a job after creating? IB provides the flexibility to edit an existing job posting through the `editjob` command.
+
+*Format:* ` editjob INDEX [j/JOBTITLE] [l/LOCATION] [s/SKILLS] [t/TAG]`
+
+*Examples:* ` editjob 1 j/Backend Engineer l/Singapore`
+
+[NOTE]
+At least one field must be provided for the edit command to function as expected.
+
+image::editJob.JPG[width="500"]
+Figure : `editjob` edits the first job posting from Figure as shown.
+
+_{Enter the figure number in the Figure description above.}_
 
 ==== Delete Job Command
 
-* *Description:* Remove a job posting from Infinity Book using the index from latest listing.
-* *Format:* `deletejob INDEX`
-* *Examples:* `deletejob 1`
+Remove a job posting from Infinity Book using the index from latest listing.
 
+*Format:* `deletejob INDEX`
+
+*Examples:* `deletejob 1`
+
+image::deleteJob.JPG[width="500"]
+Figure : `deletejob` deletes the job posting at the specified index in the most recent listing from Figure as shown.
 // end::jobposting[]
 
 [NOTE]
