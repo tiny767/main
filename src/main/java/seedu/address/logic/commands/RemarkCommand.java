@@ -93,6 +93,7 @@ public class RemarkCommand extends UndoableCommand {
                 personToEdit.getAddress(),
                 this.remark,
                 personToEdit.getLink(),
+                personToEdit.getSkills(),
                 personToEdit.getTags());
     }
 

@@ -10,6 +10,7 @@ import java.util.List;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.job.Skill;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -18,7 +19,7 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
  * Add a list of skills to a chosen person from the address book.
  */
 public class SkillsCommand extends UndoableCommand {
-    // TODO: Add a command alias
+
     public static final String COMMAND_WORD = "skills";
     public static final String COMMAND_ALIAS = "sk";
     public static final String MESSAGE_SUCCESS = "Skills have been added!";
@@ -31,12 +32,12 @@ public class SkillsCommand extends UndoableCommand {
             + PREFIX_SKILLS + "Java, JavaScript, C++";
 
     private final Index index;
-    private final seedu.address.model.job.Skill skill;
+    private final Skill skill;
     private Person personToAddSkills;
     private Person personWithSkills;
 
-    // TODO: Create a skillsCommandDescriptor to contain the skills as obejects later
-    public SkillsCommand(Index index, seedu.address.model.job.Skill skill) {
+    // TODO: Create a skillsCommandDescriptor to contain the skills as objects later
+    public SkillsCommand(Index index, Skill skill) {
         requireNonNull(index);
         requireNonNull(skill);
 
@@ -71,7 +72,7 @@ public class SkillsCommand extends UndoableCommand {
      * Adds a {@code SkillsList} to an exisiting {@code Person}
      * @return {@code Person} with skillsList
      */
-    public static Person addSkillsToPerson(Person personToAddSkills, seedu.address.model.job.Skill skill) {
+    public static Person addSkillsToPerson(Person personToAddSkills, Skill skill) {
         Person personWithSkills = new Person(
                 personToAddSkills.getName(),
                 personToAddSkills.getPhone(),
