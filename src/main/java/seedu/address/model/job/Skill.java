@@ -1,5 +1,8 @@
 package seedu.address.model.job;
 
+import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.AppUtil.checkArgument;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -15,6 +18,8 @@ public class Skill {
     private Set<String> skillSet;
 
     public Skill(String skills) {
+        requireNonNull(skills);
+        checkArgument(isValidSkill(skills), MESSAGE_SKILL_CONSTRAINTS);
         this.value = skills;
         String[] skillsArray = skills.split(",");
 
