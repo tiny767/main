@@ -57,6 +57,9 @@ public class MainWindowHandle extends StageHandle {
         return browserPanel;
     }
 
+    /**
+     * Check if ReportPanel is currently open.
+     */
     public boolean isReportPanelOpenning() {
         try {
             this.reportPanel = new ReportPanelHandle(getChildNode(ReportPanelHandle.REPORT_ID));
