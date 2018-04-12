@@ -20,6 +20,8 @@ public class Proportion {
      */
     public Proportion(String tagName, int value, int totalPersons) {
         requireNonNull(tagName);
+        assert value >= 0 && totalPersons >= 0;
+
         this.tagName = tagName;
         this.value = value;
         this.totalPersons = totalPersons;

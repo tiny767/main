@@ -8,12 +8,13 @@
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.control.ListView?>
-<ScrollPane styleClass="report-pane">
+<ScrollPane styleClass="report-pane" >
     <GridPane xmlns="http://javafx.com/javafx"
               xmlns:fx="http://javafx.com/fxml"
               prefHeight="1000" prefWidth="400.0"
               minWidth="400.0"
-              styleClass="report-pane">
+              styleClass="report-pane"
+              fx:id="report">
         <columnConstraints>
             <ColumnConstraints percentWidth="100" hgrow="NEVER"/>
         </columnConstraints>
