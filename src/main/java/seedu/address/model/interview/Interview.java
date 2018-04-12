@@ -1,7 +1,6 @@
-//author@@ deeheenguyen
+//@@author deeheenguyen
 package seedu.address.model.interview;
 
-import java.util.ArrayList;
 import java.util.Objects;
 
 import seedu.address.model.person.Name;
@@ -14,7 +13,6 @@ public class Interview {
     private InterviewTitle interviewTitle;
     private Name interviewee;
     private Date date;
-    private ArrayList<Quest> listQuestions;
     private InterviewLocation interviewLocation;
 
     public Interview(InterviewTitle interviewTitle, Name interviewee, Date date, InterviewLocation location) {
@@ -40,14 +38,6 @@ public class Interview {
         return this.interviewLocation;
     }
 
-    public ArrayList<Quest> getListQuestions() {
-        return this.listQuestions;
-    }
-
-    public void addQuestion(Quest question) {
-        listQuestions.add(question);
-    }
-
     @Override
     public boolean equals(Object other) {
         if (other == this) {
@@ -57,7 +47,6 @@ public class Interview {
         if (!(other instanceof Interview)) {
             return false;
         }
-
         Interview otherInterview = (Interview) other;
         return otherInterview.getInterviewTitle().equals(this.getInterviewTitle())
                 && otherInterview.getInterviewee().equals(this.getInterviewee())
@@ -85,4 +74,3 @@ public class Interview {
         return builder.toString();
     }
 }
-//author@@ deeheenguyen

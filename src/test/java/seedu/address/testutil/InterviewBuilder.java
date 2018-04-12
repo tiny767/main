@@ -1,4 +1,4 @@
-//author@@ deeheenguyen
+//@@author deeheenguyen
 package seedu.address.testutil;
 
 import seedu.address.model.interview.Date;

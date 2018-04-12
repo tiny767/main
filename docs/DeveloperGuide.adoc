@@ -807,6 +807,7 @@ Hard to maintain the hard code URL.
 
 link:#top[Back to top]
 
+// tag::jobposting[]
 === Add and match job postings to candidates. [Since v1.3]
 As there might be several candidates with varying suitability for a position, the reccruiter should be able to
 filter candidates by ability, location and some other basic filters.
@@ -825,6 +826,7 @@ through the command `matchjob INDEX`, which displays the suitable candidates in 
 **Alternative 2:** Indicate required and optional matches in job posting expected in v1.4 +
 **Pros:** Search can be customized to be as accurate as required. +
 **Cons:** Spelling differences may still cause diminished effectiveness.
+// end::jobposting[]
 
 // tag::theme[]
 

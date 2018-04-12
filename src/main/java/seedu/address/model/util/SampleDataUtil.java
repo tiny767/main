@@ -8,6 +8,11 @@ import java.util.concurrent.TimeUnit;
 
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.interview.Date;
+import seedu.address.model.interview.Interview;
+import seedu.address.model.interview.InterviewLocation;
+import seedu.address.model.interview.InterviewTitle;
+import seedu.address.model.interview.exceptions.DuplicateInterviewException;
 import seedu.address.model.job.Job;
 import seedu.address.model.job.JobTitle;
 import seedu.address.model.job.Location;
@@ -40,43 +45,43 @@ public class SampleDataUtil {
     public static Person[] getSamplePersons() {
         return new Person[] {
             new Person(new Name("Alex Yeoh"), new Phone("87438807"), new Email("alexyeoh@example.com"),
-                       new Address("Blk 30 Geylang Street 29, #06-40"), EMPTY_REMARK, INIT_LINK,
+                       new Address("Blk 30 Geylang Street 29, #06-40"), EMPTY_REMARK, INIT_LINK, SAMPLE_SKILL,
                        getTagSet("FreshGrad", "Computing")),
             new Person(new Name("Bernice Yu"), new Phone("99272758"), new Email("berniceyu@example.com"),
-                       new Address("Blk 30 Lorong 3 Serangoon Gardens, #07-18"), EMPTY_REMARK, INIT_LINK,
+                       new Address("Blk 30 Lorong 3 Serangoon Gardens, #07-18"), EMPTY_REMARK, INIT_LINK, SAMPLE_SKILL,
                        getTagSet("FreshGrad", "Business")),
             new Person(new Name("Charlotte Oliveiro"), new Phone("93210283"), new Email("charlotte@example.com"),
-                       new Address("Blk 11 Ang Mo Kio Street 74, #11-04"), EMPTY_REMARK, INIT_LINK,
+                       new Address("Blk 11 Ang Mo Kio Street 74, #11-04"), EMPTY_REMARK, INIT_LINK, SAMPLE_SKILL,
                        getTagSet("SEIntern", "Interviewing")),
             new Person(new Name("David Li"), new Phone("91031282"), new Email("lidavid@example.com"),
-                       new Address("Blk 436 Serangoon Gardens Street 26, #16-43"), EMPTY_REMARK, INIT_LINK,
-                       getTagSet("SEIntern", "Offered")),
+                       new Address("Blk 436 Serangoon Gardens Street 26, #16-43"),
+                    EMPTY_REMARK, INIT_LINK, SAMPLE_SKILL, getTagSet("SEIntern", "Offered")),
             new Person(new Name("Irfan Ibrahim"), new Phone("92492021"), new Email("irfan@example.com"),
-                       new Address("Blk 47 Tampines Street 20, #17-35"), EMPTY_REMARK, INIT_LINK,
+                       new Address("Blk 47 Tampines Street 20, #17-35"), EMPTY_REMARK, INIT_LINK, SAMPLE_SKILL,
                        getTagSet("SEIntern", "Screening")),
             new Person(new Name("Clinton Francis Barton"), new Phone("92624417"), new Email("royb@example.com"),
-                       new Address("Blk 45 Aljunied Street 85, #11-31"), SAMPLE_REMARK, INIT_LINK,
+                       new Address("Blk 45 Aljunied Street 85, #11-31"), SAMPLE_REMARK, INIT_LINK, SAMPLE_SKILL,
                        getTagSet("SEIntern", "Screening")),
             new Person(new Name("Roy Balakrishnan"), new Phone("92624417"), new Email("a@example.com"),
-                    new Address("Blk 45 Aljunied Street 85, #11-31"), SAMPLE_REMARK, INIT_LINK,
+                    new Address("Blk 45 Aljunied Street 85, #11-31"), SAMPLE_REMARK, INIT_LINK, SAMPLE_SKILL,
                     getTagSet("SEIntern", "Screening")),
             new Person(new Name("Roy Doe"), new Phone("92624417"), new Email("b@example.com"),
-                    new Address("Blk 45 Aljunied Street 85, #11-31"), SAMPLE_REMARK, INIT_LINK,
+                    new Address("Blk 45 Aljunied Street 85, #11-31"), SAMPLE_REMARK, INIT_LINK, SAMPLE_SKILL,
                     getTagSet("SEIntern", "Rejected")),
             new Person(new Name("Sam Balakrishnan"), new Phone("92624417"), new Email("c@example.com"),
-                    new Address("Blk 45 Aljunied Street 85, #11-31"), SAMPLE_REMARK, INIT_LINK,
+                    new Address("Blk 45 Aljunied Street 85, #11-31"), SAMPLE_REMARK, INIT_LINK, SAMPLE_SKILL,
                     getTagSet("SEIntern", "Offered")),
             new Person(new Name("Alex Smith"), new Phone("92624417"), new Email("d@example.com"),
-                    new Address("Blk 45 Aljunied Street 85, #11-31"), SAMPLE_REMARK, INIT_LINK,
+                    new Address("Blk 45 Aljunied Street 85, #11-31"), SAMPLE_REMARK, INIT_LINK, SAMPLE_SKILL,
                     getTagSet("SEIntern", "Interviewing")),
             new Person(new Name("Jacques Duquesne"), new Phone("92624417"), new Email("e@example.com"),
-                    new Address("Blk 45 Aljunied Street 85, #11-31"), SAMPLE_REMARK, INIT_LINK,
+                    new Address("Blk 45 Aljunied Street 85, #11-31"), SAMPLE_REMARK, INIT_LINK, SAMPLE_SKILL,
                     getTagSet("SEIntern", "Interviewing")),
             new Person(new Name("Pietro Maximoff"), new Phone("92624417"), new Email("f@example.com"),
-                    new Address("Blk 45 Aljunied Street 85, #11-31"), SAMPLE_REMARK, INIT_LINK,
+                    new Address("Blk 45 Aljunied Street 85, #11-31"), SAMPLE_REMARK, INIT_LINK, SAMPLE_SKILL,
                     getTagSet("SEIntern", "Screening")),
             new Person(new Name("Wanda Maximoff"), new Phone("92624417"), new Email("j@example.com"),
-                    new Address("Blk 45 Aljunied Street 85, #11-31"), SAMPLE_REMARK, INIT_LINK,
+                    new Address("Blk 45 Aljunied Street 85, #11-31"), SAMPLE_REMARK, INIT_LINK, SAMPLE_SKILL,
                     getTagSet("SEIntern", "Screening"))
         };
     }
@@ -123,6 +128,17 @@ public class SampleDataUtil {
         };
     }
 
+    public static Interview[] getSampleInterviews() {
+        return new Interview[] {
+            new Interview(new InterviewTitle("Backend Interview"), new Name("David"), new Date("01.01.2015"),
+                    new InterviewLocation("One North")),
+            new Interview(new InterviewTitle("Frontend Interview"), new Name("Joe"), new Date("01.02.2016"),
+                    new InterviewLocation("SOC")),
+            new Interview(new InterviewTitle("Data Scientist Interview"), new Name("Kelvin"),
+                    new Date("01.03.2017"), new InterviewLocation("NUS")),
+        };
+    }
+
     public static ReadOnlyAddressBook getSampleAddressBook() {
         try {
             AddressBook sampleAb = new AddressBook();
@@ -135,11 +151,16 @@ public class SampleDataUtil {
             for (Report sampleReport : getSampleReports()) {
                 sampleAb.addReport(sampleReport);
             }
+            for (Interview sampleInterview: getSampleInterviews()) {
+                sampleAb.addInterview(sampleInterview);
+            }
             return sampleAb;
         } catch (DuplicatePersonException e) {
             throw new AssertionError("sample data cannot contain duplicate persons", e);
         } catch (DuplicateJobException e) {
             throw new AssertionError("sample data cannot contain duplicate jobs", e);
+        } catch (DuplicateInterviewException e) {
+            throw new AssertionError("sample data cannot contain duplicate interviews", e);
         } catch (InterruptedException e) {
             throw new Error("error in generating sample reports", e);
         }

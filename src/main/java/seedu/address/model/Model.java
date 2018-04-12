@@ -5,6 +5,7 @@ import java.util.function.Predicate;
 import javafx.collections.ObservableList;
 import seedu.address.model.interview.Interview;
 import seedu.address.model.interview.exceptions.DuplicateInterviewException;
+import seedu.address.model.interview.exceptions.InterviewNotFoundException;
 import seedu.address.model.job.Job;
 import seedu.address.model.job.exceptions.DuplicateJobException;
 import seedu.address.model.job.exceptions.JobNotFoundException;
@@ -92,6 +93,9 @@ public interface Model {
 
     /* Adds the give interview. */
     void addInterview(Interview interview) throws DuplicateInterviewException;
+
+    /** Deletes the given interview. */
+    void deleteInterview(Interview target) throws InterviewNotFoundException;
 
     /**
      * Updates the filter of the filtered interview list to filter by the given {@code predicate}.

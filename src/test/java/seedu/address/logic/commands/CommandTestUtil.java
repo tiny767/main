@@ -7,10 +7,12 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_INTERVIEW;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_JOBTITLE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_LINK;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_SKILLS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.ArrayList;
@@ -23,6 +25,12 @@ import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
+
+import seedu.address.model.interview.Interview;
+import seedu.address.model.interview.InterviewMatchInterviewee;
+import seedu.address.model.interview.exceptions.InterviewNotFoundException;
+import seedu.address.model.job.Job;
+import seedu.address.model.job.JobMatchesKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.PersonContainsKeywordsPredicate;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -48,7 +56,17 @@ public class CommandTestUtil {
     public static final String VALID_TAG_NONEXISTENT = "nonexistent";
     public static final String VALID_LINK_AMY = "https://www.google.com.sg/";
     public static final String VALID_LINK_BOB = "https://www.google.com.sg/";
+    public static final String VALID_SKILL_AMY = "CSS";
+    public static final String VALID_SKILL_BOB = "CSS";
 
+    public static final String VALID_JOBTITLE_FE = "Frontend Engineer";
+    public static final String VALID_JOBTITLE_BE = "Backend Engineer";
+    public static final String VALID_LOCATION_FE = "Bayfront";
+    public static final String VALID_LOCATION_BE = "Kent Ridge";
+    public static final String VALID_SKILL_FE = "HTML, CSS, JavaScript";
+    public static final String VALID_SKILL_BE = "JavaScript, Python, Java";
+    public static final String VALID_TAG_FE = "FreshGrad";
+    public static final String VALID_TAG_BE = "Intern";
 
     public static final String NAME_DESC_AMY = " " + PREFIX_NAME + VALID_NAME_AMY;
     public static final String NAME_DESC_BOB = " " + PREFIX_NAME + VALID_NAME_BOB;
@@ -62,6 +80,17 @@ public class CommandTestUtil {
     public static final String TAG_DESC_HUSBAND = " " + PREFIX_TAG + VALID_TAG_HUSBAND;
     public static final String LINK_DESC_AMY = " " + PREFIX_LINK + VALID_LINK_AMY;
     public static final String LINK_DESC_BOB = " " + PREFIX_LINK + VALID_LINK_BOB;
+    public static final String SKILL_DESC_AMY = " " + PREFIX_SKILLS + VALID_SKILL_AMY;
+    public static final String SKILL_DESC_BOB = " " + PREFIX_SKILLS + VALID_SKILL_BOB;
+
+    public static final String JOBTITLE_DESC_FE = " " + PREFIX_JOBTITLE + VALID_JOBTITLE_FE;
+    public static final String JOBTITLE_DESC_BE = " " + PREFIX_JOBTITLE + VALID_JOBTITLE_BE;
+    public static final String LOCATION_DESC_FE = " " + PREFIX_LOCATION + VALID_LOCATION_FE;
+    public static final String LOCATION_DESC_BE = " " + PREFIX_LOCATION + VALID_LOCATION_BE;
+    public static final String SKILL_DESC_FE = " " + PREFIX_SKILLS + VALID_SKILL_FE;
+    public static final String SKILL_DESC_BE = " " + PREFIX_SKILLS + VALID_SKILL_BE;
+    public static final String TAG_DESC_FE = " " + PREFIX_TAG + VALID_TAG_FE;
+    public static final String TAG_DESC_BE = " " + PREFIX_TAG + VALID_TAG_BE;
 
     public static final String INVALID_NAME_DESC = " " + PREFIX_NAME + "James&"; // '&' not allowed in names
     public static final String INVALID_PHONE_DESC = " " + PREFIX_PHONE + "911a"; // 'a' not allowed in phones
@@ -70,6 +99,11 @@ public class CommandTestUtil {
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
     public static final String INVALID_LINK = " " + PREFIX_LINK + "abc.com"; // 'should start with https'
 
+    // TODO: Create correct invalid descriptors
+    public static final String INVALID_JOBTITLE_DESC = " " + PREFIX_JOBTITLE + "SoftwareEngineer%";
+    // '%' is not allowed in job title
+    public static final String INVALID_LOCATION_DESC = " " + PREFIX_LOCATION + " "; // Location shouls not be empty
+    public static final String INVALID_SKILL_DESC =  " " + PREFIX_SKILLS + ""; // Alphanumeric skills are expected
     public static final String VALID_INTERVIEW_TITLE_SE = "SE INTERVIEW";
     public static final String VALID_INTERVIEWEE_SE = "David";
     public static final String VALID_INTERVIEW_LOCATION_SE = "NUS";
@@ -148,6 +182,20 @@ public class CommandTestUtil {
     }
 
     /**
+     * Updates {@code model}'s filtered list to show only the job at the given {@code targetIndex} in the
+     * {@code model}'s address book.
+     */
+    public static void showJobAtIndex(Model model, Index targetIndex) {
+        assertTrue(targetIndex.getZeroBased() < model.getFilteredJobList().size());
+
+        Job job = model.getFilteredJobList().get(targetIndex.getZeroBased());
+        final String[] splitName = job.getJobTitle().fullTitle.split("\\s+");
+        model.updateFilteredJobList(new JobMatchesKeywordsPredicate(Arrays.asList(splitName[0])));
+
+        assertEquals(1, model.getFilteredPersonList().size());
+    }
+
+    /**
      * Deletes the first person in {@code model}'s filtered list from {@code model}'s address book.
      */
     public static void deleteFirstPerson(Model model) {
@@ -155,6 +203,32 @@ public class CommandTestUtil {
         try {
             model.deletePerson(firstPerson);
         } catch (PersonNotFoundException pnfe) {
+            throw new AssertionError("Person in filtered list must exist in model.", pnfe);
+        }
+    }
+
+    /**
+     * Updates {@code model}'s filtered list to show only the interview at the given {@code targetIndex} in the
+     * {@code model}'s address book.
+     */
+    public static void showInterviewAtIndex(Model model, Index targetIndex) {
+        assertTrue(targetIndex.getZeroBased() < model.getFilteredInterviewList().size());
+
+        Interview interview = model.getFilteredInterviewList().get(targetIndex.getZeroBased());
+        final String splitName = interview.getInterviewee().fullName;
+        model.updateFilteredInterviewList(new InterviewMatchInterviewee(splitName));
+
+        assertEquals(1, model.getFilteredInterviewList().size());
+    }
+
+    /**
+     * Deletes the first person in {@code model}'s filtered list from {@code model}'s address book.
+     */
+    public static void deleteFirstInterview (Model model) {
+        Interview firstInterview = model.getFilteredInterviewList().get(0);
+        try {
+            model.deleteInterview(firstInterview);
+        } catch (InterviewNotFoundException pnfe) {
             throw new AssertionError("Person in filtered list must exist in model.", pnfe);
         }
     }
