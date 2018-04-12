@@ -8,6 +8,11 @@ import java.util.concurrent.TimeUnit;
 
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.interview.Date;
+import seedu.address.model.interview.Interview;
+import seedu.address.model.interview.InterviewLocation;
+import seedu.address.model.interview.InterviewTitle;
+import seedu.address.model.interview.exceptions.DuplicateInterviewException;
 import seedu.address.model.job.Job;
 import seedu.address.model.job.JobTitle;
 import seedu.address.model.job.Location;
@@ -123,6 +128,17 @@ public class SampleDataUtil {
         };
     }
 
+    public static Interview[] getSampleInterviews() {
+        return new Interview[] {
+            new Interview(new InterviewTitle("Backend Interview"), new Name("David"), new Date("01.01.2015"),
+                    new InterviewLocation("One North")),
+            new Interview(new InterviewTitle("Frontend Interview"), new Name("Joe"), new Date("01.02.2016"),
+                    new InterviewLocation("SOC")),
+            new Interview(new InterviewTitle("Data Scientist Interview"), new Name("Kelvin"),
+                    new Date("01.03.2017"), new InterviewLocation("NUS")),
+        };
+    }
+
     public static ReadOnlyAddressBook getSampleAddressBook() {
         try {
             AddressBook sampleAb = new AddressBook();
@@ -135,11 +151,16 @@ public class SampleDataUtil {
             for (Report sampleReport : getSampleReports()) {
                 sampleAb.addReport(sampleReport);
             }
+            for (Interview sampleInterview: getSampleInterviews()) {
+                sampleAb.addInterview(sampleInterview);
+            }
             return sampleAb;
         } catch (DuplicatePersonException e) {
             throw new AssertionError("sample data cannot contain duplicate persons", e);
         } catch (DuplicateJobException e) {
             throw new AssertionError("sample data cannot contain duplicate jobs", e);
+        } catch (DuplicateInterviewException e) {
+            throw new AssertionError("sample data cannot contain duplicate interviews", e);
         } catch (InterruptedException e) {
             throw new Error("error in generating sample reports", e);
         }
