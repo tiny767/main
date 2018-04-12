@@ -3,6 +3,7 @@ package seedu.address.ui;
 import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -12,13 +13,26 @@ import javafx.scene.input.KeyCode;
 import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.ListJobsCommand;
+import seedu.address.logic.commands.MatchJobCommand;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 
 public class CommandBoxTest extends GuiUnitTest {
 
+    private static final int FIRST_INDEX = 0;
+    private static final int THIRD_INDEX = 2;
+
     private static final String COMMAND_THAT_SUCCEEDS = ListCommand.COMMAND_WORD;
+    private static final String COMPLETE_COMMAND_FIRST_COMPLETION = ListCommand.COMMAND_WORD + " ";
+    private static final String COMPLETE_COMMAND_SECOND_COMPLETION = ListJobsCommand.COMMAND_WORD + " ";
+    private static final String COMMAND_WITH_ONE_COMPLETION = MatchJobCommand.COMMAND_WORD.
+            substring(FIRST_INDEX, THIRD_INDEX);
+    private static final String COMPLETE_COMMAND_WITH_ONE_COMPLETION = MatchJobCommand.COMMAND_WORD + " ";
+    private static final String COMMAND_WITH_MULTIPLE_COMPLETIONS = ListCommand.COMMAND_WORD
+            .substring(FIRST_INDEX,THIRD_INDEX);
     private static final String COMMAND_THAT_FAILS = "invalid command";
+    private static final String INCOMPLETE_COMMAND = ListCommand.COMMAND_WORD.substring(FIRST_INDEX,THIRD_INDEX);
 
     private ArrayList<String> defaultStyleOfCommandBox;
     private ArrayList<String> errorStyleOfCommandBox;
@@ -123,6 +137,31 @@ public class CommandBoxTest extends GuiUnitTest {
         commandBoxHandle.run(thirdCommand);
         assertInputHistory(KeyCode.DOWN, "");
         assertInputHistory(KeyCode.UP, thirdCommand);
+    }
+
+    @Test
+    public void handleKeyPress_startingWithTab() {
+        // no completion exists
+        assertInputHistory(KeyCode.TAB, "");
+
+        // one completion exists
+        commandBoxHandle.run(COMMAND_WITH_ONE_COMPLETION);
+        assertInputHistory(KeyCode.TAB, COMPLETE_COMMAND_WITH_ONE_COMPLETION);
+
+        // no change on multiple tab press
+        assertInputHistory(KeyCode.TAB, COMPLETE_COMMAND_WITH_ONE_COMPLETION);
+
+        // two possible completions exist
+        commandBoxHandle.run(COMMAND_WITH_MULTIPLE_COMPLETIONS);
+        assertInputHistory(KeyCode.TAB, COMPLETE_COMMAND_FIRST_COMPLETION);
+        assertInputHistory(KeyCode.TAB, COMPLETE_COMMAND_SECOND_COMPLETION);
+
+        // on further tab press it should cycle through
+        assertInputHistory(KeyCode.TAB, COMPLETE_COMMAND_FIRST_COMPLETION);
+
+        // incorrect command phrase is attempted to be completed
+        commandBoxHandle.run(COMMAND_THAT_FAILS);
+        assertInputHistory(KeyCode.TAB, COMMAND_THAT_FAILS);
     }
 
     /**
