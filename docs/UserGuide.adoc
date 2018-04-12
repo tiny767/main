@@ -50,17 +50,23 @@ Refer to <<FAQ>> for instructions to check Java version.
 .The User Interface.
 
 image::Ui.png[width="790"]
-+
 
-.  Type the command in the command box and press kbd:[Enter] to execute it. +
-e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
-.  Set up is now complete. You should see the interface as shown in Figure 1. Try some example commands shown here:
+
+Set up is now complete. You have launched Infinity Book. You should see the interface as shown in Figure 1. +
+
+Type your command in the command box and press kbd:[Enter] to execute it. Some examples are given below.
+
+====
+Typing *`help`* and pressing kbd:[Enter] will open the help window.
+Other basic example commands are shown here:
 
 * *`list`* : lists all contacts
 * **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
 * **`delete`**`3` : deletes the 3rd contact shown in the current list
 * *`exit`* : exits the app
 
+You can view the entire command list <<Command Summary, here>>.
+====
 [NOTE]
 ====
 The User Interface might appear mildly different for different versions of the product.
@@ -86,13 +92,13 @@ Infinity Book uses a command line interface that follows the command format give
 
 * Spell corrects and completes command words being typed into Infinity Book +
 
-* `TAB` key auto-completes a partial command word and `SPACE` autocorrects an incorrect command word spelling.
+* kbd:[TAB] key auto-completes a partial command word and kbd:[SPACE] autocorrects an incorrect command word spelling.
 
 * *Example:*
-** `li` + `TAB` key press +
+** `li` + kbd:[TAB] key press +
 Completes to command word to `list`
 
-** `lsit` + `SPACE` key press +
+** `lsit` + kbd:[SPACE] key press +
 Corrects command word to `list`.
 
 
