@@ -29,6 +29,8 @@ Jump to the <<Quick Start>> to get started. Enjoy!
 This User Guide introduces a user to Infinity Book, provides set up instructions and details the features of the product.
 This document does not assume any prior technical knowledge, and the glossary explains any technical terms. Please check the FAQ section for frequent user issues.
 
+To quickly set up Infinity Book and try out the features, jump to <<Quick Start>>.
+
 [NOTE]
 For information about implementation and architecture, please refer to the Developer Guide.
 
