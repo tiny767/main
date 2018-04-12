@@ -29,4 +29,11 @@ public class SaveReportCommand extends Command {
 
         return new CommandResult(MESSAGE_SUCCESS + population.tagName);
     }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof SaveReportCommand // instanceof handles nulls
+                && this.population.equals(((SaveReportCommand) other).population)); // state check
+    }
 }
