@@ -40,4 +40,5 @@ public class Skill {
     public static boolean isValidSkill(String test) {
         return test.matches(SKILL_VALIDATION_REGEX);
     }
+
 }
