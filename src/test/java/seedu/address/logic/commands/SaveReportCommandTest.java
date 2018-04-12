@@ -1,12 +1,22 @@
 package seedu.address.logic.commands;
 
-import javafx.collections.ObservableList;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.function.Predicate;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+
+import javafx.collections.ObservableList;
+
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
-import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
@@ -22,16 +32,6 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.report.Report;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.ReportBuilder;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.function.Predicate;
-
-import static java.util.Objects.requireNonNull;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 public class SaveReportCommandTest {
 
@@ -209,27 +209,12 @@ public class SaveReportCommandTest {
 
     }
 
-//    /**
-//     * A Model stub that always throw a DuplicatePersonException when trying to add a report.
-//     */
-//    private class ModelStubThrowingDuplicatePersonException extends ModelStub {
-//        @Override
-//        public void addReport(Report report) throws DuplicatePersonException {
-//            throw new DuplicatePersonException();
-//        }
-//
-//        @Override
-//        public ReadOnlyAddressBook getAddressBook() {
-//            return new AddressBook();
-//        }
-//    }
-
     /**
      * A Model stub that always accept the report being added.
      */
     private class ModelStubAcceptingReportAdded extends ModelStub {
         final ArrayList<Report> reportsAdded = new ArrayList<>();
-        Report report;
+        private Report report;
 
         @Override
         public void updateReport(Tag population) {

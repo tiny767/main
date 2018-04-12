@@ -1,10 +1,10 @@
 package seedu.address.logic.commands;
 
+import static java.util.Objects.requireNonNull;
+
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.ToggleReportPanelEvent;
 import seedu.address.model.tag.Tag;
-
-import static java.util.Objects.requireNonNull;
 
 /**
  * Displays the report to the user.
