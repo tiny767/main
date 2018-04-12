@@ -407,7 +407,6 @@ image::viewCommand.png[width="300"]
 - Displays the added interview in list of Interview panel.
 
 ==== List Interview [Coming in v1.5]
-
 ==== Add Question [Coming in v1.5]
 
 // tag::facebook[]
