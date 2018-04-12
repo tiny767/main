@@ -3,6 +3,7 @@ package seedu.address.testutil;
 import java.util.HashSet;
 import java.util.Set;
 
+import seedu.address.model.job.Skill;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Link;
@@ -25,12 +26,14 @@ public class PersonBuilder {
     public static final String DEFAULT_REMARK = "";
     public static final String DEFAULT_TAGS = "friends";
     public static final String DEFAULT_LINK = "https://www.google.com.sg/";
+    public static final String DEFAULT_SKILL = "CSS";
 
     private Name name;
     private Phone phone;
     private Email email;
     private Address address;
     private Remark remark;
+    private Skill skill;
     private Set<Tag> tags;
     private Link link;
 
@@ -41,6 +44,7 @@ public class PersonBuilder {
         address = new Address(DEFAULT_ADDRESS);
         remark = new Remark(DEFAULT_REMARK);
         link = new Link(DEFAULT_LINK);
+        skill = new Skill(DEFAULT_SKILL);
         tags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
     }
 
@@ -54,6 +58,7 @@ public class PersonBuilder {
         address = personToCopy.getAddress();
         remark = personToCopy.getRemark();
         link = personToCopy.getLink();
+        skill = personToCopy.getSkills();
         tags = new HashSet<>(personToCopy.getTags());
     }
 
@@ -114,8 +119,16 @@ public class PersonBuilder {
         return this;
     }
 
+    /**
+     * Sets the {@code Skill} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withSkills(String skills) {
+        this.skill = new Skill(skills);
+        return this;
+    }
+
     public Person build() {
-        return new Person(name, phone, email, address, remark, link, tags);
+        return new Person(name, phone, email, address, remark, link, skill, tags);
     }
 
 }

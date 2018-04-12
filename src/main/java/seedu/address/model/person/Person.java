@@ -28,7 +28,8 @@ public class Person {
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Remark remark, Link link, Set<Tag> tags) {
+    public Person(Name name, Phone phone, Email email, Address address, Remark remark, Link link, Skill skill,
+                  Set<Tag> tags) {
         requireAllNonNull(name, phone, email, address, remark, tags);
         this.name = name;
         this.phone = phone;
@@ -36,26 +37,10 @@ public class Person {
         this.address = address;
         this.remark = remark;
         this.link = link;
-        this.skills = new seedu.address.model.job.Skill("");
+        this.skills = skill;
         // protect internal tags from changes in the arg list
         this.tags = new UniqueTagList(tags);
     }
-
-    public Person(
-            Name name, Phone phone, Email email, Address address,
-            Remark remark, Link link, seedu.address.model.job.Skill skills, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, remark, tags);
-        this.name = name;
-        this.phone = phone;
-        this.email = email;
-        this.address = address;
-        this.remark = remark;
-        this.link = link;
-        this.skills = skills;
-        // protect internal tags from changes in the arg list
-        this.tags = new UniqueTagList(tags);
-    }
-
 
     public Name getName() {
         return name;
