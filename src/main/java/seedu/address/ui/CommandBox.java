@@ -102,11 +102,11 @@ public class CommandBox extends UiPart<Region> {
     }
 
     /**
-     * TODO: Write Javadoc comment.
+     * Updates the text field with the suggested text by auto-correct,
+     * if there exists a suggestion.
      *
      */
     private void navigateToLikelyCommand() {
-        // TODO: Check if the command is actually wrong
         CommandCorrection.setUpCommandCorrection();
         if (CommandCorrection.isCorrectCommand(commandTextField.getText())) {
             return;
@@ -117,11 +117,11 @@ public class CommandBox extends UiPart<Region> {
     }
 
     /***
-     * TODO:Write javadoc comment
-     * @param suggestions
-     * @param suggestionToChoose
-     * @param commandText
-     * @return
+     * Picks the next auto-complete suggestion from the list of possible suggestions.
+     * @param suggestions contains all possible suggestions
+     * @param suggestionToChoose indicates the suggestion to pick
+     * @param commandText the string input from user
+     * @return the suggested completion, if available. Else the input is returned.
      */
     public static String chooseSuggestion(ArrayList<String> suggestions, int suggestionToChoose, String commandText) {
         if (suggestions.size() != 0) {
@@ -133,8 +133,8 @@ public class CommandBox extends UiPart<Region> {
     }
 
     /***
-     * TODO: Write a javadoc comment
-     * @param textToComplete
+     * Updates the tab counter based on user input either incrementing or resetting.
+     * @param textToComplete stores the string input from the user.
      */
     private void updateTabCounter(String textToComplete) {
         if (textToComplete.compareTo(recentSuggestion.trim()) == 0) {
@@ -145,9 +145,9 @@ public class CommandBox extends UiPart<Region> {
     }
 
     /***
-     * TODO: Write a javadoc comment
-     * @param textToComplete
-     * @return
+     * Updates text to complete to original user input, if it has been altered.
+     * @param textToComplete stores the string in the commandBox currently.
+     * @return the original user input.
      */
     private String updateTextToComplete(String textToComplete) {
         if (textToComplete.compareTo(recentSuggestion.trim()) == 0) {
@@ -162,12 +162,10 @@ public class CommandBox extends UiPart<Region> {
     }
 
     /***
-     * TODO: Write Javadoc comment.
-     *
+     * Updates the text field with suggestion from auto-complete,
+     * if there exists a suggested completion
      */
-
     private void navigateToCompletedCommand() {
-        // TODO: Check if the command is actually wrong
         CommandCorrection.setUpCommandCompletion();
         String textToComplete = commandTextField.getText().trim();
 
@@ -183,8 +181,13 @@ public class CommandBox extends UiPart<Region> {
 
         ArrayList<String> suggestions = CommandCorrection.getSuggestions(textToComplete);
         String chosenString = chooseSuggestion(suggestions, suggestionToChoose, commandTextField.getText());
-
-        raise(new CommandCorrectedEvent(String.format(CommandCorrection.FEEDBACK_TO_USER, chosenString)));
+        if (suggestions.isEmpty()) {
+            raise(new CommandCorrectedEvent(
+                    String.format(CommandCorrection.NO_MATCHES_FEEDBACK_TO_USER, chosenString)));
+        } else {
+            raise(new CommandCorrectedEvent(
+                    String.format(CommandCorrection.MATCH_FOUND_FEEDBACK_TO_USER, chosenString)));
+        }
         replaceText(chosenString);
     }
 

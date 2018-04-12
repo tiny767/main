@@ -21,8 +21,10 @@ import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.model.interview.Interview;
 import seedu.address.model.interview.exceptions.DuplicateInterviewException;
+import seedu.address.model.interview.exceptions.InterviewNotFoundException;
 import seedu.address.model.job.Job;
 import seedu.address.model.job.exceptions.DuplicateJobException;
+import seedu.address.model.job.exceptions.JobNotFoundException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -119,9 +121,24 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public void updateJob(Job target, Job editedJob)
+            throws DuplicateJobException, JobNotFoundException {
+        requireAllNonNull(target, editedJob);
+
+        addressBook.updateJob(target, editedJob);
+        indicateAddressBookChanged();
+    }
+
+    @Override
     public void updateFilteredJobList(Predicate<Job> predicate) {
         requireNonNull(predicate);
         filteredJobs.setPredicate(predicate);
+    }
+
+    @Override
+    public synchronized void deleteJob(Job target) throws JobNotFoundException {
+        addressBook.removeJob(target);
+        indicateAddressBookChanged();
     }
 
     /**
@@ -213,11 +230,18 @@ public class ModelManager extends ComponentManager implements Model {
                 && filteredJobs.equals(other.filteredJobs);
     }
 
+    //@@author deeheenguyen
     //=========== Filtered Interview List Accessors =============================================================
     @Override
     public synchronized void addInterview(Interview interview) throws DuplicateInterviewException {
         addressBook.addInterview(interview);
         updateFilteredInterviewList(PREDICATE_SHOW_ALL_INTERVIEWS);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public synchronized void deleteInterview(Interview target) throws InterviewNotFoundException {
+        addressBook.removeInterview(target);
         indicateAddressBookChanged();
     }
 
@@ -235,6 +259,7 @@ public class ModelManager extends ComponentManager implements Model {
         requireNonNull(predicate);
         filteredInterviews.setPredicate(predicate);
     }
+    //@@author
 
     /**
      * Returns an unmodifiable view of the list of {@code Report} backed by the internal list of

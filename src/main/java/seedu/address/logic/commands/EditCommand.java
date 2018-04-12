@@ -5,6 +5,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_SKILLS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
@@ -21,6 +22,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.ui.RefreshReportPanelEvent;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.job.Skill;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Link;
@@ -50,6 +52,7 @@ public class EditCommand extends UndoableCommand {
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
+            + "[" + PREFIX_SKILLS + "SKILLS] "
             + "[" + PREFIX_TAG + "TAG]... | "
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_PHONE + "91234567 "
@@ -136,6 +139,7 @@ public class EditCommand extends UndoableCommand {
         private Email email;
         private Address address;
         private Link link;
+        private Skill skill;
         private Set<Tag> tags;
         private Set<Tag> newTags;
         private Set<Tag> deletedTags;
@@ -152,6 +156,7 @@ public class EditCommand extends UndoableCommand {
             setEmail(toCopy.email);
             setAddress(toCopy.address);
             setLink(toCopy.link);
+            setSkill(toCopy.skill);
             setTags(toCopy.tags);
             setNewTags(toCopy.newTags);
             setDeletedTags(toCopy.deletedTags);
@@ -161,7 +166,7 @@ public class EditCommand extends UndoableCommand {
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email, this.address,
+            return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email, this.address, this.skill,
                     this.tags, this.newTags, this.deletedTags);
         }
 
@@ -195,6 +200,14 @@ public class EditCommand extends UndoableCommand {
 
         public Optional<Address> getAddress() {
             return Optional.ofNullable(address);
+        }
+
+        public void setSkill(Skill skill) {
+            this.skill = skill;
+        }
+
+        public Optional<Skill> getSkill() {
+            return Optional.ofNullable(skill);
         }
 
         public void setLink(Link link) {
@@ -274,6 +287,7 @@ public class EditCommand extends UndoableCommand {
             Name updatedName = getName().orElse(personToEdit.getName());
             Phone updatedPhone = getPhone().orElse(personToEdit.getPhone());
             Email updatedEmail = getEmail().orElse(personToEdit.getEmail());
+            Skill updatedSkill = getSkill().orElse(personToEdit.getSkills());
             Remark updatedRemark = personToEdit.getRemark();
             Link updatedLink = personToEdit.getLink();
             Address updatedAddress = getAddress().orElse(personToEdit.getAddress());
@@ -300,7 +314,7 @@ public class EditCommand extends UndoableCommand {
 
 
             return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedRemark,
-                    updatedLink, updatedTags);
+                    updatedLink, updatedSkill, updatedTags);
         }
 
         @Override

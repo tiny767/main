@@ -19,15 +19,14 @@ public class AddInterviewCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "addInterview";
     public static final String COMMAND_ALIAS = "ai";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds an interview to the address book. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds an interview to the address book.\n"
             + "Parameters: "
             + PREFIX_INTERVIEW + "INTERVIEW "
             + PREFIX_NAME + "INTERVIEWEE "
-            + PREFIX_DATE + "INTERVIEW_DATE"
-            + PREFIX_LOCATION + "INTERVIEW_LOCATION "
-            + "\n "
+            + PREFIX_DATE + "INTERVIEW_DATE "
+            + PREFIX_LOCATION + "INTERVIEW_LOCATION \n"
             + "Example: " + COMMAND_WORD + " "
-            + PREFIX_INTERVIEW + "INTERNSHIP INTERVIEW "
+            + PREFIX_INTERVIEW + "SE INTERVIEW "
             + PREFIX_NAME + "DAVID "
             + PREFIX_DATE + "04.05.2018 "
             + PREFIX_LOCATION + "SUNTEX CITY ";
@@ -64,4 +63,3 @@ public class AddInterviewCommand extends UndoableCommand {
                 && toAdd.equals(((AddInterviewCommand) other).toAdd));
     }
 }
-//author@@ deeheenguyen

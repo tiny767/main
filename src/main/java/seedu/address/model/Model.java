@@ -5,8 +5,10 @@ import java.util.function.Predicate;
 import javafx.collections.ObservableList;
 import seedu.address.model.interview.Interview;
 import seedu.address.model.interview.exceptions.DuplicateInterviewException;
+import seedu.address.model.interview.exceptions.InterviewNotFoundException;
 import seedu.address.model.job.Job;
 import seedu.address.model.job.exceptions.DuplicateJobException;
+import seedu.address.model.job.exceptions.JobNotFoundException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -69,6 +71,19 @@ public interface Model {
     /* Adds the given job. */
     void addJob(Job j) throws DuplicateJobException;
 
+    /** Deletes the given job. */
+    void deleteJob(Job target) throws JobNotFoundException;
+
+    /**
+     * Replaces the given job {@code target} with {@code editedJob}.
+     *
+     * @throws DuplicateJobException if updating the job's details causes the job to be equivalent to
+     *      another existing person in the list.
+     * @throws JobNotFoundException if {@code target} could not be found in the list.
+     */
+    void updateJob(Job target, Job editedJob)
+            throws DuplicateJobException, JobNotFoundException;
+
     /**
      * Updates the filter of the filtered job list to filter by the given {@code predicate}.
      * @throws NullPointerException if {@code predicate} is null.
@@ -78,6 +93,9 @@ public interface Model {
 
     /* Adds the give interview. */
     void addInterview(Interview interview) throws DuplicateInterviewException;
+
+    /** Deletes the given interview. */
+    void deleteInterview(Interview target) throws InterviewNotFoundException;
 
     /**
      * Updates the filter of the filtered interview list to filter by the given {@code predicate}.

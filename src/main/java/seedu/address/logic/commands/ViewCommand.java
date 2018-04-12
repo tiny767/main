@@ -4,6 +4,7 @@ package seedu.address.logic.commands;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
+import seedu.address.commons.events.ui.ToggleBrowserPanelEvent;
 import seedu.address.model.person.EmailFilter;
 
 /**
@@ -27,6 +28,7 @@ public class ViewCommand extends Command {
     public CommandResult execute() {
         model.updateFilteredPersonList(predicate);
         Index targetIndex = Index.fromOneBased(1);
+        EventsCenter.getInstance().post(new ToggleBrowserPanelEvent());
         EventsCenter.getInstance().post(new JumpToListRequestEvent(targetIndex));
         return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
     }
@@ -38,4 +40,4 @@ public class ViewCommand extends Command {
                 && this.predicate.equals(((ViewCommand) other).predicate)); // state check
     }
 }
-//@@author deeheenguyen
+//@@author

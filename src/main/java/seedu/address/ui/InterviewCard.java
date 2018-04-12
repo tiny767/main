@@ -1,3 +1,4 @@
+//@@author deeheenguyen
 package seedu.address.ui;
 
 import javafx.fxml.FXML;
@@ -40,7 +41,7 @@ public class InterviewCard extends UiPart<Region> {
         this.interview = interview;
         id.setText(displayedIndex + ". ");
         interviewTitle.setText(interview.getInterviewTitle().toString());
-        interviewLocation.setText(interview.getLocation().value);
+        interviewLocation.setText(interview.getInterviewLocation().value);
         interviewee.setText(interview.getInterviewee().toString());
         date.setText(interview.getDate().toString());
     }

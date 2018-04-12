@@ -1,3 +1,4 @@
+//@@author deeheenguyen
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
@@ -26,5 +27,5 @@ public class ViewCommandParser implements Parser<ViewCommand> {
 
         return new ViewCommand(new EmailFilter(new Email(trimmedArgs)));
     }
-
 }
+//author@@ deeheenguyen

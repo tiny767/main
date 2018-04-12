@@ -11,10 +11,15 @@ import seedu.address.logic.commands.AddInterviewCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.DeleteInterviewCommand;
+import seedu.address.logic.commands.DeleteJobCommand;
 import seedu.address.logic.commands.EditCommand;
+import seedu.address.logic.commands.EditJobCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FacebookLoginCommand;
+import seedu.address.logic.commands.FacebookPostCommand;
 import seedu.address.logic.commands.FindCommand;
+import seedu.address.logic.commands.FindInterviewCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
@@ -26,11 +31,13 @@ import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemarkCommand;
 import seedu.address.logic.commands.SaveReportCommand;
 import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.SkillsCommand;
 import seedu.address.logic.commands.ThemeCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.ViewCommand;
 import seedu.address.logic.commands.ViewReportCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.ui.BrowserPanel;
 
 /**
  * Parses user input.
@@ -59,10 +66,20 @@ public class AddressBookParser {
         final String arguments = matcher.group("arguments");
         switch (commandWord) {
         case FacebookLoginCommand.COMMAND_WORD:
+            BrowserPanel.setProcessType(commandWord);
             return new FacebookLoginCommand();
 
         case FacebookLoginCommand.COMMAND_ALIAS:
+            BrowserPanel.setProcessType(commandWord);
             return new FacebookLoginCommand();
+
+        case FacebookPostCommand.COMMAND_WORD:
+            BrowserPanel.setProcessType(commandWord);
+            return new FacebookPostCommandParser().parse(arguments);
+
+        case FacebookPostCommand.COMMAND_ALIAS:
+            BrowserPanel.setProcessType(commandWord);
+            return new FacebookPostCommandParser().parse(arguments);
 
         case RemarkCommand.COMMAND_WORD:
             return new RemarkCommandParser().parse(arguments);
@@ -94,6 +111,9 @@ public class AddressBookParser {
         case EditCommand.COMMAND_ALIAS:
             return new EditCommandParser().parse(arguments);
 
+        case EditJobCommand.COMMAND_WORD:
+            return new EditJobCommandParser().parse(arguments);
+
         case EditCommand.COMMAND_WORD:
             return new EditCommandParser().parse(arguments);
 
@@ -106,6 +126,18 @@ public class AddressBookParser {
         case DeleteCommand.COMMAND_ALIAS:
             return new DeleteCommandParser().parse(arguments);
 
+        case DeleteJobCommand.COMMAND_WORD:
+            return new DeleteJobCommandParser().parse(arguments);
+
+        case DeleteJobCommand.COMMAND_ALIAS:
+            return new DeleteJobCommandParser().parse(arguments);
+
+        case DeleteInterviewCommand.COMMAND_WORD:
+            return new DeleteInterviewCommandParser().parse(arguments);
+
+        case DeleteInterviewCommand.COMMAND_ALIAS:
+            return new DeleteInterviewCommandParser().parse(arguments);
+
         case DeleteCommand.COMMAND_WORD:
             return new DeleteCommandParser().parse(arguments);
 
@@ -117,6 +149,9 @@ public class AddressBookParser {
 
         case FindCommand.COMMAND_WORD:
             return new FindCommandParser().parse(arguments);
+
+        case FindInterviewCommand.COMMAND_WORD:
+            return new FindInterviewCommandParser().parse(arguments);
 
         case ViewCommand.COMMAND_WORD:
             return new ViewCommandParser().parse(arguments);
@@ -156,6 +191,9 @@ public class AddressBookParser {
 
         case SaveReportCommand.COMMAND_ALIAS:
             return new SaveReportCommandParser().parse(arguments);
+
+        case SkillsCommand.COMMAND_WORD:
+            return new SkillsCommandParser().parse(arguments);
 
         case AddInterviewCommand.COMMAND_WORD :
             return new AddInterviewCommandParser().parse(arguments);

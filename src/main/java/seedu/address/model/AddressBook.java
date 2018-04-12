@@ -17,9 +17,11 @@ import javafx.collections.ObservableList;
 import seedu.address.model.interview.Interview;
 import seedu.address.model.interview.UniqueInterviewList;
 import seedu.address.model.interview.exceptions.DuplicateInterviewException;
+import seedu.address.model.interview.exceptions.InterviewNotFoundException;
 import seedu.address.model.job.Job;
 import seedu.address.model.job.UniqueJobList;
 import seedu.address.model.job.exceptions.DuplicateJobException;
+import seedu.address.model.job.exceptions.JobNotFoundException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -169,7 +171,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         personTags.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
         return new Person(
                 person.getName(), person.getPhone(), person.getEmail(), person.getAddress(),
-                person.getRemark(), person.getLink(), correctTagReferences);
+                person.getRemark(), person.getLink(), person.getSkills(), correctTagReferences);
     }
 
     /**
@@ -198,7 +200,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
         Person modifiedPerson =
                 new Person(person.getName(), person.getPhone(), person.getEmail(), person.getAddress(),
-                        person.getRemark(), person.getLink(), modifiedTags);
+                        person.getRemark(), person.getLink(), person.getSkills(), modifiedTags);
 
         try {
             updatePerson(person, modifiedPerson);
@@ -247,22 +249,66 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     //// interview-level operations
-
+    //@@author deeheenguyen
     public void addInterview(Interview interview) throws DuplicateInterviewException {
         interviews.add(interview);
     }
+
+    /**
+     * Removes {@code key} from this {@code AddressBook}.
+     * @throws InterviewNotFoundException if the {@code key} is not in this {@code AddressBook}.
+     */
+    public boolean removeInterview(Interview key) throws InterviewNotFoundException {
+        if (interviews.remove(key)) {
+            return true;
+        } else {
+            throw new InterviewNotFoundException();
+        }
+    }
+    //@@author
     //// job methods
 
     /**
      * Adds a job to the address book.
      *
-     * TODO: Write the javadoc comment
-     * TODO: Write the exception.
      * @throws DuplicatePersonException if an equivalent person already exists.
      */
     public void addJob(Job j) throws DuplicateJobException {
         // TODO: Mimic the implementation of the addperson method.
         jobs.add(j);
+    }
+
+    /**
+     * Replaces the given job {@code target} in the list with {@code editedJob}.
+     * {@code AddressBook}'s tag list will be updated with the tags of {@code editedJob}.
+     *
+     * @throws DuplicateJobException if updating the job's details causes the person to be equivalent to
+     *      another existing job in the list.
+     * @throws JobNotFoundException if {@code target} could not be found in the list.
+     *
+     */
+    public void updateJob(Job target, Job editedJob)
+            throws DuplicateJobException, JobNotFoundException {
+        requireNonNull(editedJob);
+        // TODO: Figure out about this syncWithMasterTagList
+        // Job syncedEditedJob = syncWithMasterTagList(editedJob);
+        Job syncedEditedJob = editedJob;
+        // TODO: the tags master list will be updated even though the below line fails.
+        // This can cause the tags master list to have additional tags that are not tagged to any person
+        // in the person list.
+        jobs.setJob(target, syncedEditedJob);
+    }
+
+    /**
+     * Removes {@code key} from this {@code AddressBook}.
+     * @throws JobNotFoundException if the {@code key} is not in this {@code AddressBook}.
+     */
+    public boolean removeJob(Job key) throws JobNotFoundException {
+        if (jobs.remove(key)) {
+            return true;
+        } else {
+            throw new JobNotFoundException();
+        }
     }
 
     //// report methods
@@ -279,8 +325,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     @Override
     public String toString() {
         return persons.asObservableList().size() + " persons, " + tags.asObservableList().size() +  " tags"
-                + reports.asObservableList().size() + " reports.";
-        // TODO: update with number of job postings
+                + reports.asObservableList().size() + " reports" + jobs.asObservableList().size() + " jobs.";
     }
 
     @Override

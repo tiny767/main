@@ -6,10 +6,14 @@ import java.util.Iterator;
 import java.util.Set;
 
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.AddInterviewCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.DeleteJobCommand;
 import seedu.address.logic.commands.EditCommand;
+import seedu.address.logic.commands.EditJobCommand;
 import seedu.address.logic.commands.ExitCommand;
+import seedu.address.logic.commands.FacebookLoginCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
@@ -19,16 +23,20 @@ import seedu.address.logic.commands.MatchJobCommand;
 import seedu.address.logic.commands.PostJobCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemarkCommand;
+import seedu.address.logic.commands.SaveReportCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.ThemeCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.ViewCommand;
+import seedu.address.logic.commands.ViewReportCommand;
 
 /***
- * TODO: Add Javadoc comment here.
+ * Auto-correct and auto-completing the command words being typed by the user in the command box.
  */
 public class CommandCorrection {
-    public static final String FEEDBACK_TO_USER = "Auto-corrected to: %1$s";
+    public static final String MATCH_FOUND_FEEDBACK_TO_USER = "Auto-corrected to: %1$s";
+    public static final String NO_MATCHES_FEEDBACK_TO_USER = "No matching command completion found. "
+            + "Try SPACE key for auto-correct.";
 
     private static Set<String> commandDictionary;
     private static String commandParameters;
@@ -63,7 +71,7 @@ public class CommandCorrection {
     }
 
     /***
-     * Creates a dictionary of words that are included in the command words.
+     * Creates a dictionary of all command words recognized by Infinity Book.
      */
     public static void createDictionary() {
         commandDictionary = new HashSet<>();
@@ -85,6 +93,16 @@ public class CommandCorrection {
         commandDictionary.add(UndoCommand.COMMAND_WORD);
         commandDictionary.add(ViewCommand.COMMAND_WORD);
         commandDictionary.add(ExitCommand.COMMAND_WORD);
+        commandDictionary.add(AddInterviewCommand.COMMAND_WORD);
+        commandDictionary.add(FacebookLoginCommand.COMMAND_WORD);
+        commandDictionary.add(ThemeCommand.COMMAND_WORD);
+        commandDictionary.add(HistoryCommand.COMMAND_WORD);
+        commandDictionary.add(ExitCommand.COMMAND_WORD);
+        commandDictionary.add(UndoCommand.COMMAND_WORD);
+        commandDictionary.add(ViewReportCommand.COMMAND_WORD);
+        commandDictionary.add(SaveReportCommand.COMMAND_WORD);
+        commandDictionary.add(DeleteJobCommand.COMMAND_WORD);
+        commandDictionary.add(EditJobCommand.COMMAND_WORD);
     }
 
     /***
@@ -100,7 +118,7 @@ public class CommandCorrection {
 
     /***
      * Checks if the commandText that contains the command word is already a correct command.
-     * @param commandText
+     * @param commandText string from the commandBox that was typed by the user.
      * @return boolean indicating whether it is a correct command.
      */
     public static boolean isCorrectCommand(String commandText) {
@@ -109,7 +127,7 @@ public class CommandCorrection {
 
     /***
      * Finds the nearest correction that is found. If no correction is found the text is returned as is.
-     * @param commandText
+     * @param commandText string from the commandBox that was typed by the user.
      * @return corrected String according the rules.
      */
     public static String nearestCorrection(String commandText) {
@@ -137,9 +155,9 @@ public class CommandCorrection {
     }
 
     /***
-     * TODO: Write javadoc comment here.
-     * @param commandText
-     * @return corrected word after removing one character
+     * Searches for corrected command word by removing one character at a time.
+     * @param commandText string from the commandBox that was typed by the user.
+     * @return a corrected String, if available. Else returns the same string.
      */
     public static String removeOneCharacter(String commandText) {
         for (int index = 0; index < commandText.length(); index++) {
@@ -155,9 +173,9 @@ public class CommandCorrection {
     }
 
     /***
-     * TODO: Write javadoc ocmments here.
-     * @param commandText
-     * @return
+     * Searches for corrected command word that by adding one character at a time.
+     * @param commandText string from the commandBox that was typed by the user.
+     * @returns a corrected String, if available. Else returns the same string.
      */
     public static String addOneCharacter(String commandText) {
         String alphabetString = new String("abcdefghijklmnopqrstuvwxyz");
@@ -179,7 +197,7 @@ public class CommandCorrection {
 
     /***
      * Returns correct word when two consecutive alphabets are swapped.
-     * @param commandText
+     * @param commandText string from the commandBox that was typed by the user.
      * @returns a corrected String, if available. Else returns the same string.
      */
     public static String swapTwoCharacters(String commandText) {
@@ -206,8 +224,10 @@ public class CommandCorrection {
         tabCounter++;
     }
 
+
     /***
-     * TODO: Write a javadoc comment
+     * Updates the suggestions list based on the input string in commandBox
+     * @param commandText string from the commandBox that was typed by the user.
      */
     public static void updateSuggestionsList(String commandText) {
         if (commandText.equals(commandInput)) {
@@ -233,8 +253,8 @@ public class CommandCorrection {
 
     /***
      * Function attempts to complete command that is consistent with the text already typed.
-     * @param commandText
-     * @return
+     * @param commandText string from the commandBox that was typed by the user.
+     * @returns ArrayList containing all possible suggestions as strings.
      */
     public static ArrayList<String> getSuggestions(String commandText) {
         updateSuggestionsList(commandText);

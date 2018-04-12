@@ -1,3 +1,4 @@
+//@@author deeheenguyen
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
@@ -32,19 +33,24 @@ public class AddInterviewCommandParser implements Parser<AddInterviewCommand> {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_INTERVIEW, PREFIX_NAME, PREFIX_DATE, PREFIX_LOCATION);
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_INTERVIEW, PREFIX_LOCATION)
+        if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_INTERVIEW, PREFIX_DATE, PREFIX_LOCATION)
                 || !argMultimap.getPreamble().isEmpty()) {
+            System.out.println("bug bug bug");
+            System.out.println(arePrefixesPresent(argMultimap, PREFIX_INTERVIEW));
+            System.out.println(arePrefixesPresent(argMultimap, PREFIX_NAME));
+            System.out.println(arePrefixesPresent(argMultimap, PREFIX_DATE));
+            System.out.println(arePrefixesPresent(argMultimap, PREFIX_LOCATION));
+            System.out.println(argMultimap.getPreamble().isEmpty());
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddInterviewCommand.MESSAGE_USAGE));
         }
 
         try {
             InterviewTitle title = ParserUtil.parseInterviewTitle(argMultimap.getValue(PREFIX_INTERVIEW)).get();
-            InterviewLocation location = ParserUtil.parseInterviewLocation(argMultimap.getValue(PREFIX_LOCATION)).get();
-            Date date = ParserUtil.parseDate(argMultimap.getValue(PREFIX_DATE)).get();
             Name interviewee = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME)).get();
+            Date date = ParserUtil.parseDate(argMultimap.getValue(PREFIX_DATE)).get();
+            InterviewLocation location = ParserUtil.parseInterviewLocation(argMultimap.getValue(PREFIX_LOCATION)).get();
 
             Interview interview = new Interview(title, interviewee, date, location);
-
             return new AddInterviewCommand(interview);
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
@@ -60,3 +66,4 @@ public class AddInterviewCommandParser implements Parser<AddInterviewCommand> {
     }
 
 }
+//author@@
