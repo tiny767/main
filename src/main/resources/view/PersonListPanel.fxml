@@ -8,7 +8,7 @@
 
 <VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
   <!--Referenced for <Text> https://github.com/kush1509/contactHeRo/blob/master/src/main/resources/view/PersonListPanel.fxml-->
-  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Contacts" textAlignment="CENTER" wrappingWidth="248.27490234375">
+  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Candidates" textAlignment="CENTER" wrappingWidth="248.27490234375">
     <VBox.margin>
       <Insets bottom="5.0" top="5.0" />
     </VBox.margin>
