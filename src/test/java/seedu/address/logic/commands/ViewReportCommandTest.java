@@ -5,8 +5,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.function.Predicate;
 
 import org.junit.Rule;
@@ -33,7 +31,7 @@ import seedu.address.model.report.Report;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.ReportBuilder;
 
-public class SaveReportCommandTest {
+public class ViewReportCommandTest {
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
@@ -41,33 +39,33 @@ public class SaveReportCommandTest {
     @Test
     public void constructor_nullReport_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
-        new SaveReportCommand(null);
+        new ViewReportCommand(null);
     }
 
     @Test
     public void execute_reportAcceptedByModel_addSuccessful() throws Exception {
-        ModelStubAcceptingReportAdded modelStub = new ModelStubAcceptingReportAdded();
+        ModelStubAcceptingReportUpdated modelStub = new ModelStubAcceptingReportUpdated();
         Tag validTag = new Tag("validTag");
         Report validReport = new ReportBuilder().build();
 
-        CommandResult commandResult = getSaveReportCommand(validTag, modelStub).execute();
+        CommandResult commandResult = getViewReportCommand(validTag, modelStub).execute();
 
-        assertEquals(String.format(SaveReportCommand.MESSAGE_SUCCESS + validTag.tagName), commandResult.feedbackToUser);
-        assertEquals(Arrays.asList(validReport), modelStub.reportsAdded);
+        assertEquals(String.format(ViewReportCommand.MESSAGE_SUCCESS + validTag.tagName), commandResult.feedbackToUser);
+        assertEquals(validReport, modelStub.report);
     }
 
     @Test
     public void equals() {
         Report screening = new ReportBuilder().withPopulation("Screening").build();
         Report interviewing = new ReportBuilder().withPopulation("Interviewing").build();
-        SaveReportCommand viewreportScreeningCommand = new SaveReportCommand(new Tag("Screening"));
-        SaveReportCommand viewreportInterviewingCommand = new SaveReportCommand(new Tag("Interviewing"));
+        ViewReportCommand viewreportScreeningCommand = new ViewReportCommand(new Tag("Screening"));
+        ViewReportCommand viewreportInterviewingCommand = new ViewReportCommand(new Tag("Interviewing"));
 
         // same object -> returns true
         assertTrue(viewreportScreeningCommand.equals(viewreportScreeningCommand));
 
         // same values -> returns true
-        SaveReportCommand addScreeningCommandCopy = new SaveReportCommand(new Tag("Screening"));
+        ViewReportCommand addScreeningCommandCopy = new ViewReportCommand(new Tag("Screening"));
         assertTrue(viewreportScreeningCommand.equals(addScreeningCommandCopy));
 
         // different types -> returns false
@@ -81,10 +79,10 @@ public class SaveReportCommandTest {
     }
 
     /**
-     * Generates a new SaveReportCommand with the details of the given report.
+     * Generates a new ViewReportCommand with the details of the given report.
      */
-    private SaveReportCommand getSaveReportCommand(Tag population, Model model) {
-        SaveReportCommand command = new SaveReportCommand(population);
+    private ViewReportCommand getViewReportCommand(Tag population, Model model) {
+        ViewReportCommand command = new ViewReportCommand(population);
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
@@ -212,8 +210,7 @@ public class SaveReportCommandTest {
     /**
      * A Model stub that always accept the report being added.
      */
-    private class ModelStubAcceptingReportAdded extends ModelStub {
-        final ArrayList<Report> reportsAdded = new ArrayList<>();
+    private class ModelStubAcceptingReportUpdated extends ModelStub {
         private Report report;
 
         @Override
@@ -221,10 +218,6 @@ public class SaveReportCommandTest {
             report = new ReportBuilder().build();
         }
 
-        @Override
-        public void addReport(Report reportToAdd) {
-            reportsAdded.add(reportToAdd);
-        }
 
         @Override
         public Report getReport() {
