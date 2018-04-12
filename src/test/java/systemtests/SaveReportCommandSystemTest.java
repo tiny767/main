@@ -1,36 +1,35 @@
 package systemtests;
 
+import org.junit.Test;
+import seedu.address.commons.core.index.Index;
+import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.commands.SaveReportCommand;
+import seedu.address.model.Model;
+import seedu.address.model.tag.Tag;
+
 import static org.junit.Assert.assertTrue;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_POPULATION;
 import static seedu.address.model.tag.Tag.MESSAGE_TAG_CONSTRAINTS;
 
-import org.junit.Test;
-
-import seedu.address.commons.core.index.Index;
-import seedu.address.logic.commands.UndoCommand;
-import seedu.address.logic.commands.ViewReportCommand;
-import seedu.address.model.Model;
-import seedu.address.model.tag.Tag;
-
-public class ViewReportCommandSystemTest extends AddressBookSystemTest {
+public class SaveReportCommandSystemTest extends AddressBookSystemTest {
     @Test
-    public void viewreport() {
+    public void savereport() {
         Tag samplePop = new Tag("SEIntern");
         Tag samplePopComputing = new Tag("computing");
-        /* ------------------------ Perform viewreport operations -------------------------- */
+        /* ------------------------ Perform savereport operations -------------------------- */
 
         /* Case: command with leading spaces and trailing spaces
          * -> report displayed
          */
-        String command = "   " + ViewReportCommand.COMMAND_WORD + "  " + PREFIX_POPULATION + samplePop.tagName + "   ";
+        String command = "   " + SaveReportCommand.COMMAND_WORD + "  " + PREFIX_POPULATION + samplePop.tagName + "   ";
         assertCommandSuccess(command, samplePop
         );
 
         /* Case: command with more than one population
          * -> report displayed of the last population
          */
-        command = "   " + ViewReportCommand.COMMAND_WORD + "  " + PREFIX_POPULATION + samplePop.tagName
+        command = "   " + SaveReportCommand.COMMAND_WORD + "  " + PREFIX_POPULATION + samplePop.tagName
                 + " " + PREFIX_POPULATION + samplePopComputing.tagName;
         assertCommandSuccess(command, samplePopComputing);
 
@@ -42,11 +41,11 @@ public class ViewReportCommandSystemTest extends AddressBookSystemTest {
         /* ----------------------------------- Perform invalid operations ------------------------------------ */
 
         /* Case: empty population -> rejected */
-        assertCommandFailure(ViewReportCommand.COMMAND_WORD + " " + PREFIX_POPULATION,
+        assertCommandFailure(SaveReportCommand.COMMAND_WORD + " " + PREFIX_POPULATION,
                 MESSAGE_TAG_CONSTRAINTS);
 
         /* Case: mixed case command word -> rejected */
-        assertCommandFailure("ViewReport pop/Anh", MESSAGE_UNKNOWN_COMMAND);
+        assertCommandFailure("SaveReport pop/Anh", MESSAGE_UNKNOWN_COMMAND);
     }
 
     /**
@@ -66,7 +65,8 @@ public class ViewReportCommandSystemTest extends AddressBookSystemTest {
     private void assertCommandSuccess(String command, Tag population) {
         Model expectedModel = getModel();
         expectedModel.updateReport(population);
-        String expectedResultMessage = ViewReportCommand.MESSAGE_SUCCESS + population.tagName;
+        expectedModel.addReport(expectedModel.getReport());
+        String expectedResultMessage = SaveReportCommand.MESSAGE_SUCCESS + population.tagName;
 
         assertCommandSuccess(command, expectedModel, expectedResultMessage);
     }
@@ -89,8 +89,9 @@ public class ViewReportCommandSystemTest extends AddressBookSystemTest {
         executeCommand(command);
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
         assertTrue(isReportPanelOpenning());
+        assertSelectedCardUnchanged();
         assertCommandBoxShowsDefaultStyle();
-        assertStatusBarUnchanged();
+        assertStatusBarUnchangedExceptSyncStatus();
     }
 
     /**
