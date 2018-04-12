@@ -1,7 +1,6 @@
 package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
@@ -112,37 +111,6 @@ public class DeleteJobCommandTest {
         assertCommandFailure(undoCommand, model, UndoCommand.MESSAGE_FAILURE);
         assertCommandFailure(redoCommand, model, RedoCommand.MESSAGE_FAILURE);
     }
-
-//    TODO: Fix this test fail
-//    /**
-//     * 1. Deletes a {@code Person} from a filtered list.
-//     * 2. Undo the deletion.
-//     * 3. The unfiltered list should be shown now. Verify that the index of the previously deleted person in the
-//     * unfiltered list is different from the index at the filtered list.
-//     * 4. Redo the deletion. This ensures {@code RedoCommand} deletes the person object regardless of indexing.
-//     */
-//    @Test
-//    public void executeUndoRedo_validIndexFilteredList_sameJobDeleted() throws Exception {
-//        UndoRedoStack undoRedoStack = new UndoRedoStack();
-//        UndoCommand undoCommand = prepareUndoCommand(model, undoRedoStack);
-//        RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack);
-//        DeleteJobCommand deleteJobCommand = prepareCommand(INDEX_FIRST_JOB);
-//        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-//
-//        showJobAtIndex(model, INDEX_SECOND_JOB);
-//        Job jobToDelete = model.getFilteredJobList().get(INDEX_FIRST_JOB.getZeroBased());
-//        // delete -> deletes second job in unfiltered job list / first job in filtered job list
-//        deleteJobCommand.execute();
-//        undoRedoStack.push(deleteJobCommand);
-//
-//        // undo -> reverts addressbook back to previous state and filtered job list to show all jobs
-//        assertCommandSuccess(undoCommand, model, UndoCommand.MESSAGE_SUCCESS, expectedModel);
-//
-//        expectedModel.deleteJob(jobToDelete);
-//        assertNotEquals(jobToDelete, model.getFilteredJobList().get(INDEX_FIRST_JOB.getZeroBased()));
-//        // redo -> deletes same second job in unfiltered job list
-//        assertCommandSuccess(redoCommand, model, RedoCommand.MESSAGE_SUCCESS, expectedModel);
-//    }
 
     @Test
     public void equals() throws Exception {

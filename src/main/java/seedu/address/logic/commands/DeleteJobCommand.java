@@ -45,8 +45,7 @@ public class DeleteJobCommand extends UndoableCommand {
         } catch (JobNotFoundException jnfe) {
             throw new AssertionError("The target job cannot be missing");
         }
-
-            return new CommandResult(String.format(MESSAGE_DELETE_JOB_SUCCESS, jobToDelete));
+        return new CommandResult(String.format(MESSAGE_DELETE_JOB_SUCCESS, jobToDelete));
     }
 
     @Override
