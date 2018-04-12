@@ -270,6 +270,7 @@ public class ParserUtil {
         return tagSet;
     }
 
+    //@@author deeheenguyen
     /**
      * Parses a {@code String string} into a trimmed {@code Location}.
      * Leading and trailing whitespaces will be trimmed.

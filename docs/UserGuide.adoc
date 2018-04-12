@@ -399,8 +399,8 @@ This section describes command available for managing interview in the Infinity 
 
 ==== Add Interview Command
 * *Description:* Add a Interview to Infinity Book.
-* *Format:* `addInterview n/Interviewee l/LOCATION d/DATE`
-* *Examples:* `addInterview n/John l/One North d/30.1.2018`
+* *Format:* `addInterview i/Interview Title n/Interviewee l/LOCATION d/DATE`
+* *Examples:* `addInterview i/SE Interview n/John l/One North d/30.1.2018`
 
 image::viewCommand.png[width="300"]
 - Add the interview with predicate name, location, and date
@@ -568,19 +568,25 @@ The following table summarises Infinity Book commands with suitable examples:
 [width="100%",cols="10%,<45%,<45%",options="header",]
 |=====================================================================================================
 |Command |Command Format |Example
-|Add |`add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` | `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+|Add |`add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` | `add n/James Ho p/22224444 e/jamesho@example.com a/123,
+ Clementi Rd, 1234665 t/friend t/colleague`
+|Add Interview | `addInterview i/INTERVIEW_TITLE n/INTERVIEWEE d/DATE l/INTERVIEW_LOCATION`| `addInterview i/SE Interview n/David
+d/04.05.2018 l/Suntex City `
 |Clear |`clear`| `clear`
 |Delete |`delete INDEX` |`delete 3`
+|Delete Interview |`delete INDEX | `deleteInterview 3`
 |Edit |`edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` |`edit 2 n/James Lee e/jameslee@example.com`
 |Add new tags to a person |`edit -add-tag INDEX [t/TAG]...` |`edit -add-tag 2 t/Computing`
 |Delete tags from a person |`edit -delete-tag INDEX [t/TAG]...` |`edit -delete-tag 2 t/Computing`
 |Find |`find KEYWORD [MORE_KEYWORDS]` |`find James Jake`
+|Find Interview | `FindInterview n/INTERVIEWEE`| `FindInterview David`
 |Help |`help` |`help`
 |History |`history` | `history`
 |List | `list`|`list`
 |Redo |`redo`|`redo`
 |Select |`select INDEX` |`select 2`
 |Undo |`undo` |`undo`
+|View |`view emailID`| `view johnd@example.com`
 |View Report |`viewreport pop/[POPULATION_TAG]` |`viewreport pop/SEIntern`
 |Save Report |`savereport pop/[POPULATION_TAG]` |`savereport pop/SEIntern`
 |=====================================================================================================

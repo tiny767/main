@@ -33,8 +33,14 @@ public class AddInterviewCommandParser implements Parser<AddInterviewCommand> {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_INTERVIEW, PREFIX_NAME, PREFIX_DATE, PREFIX_LOCATION);
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_INTERVIEW, PREFIX_LOCATION)
+        if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_INTERVIEW, PREFIX_DATE, PREFIX_LOCATION)
                 || !argMultimap.getPreamble().isEmpty()) {
+            System.out.println("bug bug bug");
+            System.out.println(arePrefixesPresent(argMultimap, PREFIX_INTERVIEW));
+            System.out.println(arePrefixesPresent(argMultimap, PREFIX_NAME));
+            System.out.println(arePrefixesPresent(argMultimap, PREFIX_DATE));
+            System.out.println(arePrefixesPresent(argMultimap, PREFIX_LOCATION));
+            System.out.println(argMultimap.getPreamble().isEmpty());
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddInterviewCommand.MESSAGE_USAGE));
         }
 
