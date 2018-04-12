@@ -27,7 +27,7 @@ Jump to the <<Quick Start>> to get started. Enjoy!
 == About
 
 This User Guide introduces a user to Infinity Book, provides set up instructions and details the features of the product.
-This document does not assume any prior knowledge, and the glossary explains any technical terms.
+This document does not assume any prior technical knowledge, and the glossary explains any technical terms. Please check the FAQ section for frequent user issues.
 
 [NOTE]
 For information about implementation and architecture, please refer to the Developer Guide.
@@ -35,13 +35,14 @@ For information about implementation and architecture, please refer to the Devel
 == Quick Start
 If you are a first time user, this section will help you get started with Infinity Book in 5 easy steps:
 
-.  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
+.  Ensure you have Java version `1.8.0_60` or later installed in your Computer. If you do not have Java installed, get it link:https://java.com/en/download/[here].
 +
 [NOTE]
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8. +
 Refer to <<FAQ>> for instructions to check Java version.
 +
+
 .  Download the latest `infinitybook.jar` link:{repoURL}/releases[here].
 .  Copy the file to the folder you want to use as the home folder for your Address Book.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
@@ -65,13 +66,14 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 The User Interface might appear mildly different for different versions of the product.
 ====
 
-.  Refer to <<Features>> for details of each command and for more commands.
+Refer to <<Features>> for details of each command and for more commands.
 
-[[Features]]
-== Features
+[[CommandLine]]
+== Command Line
 
-====
-*Command Format*
+Infinity Book uses a command line interface that follows the command format given below. Auto-complete and auto-correct are optimised to assist in CLI usage as detailed in this section.
+
+=== Command Format
 
 * Command starts with a `COMMAND WORD` to specify the command you want to perform.
 * Words prefixed with a dash (optional) are `COMMAND OPTION` e.g. in `edit -add-tag t/TAG`, `-add-tag` is a command option.
@@ -79,7 +81,30 @@ The User Interface might appear mildly different for different versions of the p
 * Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
 * Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
+
+=== Auto-complete and auto-correct
+
+* Spell corrects and completes command words being typed into Infinity Book +
+
+* `TAB` key auto-completes a partial command word and `SPACE` autocorrects an incorrect command word spelling.
+
+* *Example:*
+** `li` + `TAB` key press +
+Completes to command word to `list`
+
+** `lsit` + `SPACE` key press +
+Corrects command word to `list`.
+
+
+[NOTE]
 ====
+* Auto-correct only corrects one edit distance errors.
+* When completions are available, use `TAB` to toggle through options.
+====
+
+
+[[Features]]
+== Features
 
 === Managing Candidates' Information
 
@@ -256,24 +281,6 @@ Selects the 1st person in the results of the `find` command.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* `1, 2, 3, ...`
 ****
-
-==== Auto-correct and auto-complete
-
-* *Description:* Spell corrects and completes command words being typed into Infinity Book +
-* *Format:* `TAB` keypress auto-completes and `SPACE` autocorrects
-* *Example:*
-
-- `li` + `TAB` key press +
-Completes to command word to `list`
-
-- `lsit` + `SPACE` key press +
-Corrects command word to `list`.
-
-****
-* Auto-correct only corrects one edit distance errors.
-* When completions are available, use `TAB` to toggle through options.
-****
-
 // tag::report[]
 
 === Dashboard Reporting
