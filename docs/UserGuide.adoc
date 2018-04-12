@@ -18,9 +18,11 @@ By: `Team JACKHA (CS2103JAN2018-W11-B3)`      Since: `Jun 2016`      Licence: `M
 
 == Introduction
 
-Infinity Book (IB) is for those Tech recruiters who *prefer to use a desktop app for managing candidates*.  +
+Infinity Book is an address book application for Tech recruiters who *prefer to use a desktop app to keep track candidates' information, job postings, and interview*.  +
 
-More importantly, IB is *optimized for those who prefer to work with a Command Line Interface* (link:#cli[CLI]) while still having the benefits of a Graphical User Interface (link:#gui[GUI]). If you can type fast, IB can get your candidates management tasks done faster than traditional GUI apps. +
+Infinity Book provides end-to-end support, from searching for candidates,to adding job postings and saving their resumes and interviews. +
+
+More importantly, Infinity Book is *optimized for those who prefer to work with a Command Line Interface* (link:#cli[CLI]) while still having the benefits of a Graphical User Interface (link:#gui[GUI]). If you can type fast, Infinity Book can get your candidates management tasks done faster than traditional GUI apps. +
 
 Interested? +
 Jump to the <<Quick Start>> to get started. Enjoy!
@@ -44,7 +46,7 @@ This app will not work with earlier versions of Java 8. +
 Refer to <<FAQ>> for instructions to check Java version.
 +
 .  Download the latest `infinitybook.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
+.  Copy the file to the folder you want to use as the home folder for your Infinity Book.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
 .The User Interface.
@@ -57,7 +59,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Set up is now complete. You should see the interface as shown in Figure 1. Try some example commands shown here:
 
 * *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
+* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Infinity Book.
 * **`delete`**`3` : deletes the 3rd contact shown in the current list
 * *`exit`* : exits the app
 
@@ -120,39 +122,69 @@ Edits the name of the 2nd person to be `Betsy Crower` and clears all existing ta
 
 ==== Add new tags to a person : `edit -add-tag`
 
-To add new tags to an existing person in Infinity Book, use the edit -add-tag command.
+Infinity Book helps you process candidate's information faster.
+Summarize each candidate in a few keywords using the `edit -add-tag` command to save time for your future reference.
 
 *Format:* `edit -add-tag INDEX [t/TAG]...`
 
 [NOTE]
 ====
-Tag name comparision is case sensitive.
+* Each candidate +
+
+. Can have any number (including zero) of tags.
+. Cannot have duplicated tags. Tag name comparision is case sensitive, which means the list of tags of a candidate can be
+`Java` `JAVA` `JAVa`, for example, but cannot be `JAVA` `JAVA`.
+. Cannot have tags with empty tag name.
+
+* When you provide invalid tags, Infinity Book will ignore them. To verify, you can look at all tags shown under the candidate's name in the list.
+
+* Ensure that the specified `INDEX` is a positive integer that is smaller or equal to the total number of candidates shown in the list.
 ====
 
-*Example:* +
-`edit -add-tag 1 t/Year2 t/SpeakVietnamese` +
-Adds tag `Year2` and `SpeakVietnamese` to the first person.
+*Examples:* +
+* `edit -add-tag 1 t/Year2 t/SpeakVietnamese` +
+Adds tag `Year2` and `SpeakVietnamese` to the first candidate.
 
-image::addtag.png[width="600"]
-_Figure._ Added new tags to the first person.
+image::canaddtag.png[width="900"]
+
+Figure. Added new tags to the first candidate.
+
+* `edit -add-tag 1 t/Year2` +
+Adds a new tag `Year2` to the first candidate, but it is not successful since this candidate already has tag `Year2`.
+
+image::cannotaddtag.png[width="900"]
+
+Figure. Cannot add a new duplicated tag to the first candidate. The candidate's details will not be updated,
+and Infinity Book will not show any warning.
 
 ==== Delete tags from a person : `edit -delete-tag`
 
-To remove tags from an existing person in Infinity Book, use the edit -delete-tag command.
+Some tags are no longer seems to be relevant to the candidate? Remove them using the `edit -delete-tag` command.
 
 *Format:* `edit -delete-tag INDEX [t/TAG]...`
 
 [NOTE]
 ====
-Tag name comparision is case sensitive.
+. Tag name comparision is case sensitive, which means when the first candidate has tags `COMPUTING` `computing`, for example,
+`edit -delete-tag 1 t/computing` will only remove tag `computing`.
+. Ensure that the specified `INDEX` is a positive integer that is smaller or equal to the total number of candidates shown in the list.
 ====
 
-*Example:* +
-`edit -delete-tag 1 t/Year2 t/SpeakVietnamese` +
-Deletes tag `Year2` and `SpeakVietnamese` from the first person.
+*Examples:* +
+* `edit -delete-tag 1 t/computing` +
+Deletes tag `computing` from the first candidate.
 
-image::deletetag.png[width="600"]
-_Figure._ Deleted tags from the first person.
+image::candeletetag.png[width="600"]
+
+Figure. Remove tags from the first candidate.
+
+* `edit -delete-tag 1 t/computing` +
+Removes tag `computing` from the first candidate, but it is not successful since this candidate does not have tag `computing`.
+
+image::cannotdeletetag.png[width="600"]
+
+Figure. Cannot delete tag `computing` from the first candidate. The candidate's details will not be updated,
+and Infinity Book will not show any warning.
 
 ==== Add a remark : `remark` [Since v1.1]
 //tag::remark[]
@@ -198,24 +230,24 @@ Deletes the 1st person in the results of the `find` command.
 
 === Navigating Infinity Book
 
-==== Listing all persons : `list`
+==== Listing all candidates : `list`
 
-* *Description:* Shows a list of all persons in the Infinity Book. +
+* *Description:* Shows a list of all candidates in the Infinity Book. +
 * *Format:* `list`
 
 
-==== Locating persons by name, phone, email, and tags: `find`
+==== Finding candidates by name, phone, email, and tags: `find`
 
-Finds persons whose names, phone numbers, emails, or tags contain any of the given keywords. +
+Finds candidates whose names, phone numbers, emails, or tags contain any of the given keywords. +
 
 *Format:* `find KEYWORD [MORE_KEYWORDS]` +
 
 ****
-* The search is case insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name, phone number, email, and tags are searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* The search is case insensitive. e.g `hans` will match `Hans`.
+* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`.
+* Only candidate's name, phone number, email, and tags are searched.
+* Only full words will be matched e.g. `Han` will not match `Hans`.
+* Candidates matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 ****
 
 *Examples:*
@@ -279,18 +311,18 @@ Corrects command word to `list`.
 
 === Dashboard Reporting
 
-Infinity Book is tailored for people who are obsessed with speed. Aligning with this vision, our Report feature enables
-you to get insights of your huge list of contacts in a few keystrokes.
+Infinity Book is tailored to optimize recruiters' speed.
+Aligning with this vision, Report feature offers you an easy way to get statistics of the group of candidates tagged with a specific tag (which we call Population Tag) in few keystrokes.
 
 Each report is identified with a Population Tag: +
 
-* Represented with the prefix `pop/` followed by the tag name of the population tag. Example: `pop/SEIntern`.
-* The population tag name must be an alphanumeric string.
+* Represented with the prefix `pop/` followed by the tag name of the Population Tag. Example: `pop/SEIntern`.
+* The name of Population Tag must be an alphanumeric string.
 
-In the report, you will find statistics of the group of all Persons tagged with `POPULATION TAG`: +
+In the report, you will find statistics of the group of all candidates tagged with Population Tag: +
 
-* A bar chart showing all other Tags owned by this group and number of owners for each Tag.
-* A pie chart illustrating the numerical proportion of each Tag.
+* A bar chart showing all other tags owned by this group and number of owners for each tag.
+* A pie chart illustrating the numerical proportion of each tag.
 * A history panel listing statistics of this group at earlier points of time.
 
 *An example usage:*
@@ -299,9 +331,9 @@ You are recruiting Software Engineering interns, and you want to keep track of t
 Screening, Interviewing, Offered, or Rejected. Given the a significant pool of applicants, this task is tedious, and
 our Report feature is a solution.   +
 
-Using our Report with population tag `SEIntern`, +
+Using our Report with Population Tag `SEIntern`, +
 
-* You can monitor recruiting pipeline:
+* To ensure your team keeps up with deadlines, you can monitor the whole recruiting pipeline using Report bar chart.
 
 image::barchart.png[width="400"]
 
@@ -309,7 +341,7 @@ _Figure._ Bar chart in `SEIntern` report +
 _Explanation:_ there are 11 candidates tagged with `SEIntern` in which 5 of them are tagged with `Screening`, 3 of them
 are tagged with `Interviewing`, 1 of them is tagged with `Rejected`, and 2 of them are tagged with `Offered`.
 
-* You can evaluate the amount of workload:
+* To see the progress of your interns recruitment, you can view percentages of candidates in each stage using Report pie chart.
 
 image::piechart.png[width="400"]
 
@@ -317,35 +349,73 @@ _Figure._ Pie chart in `SEIntern` report +
 _Explanation:_ there are 11 tags that candidates tagged with `SEIntern` has in total, and 45% of them are `Screening`,
 27% are `Interviewing`, 18% are `Offered`, and 9% are `Rejected`.
 
-* You can track of the progress of your team:
+* To analyze your team's productivity, you can track the speed at which tasks are done using the history list.
 
-image::history.png[width="400"]
+image::history copy.png[width="400"]
 
-_Figure._ History panel in `SEIntern` report +
+_Figure._ History list in `SEIntern` report +
+_Example in the firgure:_ At 14:10:24 04/06/2018, there are 9 candidates tagged with `Screening` in Infinity Book,
+then at 16:36:55 04/12/2018, there are only 5 `Screening` candidates left.
+
+[NOTE]
+====
+Date format is in **"hh/mm/ss mm/dd/yyyy""**.
+====
 
 ==== Viewing a report : `viewreport` or `vr` [Since v1.4]
 
-Want to have bird's view statistics of a certain group of candidates? View a report using `viewreport` or `vr` command.+
+Want to have bird's view statistics of a certain group of candidates? View a report using `viewreport` or `vr` command. +
 
 *Format:*  `viewreport pop/POPULATION_TAG` or `vr pop/POPULATION_TAG`
 
-*Example:*
-`viewreport pop/SEIntern`
+*Example:* +
+`viewreport pop/SEIntern` +
+Displays statistics for candidates tagged with `SEIntern`.
 
 image::viewreport.png[width="600"]
-_Figure._ Report with population Tag `SEIntern` is displayed.
+_Figure._ Infinity Book has displayed Report with Population Tag `SEIntern` in the right-most column.
+
+[NOTE]
+====
+Regarding displaying the Report, +
+
+* In the right-most column, Infinity Book will show you a bar chart, a pie chart, and a history list.
+====
+
+[WARNING]
+====
+* If there are no candidates tagged with the Population Tag you provide, Inifinity Book will not show you the pie chart.
+* If you provide multiple `POPULATION_TAG`, Infinity Book will take the last one.
+For example, when you execute `viewreport pop/SEIntern pop/Computing`, Infinity Book will display the report for `Computing`.
+====
 
 ==== Saving a report : `savereport` or `sr` [Since v1.4]
 
 Wish to save the current statistics for future reference? Saving the report using `savereport` or `sr` command. +
-*Format:*  `savereport pop/REPORT_NAME`  `sr pop/REPORT_NAME`
 
-*Example:*
-`savereport pop/SEIntern`
-Saves the current statistics of the report. A new entry will be added at the end of history panel in the report.
+*Format:*  `savereport pop/REPORT_NAME` or `sr pop/REPORT_NAME`
+
+*Example:* +
+`savereport pop/SEIntern` +
+Saves the current statistics for candidates tagged with `SEIntern` at this current time.
+Infinity Book will add a new entry to the history list in the report.
 
 image::savereport.png[width="600"]
-_Figure._ Report with population Tag `SEIntern` is saved.
+_Figure._ Infinity Book has saved Report with population Tag `SEIntern`. In the right-most column,
+the history list includes all statistics you have saved.
+
+[NOTE]
+====
+* Date format is in **"hh/mm/ss mm/dd/yyyy""**.
+* To keep transparency, saved reports in Inifnity Book are immutable,
+which means you cannot edit or delete saved reports. You also cannot undo `savereport` command.
+====
+
+[WARNING]
+====
+* If you provide multiple `POPULATION_TAG`, Infinity Book will take the last one.
+For example, when you execute `viewreport pop/SEIntern pop/Computing`, Infinity Book will save the report for `Computing`.
+====
 
 // end::report[]
 // tag::jobposting[]
@@ -537,7 +607,7 @@ There is no need to save manually.
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Infinity Book folder.
 
 *Q*: How do I check if Infinity Book is compatible with my computer? +
 *A*: Infinity Book is compatible with Windows, Mac OS and Ubuntu with Java `1.8.0_60` or later installed. Compatibility with other link:#unix[UNIX] distributions is not guaranteed. +
