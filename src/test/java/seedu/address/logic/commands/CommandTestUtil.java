@@ -192,7 +192,7 @@ public class CommandTestUtil {
         final String[] splitName = job.getJobTitle().fullTitle.split("\\s+");
         model.updateFilteredJobList(new JobMatchesKeywordsPredicate(Arrays.asList(splitName[0])));
 
-        assertEquals(1, model.getFilteredPersonList().size());
+        assertEquals(1, model.getFilteredJobList().size());
     }
 
     /**
