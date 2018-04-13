@@ -4,6 +4,8 @@ import java.util.logging.Logger;
 
 import org.fxmisc.easybind.EasyBind;
 
+import com.google.common.eventbus.Subscribe;
+
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -12,6 +14,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.JobPanelSelectionChangedEvent;
+import seedu.address.commons.events.ui.JumpToJobListRequestEvent;
 import seedu.address.model.job.Job;
 
 /**
@@ -48,6 +51,11 @@ public class JobListPanel extends UiPart<Region> {
                 });
     }
 
+    @Subscribe
+    private void handleJumpToJobListRequestEvent(JumpToJobListRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        scrollTo(event.targetIndex);
+    }
 
     /**
      * Scrolls to the {@code JobCard} at the {@code index} and selects it.
