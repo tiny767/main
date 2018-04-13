@@ -28,6 +28,7 @@ import seedu.address.model.job.exceptions.DuplicateJobException;
 import seedu.address.model.job.exceptions.JobNotFoundException;
 import seedu.address.model.tag.Tag;
 
+//@@author ChengSashankh
 /**
  * Edits the details of an existing job in the address book.
  */
@@ -249,7 +250,7 @@ public class EditJobCommand extends UndoableCommand {
             JobTitle updatedJobTitle = getJobTitle().orElse(jobToEdit.getJobTitle());
             Location updatedLocation = getLocation().orElse(jobToEdit.getLocation());
             Skill updatedSkill = getSkill().orElse(jobToEdit.getSkills());
-
+//@@author
             Set<Tag> updatedTags;
             Set<Tag> jobTags = new HashSet<>(jobToEdit.getTags());
             if (isTagsChanged) {
@@ -270,7 +271,7 @@ public class EditJobCommand extends UndoableCommand {
                 updatedTags = jobTags;
             }
 
-
+//@@author ChengSashankh
             return new Job(updatedJobTitle, updatedLocation, updatedSkill, updatedTags);
         }
 
@@ -298,3 +299,4 @@ public class EditJobCommand extends UndoableCommand {
 
 }
 
+//@@author

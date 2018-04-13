@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
+import seedu.address.commons.events.ui.CommandCorrectedEvent;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.AddInterviewCommand;
 import seedu.address.logic.commands.ClearCommand;
@@ -29,45 +30,43 @@ import seedu.address.logic.commands.ThemeCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.ViewCommand;
 import seedu.address.logic.commands.ViewReportCommand;
+import seedu.address.ui.CommandBox;
 
+//@@author ChengSashankh
 /***
  * Auto-correct and auto-completing the command words being typed by the user in the command box.
  */
 public class CommandCorrection {
-    public static final String MATCH_FOUND_FEEDBACK_TO_USER = "Auto-corrected to: %1$s";
-    public static final String NO_MATCHES_FEEDBACK_TO_USER = "No matching command completion found. "
-            + "Try SPACE key for auto-correct.";
-
+    private static boolean isFirstCall = true;
     private static Set<String> commandDictionary;
+
+    // Auto-correct
+    private static final int NUMBER_ALPHABET = 26;
     private static String commandParameters;
+    public static final String MATCH_FOUND_FEEDBACK_TO_USER = "Auto-corrected to: %1$s";
+
+    // Auto-complete
+    private static final int START_INDEX = 0;
     private static int tabCounter = 0;
     private static String commandInput;
+    private static String recentInput;
+    private static String recentSuggestion;
     private static ArrayList<String> latestSuggestionsList;
-    private static final int NUMBER_ALPHABET = 26;
-    private static final int START_INDEX = 0;
-    private static boolean isFirstCall = true;
-
-
+    public static final String NO_MATCHES_FEEDBACK_TO_USER = "No matching command completion found. "
+            + "Try SPACE key for auto-correct.";
 
     public CommandCorrection() {
         createDictionary();
         latestSuggestionsList = new ArrayList<String>();
     }
 
-    public static int getTabCounter() {
-        return tabCounter;
-    }
-
-    public static void setUpCommandCorrection() {
-        createDictionary();
-    }
-
-    public static void setUpCommandCompletion() {
-        if (isFirstCall) {
-            commandInput = "";
-            isFirstCall = false;
-        }
-        createDictionary();
+    /***
+     * Checks if the commandText that contains the command word is already a correct command.
+     * @param commandText string from the commandBox that was typed by the user.
+     * @return boolean indicating whether it is a correct command.
+     */
+    public static boolean isCorrectCommand(String commandText) {
+        return commandDictionary.contains(commandText);
     }
 
     /***
@@ -78,7 +77,9 @@ public class CommandCorrection {
         commandDictionary.add(AddCommand.COMMAND_WORD);
         commandDictionary.add(ClearCommand.COMMAND_WORD);
         commandDictionary.add(DeleteCommand.COMMAND_WORD);
+        commandDictionary.add(DeleteJobCommand.COMMAND_WORD);
         commandDictionary.add(EditCommand.COMMAND_WORD);
+        commandDictionary.add(EditJobCommand.COMMAND_WORD);
         commandDictionary.add(FindCommand.COMMAND_WORD);
         commandDictionary.add(HelpCommand.COMMAND_WORD);
         commandDictionary.add(HistoryCommand.COMMAND_WORD);
@@ -101,8 +102,129 @@ public class CommandCorrection {
         commandDictionary.add(UndoCommand.COMMAND_WORD);
         commandDictionary.add(ViewReportCommand.COMMAND_WORD);
         commandDictionary.add(SaveReportCommand.COMMAND_WORD);
-        commandDictionary.add(DeleteJobCommand.COMMAND_WORD);
-        commandDictionary.add(EditJobCommand.COMMAND_WORD);
+    }
+
+    //==================================== Auto-complete methods ============================================
+
+    public static void setUpCommandCompletion() {
+        if (isFirstCall) {
+            recentInput = "";
+            recentSuggestion = "";
+            commandInput = "";
+            isFirstCall = false;
+            createDictionary();
+        }
+    }
+
+    public static void setRecentInput(String recentInput) {
+        CommandCorrection.recentInput = recentInput;
+    }
+
+    public static int getTabCounter() {
+        return tabCounter;
+    }
+
+    public static void resetTabCounter() {
+        tabCounter = 0;
+    }
+
+    public static void incrementTabCounter() {
+        tabCounter++;
+    }
+
+    /***
+     * Function attempts to complete command that is consistent with the text already typed.
+     * @param commandText string from the commandBox that was typed by the user.
+     * @returns ArrayList containing all possible suggestions as strings.
+     */
+    public static ArrayList<String> getSuggestions(String commandText) {
+        updateSuggestionsList(commandText);
+        commandInput = commandText;
+
+        if (isCorrectCommand(commandText)) {
+            latestSuggestionsList.add(commandText.concat(" "));
+            return latestSuggestionsList;
+        }
+
+        return latestSuggestionsList;
+    }
+
+    public static boolean noTextToComplete(String textToComplete) {
+        return (textToComplete.equals(""));
+    }
+
+    /***
+     * Updates text to complete to original user input, if it has been altered.
+     * @param textToComplete stores the string in the commandBox currently.
+     * @return the original user input.
+     */
+    public static String updateTextToComplete(String textToComplete) {
+        if (textToComplete.compareTo(recentSuggestion.trim()) == 0) {
+            return recentInput;
+        } else {
+            return textToComplete;
+        }
+    }
+
+    /***
+     * Picks the next auto-complete suggestion from the list of possible suggestions.
+     * @param suggestions contains all possible suggestions
+     * @param suggestionToChoose indicates the suggestion to pick
+     * @param commandText the string input from user
+     * @return the suggested completion, if available. Else the input is returned.
+     */
+    public static String chooseSuggestion(ArrayList<String> suggestions, int suggestionToChoose,
+                                          String commandText) {
+        if (suggestions.size() != 0) {
+            suggestionToChoose = suggestionToChoose % suggestions.size();
+            recentSuggestion = suggestions.get(suggestionToChoose);
+            return recentSuggestion;
+        }
+        return commandText;
+    }
+
+    /***
+     * Updates the tab counter based on user input either incrementing or resetting.
+     * @param textToComplete stores the string input from the user.
+     */
+    public static void updateTabCounter(String textToComplete) {
+        if (textToComplete.compareTo(recentSuggestion.trim()) == 0) {
+            CommandCorrection.incrementTabCounter();
+        } else {
+            CommandCorrection.resetTabCounter();
+        }
+    }
+
+    /***
+     * Updates the suggestions list based on the input string in commandBox
+     * @param commandText string from the commandBox that was typed by the user.
+     */
+    public static void updateSuggestionsList(String commandText) {
+        if (commandText.equals(commandInput)) {
+            return;
+        }
+        latestSuggestionsList = new ArrayList<String>();
+        Iterator<String> iterator = commandDictionary.iterator();
+        int commandTextLength = commandText.length();
+
+        while (iterator.hasNext()) {
+            String nextCommand = iterator.next();
+            int nextCommandLength = nextCommand.length();
+            if (nextCommandLength > commandTextLength) {
+                String nextCommandSnippet = nextCommand.substring(START_INDEX, commandTextLength);
+                if (nextCommandSnippet.compareTo(commandText) == 0) {
+                    latestSuggestionsList.add(nextCommand.concat(" "));
+                }
+            }
+        }
+
+        latestSuggestionsList.sort((string1, string2) -> string1.compareToIgnoreCase(string2));
+    }
+
+    //==================================== Auto-correct methods ============================================
+
+    public static void setUpCommandCorrection() {
+        createDictionary();
     }
 
     /***
@@ -114,15 +236,6 @@ public class CommandCorrection {
         commandParameters = commandText;
         commandParameters = commandParameters.replace(wordsInCommandText[0], "");
         return wordsInCommandText[0];
-    }
-
-    /***
-     * Checks if the commandText that contains the command word is already a correct command.
-     * @param commandText string from the commandBox that was typed by the user.
-     * @return boolean indicating whether it is a correct command.
-     */
-    public static boolean isCorrectCommand(String commandText) {
-        return commandDictionary.contains(commandText);
     }
 
     /***
@@ -154,6 +267,8 @@ public class CommandCorrection {
         return commandText;
     }
 
+    /// Methods to search for auto-corrected command words.
+
     /***
      * Searches for corrected command word by removing one character at a time.
      * @param commandText string from the commandBox that was typed by the user.
@@ -178,7 +293,7 @@ public class CommandCorrection {
      * @returns a corrected String, if available. Else returns the same string.
      */
     public static String addOneCharacter(String commandText) {
-        String alphabetString = new String("abcdefghijklmnopqrstuvwxyz");
+        String alphabetString = "abcdefghijklmnopqrstuvwxyz";
 
         for (int i = 0; i < NUMBER_ALPHABET; i++) {
             char alphabet = alphabetString.charAt(i);
@@ -215,56 +330,6 @@ public class CommandCorrection {
         }
         return null;
     }
-
-    public static void resetTabCounter() {
-        tabCounter = 0;
-    }
-
-    public static void incrementTabCounter() {
-        tabCounter++;
-    }
-
-
-    /***
-     * Updates the suggestions list based on the input string in commandBox
-     * @param commandText string from the commandBox that was typed by the user.
-     */
-    public static void updateSuggestionsList(String commandText) {
-        if (commandText.equals(commandInput)) {
-            return;
-        }
-        latestSuggestionsList = new ArrayList<String>();
-        Iterator<String> iterator = commandDictionary.iterator();
-        int commandTextLength = commandText.length();
-
-        while (iterator.hasNext()) {
-            String nextCommand = iterator.next();
-            int nextCommandLength = nextCommand.length();
-            if (nextCommandLength > commandTextLength) {
-                String nextCommandSnippet = nextCommand.substring(START_INDEX, commandTextLength);
-                if (nextCommandSnippet.compareTo(commandText) == 0) {
-                    latestSuggestionsList.add(nextCommand.concat(" "));
-                }
-            }
-        }
-
-        latestSuggestionsList.sort((string1, string2) -> string1.compareToIgnoreCase(string2));
-    }
-
-    /***
-     * Function attempts to complete command that is consistent with the text already typed.
-     * @param commandText string from the commandBox that was typed by the user.
-     * @returns ArrayList containing all possible suggestions as strings.
-     */
-    public static ArrayList<String> getSuggestions(String commandText) {
-        updateSuggestionsList(commandText);
-        commandInput = commandText;
-
-        if (isCorrectCommand(commandText)) {
-            latestSuggestionsList.add(commandText.concat(" "));
-            return latestSuggestionsList;
-        }
-
-        return latestSuggestionsList;
-    }
 }
+
+//@@author ChengSashankh

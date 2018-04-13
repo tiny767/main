@@ -13,6 +13,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.job.Job;
 import seedu.address.model.job.exceptions.JobNotFoundException;
 
+//@@author ChengSashankh
 /**
  * Deletes a job identified using it's last displayed index from the address book.
  */
@@ -69,3 +70,4 @@ public class DeleteJobCommand extends UndoableCommand {
 
 }
 
+//@@author
