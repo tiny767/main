@@ -5,9 +5,11 @@ import static org.junit.Assert.assertEquals;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import guitests.guihandles.JobCardHandle;
 import guitests.guihandles.PersonCardHandle;
 import guitests.guihandles.PersonListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
+import seedu.address.model.job.Job;
 import seedu.address.model.person.Person;
 
 /**
@@ -36,6 +38,17 @@ public class GuiTestAssert {
         assertEquals(expectedPerson.getAddress().value, actualCard.getAddress());
         assertEquals(expectedPerson.getRemark().value, actualCard.getRemark());
         assertEquals(expectedPerson.getTags().stream().map(tag -> tag.tagName).collect(Collectors.toList()),
+                actualCard.getTags());
+    }
+
+    /**
+     * Asserts that {@code actualCard} displays the details of {@code expectedJob}.
+     */
+    public static void assertCardDisplaysJob(Job expectedJob, JobCardHandle actualCard) {
+        assertEquals(expectedJob.getJobTitle().fullTitle, actualCard.getJobTitle());
+        assertEquals(expectedJob.getLocation().value, actualCard.getLocation());
+        assertEquals(expectedJob.getSkills().value, actualCard.getSkills());
+        assertEquals(expectedJob.getTags().stream().map(tag -> tag.tagName).collect(Collectors.toList()),
                 actualCard.getTags());
     }
 
