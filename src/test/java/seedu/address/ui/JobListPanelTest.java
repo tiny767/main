@@ -5,7 +5,6 @@ import static seedu.address.testutil.EventsUtil.postNow;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_JOB;
 import static seedu.address.testutil.TypicalJobs.getTypicalJobs;
 import static seedu.address.ui.testutil.GuiTestAssert.assertCardDisplaysJob;
-import static seedu.address.ui.testutil.GuiTestAssert.assertCardDisplaysPerson;
 import static seedu.address.ui.testutil.GuiTestAssert.assertCardEquals;
 
 import org.junit.Before;
@@ -13,7 +12,6 @@ import org.junit.Test;
 
 import guitests.guihandles.JobCardHandle;
 import guitests.guihandles.JobListPanelHandle;
-import guitests.guihandles.PersonListPanelHandle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.events.ui.JumpToJobListRequestEvent;
@@ -23,7 +21,8 @@ public class JobListPanelTest extends GuiUnitTest {
     private static final ObservableList<Job> TYPICAL_JOB =
             FXCollections.observableList(getTypicalJobs());
 
-    private static final JumpToJobListRequestEvent JUMP_TO_SECOND_EVENT = new JumpToJobListRequestEvent(INDEX_SECOND_JOB);
+    private static final JumpToJobListRequestEvent JUMP_TO_SECOND_EVENT =
+            new JumpToJobListRequestEvent(INDEX_SECOND_JOB);
 
     private JobListPanelHandle jobListPanelHandle;
 
