@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-import seedu.address.commons.events.ui.CommandCorrectedEvent;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.AddInterviewCommand;
 import seedu.address.logic.commands.ClearCommand;
@@ -30,30 +29,26 @@ import seedu.address.logic.commands.ThemeCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.ViewCommand;
 import seedu.address.logic.commands.ViewReportCommand;
-import seedu.address.ui.CommandBox;
 
 //@@author ChengSashankh
 /***
  * Auto-correct and auto-completing the command words being typed by the user in the command box.
  */
 public class CommandCorrection {
-    private static boolean isFirstCall = true;
-    private static Set<String> commandDictionary;
-
-    // Auto-correct
-    private static final int NUMBER_ALPHABET = 26;
-    private static String commandParameters;
     public static final String MATCH_FOUND_FEEDBACK_TO_USER = "Auto-corrected to: %1$s";
-
-    // Auto-complete
-    private static final int START_INDEX = 0;
-    private static int tabCounter = 0;
-    private static String commandInput;
-    private static String recentInput;
-    private static String recentSuggestion;
-    private static ArrayList<String> latestSuggestionsList;
     public static final String NO_MATCHES_FEEDBACK_TO_USER = "No matching command completion found. "
             + "Try SPACE key for auto-correct.";
+    private static final int NUMBER_ALPHABET = 26;
+    private static final int START_INDEX = 0;
+
+    private static boolean isFirstCall = true;
+    private static Set<String> commandDictionary;
+    private static String commandParameters;
+    private static String commandInput;
+    private static ArrayList<String> latestSuggestionsList;
+    private static String recentInput;
+    private static String recentSuggestion;
+    private static int tabCounter = 0;
 
     public CommandCorrection() {
         createDictionary();
