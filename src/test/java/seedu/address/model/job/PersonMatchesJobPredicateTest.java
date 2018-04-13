@@ -10,25 +10,28 @@ import java.util.List;
 import org.junit.Test;
 
 import seedu.address.model.person.PersonContainsKeywordsPredicate;
+import seedu.address.testutil.JobBuilder;
 import seedu.address.testutil.PersonBuilder;
 
 public class PersonMatchesJobPredicateTest {
     @Test
     public void equals() {
-        List<String> firstPredicateKeywordList = Collections.singletonList("first");
-        List<String> secondPredicateKeywordList = Arrays.asList("first", "second");
+        Job firstJobPosting = new JobBuilder().withJobTitle("Sample Title").withLocation("Geylang")
+                .withSkill("CSS").build();
+        Job secondJobPosting = new JobBuilder().withJobTitle("Second Sample").withLocation("Tampines")
+                .withSkill("HTML").build();
 
-        PersonContainsKeywordsPredicate firstPredicate;
-        firstPredicate = new PersonContainsKeywordsPredicate(firstPredicateKeywordList);
-        PersonContainsKeywordsPredicate secondPredicate;
-        secondPredicate = new PersonContainsKeywordsPredicate(secondPredicateKeywordList);
+        PersonMatchesJobPredicate firstPredicate;
+        firstPredicate = new PersonMatchesJobPredicate(firstJobPosting);
+        PersonMatchesJobPredicate secondPredicate;
+        secondPredicate = new PersonMatchesJobPredicate(secondJobPosting);
 
         // same object -> returns true
         assertTrue(firstPredicate.equals(firstPredicate));
 
         // same values -> returns true
-        PersonContainsKeywordsPredicate firstPredicateCopy;
-        firstPredicateCopy = new PersonContainsKeywordsPredicate(firstPredicateKeywordList);
+        PersonMatchesJobPredicate firstPredicateCopy;
+        firstPredicateCopy = new PersonMatchesJobPredicate(firstJobPosting);
         assertTrue(firstPredicate.equals(firstPredicateCopy));
 
         // different types -> returns false
@@ -42,48 +45,41 @@ public class PersonMatchesJobPredicateTest {
     }
 
     @Test
-    public void test_personContainsKeywords_returnsTrue() {
+    public void test_personMatchesJob_returnsTrue() {
         // One keyword
-        PersonContainsKeywordsPredicate predicate;
-        predicate = new PersonContainsKeywordsPredicate(Collections.singletonList("55555"));
-        assertTrue(predicate.test(new PersonBuilder().withPhone("55555").build()));
+        PersonMatchesJobPredicate predicate;
+        predicate = new PersonMatchesJobPredicate(new JobBuilder().withLocation("Geylang").withSkill("ALL")
+                .withTags("ALL").build());
+        assertTrue(predicate.test(new PersonBuilder().withAddress("Geylang Street Area").build()));
 
-        predicate = new PersonContainsKeywordsPredicate(Collections.singletonList("anh@gmail.com"));
-        assertTrue(predicate.test(new PersonBuilder().withEmail("anh@gmail.com").build()));
+        predicate = new PersonMatchesJobPredicate(new JobBuilder().withSkill("CSS").withLocation("ALL")
+                .withTags("ALL").build());
+        assertTrue(predicate.test(new PersonBuilder().withSkills("CSS").build()));
 
         // Multiple keywords
-        predicate = new PersonContainsKeywordsPredicate(Arrays.asList("Alice", "Bob"));
-        assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob").build()));
+        predicate = new PersonMatchesJobPredicate(new JobBuilder().withSkill("CSS").withLocation("Geylang")
+                .withTags("ALL").build());
+        assertTrue(predicate.test(new PersonBuilder().withSkills("CSS").withAddress("Geylang Street Area").build()));
 
-        predicate = new PersonContainsKeywordsPredicate(Arrays.asList("school", "friends"));
-        assertTrue(predicate.test(new PersonBuilder().withTags("school", "friends").build()));
-
-        // Only one matching keyword
-        predicate = new PersonContainsKeywordsPredicate(Arrays.asList("Bob", "Carol"));
-        assertTrue(predicate.test(new PersonBuilder().withName("Alice Carol").build()));
-
-        // Mixed-case keywords
-        predicate = new PersonContainsKeywordsPredicate(Arrays.asList("aLIce", "bOB"));
-        assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob").build()));
-
-        predicate = new PersonContainsKeywordsPredicate(Collections.singletonList("DUC@GMail.com"));
-        assertTrue(predicate.test(new PersonBuilder().withEmail("duc@gmail.com").build()));
+        predicate = new PersonMatchesJobPredicate(new JobBuilder().withSkill("CSS").withLocation("Geylang")
+                .withTags("FreshGrad").build());
+        assertTrue(predicate.test(new PersonBuilder().withSkills("CSS").withAddress("Geylang Street Area")
+                .withTags("FreshGrad").build()));
     }
 
     @Test
-    public void test_personDoesNotContainKeywords_returnsFalse() {
-        // Zero keywords
-        PersonContainsKeywordsPredicate predicate = new PersonContainsKeywordsPredicate(Collections.emptyList());
+    public void test_personDoesNotMatchJobs_returnsFalse() {
+        // Non-matching jobs and candidates
+        PersonMatchesJobPredicate predicate = new PersonMatchesJobPredicate(new JobBuilder().withSkill("UnknownSkill")
+                .withLocation("Batcave").withTags("UnknownTag").build());
         assertFalse(predicate.test(new PersonBuilder().withName("Alice").build()));
 
-        // Non-matching keyword
-        predicate = new PersonContainsKeywordsPredicate(Arrays.asList("Carol"));
-        assertFalse(predicate.test(new PersonBuilder().withName("Alice Bob").build()));
-
-        // Keywords match address, but does not match name or email or phone number or tags
-        predicate = new PersonContainsKeywordsPredicate(Arrays.asList("Main", "Street"));
+        // Keywords match location, but does not match skills or tags
+        predicate = new PersonMatchesJobPredicate(new JobBuilder().withSkill("UnknownSkill")
+                .withLocation("Matching Location").withTags("UnknownTag").build());
         assertFalse(predicate.test(new PersonBuilder().withName("Alice").withPhone("12345")
-                .withEmail("alice@email.com").withAddress("Main Street").withTags("school", "friends").build()));
+                .withEmail("alice@email.com").withAddress("Matching Street").withTags("school", "friends")
+                .withSkills("Non-matching skills").build()));
     }
 
 }
