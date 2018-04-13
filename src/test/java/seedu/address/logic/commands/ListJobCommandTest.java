@@ -1,10 +1,24 @@
 package seedu.address.logic.commands;
 
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.address.logic.commands.CommandTestUtil.showJobAtIndex;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_JOB;
+import static seedu.address.testutil.TypicalJobs.getTypicalAddressBook;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import seedu.address.logic.CommandHistory;
+import seedu.address.logic.UndoRedoStack;
+import seedu.address.model.Model;
+import seedu.address.model.ModelManager;
+import seedu.address.model.UserPrefs;
+
 /**
  * Contains integration tests (interaction with the Model) and unit tests for ListJobsCommand.
  */
-public class ListJobsCommandTest {
-    /*
+public class ListJobCommandTest {
+
     private Model model;
     private Model expectedModel;
     private ListJobsCommand listJobsCommand;
@@ -28,5 +42,4 @@ public class ListJobsCommandTest {
         showJobAtIndex(model, INDEX_FIRST_JOB);
         assertCommandSuccess(listJobsCommand, model, ListJobsCommand.MESSAGE_SUCCESS, expectedModel);
     }
-    */
 }
