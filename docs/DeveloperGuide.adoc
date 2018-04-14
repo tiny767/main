@@ -920,6 +920,10 @@ HR may need a tool to manage interview efficiently. The Infinity Book will
 need interview model with basic features including adding interview, listing
 interview, and deleting interview.
 
+* Interview Model:
+
+image::InterviewModel.png[width="700"]
+
 ==== Adding an interview
 The recruiter may want to conduct an interview with candidates, and maintain
 an interview lists.
