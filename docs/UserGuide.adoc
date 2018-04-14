@@ -20,10 +20,12 @@ endif::[]
 By: `Team JACKHA (CS2103JAN2018-W11-B3)`      Since: `Jun 2016`      Licence: `MIT`
 
 == Introduction
-
+//tag::introduction[]
 Infinity Book is a desktop application that provides Tech recruiters end-to-end support, from searching for candidates,to adding job postings and saving their resumes and interviews. +
 
 More importantly, IB is *optimized for those who prefer to work with a desktop Command Line Interface* (link:#cli[CLI]) while still having the benefits of a Graphical User Interface (link:#gui[GUI]). If you can type fast, IB can get your candidates management tasks done faster than traditional GUI apps. +
+
+//end::introduction[]
 
 Jump to the <<Quick Start>> to get started. Enjoy!
 
@@ -290,6 +292,7 @@ Returns `Alex Yeoh`, `Charlotte Oliveiro`, and `Alex Smith` whose names and phon
 image::Find.png[width="300"]
 _Figure._ Person list after finding with keywords `Alex` and `93210283`.
 
+//tag::viewcommand[]
 ==== Viewing a person: `view`
 
 * *Description:* viewing the person records and linking page locating by emailID +
@@ -304,6 +307,7 @@ image::viewCommand.png[width="300"]
 * The email needs to be correct format.
 * Only one person returned since email is unique.
 ****
+//end::viewcommand[]
 
 ==== Selecting a person : `select`
 
@@ -496,6 +500,8 @@ Figure : `deletejob` deletes the job posting at the specified index in the most 
 Index to be used as displayed in the panel.
 ====
 
+//tag::interviewmanagement[]
+
 === Managing Interview
 This section describes command available for managing interview in the Infinity Book.
 
@@ -516,7 +522,7 @@ Figure 5.1: Add Interview command adds a new interview, as shown above.
 * *Format:* `listInterview`
 * *Example:* `listInterview`
 
-image::ListInterview.JPG[width="500"]
+image::ListInterview.png[width="300"]
 Figure 5.2: List Interview command lists all interviews, as shown above.
 
 ==== Delete Interview
@@ -524,7 +530,7 @@ Figure 5.2: List Interview command lists all interviews, as shown above.
 * *Format:* `deleteInterview INDEX`
 * *Examples:* `deleteInterview 1`
 
-image::ListInterview.JPG[width="500"]
+image::DeleteInterview.png[width="300"]
 Figure 5.3: List Interview command lists all interviews, as shown above.
 
 ****
@@ -532,6 +538,8 @@ Figure 5.3: List Interview command lists all interviews, as shown above.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* 1, 2, 3, ...
 ****
+
+//end::interviewmanagement[]
 
 // tag::facebook[]
 

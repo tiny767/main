@@ -791,6 +791,7 @@ We use hash code of the tag names to generate a color. This is deliberately desi
 **Pros:** Number of different color is very big (i.e. there is less repetitive color used)   +
 **Cons:** The color for each tag value might be different between app launchs +
 
+//tag::viewcommand[]
 === Display relevant Github or resume page.
 
 As a candidate may have linked online resume or github page. The recruiter may want
@@ -805,7 +806,7 @@ Pros: The page can be linked to the person.
 **Alternative 2:** Add a new command to view specific page, which is hard code URL.
 Hard to maintain the hard code URL.
 
-link:#top[Back to top]
+//end::viewcommand[]
 
 // tag::jobposting[]
 === Add and match job postings to candidates. [Since v1.3]
@@ -881,9 +882,10 @@ UiStyle.getInstance().setToLightTheme();
 
 // end::theme[]
 
+//tag::interviewmanagement[]
 === Interview Management
 
-==== Adding an interview (Since v1.4)
+==== Adding an interview
 The recruiter may want to conduct an interview with candidates, and maintain
 an interview lists.
 
@@ -921,7 +923,7 @@ Aspects: Implementation of deleting an interview:
 
 **Alternative 1:** (current choice) create deleting command for deleting interview by index +
 **Pros:** It can be easily to use follow the index of listing interview command +
-
+//end::interviewmanagement[]
 
 == Documentation
 This project maintains documentation in the docs folder, also accessible through the readme. This documentation is written and maintained using *asciidoc*.
