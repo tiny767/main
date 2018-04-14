@@ -111,11 +111,14 @@ public class AddressBookParser {
         case EditCommand.COMMAND_ALIAS:
             return new EditCommandParser().parse(arguments);
 
-        case EditJobCommand.COMMAND_WORD:
-            return new EditJobCommandParser().parse(arguments);
-
         case EditCommand.COMMAND_WORD:
             return new EditCommandParser().parse(arguments);
+
+        case EditJobCommand.COMMAND_ALIAS:
+            return new EditJobCommandParser().parse(arguments);
+
+        case EditJobCommand.COMMAND_WORD:
+            return new EditJobCommandParser().parse(arguments);
 
         case SelectCommand.COMMAND_ALIAS:
             return new SelectCommandParser().parse(arguments);
