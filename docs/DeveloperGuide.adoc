@@ -941,7 +941,7 @@ according to each candidates. +
 **Pros:** It is easier to implement. +
 **Cons:** It is difficult to search specific interview effectively.
 
-===== Implementation details
+** Current implementation details
 * `AddInterviewCommandParser` class will extract interview title, interviewee name, date,
 and interview location from user input, form a new interview,
 then pass it to `AddInterviewCommand` class.
@@ -962,6 +962,11 @@ interview when listing all candidates. +
 **Pros:** No need to create new command, just need to edit current list comamnd +
 **Cons:** It increases coupling and it is harder to implement.
 
+** Current implementation details
+* `AddressBookParser` class will parse the command `listInterview` from CLI
+and call ListInterviewCommand.
+* `ListInterviewCommnad` will list all the interviews in storage.
+
 ==== Deleting Interview
 After conducted interview, the HR may want to delete the interview from the Infinity Book.
 
@@ -973,6 +978,12 @@ Aspects: Implementation of deleting an interview:
 **Alternative 2:** create deleting command for deleting interview by name. +
 **Pros:** It requires addtional tools to match interview +
 **Cons:** It is easier for user to use.
+
+** Current implementation details
+* `DeletingInterviewParser` class will extract the index of the interview needed
+to be deleted and pass in to `DeleteInterviewCommand`.
+* `DeleteInterviewCommand` will take in the index and update the interview list
+accordingly.
 
 //end::interviewmanagement[]
 
