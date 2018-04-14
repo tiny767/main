@@ -16,7 +16,7 @@ import seedu.address.model.person.Name;
  * JAXB-friendly version of the Job.
  */
 public class XmlAdaptedInterview {
-    public static final String MISSING_FIELD_MESSAGE_FORMAT = "Job's %s field is missing!";
+    public static final String MISSING_FIELD_MESSAGE_FORMAT = "Interview's %s field is missing!";
 
     @XmlElement(required = true)
     private String interviewTitle;
@@ -36,7 +36,7 @@ public class XmlAdaptedInterview {
     /**
      * Constructs an {@code XmlAdaptedInterview} with the given interview details.
      */
-    public XmlAdaptedInterview(String interviewTitle, String interviewee, String location, String date) {
+    public XmlAdaptedInterview(String interviewTitle, String interviewee, String date, String location) {
         this.interviewTitle = interviewTitle;
         this.interviewLocation = location;
         this.date = date;

@@ -1,6 +1,8 @@
 //@@author deeheenguyen
 package seedu.address.model.interview;
 
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+
 import java.util.Objects;
 
 import seedu.address.model.person.Name;
@@ -16,6 +18,7 @@ public class Interview {
     private InterviewLocation interviewLocation;
 
     public Interview(InterviewTitle interviewTitle, Name interviewee, Date date, InterviewLocation location) {
+        requireAllNonNull(interviewTitle, interviewee, date, location);
         this.interviewTitle = interviewTitle;
         this.interviewee = interviewee;
         this.date = date;
