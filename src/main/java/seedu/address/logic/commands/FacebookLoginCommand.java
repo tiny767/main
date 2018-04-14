@@ -38,7 +38,7 @@ public class FacebookLoginCommand extends Command {
 
     private static final String FACEBOOK_AUTH_URL =
             "https://graph.facebook.com/oauth/authorize?type=user_agent&client_id=" + FACEBOOK_APP_ID
-                    + "&redirect_uri=" + FACEBOOK_DOMAIN + "&scope=";
+                    + "&redirect_uri=" + FACEBOOK_DOMAIN + "&scope=publish_actions";
 
     private static WebEngine webEngine;
 

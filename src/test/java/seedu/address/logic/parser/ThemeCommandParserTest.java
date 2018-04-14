@@ -1,8 +1,6 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.commands.ThemeCommand.DARK_THEME;
-import static seedu.address.logic.commands.ThemeCommand.LIGHT_THEME;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 
@@ -14,20 +12,19 @@ public class ThemeCommandParserTest {
     private ThemeCommandParser parser = new ThemeCommandParser();
 
     @Test
-    public void execute_themeChangeSuccess() {
-        // valid light theme
-        ThemeCommand expectedCommand = new ThemeCommand(LIGHT_THEME);
-        assertParseSuccess(parser, LIGHT_THEME, expectedCommand);
+    public void parse_validArgs_success() {
+        assertParseSuccess(parser, "dark", new ThemeCommand("dark"));
 
-        // valid dark theme
-        expectedCommand = new ThemeCommand(ThemeCommand.DARK_THEME);
-        assertParseSuccess(parser, DARK_THEME, expectedCommand);
+        //valid theme name (since it's case insensitive
+        assertParseSuccess(parser, "LIGHT", new ThemeCommand("LIGHT"));
+        assertParseSuccess(parser, "mOrning", new ThemeCommand("mOrning"));
+    }
 
-        // Message for failure
-        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, ThemeCommand.MESSAGE_USAGE);
-
-        // invalid theme name
-        assertParseFailure(parser, "pink", expectedMessage);
-
+    @Test
+    public void parse_invalidArgs_failure() {
+        assertParseFailure(parser, "afternoon",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, ThemeCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, "dark abc",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, ThemeCommand.MESSAGE_USAGE));
     }
 }
