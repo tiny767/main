@@ -21,19 +21,18 @@ By: `Team JACKHA (CS2103JAN2018-W11-B3)`      Since: `Jun 2016`      Licence: `M
 
 == Introduction
 
-Infinity Book is an address book application for Tech recruiters who *prefer to use a desktop app to keep track candidates' information, job postings, and interview*.  +
+Infinity Book is a desktop application that provides Tech recruiters end-to-end support, from searching for candidates,to adding job postings and saving their resumes and interviews. +
 
-Infinity Book provides end-to-end support, from searching for candidates,to adding job postings and saving their resumes and interviews. +
+More importantly, IB is *optimized for those who prefer to work with a desktop Command Line Interface* (link:#cli[CLI]) while still having the benefits of a Graphical User Interface (link:#gui[GUI]). If you can type fast, IB can get your candidates management tasks done faster than traditional GUI apps. +
 
-More importantly, Infinity Book is *optimized for those who prefer to work with a Command Line Interface* (link:#cli[CLI]) while still having the benefits of a Graphical User Interface (link:#gui[GUI]). If you can type fast, Infinity Book can get your candidates management tasks done faster than traditional GUI apps. +
-
-Interested? +
 Jump to the <<Quick Start>> to get started. Enjoy!
 
 == About
 
 This User Guide introduces a user to Infinity Book, provides set up instructions and details the features of the product.
-This document does not assume any prior knowledge, and the glossary explains any technical terms.
+This document does not assume any prior technical knowledge, and the glossary explains any technical terms. Please check the FAQ section for frequent user issues.
+
+To quickly set up Infinity Book and try out the features, jump to <<Quick Start>>.
 
 [NOTE]
 For information about implementation and architecture, please refer to the Developer Guide.
@@ -41,13 +40,14 @@ For information about implementation and architecture, please refer to the Devel
 == Quick Start
 If you are a first time user, this section will help you get started with Infinity Book in 5 easy steps:
 
-.  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
+.  Ensure you have Java version `1.8.0_60` or later installed in your Computer. If you do not have Java installed, get it link:https://java.com/en/download/[here].
 +
 [NOTE]
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8. +
 Refer to <<FAQ>> for instructions to check Java version.
 +
+
 .  Download the latest `infinitybook.jar` link:{repoURL}/releases[here].
 .  Copy the file to the folder you want to use as the home folder for your Infinity Book.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
@@ -55,29 +55,36 @@ Refer to <<FAQ>> for instructions to check Java version.
 .The User Interface.
 
 image::Ui.png[width="790"]
-+
 
-.  Type the command in the command box and press kbd:[Enter] to execute it. +
-e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
-.  Set up is now complete. You should see the interface as shown in Figure 1. Try some example commands shown here:
+
+Set up is now complete. You have launched Infinity Book. You should see the interface as shown in Figure 1. +
+
+Type your command in the command box and press kbd:[Enter] to execute it. Some examples are given below.
+
+====
+Typing *`help`* and pressing kbd:[Enter] will open the help window.
+Other basic example commands are shown here:
 
 * *`list`* : lists all contacts
 * **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Infinity Book.
 * **`delete`**`3` : deletes the 3rd contact shown in the current list
 * *`exit`* : exits the app
 
+You can view the entire command list <<Command Summary, here>>.
+====
 [NOTE]
 ====
 The User Interface might appear mildly different for different versions of the product.
 ====
 
-.  Refer to <<Features>> for details of each command and for more commands.
+Refer to <<Features>> for details of each command and for more commands.
 
-[[Features]]
-== Features
+[[CommandLine]]
+== Command Line
 
-====
-*Command Format*
+Infinity Book uses a command line interface that follows the command format given below. Auto-complete and auto-correct are optimised to assist in CLI usage as detailed in this section.
+
+=== Command Format
 
 * Command starts with a `COMMAND WORD` to specify the command you want to perform.
 * Words prefixed with a dash (optional) are `COMMAND OPTION` e.g. in `edit -add-tag t/TAG`, `-add-tag` is a command option.
@@ -85,7 +92,30 @@ The User Interface might appear mildly different for different versions of the p
 * Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
 * Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
+
+=== Auto-complete and auto-correct
+
+* Spell corrects and completes command words being typed into Infinity Book +
+
+* kbd:[TAB] key auto-completes a partial command word and kbd:[SPACE] autocorrects an incorrect command word spelling.
+
+* *Example:*
+** `li` + kbd:[TAB] key press +
+Completes to command word to `list`
+
+** `lsit` + kbd:[SPACE] key press +
+Corrects command word to `list`.
+
+
+[NOTE]
 ====
+* Auto-correct only corrects one edit distance errors.
+* When completions are available, use `TAB` to toggle through options.
+====
+
+
+[[Features]]
+== Features
 
 === Managing Candidates' Information
 
@@ -106,7 +136,7 @@ A person can have any number of tags (including 0)
 
 ==== Editing a person : `edit`
 
-* *Description:* Edits an existing person in Infinity Book. +
+* *Description:* Edits an existing person's record in Infinity Book. +
 * *Format:* `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
 
 * *Examples:* +
@@ -209,7 +239,7 @@ Removes the remark for the second person.
 
 ==== Deleting a person : `delete`
 
-* *Description:* Deletes the specified person from the Infinity Book. +
+* *Description:* Deletes the specified person's record from the Infinity Book. +
 * *Format:* `delete INDEX`
 * *Examples:*
 
@@ -292,24 +322,6 @@ Selects the 1st person in the results of the `find` command.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* `1, 2, 3, ...`
 ****
-
-==== Auto-correct and auto-complete
-
-* *Description:* Spell corrects and completes command words being typed into Infinity Book +
-* *Format:* `TAB` keypress auto-completes and `SPACE` autocorrects
-* *Example:*
-
-- `li` + `TAB` key press +
-Completes to command word to `list`
-
-- `lsit` + `SPACE` key press +
-Corrects command word to `list`.
-
-****
-* Auto-correct only corrects one edit distance errors.
-* When completions are available, use `TAB` to toggle through options.
-****
-
 // tag::report[]
 
 === Dashboard Reporting
@@ -420,41 +432,63 @@ IMPORTANT: If you provide multiple `POPULATION_TAG`, Infinity Book will take the
 
 === Managing Job Postings
 
-This section describes commands available for managing job postings in the Infinity Book.
+In line with the vision of offering end to end support, Infinity Book offers recruiters a very efficient way to keep track of job vacancies and match candidates to these positions. +
+
+This section details commands for managing job postings.
 
 ==== Post Job Command
+Want to add a newly available job vacancy to IB and match candidates to this role? Add a job posting using the `postjob` command.
+
+*Format:* `postjob j/JOB TITLE l/LOCATION t/[TAGS] s/SKILLS`
+
+*Examples:* `postjob j/Backend Engineer l/Singapore t/FreshGrad s/Java`
+
+[NOTE]
+Job postings are matched to candidates on the basis of location, skills and tags. To neglect any of these during matching, set the field to 'ALL'.
+
 
 image::postjob.JPG[width="500"]
-
-Figure 2: PostJob Command adds Jobs into a new pane as shown.
-
-
-* *Description:* Add a job posting to Infinity Book to filter out qualified candidates.
-* *Format:* `postjob j/JOB TITLE l/LOCATION t/[TAGS] s/SKILLS`
-* *Examples:* `postjob j/Backend Engineer l/Singapore t/FreshGrad s/Java`
+Figure : PostJob Command adds Jobs into a new pane as shown.
 
 ==== Match Job Command
 
+To match an existing job posting to potential candidates, use the `matchjob` command to filter out candidates for the chosen job.
+
+Job matching is done on the basis of location, skills and tags. To disregard a parameter during matching, set it to 'ALL' using `postjob` or `editjob`.
+
+*Format:* `matchjob INDEX`
+
+*Example:* `matchjob 1`
+
 image::matchJob.JPG[width="500"]
-Figure 3: MatchJob command filters the Candidates as per Job, as shown above.
-
-
-* *Description:* Match a job posting to list out the filtered candidates for this job.
-* *Format:* `matchjob INDEX`
-* *Example:* `matchjob 1`
+Figure : MatchJob command filters the Candidates as per Job, as shown above.
 
 ==== Edit Job Command
 
-* *Description:* Edits an existing job posting in the Infinity Book.
-* *Format:* ` editjob INDEX [j/JOBTITLE] [l/LOCATION] [s/SKILLS] [t/TAG]`
-* *Examples:* ` editjob 1 j/Backend Engineer l/Singapore`
+Want to change the parameters of a job after creating? IB provides the flexibility to edit an existing job posting through the `editjob` command.
+
+*Format:* ` editjob INDEX [j/JOBTITLE] [l/LOCATION] [s/SKILLS] [t/TAG]`
+
+*Examples:* ` editjob 1 j/Backend Engineer l/Singapore`
+
+[NOTE]
+At least one field must be provided for the edit command to function as expected.
+
+image::editjob.JPG[width="500"]
+Figure : `editjob` edits the first job posting from Figure as shown.
+
+_{Enter the figure number in the Figure description above.}_
 
 ==== Delete Job Command
 
-* *Description:* Remove a job posting from Infinity Book using the index from latest listing.
-* *Format:* `deletejob INDEX`
-* *Examples:* `deletejob 1`
+Remove a job posting from Infinity Book using the index from latest listing.
 
+*Format:* `deletejob INDEX`
+
+*Examples:* `deletejob 1`
+
+image::deletejob.JPG[width="500"]
+Figure : `deletejob` deletes the job posting at the specified index in the most recent listing from Figure as shown.
 // end::jobposting[]
 
 [NOTE]
