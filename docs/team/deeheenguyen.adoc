@@ -56,7 +56,6 @@ https://github.com/CS2103JAN2018-W11-B3/main/pull/166[#166])
 ** Community:
 *** PRs reviewed (with non-trivial review comments): https://github.com/CS2103JAN2018-W11-B3/main/pull/51[#51]
 *** Reported bugs and suggestions for other teams in the class
-*** Some parts of the history feature I added was adopted by several other class mates (https://github.com[1], https://github.com[2])
 
 
 == Contributions to the User Guide

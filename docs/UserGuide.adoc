@@ -125,7 +125,7 @@ Corrects command word to `list`.
 
 * *Description:* Adds a person to the Infinity Book +
 
-* *Format:* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS l/LINK[t/TAG]...`
+* *Format:* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS l/LINK [t/TAG]...`
 
 * *Examples:* +
 - `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123,
@@ -292,7 +292,7 @@ Returns `Alex Yeoh`, `Charlotte Oliveiro`, and `Alex Smith` whose names and phon
 image::Find.png[width="300"]
 _Figure._ Person list after finding with keywords `Alex` and `93210283`.
 
-//tag::viewcommand[]
+//tag:: viewcommand[]
 ==== Viewing a person: `view`
 
 * *Description:* viewing the person records and linking page locating by emailID +
@@ -307,7 +307,7 @@ image::viewCommand.png[width="300"]
 * The email needs to be correct format.
 * Only one person returned since email is unique.
 ****
-//end::viewcommand[]
+//end:: viewcommand[]
 
 ==== Selecting a person : `select`
 

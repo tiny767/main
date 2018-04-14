@@ -792,19 +792,50 @@ We use hash code of the tag names to generate a color. This is deliberately desi
 **Cons:** The color for each tag value might be different between app launchs +
 
 //tag::viewcommand[]
-=== Display relevant Github or resume page.
+=== Display relevant Github or resume page. (Since v1.3)
 
 As a candidate may have linked online resume or github page. The recruiter may want
 to consider these pages.
-Aspects: Implementation of removing/adding a linked page.
 
-**Alternative 1:** (current choice): Each person has a page, which is resume or github.
-Add the view command to view a specific person, and view the linked page
-on the browser panel.
-Pros: The page can be linked to the person.
+==== Design Considerations
+**Aspect**: Aspects: Implementation of removing/adding a linked page.
 
+**Alternative 1:**(current choice) Each person has a page, which is resume or github.
+Add the view command to view a specific person, and view the linked page on the browser panel.+
+**Pros:** The page can be linked to the person, and it is easier to view by person's email+
+**Cons:** +
 **Alternative 2:** Add a new command to view specific page, which is hard code URL.
-Hard to maintain the hard code URL.
+**Pros:** No need to modify current person +
+**Cons:** Hard to maintain the hard code URL
+
+==== Implementation details
+* `ViewCommandParser` class will extract emails ID from user input, form a predicate,
+then pass it to `ViewCommand` class.
+* `ViewCommand` will take in the predicate and update the list of Persons by email ID,
+and change the browser panel accordingly.
+source, java]
+----
+public class EmailFilter implements Predicate<Person> {
+    private final String email;
+
+    public EmailFilter (Email email) {
+        this.email = email.toString();
+    }
+
+    @Override
+    public boolean test(Person person) {
+        return person.getEmail().toString().equals(this.email);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof EmailFilter // instanceof handles nulls
+                && this.email.equals(((EmailFilter) other).email)); // state check
+    }
+
+}
+----
 
 //end::viewcommand[]
 
@@ -883,7 +914,11 @@ UiStyle.getInstance().setToLightTheme();
 // end::theme[]
 
 //tag::interviewmanagement[]
-=== Interview Management
+=== Interview Management (Since v1.5rc)
+Interviewing is one of the important steps in recruiting process.
+HR may need a tool to manage interview efficiently. The Infinity Book will
+need interview model with basic features including adding interview, listing
+interview, and deleting interview.
 
 ==== Adding an interview
 The recruiter may want to conduct an interview with candidates, and maintain
@@ -902,14 +937,21 @@ according to each candidates. +
 **Pros:** It is easier to implement. +
 **Cons:** It is difficult to search specific interview effectively.
 
-==== List interview (coming v1.5)
+===== Implementation details
+* `AddInterviewCommandParser` class will extract interview title, interviewee name, date,
+and interview location from user input, form a new interview,
+then pass it to `AddInterviewCommand` class.
+* `AddInterviewCommand` will take in the interview and add new Interview to
+storage.
+
+==== List interview
 The recruiter may want to take a look at all of the interviews.
 
 Aspects: Implementation of listing all the interviews.
 
 **Alternative 1:** (current choice) create a new command to listing all the interview. +
 **Pros:** It is easier to use and modify. +
-**Cons:** Have to create new comamnd.
+**Cons:** New command is needed.
 
 **Alternative 2:** each candidate has been linked to an interview, listing all the
 interview when listing all candidates. +
@@ -923,6 +965,11 @@ Aspects: Implementation of deleting an interview:
 
 **Alternative 1:** (current choice) create deleting command for deleting interview by index +
 **Pros:** It can be easily to use follow the index of listing interview command +
+**Cons:** It requires users to use two commands +
+**Alternative 2:** create deleting command for deleting interview by name. +
+**Pros:** It requires addtional tools to match interview +
+**Cons:** It is easier for user to use.
+
 //end::interviewmanagement[]
 
 == Documentation
