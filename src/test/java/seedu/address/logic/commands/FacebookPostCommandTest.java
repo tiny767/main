@@ -3,11 +3,20 @@ package seedu.address.logic.commands;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 public class FacebookPostCommandTest {
 
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
 
+    @Test
+    public void constructor_nullMessage_throwsNullPointerException() {
+        thrown.expect(NullPointerException.class);
+        new FacebookPostCommand(null);
+    }
 
     @Test
     public void equals() {

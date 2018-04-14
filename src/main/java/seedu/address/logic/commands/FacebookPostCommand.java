@@ -1,5 +1,7 @@
 package seedu.address.logic.commands;
 
+import static java.util.Objects.requireNonNull;
+
 import com.restfb.DefaultFacebookClient;
 import com.restfb.Parameter;
 import com.restfb.types.FacebookType;
@@ -38,6 +40,7 @@ public class FacebookPostCommand extends Command {
      * Creates an FacebookPostCommand based on the message
      */
     public FacebookPostCommand(String message) {
+        requireNonNull(message);
         toPost = message;
     }
 
