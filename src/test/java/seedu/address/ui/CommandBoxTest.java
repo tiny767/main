@@ -2,6 +2,7 @@ package seedu.address.ui;
 
 import static org.junit.Assert.assertEquals;
 
+import java.security.Key;
 import java.util.ArrayList;
 
 import org.junit.Before;
@@ -13,6 +14,7 @@ import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.ListInterviewCommand;
 import seedu.address.logic.commands.ListJobsCommand;
 import seedu.address.logic.commands.MatchJobCommand;
 import seedu.address.model.Model;
@@ -25,7 +27,8 @@ public class CommandBoxTest extends GuiUnitTest {
 
     private static final String COMMAND_THAT_SUCCEEDS = ListCommand.COMMAND_WORD;
     private static final String COMPLETE_COMMAND_FIRST_COMPLETION = ListCommand.COMMAND_WORD + " ";
-    private static final String COMPLETE_COMMAND_SECOND_COMPLETION = ListJobsCommand.COMMAND_WORD + " ";
+    private static final String COMPLETE_COMMAND_SECOND_COMPLETION = ListInterviewCommand.COMMAND_WORD + " ";
+    private static final String COMPLETE_COMMAND_THIRD_COMPLETION = ListJobsCommand.COMMAND_WORD + " ";
     private static final String COMMAND_WITH_ONE_COMPLETION = MatchJobCommand.COMMAND_WORD
             .substring(FIRST_INDEX, THIRD_INDEX);
     private static final String COMPLETE_COMMAND_WITH_ONE_COMPLETION = MatchJobCommand.COMMAND_WORD + " ";
@@ -158,10 +161,11 @@ public class CommandBoxTest extends GuiUnitTest {
         // no change on multiple tab press
         assertInputHistory(KeyCode.TAB, COMPLETE_COMMAND_WITH_ONE_COMPLETION);
 
-        // two possible completions exist
+        // three possible completions exist
         commandBoxHandle.run(COMMAND_WITH_MULTIPLE_COMPLETIONS);
         assertInputHistory(KeyCode.TAB, COMPLETE_COMMAND_FIRST_COMPLETION);
         assertInputHistory(KeyCode.TAB, COMPLETE_COMMAND_SECOND_COMPLETION);
+        assertInputHistory(KeyCode.TAB, COMPLETE_COMMAND_THIRD_COMPLETION);
 
         // on further tab press it should cycle through
         assertInputHistory(KeyCode.TAB, COMPLETE_COMMAND_FIRST_COMPLETION);
