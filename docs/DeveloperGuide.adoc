@@ -39,7 +39,6 @@ link:#top[Back to top]
 
 This section provides step-by-step instructions to set up Infinity Book for development on your computer. +
 
-link:#top[Back to top]
 
 === Prerequisites
 
@@ -815,7 +814,7 @@ words that are typed in are examined for spelling errors and completions upon `S
 
 The following sequence diagram shows the sequence of events triggered by both operations.
 
-_{ add image here }_
+//_{ add image here }_
 
 ==== Auto-complete Implementation
 
@@ -1089,6 +1088,8 @@ The ListJobCommand selects displays all Job objects from UniqueJobList in the Jo
 **Alternative 2:** Maintain a UniqueSkillsList similar to tags. +
 **Pros:** Different candidates with similar skills will utilize the same object. +
 **Cons:** The list of skills must be synchronized with both person list and job list, removing any skills that are not used by both.
+
+---
 
 **Aspect:** Implementation of Job-Person Matching +
 
