@@ -9,6 +9,7 @@ import seedu.address.logic.commands.FacebookPostCommand;
 import seedu.address.model.Model;
 
 public class FacebookPostCommandSystemTest extends AddressBookSystemTest {
+
     @Test
     public void facebookpost() {
         /* ------------------------ Perform select operations on the shown unfiltered list -------------------------- */
