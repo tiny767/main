@@ -15,6 +15,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
+//@@author ChengSashankh
 /**
  * Add a list of skills to a chosen person from the address book.
  */
@@ -88,3 +89,4 @@ public class SkillsCommand extends UndoableCommand {
     }
 }
 
+//@@author ChengSashankh

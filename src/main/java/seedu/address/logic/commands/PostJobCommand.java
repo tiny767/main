@@ -10,6 +10,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.job.Job;
 import seedu.address.model.job.exceptions.DuplicateJobException;
 
+//@@author ChengSashankh
 /***
  * Adds a job posting to the infinity book.
  */
@@ -63,3 +64,5 @@ public class PostJobCommand extends UndoableCommand {
                 && toAdd.equals(((PostJobCommand) other).toAdd));
     }
 }
+
+//@@author ChengSashankh

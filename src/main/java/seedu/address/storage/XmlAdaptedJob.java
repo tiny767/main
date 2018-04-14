@@ -56,7 +56,7 @@ public class XmlAdaptedJob {
     public XmlAdaptedJob(Job source) {
         jobTitle = source.getJobTitle().fullTitle;
         location = source.getLocation().value;
-        skills = source.getSkills().toString();
+        skills = source.getSkills().value;
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
