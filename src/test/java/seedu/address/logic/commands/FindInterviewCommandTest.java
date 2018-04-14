@@ -5,12 +5,16 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.commons.core.Messages.MESSAGE_INTERVIEWS_LISTED_OVERVIEW;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalInterviews.SE_INTERVIEW;
+import static seedu.address.testutil.TypicalInterviews.getTypicalAddressBook;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
@@ -25,6 +29,10 @@ import seedu.address.model.interview.InterviewMatchInterviewee;
  * Contains integration tests (interaction with the Model) for {@code FindCommand}.
  */
 public class FindInterviewCommandTest {
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
     @Test
@@ -58,7 +66,16 @@ public class FindInterviewCommandTest {
     public void execute_zeroKeywords_noInterviewFound() {
         String expectedMessage = String.format(MESSAGE_INTERVIEWS_LISTED_OVERVIEW, 0);
         FindInterviewCommand command = prepareCommand(" ");
+        thrown.expect(IllegalArgumentException.class);
         assertCommandSuccess(command, expectedMessage, Collections.emptyList());
+    }
+
+    @Test
+    public void execute_oneKeyword_interviewFound() {
+        String expectedMessage = String.format(MESSAGE_INTERVIEWS_LISTED_OVERVIEW, 1);
+        FindInterviewCommand command = prepareCommand("Kelvin");
+        assertCommandSuccess(command, expectedMessage,
+                Arrays.asList(SE_INTERVIEW));
     }
 
     /**
