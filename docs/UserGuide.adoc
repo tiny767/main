@@ -486,7 +486,7 @@ Job postings are matched to candidates on the basis of location, skills and tags
 
 
 image::postjob.JPG.png[width="500"]
-Figure : PostJob Command adds Jobs into a new pane as shown.
+Figure : PostJob Command adds Jobs into the Job Postings panel as shown.
 
 ==== Edit Job Command
 
@@ -500,9 +500,7 @@ Want to change the parameters of a job after creating? IB provides the flexibili
 At least one field must be provided for the edit command to function as expected.
 
 image::editjob.JPG.png[width="500"]
-Figure : `editjob` edits the first job posting from Figure as shown.
-
-_{Enter the figure number in the Figure description above.}_
+Figure : `editjob` edits the first job posting as marked in diagram.
 
 ==== Delete Job Command
 
@@ -556,8 +554,8 @@ Finds jobs whose job titles, locations, or tags contain any of the given keyword
 Returns `Backend Engineer`, `Frontend Engineer`, and `Backend Tester` whose job titles and locations match with the given keywords.
 
 image::findjob.png[width="700"]
+_Figure._ Job list after finding with keywords `backend` and `geylang`.
 
-_Figure._ Job list after finding with keywords `Backend` and `Geylang`.
 // end::jobposting[]
 
 === Managing Interview
