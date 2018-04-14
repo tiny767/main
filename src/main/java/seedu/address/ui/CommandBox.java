@@ -1,11 +1,13 @@
 package seedu.address.ui;
 
 import static seedu.address.logic.CommandCorrection.chooseSuggestion;
+import static seedu.address.logic.CommandCorrection.getSuggestions;
 import static seedu.address.logic.CommandCorrection.setRecentInput;
 import static seedu.address.logic.CommandCorrection.setUpCommandCompletion;
 import static seedu.address.logic.CommandCorrection.setUpCommandCorrection;
 import static seedu.address.logic.CommandCorrection.updateSuggestionsList;
 import static seedu.address.logic.CommandCorrection.updateTabCounter;
+import static seedu.address.logic.CommandCorrection.updateTextToComplete;
 
 import java.util.ArrayList;
 import java.util.logging.Logger;
@@ -130,13 +132,12 @@ public class CommandBox extends UiPart<Region> {
         }
 
         updateTabCounter(textToComplete);
-        textToComplete = CommandCorrection.updateTextToComplete(textToComplete);
+        textToComplete = updateTextToComplete(textToComplete);
 
-        updateSuggestionsList(textToComplete);
         setRecentInput(textToComplete);
         int suggestionToChoose = CommandCorrection.getTabCounter();
 
-        ArrayList<String> suggestions = CommandCorrection.getSuggestions(textToComplete);
+        ArrayList<String> suggestions = getSuggestions(textToComplete);
         String chosenString = chooseSuggestion(suggestions, suggestionToChoose,
                 commandTextField.getText());
         if (suggestions.isEmpty()) {

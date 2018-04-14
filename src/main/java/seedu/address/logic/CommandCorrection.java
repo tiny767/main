@@ -136,16 +136,11 @@ public class CommandCorrection {
         updateSuggestionsList(commandText);
         commandInput = commandText;
 
-        if (isCorrectCommand(commandText)) {
-            latestSuggestionsList.add(commandText.concat(" "));
-            return latestSuggestionsList;
-        }
-
         return latestSuggestionsList;
     }
 
     public static boolean noTextToComplete(String textToComplete) {
-        return (textToComplete.equals(""));
+        return (textToComplete.trim().equals(""));
     }
 
     /***
@@ -205,7 +200,7 @@ public class CommandCorrection {
         while (iterator.hasNext()) {
             String nextCommand = iterator.next();
             int nextCommandLength = nextCommand.length();
-            if (nextCommandLength > commandTextLength) {
+            if (nextCommandLength >= commandTextLength) {
                 String nextCommandSnippet = nextCommand.substring(START_INDEX, commandTextLength);
                 if (nextCommandSnippet.compareTo(commandText) == 0) {
                     latestSuggestionsList.add(nextCommand.concat(" "));
