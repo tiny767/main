@@ -32,7 +32,6 @@ import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemarkCommand;
 import seedu.address.logic.commands.SaveReportCommand;
 import seedu.address.logic.commands.SelectCommand;
-import seedu.address.logic.commands.SkillsCommand;
 import seedu.address.logic.commands.ThemeCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.ViewCommand;
@@ -195,9 +194,6 @@ public class AddressBookParser {
 
         case SaveReportCommand.COMMAND_ALIAS:
             return new SaveReportCommandParser().parse(arguments);
-
-        case SkillsCommand.COMMAND_WORD:
-            return new SkillsCommandParser().parse(arguments);
 
         case AddInterviewCommand.COMMAND_WORD :
             return new AddInterviewCommandParser().parse(arguments);
