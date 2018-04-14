@@ -33,6 +33,13 @@ public class Skill {
         return skillSet;
     }
 
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof Skill // instanceof handles nulls
+                && this.value.compareTo(((Skill) other).value) == 0); // state check
+    }
+
     public String toString() {
         return value;
     }

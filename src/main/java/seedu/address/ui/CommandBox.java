@@ -5,7 +5,6 @@ import static seedu.address.logic.CommandCorrection.getSuggestions;
 import static seedu.address.logic.CommandCorrection.setRecentInput;
 import static seedu.address.logic.CommandCorrection.setUpCommandCompletion;
 import static seedu.address.logic.CommandCorrection.setUpCommandCorrection;
-import static seedu.address.logic.CommandCorrection.updateSuggestionsList;
 import static seedu.address.logic.CommandCorrection.updateTabCounter;
 import static seedu.address.logic.CommandCorrection.updateTextToComplete;
 

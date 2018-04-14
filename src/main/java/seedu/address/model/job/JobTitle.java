@@ -47,7 +47,7 @@ public class JobTitle {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof seedu.address.model.job.JobTitle // instanceof handles nulls
-                && this.fullTitle.equals(((JobTitle) other).fullTitle)); // state check
+                && this.fullTitle.compareTo(((JobTitle) other).fullTitle) == 0); // state check
     }
 
     @Override

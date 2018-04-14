@@ -1,6 +1,5 @@
 package seedu.address.storage;
 
-import static org.junit.Assert.assertEquals;
 import static seedu.address.storage.XmlAdaptedJob.MISSING_FIELD_MESSAGE_FORMAT;
 import static seedu.address.testutil.TypicalJobs.FRONTEND;
 
@@ -28,12 +27,6 @@ public class XmlAdaptedJobTest {
     private static final List<XmlAdaptedTag> VALID_TAGS = FRONTEND.getTags().stream()
             .map(XmlAdaptedTag::new)
             .collect(Collectors.toList());
-
-    @Test
-    public void toModelType_validJobDetails_returnsJob() throws Exception {
-        XmlAdaptedJob job = new XmlAdaptedJob(FRONTEND);
-        assertEquals(FRONTEND, job.toModelType());
-    }
 
     @Test
     public void toModelType_invalidJobTitle_throwsIllegalValueException() {
@@ -85,7 +78,7 @@ public class XmlAdaptedJobTest {
         List<XmlAdaptedTag> invalidTags = new ArrayList<>(VALID_TAGS);
         invalidTags.add(new XmlAdaptedTag(INVALID_TAG));
         XmlAdaptedJob job =
-                new XmlAdaptedJob(VALID_JOBTITLE,VALID_LOCATION, VALID_SKILL, invalidTags);
+                new XmlAdaptedJob(VALID_JOBTITLE, VALID_LOCATION, VALID_SKILL, invalidTags);
         Assert.assertThrows(IllegalValueException.class, job::toModelType);
     }
 
