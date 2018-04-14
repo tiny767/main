@@ -447,8 +447,53 @@ Want to add a newly available job vacancy to IB and match candidates to this rol
 Job postings are matched to candidates on the basis of location, skills and tags. To neglect any of these during matching, set the field to 'ALL'.
 
 
-image::postjob.JPG[width="500"]
+image::postjob.JPG.png[width="500"]
 Figure : PostJob Command adds Jobs into a new pane as shown.
+
+==== Edit Job Command
+
+Want to change the parameters of a job after creating? IB provides the flexibility to edit an existing job posting through the `editjob` command.
+
+*Format:* ` editjob INDEX [j/JOBTITLE] [l/LOCATION] [s/SKILLS] [t/TAG]`
+
+*Examples:* ` editjob 1 j/Backend Engineer l/Singapore`
+
+[NOTE]
+At least one field must be provided for the edit command to function as expected.
+
+image::editjob.JPG.png[width="500"]
+Figure : `editjob` edits the first job posting from Figure as shown.
+
+_{Enter the figure number in the Figure description above.}_
+
+==== Delete Job Command
+
+Remove a job posting from Infinity Book using the index from latest listing.
+
+*Format:* `deletejob INDEX`
+
+*Examples:* `deletejob 1`
+
+image::deletejob.JPG.png[width="500"]
+Figure : `deletejob` deletes the job posting at the specified index in the most recent listing from Figure as shown.
+
+[NOTE]
+====
+Index to be used as displayed in the panel.
+====
+
+==== Match Job Command
+
+To match an existing job posting to potential candidates, use the `matchjob` command to filter out candidates for the chosen job.
+
+Job matching is done on the basis of location, skills and tags. To disregard a parameter during matching, set it to 'ALL' using `postjob` or `editjob`.
+
+*Format:* `matchjob INDEX`
+
+*Example:* `matchjob 1`
+
+image::matchJob.JPG.png[width="500"]
+Figure : MatchJob command filters the Candidates as per Job, as shown above.
 
 ==== Listing all jobs : `listjobs`
 
@@ -474,53 +519,7 @@ Finds jobss whose job titles, locations, or tags contain any of the given keywor
 - `findjob Backend Geylang` +
 Returns `Backend Engineer`, `Frontend Engineer`, and `Backend Tester` whose job titles and locations match with the given keywords.
 
-image::Find.png[width="300"]
 _Figure._ Job list after finding with keywords `Backend` and `Geylang`.
-
-==== Match Job Command
-
-To match an existing job posting to potential candidates, use the `matchjob` command to filter out candidates for the chosen job.
-
-Job matching is done on the basis of location, skills and tags. To disregard a parameter during matching, set it to 'ALL' using `postjob` or `editjob`.
-
-*Format:* `matchjob INDEX`
-
-*Example:* `matchjob 1`
-
-image::matchJob.JPG[width="500"]
-Figure : MatchJob command filters the Candidates as per Job, as shown above.
-
-==== Edit Job Command
-
-Want to change the parameters of a job after creating? IB provides the flexibility to edit an existing job posting through the `editjob` command.
-
-*Format:* ` editjob INDEX [j/JOBTITLE] [l/LOCATION] [s/SKILLS] [t/TAG]`
-
-*Examples:* ` editjob 1 j/Backend Engineer l/Singapore`
-
-[NOTE]
-At least one field must be provided for the edit command to function as expected.
-
-image::editjob.JPG[width="500"]
-Figure : `editjob` edits the first job posting from Figure as shown.
-
-_{Enter the figure number in the Figure description above.}_
-
-==== Delete Job Command
-
-Remove a job posting from Infinity Book using the index from latest listing.
-
-*Format:* `deletejob INDEX`
-
-*Examples:* `deletejob 1`
-
-image::deletejob.JPG[width="500"]
-Figure : `deletejob` deletes the job posting at the specified index in the most recent listing from Figure as shown.
-
-[NOTE]
-====
-Index to be used as displayed in the panel.
-====
 
 // end::jobposting[]
 
