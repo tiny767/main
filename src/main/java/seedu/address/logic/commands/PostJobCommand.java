@@ -29,7 +29,7 @@ public class PostJobCommand extends UndoableCommand {
             + PREFIX_JOBTITLE + "Backend Engineer "
             + PREFIX_LOCATION + "Singapore "
             + PREFIX_SKILLS + "SQL, Javascript "
-            + PREFIX_TAG + "Fresh Graduate ";
+            + PREFIX_TAG + "FreshGrad ";
 
     public static final String MESSAGE_SUCCESS = "New job added: %1$s";
     public static final String MESSAGE_DUPLICATE_JOB = "This job already exists in the address book";

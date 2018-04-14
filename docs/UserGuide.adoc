@@ -670,21 +670,27 @@ The following table summarises Infinity Book commands with suitable examples:
 [width="100%",cols="10%,<45%,<45%",options="header",]
 |=====================================================================================================
 |Command |Command Format |Example
-|Add |`add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` | `add n/James Ho p/22224444 e/jamesho@example.com a/123,
+|Add Person|`add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` | `add n/James Ho p/22224444 e/jamesho@example.com a/123,
  Clementi Rd, 1234665 t/friend t/colleague`
 |Add Interview | `addInterview i/INTERVIEW_TITLE n/INTERVIEWEE d/DATE l/INTERVIEW_LOCATION`| `addInterview i/SE Interview n/David
-d/04.05.2018 l/Suntex City `
+|Add Job|`postjob j/JOBTITLE l/LOCATION s/SKILLS [t/TAG]` | `postjob j/Backend Engineer l/Singapore s/SQL, Javascript t/FreshGrad`
 |Clear |`clear`| `clear`
 |Delete |`delete INDEX` |`delete 3`
-|Delete Interview |`delete INDEX | `deleteInterview 3`
+|Delete Interview |`deleteInterview INDEX | `deleteInterview 3`
+|Delete Job |`deletejob INDEX` | `deletejob 1`
 |Edit |`edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` |`edit 2 n/James Lee e/jameslee@example.com`
-|Add new tags to a person |`edit -add-tag INDEX [t/TAG]...` |`edit -add-tag 2 t/Computing`
+|Edit Job |`[j/JOBTITLE] [l/LOCATION] [s/SKILLS] [t/TAG]` | `editjob 1 j/Backend Engineer l/Singapore`
+|Add tags to person |`edit -add-tag INDEX [t/TAG]...` |`edit -add-tag 2 t/Computing`
+|Add tags to job |`editjob -add-tag INDEX [t/TAG]...` |`editjob -add-tag 2 t/Computing`
 |Delete tags from a person |`edit -delete-tag INDEX [t/TAG]...` |`edit -delete-tag 2 t/Computing`
 |Find |`find KEYWORD [MORE_KEYWORDS]` |`find James Jake`
 |Find Interview | `FindInterview n/INTERVIEWEE`| `FindInterview David`
+|Find Job |`findjob KEYWORD [MORE_KEYWORDS]` | `findjob frontend backend systems`
 |Help |`help` |`help`
 |History |`history` | `history`
-|List | `list`|`list`
+|List People | `list`|`list`
+|List Jobs |`listjobs` | `listjobs`
+|Match Job |`matchjob INDEX` | `matchjob 2`
 |Redo |`redo`|`redo`
 |Select |`select INDEX` |`select 2`
 |Undo |`undo` |`undo`
