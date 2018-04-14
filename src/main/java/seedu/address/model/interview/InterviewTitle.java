@@ -5,8 +5,8 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
 /**
- * Represents a Job's title in the address book.
- * Guarantees: immutable; is valid as declared in {@link #isValidTitle(String)}
+ * Represents a Interview's title in the address book.
+ * Guarantees: immutable; is valid as declared in {@title #isValidTitle(String)}
  */
 
 public class InterviewTitle {
@@ -24,7 +24,7 @@ public class InterviewTitle {
     /**
      * Constructs a {@code JobTitle}.
      *
-     * @param title A valid job title.
+     * @param title A valid interview title.
      */
     public InterviewTitle(String title) {
         requireNonNull(title);

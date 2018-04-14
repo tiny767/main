@@ -37,7 +37,7 @@ public class SampleDataUtil {
     public static final Remark EMPTY_REMARK = new Remark("");
     public static final Remark SAMPLE_REMARK = new Remark("Like fishing");
 
-    public static final Link INIT_LINK = new Link("https://www.google.com.sg/");
+    public static final Link INIT_LINK = new Link("https://github.com/CS2103JAN2018-W11-B3/main");
     public static final Skill SAMPLE_SKILL = new Skill("Java");
 
 
