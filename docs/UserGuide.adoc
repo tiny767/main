@@ -430,13 +430,13 @@ IMPORTANT: If you provide multiple `POPULATION_TAG`, Infinity Book will take the
 // end::report[]
 // tag::jobposting[]
 
-=== Managing Job Postings
+=== Job Postings
 
 In line with the vision of offering end to end support, Infinity Book offers recruiters a very efficient way to keep track of job vacancies and match candidates to these positions. +
 
 This section details commands for managing job postings.
 
-==== Post Job Command
+==== Add Job Posting
 Want to add a newly available job vacancy to IB and match candidates to this role? Add a job posting using the `postjob` command.
 
 *Format:* `postjob j/JOB TITLE l/LOCATION t/[TAGS] s/SKILLS`
@@ -449,6 +449,33 @@ Job postings are matched to candidates on the basis of location, skills and tags
 
 image::postjob.JPG[width="500"]
 Figure : PostJob Command adds Jobs into a new pane as shown.
+
+==== Listing all jobs : `listjobs`
+
+* *Description:* Shows a list of all jobs posted in the Infinity Book. +
+* *Format:* `listjobs`
+
+
+==== Finding jobs by Job Title, Location, and tags: `findjob`
+
+Finds jobss whose job titles, locations, or tags contain any of the given keywords. +
+
+*Format:* `find KEYWORD [MORE_KEYWORDS]` +
+
+****
+* The search is case insensitive. e.g `backend` will match `Backend`.
+* The order of the keywords does not matter. e.g. `Engineer Backend` will match `Backend Engineer`.
+* Only job's title, location and tags are searched.
+* Only full words will be matched e.g. `Eng` will not match `Engineer`.
+* Jobs matching at least one keyword will be returned (i.e. `OR` search). e.g. `Engineer` will return `Backend Engineer`, `Frontend Engineer`
+****
+
+*Examples:*
+- `findjob Backend Geylang` +
+Returns `Backend Engineer`, `Frontend Engineer`, and `Backend Tester` whose job titles and locations match with the given keywords.
+
+image::Find.png[width="300"]
+_Figure._ Job list after finding with keywords `Backend` and `Geylang`.
 
 ==== Match Job Command
 
