@@ -428,8 +428,8 @@ which means you cannot edit or delete saved reports. You also cannot undo `saver
 IMPORTANT: If you provide multiple `POPULATION_TAG`, Infinity Book will take the last one. For example, when you execute `viewreport pop/SEIntern pop/Computing`, Infinity Book will save the report for `Computing`.
 
 // end::report[]
-// tag::jobposting[]
 
+// tag::jobposting[]
 === Job Postings
 
 In line with the vision of offering end to end support, Infinity Book offers recruiters a very efficient way to keep track of job vacancies and match candidates to these positions. +
@@ -516,12 +516,13 @@ Remove a job posting from Infinity Book using the index from latest listing.
 
 image::deletejob.JPG[width="500"]
 Figure : `deletejob` deletes the job posting at the specified index in the most recent listing from Figure as shown.
-// end::jobposting[]
 
 [NOTE]
 ====
 Index to be used as displayed in the panel.
 ====
+
+// end::jobposting[]
 
 === Managing Interview
 This section describes command available for managing interview in the Infinity Book.
@@ -668,6 +669,7 @@ There is no need to save manually.
 *Q*: How do I transfer my data to another Computer? +
 *A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Infinity Book folder.
 
+// tag::faq[]
 *Q*: How do I check if Infinity Book is compatible with my computer? +
 *A*: Infinity Book is compatible with Windows, Mac OS and Ubuntu with Java `1.8.0_60` or later installed. Compatibility with other link:#unix[UNIX] distributions is not guaranteed. +
 
@@ -689,7 +691,7 @@ To check your Java Version:
 2. In the terminal copy paste the following command without enclosing double quotes to find your Java vesion:
 `"java -v"`
 ****
-
+// end::faq[]
 == Command Summary
 
 The following table summarises Infinity Book commands with suitable examples:
