@@ -262,8 +262,8 @@ _Figure._ Person list after finding with keywords `Alex` and `93210283`.
 
 ==== Viewing a person: `view`
 
-* *Description:* Displays the person whose email is the same as given email. +
-* *Format:* `view email`
+* *Description:* viewing the person records and linking page locating by emailID +
+* *Format:* `view EmailID`
 * *Examples:* `view abcd@gmail.com`
 
 image::viewCommand.png[width="300"]

@@ -791,7 +791,7 @@ We use hash code of the tag names to generate a color. This is deliberately desi
 **Pros:** Number of different color is very big (i.e. there is less repetitive color used)   +
 **Cons:** The color for each tag value might be different between app launchs +
 
-=== Display relevant Github or resume page.[coming in v1.4]
+=== Display relevant Github or resume page.
 
 As a candidate may have linked online resume or github page. The recruiter may want
 to consider these pages.
@@ -914,20 +914,14 @@ interview when listing all candidates. +
 **Pros:** No need to create new command, just need to edit current list comamnd +
 **Cons:** It increases coupling and it is harder to implement.
 
-==== Adding question/answer (coming v2.0)
-The recruiter may want to maintain a list of questions and keep track of candidate's
-answer of each interview.
+==== Deleting Interview
+After conducted interview, the HR may want to delete the interview from the Infinity Book.
 
-Aspects: Implementation of adding question/answer:
+Aspects: Implementation of deleting an interview:
 
-**Alternative 1:** (current choice) create two new command for adding question/answer +
-**Pros:** It can be added the interview questions first and answer later. It can be
-conducted interview in anytime. +
-**Cons:** Create new addtional command.
+**Alternative 1:** (current choice) create deleting command for deleting interview by index +
+**Pros:** It can be easily to use follow the index of listing interview command +
 
-**Alternative 2:** + combining into one command questions/answer +
-**Pros:** It is easier to maintain list answer with respect to questions +
-**Cons:** Cannot add the answer and interview separately.
 
 == Documentation
 This project maintains documentation in the docs folder, also accessible through the readme. This documentation is written and maintained using *asciidoc*.
