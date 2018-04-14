@@ -500,10 +500,9 @@ Figure : MatchJob command filters the Candidates as per Job, as shown above.
 * *Description:* Shows a list of all jobs posted in the Infinity Book. +
 * *Format:* `listjobs`
 
-
 ==== Finding jobs by Job Title, Location, and tags: `findjob`
 
-Finds jobss whose job titles, locations, or tags contain any of the given keywords. +
+Finds jobs whose job titles, locations, or tags contain any of the given keywords. +
 
 *Format:* `find KEYWORD [MORE_KEYWORDS]` +
 
@@ -515,12 +514,12 @@ Finds jobss whose job titles, locations, or tags contain any of the given keywor
 * Jobs matching at least one keyword will be returned (i.e. `OR` search). e.g. `Engineer` will return `Backend Engineer`, `Frontend Engineer`
 ****
 
-*Examples:*
-- `findjob Backend Geylang` +
+*Example:* `findjob Backend Geylang` +
 Returns `Backend Engineer`, `Frontend Engineer`, and `Backend Tester` whose job titles and locations match with the given keywords.
 
-_Figure._ Job list after finding with keywords `Backend` and `Geylang`.
+image::findjob.png[width="700"]
 
+_Figure._ Job list after finding with keywords `Backend` and `Geylang`.
 // end::jobposting[]
 
 === Managing Interview
