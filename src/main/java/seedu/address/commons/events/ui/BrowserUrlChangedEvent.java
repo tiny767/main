@@ -6,14 +6,13 @@ import seedu.address.commons.events.BaseEvent;
  * Indicates that the browser has changed
  */
 public class BrowserUrlChangedEvent extends BaseEvent {
-    private String processType;
+    private String newUrl;
 
-    public BrowserUrlChangedEvent(String processType) {
-        this.processType = processType;
+    public BrowserUrlChangedEvent(String newUrl) {
+        this.newUrl = newUrl;
     }
-
-    public String getProcessType() {
-        return processType;
+    public String getNewUrl() {
+        return newUrl;
     }
 
     @Override

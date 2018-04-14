@@ -1,14 +1,16 @@
 package seedu.address.logic.commands;
 
+import static java.util.Objects.requireNonNull;
+
 import com.restfb.DefaultFacebookClient;
 import com.restfb.Parameter;
 import com.restfb.types.FacebookType;
 
+import javafx.application.Platform;
 import javafx.scene.web.WebEngine;
 import seedu.address.commons.core.EventsCenter;
-import seedu.address.commons.events.ui.NewResultAvailableEvent;
+import seedu.address.commons.events.ui.ToggleFacebookPanelEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.ui.BrowserPanel;
 
 //@@author tiny767
 /**
@@ -25,11 +27,11 @@ public class FacebookPostCommand extends Command {
             + "Parameters: MESSAGE\n"
             + "Example: " + COMMAND_WORD + " " + EXAMPLE_POST;
 
-    public static final String MESSAGE_FACEBOOK_POST_SUCCESS = "Posted to Facebook.";
-    public static final String MESSAGE_FACEBOOK_POST_LOGIN = "User has not been authenticated yet, please log in.";
+    public static final String MESSAGE_FACEBOOK_POST_SUCCESS = "Attempted to post to Facebook";
+    public static final String MESSAGE_FACEBOOK_POST_LOGIN = "User has not been authenticated" + "\n"
+            + "Please log in and then try posting again!";
     public static final String MESSAGE_FACEBOOK_POST_FAIL = "There was an error posting to Facebook";
 
-    private static String currentPost;
     private static WebEngine webEngine;
 
     private String toPost;
@@ -38,7 +40,7 @@ public class FacebookPostCommand extends Command {
      * Creates an FacebookPostCommand based on the message
      */
     public FacebookPostCommand(String message) {
-        currentPost = message;
+        requireNonNull(message);
         toPost = message;
     }
 
@@ -49,29 +51,29 @@ public class FacebookPostCommand extends Command {
 
         DefaultFacebookClient fbClient = FacebookLoginCommand.getFbClient();
         try {
-            //fbClient.(currentPost);
-            fbClient.publish("me/feed", FacebookType.class, Parameter.with("message", currentPost));
+            fbClient.publish("me/feed", FacebookType.class, Parameter.with("message", toPost));
         } catch (Exception e) {
             e.printStackTrace();
             new CommandException(MESSAGE_FACEBOOK_POST_FAIL);
         }
-        EventsCenter.getInstance().post(new NewResultAvailableEvent(MESSAGE_FACEBOOK_POST_SUCCESS
-                + " (to " + FacebookLoginCommand.getAuthenticatedUsername() + "'s page.)"));
+
+        EventsCenter.getInstance().post(new ToggleFacebookPanelEvent());
+
         webEngine = FacebookLoginCommand.getWebEngine();
-        webEngine.load(FacebookLoginCommand.getAuthenticatedUserPage());
+        Platform.runLater(() -> webEngine.load(FacebookLoginCommand.getAuthenticatedUserPage()));
     }
 
     @Override
     public CommandResult execute() throws CommandException {
         if (!FacebookLoginCommand.getAuthenticateState()) {
-            BrowserPanel.setProcessType(COMMAND_WORD);
             FacebookLoginCommand fbLoginCommand = new FacebookLoginCommand();
             fbLoginCommand.execute();
             return new CommandResult(MESSAGE_FACEBOOK_POST_LOGIN);
         } else {
             completePost();
-            return new CommandResult(MESSAGE_FACEBOOK_POST_SUCCESS + " (to "
-                    + FacebookLoginCommand.getAuthenticatedUsername() + "'s page.)");
+            return new CommandResult(MESSAGE_FACEBOOK_POST_SUCCESS
+                +    "\nUsername: " + FacebookLoginCommand.getAuthenticatedUsername()
+                +    "\nmessage: '" + toPost + "'");
         }
     }
 
