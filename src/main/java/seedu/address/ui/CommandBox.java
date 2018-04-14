@@ -144,7 +144,7 @@ public class CommandBox extends UiPart<Region> {
                     String.format(CommandCorrection.NO_MATCHES_FEEDBACK_TO_USER, chosenString)));
         } else {
             raise(new CommandCorrectedEvent(
-                    String.format(CommandCorrection.MATCH_FOUND_FEEDBACK_TO_USER, chosenString)));
+                    String.format(CommandCorrection.MATCH_FOUND_FEEDBACK_TO_USER, suggestions.toString())));
         }
         replaceText(chosenString);
     }
