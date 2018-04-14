@@ -22,6 +22,5 @@ public class FacebookLoginCommandTest {
         // null -> returns false
         assertFalse(fbLoginCommand.equals(null));
 
-        }
-
+    }
 }
