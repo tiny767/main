@@ -223,8 +223,7 @@ public class CommandCorrection {
     public static String extractCommandWord(String commandText) {
         String trimmedCommandText = commandText.trim();
         String[] wordsInCommandText = trimmedCommandText.split(" ");
-        commandParameters = commandText;
-        commandParameters = commandParameters.replace(wordsInCommandText[0], "");
+        commandParameters = trimmedCommandText.replace(wordsInCommandText[0], "");
         return wordsInCommandText[0];
     }
 

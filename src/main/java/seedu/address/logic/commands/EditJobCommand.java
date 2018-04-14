@@ -53,7 +53,6 @@ public class EditJobCommand extends UndoableCommand {
             + COMMAND_WORD + " -" + COMMAND_OPTION_ADD_TAG + " INDEX t/[" + PREFIX_TAG + "TAG] to add one tag \n"
             + COMMAND_WORD + " -" + COMMAND_OPTION_DELETE_TAG + " INDEX t/[" + PREFIX_TAG + "TAG] to delete one tag";
 
-
     public static final String MESSAGE_EDIT_JOB_SUCCESS = "Edited Job: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_JOB = "This job already exists in the address book.";

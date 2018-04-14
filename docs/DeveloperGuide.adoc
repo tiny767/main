@@ -807,23 +807,296 @@ Hard to maintain the hard code URL.
 
 link:#top[Back to top]
 
+// tag::autocorrect[]
+=== Auto-correct and Auto-complete
+
+Infinity Book enhances the user's interaction with the application, with built in auto-correct and auto-complete. Command
+words that are typed in are examined for spelling errors and completions upon `SPACE` and `TAB` press respectively.
+
+The following sequence diagram shows the sequence of events triggered by both operations.
+
+_{ add image here }_
+
+==== Auto-complete Implementation
+
+The user input is recorded in CommandBox, and upon `TAB` keypress, the CommandBox#navigateToCompletedCommand() method looks for command
+words containing the entered string as the first substring.
+
+When CommandCorrection#updateSuggestionsList() method is called, it searches through all command words for suitable matches.
+
+When multiple matches are available, the `TAB` keypress is counted, and the command box cycles through all suggestions. When no suggestions are available, the existing
+text is left unchanged.
+
+Since the text in the command box is altered with each `TAB` press, a brief history is maintained containing the most recent suggestion
+made by auto-complete and original user input. Here, the user has pressed the `TAB` key multiple times, but expects completions based on his input, not the recent suggestion that fills the command box.
+
+
+The following code snipped demonstrates the use of the suggestion history to choose the text to complete.
+
+[source:Java]
+----
+    public static String updateTextToComplete(String textToComplete) {
+        if (textToComplete.compareTo(recentSuggestion.trim()) == 0) {
+            return recentInput;
+        } else {
+            return textToComplete;
+        }
+    }
+----
+
+==== Auto-correct Implementation
+
+Auto-correct searches command word input for potential one edit distance errors, including missed,swapped and stray characters.
+
+Two details about the implementation are noteworthy:
+
+. For seamless background operation, command words that are not recognized are automatically analysed for spelling errors on `SPACE` key press.
+. In cases where commands with spell errors are copy-pasted into the command box, `SPACE` key press separates the command word from arguments, and corrects the command word without altering the rest of the command.
+
+Upon being triggered, CommandBox#navigateToLikelyInput() method returns the likely correction using the mentioned heuristics.
+
+When multiple suggestions are available, corrections obtained by removing stray character, and adding missing character are prioritized, in that order. This is in line with
+belief that these are the most common kinds of errors.
+
+The following code snippet demonstrates this ability clearly.
+
+[source:Java]
+----
+   public static String extractCommandWord(String commandText) {
+           String trimmedCommandText = commandText.trim();
+           String[] wordsInCommandText = trimmedCommandText.split(" ");
+           commandParameters = trimmedCommandText.replace(wordsInCommandText[0], "");
+           return wordsInCommandText[0];
+       }
+----
+
+// end::autocorrect[]
+
 // tag::jobposting[]
-=== Add and match job postings to candidates. [Since v1.3]
-As there might be several candidates with varying suitability for a position, the reccruiter should be able to
-filter candidates by ability, location and some other basic filters.
+=== Job Postings [Since v1.3]
 
-Jobs may be added through the command `postjob j/JOB TITLE s/SKILLS t/TAGS l/LOCATION` ,
-and then might be matched with candidates using index displayed in the panel. This is implemented
-through the command `matchjob INDEX`, which displays the suitable candidates in the person panel.
+Recruiters may have several job openings available with varying required skills, location and tags. These are represented in the Infinity
+Book as Job Postings. Job postings may be added or removed at any time. Existing job postings can be listed, searched, edited and deleted.
+Any existing job postings may be matched with the list of candidates to filter potential matches.
 
-==== Design Considerations*
+==== Implementation Specifics
+
+===== Model Component
+
+Job postings are maintained in the Model in a UniqueJobList, enforcing uniqueness among the stored individual job postings.
+
+image::UniqueJobListUML.png[width="300"]
+
+Individual job postings are represented by the Job object with attributes `Job Title`, `Location`, `Skills` and `Tags`. The class relationship is shown
+in Figure _{num}_ .
+
+image::JobUMLDiagram.png[width="400"]
+
+Together, this modifies the Model to the state shown in the following diagram.
+
+image::ModelWithJobUML.png[width="700"]
+
+===== Storage Component
+
+Job postings are stored in `XmlAdaptedJob` objects, which maintain a class relationship as shown in this diagram.
+
+image::JobStorageDiagram.png[width="700"]
+
+An example job stored in this format is reproduced below:
+
+[source:xml]
+----
+<jobs>
+        <jobTitle>Backend Engineer</jobTitle>
+        <location>Geylang</location>
+        <skills>Java,SQL</skills>
+        <tagged>SEIntern</tagged>
+        <tagged>ATAP</tagged>
+</jobs>
+----
+
+===== UI Component
+
+The main window contains a JobListPanel, which contains individual jobs represented using JobListCards.
+JobListCards represent the fields in each Job using Labels and flowPanes.
+
+===== Job Operations and Logic
+
+Operations performed on jobs follow the sequence of operations described in the diagram below.
+
+. Command input is received by the UI component.
+. The command execution is handled by the Logic component.
+. The changes to data are effected by the Model component.
+. The new Infinity Book data is saved by the Storage component.
+
+This sequence of events is summarized in the following sequence diagram.
+
+image::SequenceDiagramJobPosting.png[width="700"]
+
+The following job posting commands are implemented according to this structure:
+
+[width="100%",cols="<50%,<50%",options="header",]
+|=====================
+|extends `UndoableCommand` | extends `Command`
+|`PostJobCommand` , `EditJobCommand` , `DeleteJobCommand` , `MatchJobCommand`| `ListJobCommand` , `FindJobCommand`
+|=====================
+
+The following diagram details the class relationship for Commands.
+
+image::CommandsStructure.png[width="300"]
+
+---
+
+*Adding Job Postings*
+
+Adding job postings to Infinity Book is performed by the PostJobCommand. The sequence of events triggered while adding a job posting are shown in the diagram below:
+
+image::PostJobCommandSequenceDiagram.png[width="700"]
+
+The PostJobCommand#executeUndoableCommand triggers addition of the Job to `UniqueJobList` in AddressBook#add
+The following code snippet demonstrates the prevention of duplicates in the UniqueJobList
+[source:Java]
+----
+    public void add(Job toAdd) throws DuplicateJobException {
+        requireNonNull(toAdd);
+        if (contains(toAdd)) {
+            throw new DuplicateJobException();
+        }
+        internalList.add(toAdd);
+    }
+----
+
+---
+
+*Editing Job Postings*
+
+Editing job postings in the Infinity Book is performed by the EditJobCommand. The sequence of events triggered while editing a job posting are shown in the diagram below:
+
+image::EditJobCommandSequenceDiagram.png[width="700"]
+
+The EditJobCommand#executeUndoableCommand triggers editing of a existing Job in `UniqueJobList` in AddressBook#add
+The `EditJobCommand` ensures that the index specified refers to a valid index in the most recent listing of jobs.
+Editing jobs to cause duplicates in the UniqueJobList is prevented by throwing a DuplicateJobException.
+
+The following code snippet demonstrates the prevention of duplicates and index checking in the UniqueJobList after editing
+
+[source:Java]
+----
+    public void setJob(Job target, Job editedJob) throws DuplicateJobException, JobNotFoundException {
+        requireNonNull(editedJob);
+
+        int index = internalList.indexOf(target);
+        if (index == -1) {
+            throw new JobNotFoundException();
+        }
+
+        if (!target.equals(editedJob) && internalList.contains(editedJob)) {
+            throw new DuplicateJobException();
+        }
+
+        internalList.set(index, editedJob);
+    }
+----
+
+To completely specify the changes to the Job object specified by EditJobCommand, an EditJobCommandDescriptor is parsed from the command, and used to update changes in the Model. Completing
+these operations ensures the new Job object is updated in the Infinity Book.
+
+---
+
+*Delete Job Postings*
+
+Deleting job postings in the Infinity Book is performed by the DeleteJobCommand. The sequence of events triggered while deleting a job posting are shown in the diagram below:
+
+image::DeleteJobCommandSequenceDiagram.png[width="700"]
+
+The DeleteJobCommand selects a Job object by matching the index with the last shown job list, and checks the index as shown in the following code snippet.
+[source:Java]
+----
+ protected void preprocessUndoableCommand() throws CommandException {
+        List<Job> lastShownList = model.getFilteredJobList();
+
+        if (targetIndex.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_JOB_DISPLAYED_INDEX);
+        }
+
+        jobToDelete = lastShownList.get(targetIndex.getZeroBased());
+----
+The changes to the UniqueJobList are enacted by AddressBook#removeJob, which completes the removal of the object and triggers Storage to update the data.
+
+---
+
+*Matching Job Postings*
+
+Matching job postings to candidates in the Infinity Book is performed by the MatchJobCommand. The sequence of events triggered while matching a job posting are shown in the diagram below:
+
+//_{ insert diagram here }_
+
+The MatchJobCommand selects a Job object by matching the index with the last shown job list. A PersonMatchesJobPredicate is used to find matches, by looking for matches between tags, location and skills fields of the Job and Person.
+
+Search parameters can be excluded from search when they are set to 'ALL'. Under these circumstances only the other parameters will influence the search.
+
+The following code snippet shows how Location can be excluded from the search. Other two parameters are handles similarly.
+
+[source:Java]
+----
+public boolean test(Person person) {
+
+        // .. code to set up and assign locationMatch, skillsMatch and tagsMatch
+
+        locationMatch = isLocationMatchSatisfied(locationMatch);
+        //.. similarly for skillsMatch and tagsMatch
+
+        return locationMatch && skillsMatch && tagsMatch;
+ }
+
+ private boolean isLocationMatchSatisfied(boolean locationMatch) {
+         if (notLocationBound) {
+             locationMatch = true;
+         }
+         return locationMatch;
+ }
+----
+
+The PersonListPanel is populated with a list of candidates who match the job according to the set parameters.
+
+---
+
+*Finding Job Postings*
+
+Finding job postings by keywords in the Infinity Book is performed by the FindJobCommand. The sequence of events triggered while finding a job posting are shown in the diagram below:
+
+//_{ insert diagram here }_
+
+The FindJobCommand selects Job objects to display by matching the keyword with the Job Title, Location or Tags, and lists all matches in the JobListPanel.
+
+---
+
+*Listing Job Postings*
+
+Listing all job postings in the Infinity Book is performed by the FindJobCommand. The sequence of events triggered while listing all job postings are shown in the diagram below:
+
+//_{ insert diagram here }_
+
+The ListJobCommand selects displays all Job objects from UniqueJobList in the JobListPanel.
+
+==== Design Considerations
+**Aspect:** Implementation of additional Skill parameter for Person and Job +
+
+**Alternative 1 (current choice):** Maintain skills as list of strings. +
+**Pros:** Allows recruiter freedom in creating a skills list as they need. +
+**Cons:** Searching requires complex string operations. Duplicates of the same skill will be found under different persons. +
+
+**Alternative 2:** Maintain a UniqueSkillsList similar to tags. +
+**Pros:** Different candidates with similar skills will utilize the same object. +
+**Cons:** The list of skills must be synchronized with both person list and job list, removing any skills that are not used by both.
+
 **Aspect:** Implementation of Job-Person Matching +
 
 **Alternative 1 (current choice):** Match as many keywords in an OR search as possible +
 **Pros:** Maintains existing search predicates with minor modifications. +
 **Cons:** May not provide effective filtering. +
 
-**Alternative 2:** Indicate required and optional matches in job posting expected in v1.4 +
+**Alternative 2:** Indicate required and optional matches in job posting. +
 **Pros:** Search can be customized to be as accurate as required. +
 **Cons:** Spelling differences may still cause diminished effectiveness.
 // end::jobposting[]
