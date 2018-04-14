@@ -98,9 +98,14 @@ Infinity Book uses a command line interface that follows the command format give
 To enhance your experience with the Command Line Interface(CLI), Infinity Books comes with built in auto-correct and auto-complete.
 
 ==== Auto-complete
-. To auto-complete a command word, type in atleast one character, and press kbd:[TAB]
-. If no
-* Spell corrects and completes command words being typed into Infinity Book +
+Spell corrects and completes command words being typed into Infinity Book +
+To auto-complete a command word:
+
+. Type in atleast the first character of your command word.
+. Press kbd:[TAB] until your desired command word appears in the command box.
+
+[NOTE]
+
 
 * kbd:[TAB] key auto-completes a partial command word and kbd:[SPACE] autocorrects an incorrect command word spelling.
 
