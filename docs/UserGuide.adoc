@@ -95,34 +95,62 @@ Infinity Book uses a command line interface that follows the command format give
 
 === Auto-complete and auto-correct
 
-To enhance your experience with the Command Line Interface(CLI), Infinity Books comes with built in auto-correct and auto-complete.
+To enhance your experience with the Command Line Interface(CLI), Infinity Book comes with built in auto-correct and auto-complete. This section explains
+how you can use these features to speed up your CLI experience.
 
 ==== Auto-complete
-Spell corrects and completes command words being typed into Infinity Book +
+Auto completes command words being typed into Infinity Book +
+
 To auto-complete a command word:
 
 . Type in atleast the first character of your command word.
 . Press kbd:[TAB] until your desired command word appears in the command box.
 
 [NOTE]
+Entered text must match (case sensitive) the start of the desired command. +
+If no matches are available, no change is made to the input text.
+
+*Example:*
+
+** `li` + kbd:[TAB] : Completes to command word to `list`.
+
+** `LI` + kbd:[TAB]  : Reports no completions found.
+
+[TIP]
+====
+Use kbd:[TAB] repeatedly to loop through the list as many times as you need.
+====
 
 
-* kbd:[TAB] key auto-completes a partial command word and kbd:[SPACE] autocorrects an incorrect command word spelling.
+==== Auto-correct
+Auto correct spell checks command words being typed into Infinity Book. +
 
-* *Example:*
-** `li` + kbd:[TAB] key press +
-Completes to command word to `list`
+To auto-correct a command word:
 
-** `lsit` + kbd:[SPACE] key press +
-Corrects command word to `list`.
-
+. Type in a possibly incorrect version of the command word.
+. Press kbd:[SPACE] and watch the command word auto-corrected immediately.
 
 [NOTE]
+Entered text must be within one edit-distance of the desired command. +
+If no corrections are available, no change is made to the input text.
+
+*Example:*
+
+** `lsit` +  kbd:[SPACE] : Corrects command word to `list`.
+
+** `lit` +   kbd:[SPACE] : Corrects command word to `list`.
+
+** `liist` + kbd:[SPACE] : Corrects command word to `list`.
+
+** `lllist` + kbd:[SPACE] : Does not make any correction.
+
+[TIP]
 ====
-* Auto-correct only corrects one edit distance errors.
-* When completions are available, use `TAB` to toggle through options.
+If a copy-pasted command may contain a spelling error in the command word, press kbd:[SPACE] to
+correct the command word without affecting the argumets entered.
 ====
 
+** `lsit` + kbd:[SPACE] : Corrects command word to `list`.
 
 [[Features]]
 == Features
