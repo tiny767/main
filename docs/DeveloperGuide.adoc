@@ -1040,7 +1040,7 @@ To use Facebook Graph API, we followed the instruction link:https://developers.f
 
 Finishing the steps, we reached this page
 .Facebook Application setup page
-image::FacebookAppCreated.png[width="800"]
+image::FacebookAppCreated.PNG[width="800"]
 
 ==== Implementation
 
