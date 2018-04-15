@@ -952,8 +952,11 @@ according to each candidates. +
 * `AddInterviewCommandParser` class will extract interview title, interviewee name, date,
 and interview location from user input, form a new interview,
 then pass it to `AddInterviewCommand` class.
-* `AddInterviewCommand` will take in the interview and call add new Interview to
-storage in model.
+* `AddInterviewCommand` will take in the interview and call add new interview to
+storage in model management.
+
+.Adding an interview sequence diagram
+image::addInterviewSequence.png[width="700"]
 
 [source,java]
 ----
@@ -983,6 +986,9 @@ interview when listing all candidates. +
 and call ListInterviewCommand.
 * `ListInterviewCommand` will call updateFilteredList in model and list all the interviews in storage.
 
+.Listing an interview sequence diagram
+image::ListInterviewSequence.png[width="700"]
+
 [source,java]
 ----
 
@@ -1004,6 +1010,9 @@ Aspects: Implementation of deleting an interview:
 **Alternative 2:** create deleting command for deleting interview by name. +
 **Pros:** It requires addtional tools to match interview +
 **Cons:** It is easier for user to use.
+
+.Delete an interview sequence diagram
+image::DeleteInterviewSequence.png[width="700"]
 
 ** Current implementation details
 * `DeletingInterviewParser` class will extract the index of the interview needed
