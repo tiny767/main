@@ -1036,7 +1036,7 @@ Firstly, we need to build a Graddle dependency in the `graddle.properties` file 
 compile group: 'com.restfb', name: 'restfb', version: '2.4.0'
 ----
 
-To use Facebook Graph API, we followed the instruction (link:https://developers.facebook.com/docs/apps/register/#create-app[`here`]) to create a Facebook Application on the Facebook for developer site
+To use Facebook Graph API, we followed the instruction link:https://developers.facebook.com/docs/apps/register/#create-app[`here`] to create a Facebook Application on the Facebook for developer site
 
 Finishing the steps, we reached this page
 .Facebook Application setup page
@@ -1046,7 +1046,7 @@ image::facebook_developers_app.png[width="800"]
 
 ===== Facebooklogin
 
-We allow users to log in by loading the Authentication URL to the FacebookPanel associated to our Facebook application specified by Graph API
+We allow users to log in by loading the authentication URL associated with our Facebook Application to the FacebookPanel (to be explained later) specified by Graph API
 
 [source,java]
 ----
@@ -1066,7 +1066,7 @@ If login credentials are accepted, facebook will return an access_token in its r
 https://www.facebook.com/?#access_token=EAAC15Ydo408BANN5h1MoSHWhLATnte3EchlxqsXA7x2WASMlZBJzlZC3rZCmlu4Wib3hi1bXR2r2sx2ZCgIJvJCrXaTAnQVN4f0ksFLSvCuezLhG43myLJtxT3Qtn0PpcIXXZBjgYUI4LwGvv837KGC2V4ifctNaBnHqRX6e7qAZDZD&expires_in=5184000
 ----
 
-Using this access_token, we 'capture' this login session by making use of RestFB API. We set up the session in FacebookLoginCommand as followed
+Using this access_token, we 'capture' this login session by making use of RestFB API. We set up the session in `FacebookLoginCommand` as followed
 
 ----
 fbClient = new DefaultFacebookClient(accessToken, Version.LATEST);
@@ -1074,11 +1074,12 @@ user = fbClient.fetchObject("me", User.class);
 ----
 
 fbClient is the Facebook Graph API client with the supplied token.
+
 user is the authenticated user object.
 
 ===== Facebookpost
 
-We will check if user is authenticated via the boolean variable isAuthenticated before allowing to post on fb
+We will check if user is authenticated via the boolean variable isAuthenticated before allowing posting on facebook. If user is not authenticated, he will be redirected to log in
 
 [source,java]
 ----
@@ -1090,7 +1091,7 @@ if (!FacebookLoginCommand.getAuthenticateState()) {
 }
 ----
 
-We simple post the message to Facebook using the authenticated fbClient in FacebookLoginCommand
+We simply post the message to Facebook using the authenticated fbClient in `FacebookLoginCommand`
 
 [source,java]
 ----
@@ -1098,20 +1099,17 @@ DefaultFacebookClient fbClient = FacebookLoginCommand.getFbClient();
 fbClient.publish("me/feed", FacebookType.class, Parameter.with("message", toPost));
 ----
 
-Implementation details:
+==== Implementation details:
 
-FacebookPanel: extend Region<Part> is very similar to BrowserPanel. It contains a browser to display login form. Note that at any time, the region used for this panel can be a facebook panel, browser panel or report panel. Thus, we need to switch back to Facebook Panel everytime Facebook login is called.
-This is achieved via posting an even 'ToggleFacebookPanelevent' inside execute()
+'FacebookPanel' extends `UiPart<Region>` and shares the same region with `BrowserPanel` or `ReportPanel`. When `facebooklogin` is executed,
+ `MainWindow` class will swap out the `BrowserPanel` or `ReportPanel` and replace by `FacebookPanel`.
+We achieve this by posting `ToggleFacebookPanelEvent` (showing in the below sequence diagram).
 
-Capturing the access_token: We registered the FacebookPanel as an event handler. If the browser url (of FacebookPanel) changes to a new one that contains the access_token, we raise a BrowserUrlChangedEvent. At the same time, our FacebookPanel is subscribed to handle BrowserUrlChangedEvent by passing the url (with access_token) back to FacebookLoginCommand to complete the auth.
+'FacebookPanel' is used mainly as a browser to authorize a user to Facebook.
 
-FacebookLoginCommand: in its execute() method, this command do the following
-	post a ToggleFacebookPanelEvent
-	load the Facebook authorisation URL to the browser of FacebookPanel
-                     It waits for the FacebookPanel to pass back the access_token to comeplete the auth
-
-FacebookPostCommand: if the user is authenticated, it will retrieve the login session from FacebookLoginCommand and make use of restfb api to make a post
-
+Capturing the access_token: We registered `FacebookPanel` as an event handler. If the url (of FacebookPanel) changes to a new one that contains the access_token,
+ we raise a BrowserUrlChangedEvent. At the same time, our FacebookPanel is subscribed to handle BrowserUrlChangedEvent by passing the url (with access_token) back to FacebookLoginCommand to complete the authentication.
+ 
 //end::facebook[]
 
 == Documentation
