@@ -429,7 +429,7 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
 // tag::findall[]
-=== Search by Name, Tags, Email, and Phone (Since v1.2)
+=== Search by Name, Tags, Email, and Phone [Since v1.2]
 
 This `find` command allows the user to search through the list of all candidates and output all whose  `Name`, `Tags`, `Email`, and `Phone` match with the given keywords.
 
@@ -841,7 +841,7 @@ public class EmailFilter implements Predicate<Person> {
 //end::viewcommand[]
 
 // tag::autocorrect[]
-=== Auto-correct and Auto-complete
+=== Auto-correct and Auto-complete [since v1.4]
 
 Infinity Book enhances the user's interaction with the application, with built in auto-correct and auto-complete. Command
 words that are typed in are examined for spelling errors and completions upon `SPACE` and `TAB` press respectively.
@@ -1225,7 +1225,7 @@ UiStyle.getInstance().setToLightTheme();
 // end::theme[]
 
 //tag::interviewmanagement[]
-=== Interview Management (Since v1.5rc)
+=== Interview Management [Since v1.5rc]
 Interviewing is one of the important steps in recruiting process.
 HR may need a tool to manage interview efficiently. The Infinity Book will
 need interview model with basic features including adding interview, listing
@@ -1746,21 +1746,32 @@ Tech recruiters who have the need for finding and acquiring skilled Computing st
 
 === Feature contributions
 ==== Sashankh Chengavalli Kumar (@ChengSashankh)
-===== Major Enhancement: Adding job postings
-This allows the user to add job postings and receive suggestions about most suitable candidates based on various parameters.
+===== Major Enhancement: Job postings
+This allows the recruiter to add and manage job postings and receive automated suggestions about most suitable candidates based on various parameters.
 
-For example, when the need arises to hire a new fresh graduate for a backend software development role with proficiency in MYSQL and Javascript, with location restrictions as well, the user may create such a job posting. As candidates are added and removed, the application displays an updated list of matching candidates, until removed from Infinity Book.
+For example, when the need arises to hire a new fresh graduate for a backend software development role with proficiency in SQL and Javascript, with location restrictions as well, the recruiter creates a job posting. As candidates are added and removed, the application displays an updated list of matching candidates, until removed from Infinity Book.
 
 Implementations needed:
 
-. Creating a postjob command that creates a job posting.
-. Creating an edit and delete command that does said operations to job posting.
+. Creating command such as postjob, editjob, deletejob, findjob and listjob to manage jobposting.
+. Creating a matchjob command that displays the list of matched candidates in the Infinity Book.
 . Display pane for showing the list of jobs currently active.
+. Adding skills field to Person and Job to enhance matching.
 
-===== Minor Enhancement: Add a skills field to the Infinity Book to allow users to make
-* Allows the recruiter to tag each user with a set of skills which are used for other candidate matching purposes.
-* In account of the multiple roles that each candidate might be suitable for, skills allow recruiter to choose the best match.
- This feature addresses this core need for recruiters.
+===== Minor Enhancement: Auto-correct and auto-complete
+This allows users to interact with Infinity Book with enhanced speed and accuracy. This implementation provides
+users the ability to auto-correct trivial spelling errors and complete partial command words.
+
+For example, when `li` is typed, the command enables completion to either `list` , `listinterview` or `listjob`. Similarly
+`lsit` is corrected to `list` by the command.
+
+Implementations needed:
+
+. Complete list of command words used by Infinity Book has to be updated and maintained when features are added.
+. Command box has to be modified to consume some keypresses such as `TAB` and `SPACE` for completion and correction.
+. To support multiple suggestions for auto-complete, a brief history of the last suggestion and input has to be maintained. This is
+further explained in <<Auto-complete Implementation, Section 5.11.1>>
+
 
 ==== Huynh Thanh Duc Anh (@anh2111)
 ===== Major Enhancement: Data visualization
@@ -1937,7 +1948,6 @@ Use case ends.
 .  Should be able to work even on older 32-bit system
 .  Project should not require updates to remain functional.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-
 
 link:#top[Back to top]
 
