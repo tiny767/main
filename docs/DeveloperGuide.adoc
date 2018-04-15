@@ -1026,7 +1026,7 @@ public synchronized void deleteInterview(Interview target) throws InterviewNotFo
 
 === Facebook Integration
 
-The Facebook features (facebooklogin and facebookpost) are facilitated by Facebook Graph API and RestFB API. RestAPI is a third party Facebook Graph API client.
+The Facebook features (facebooklogin and facebookpost) are facilitated by Facebook Graph API and RestFB API. The Graph API is low-level HTTP-based API used to get data into and out of the Facebook platform while RestAPI is a high level third-party Graph API client.
 
 ==== Preparation
 
@@ -1118,23 +1118,23 @@ image::FbSequenceDiagram.png[width="800"]
 
 ==== Design considerations
 
-**Aspect:** Choice of client API for Facebook Graph API+
+**Aspect:** Choice of client API for Facebook Graph API +
 **Alternative 1 (current choice):** Use `RestFB` +
 **Pros:** RestFB is simple and easy to use with well-documented API
-**Cons:** Features are limited+
+**Cons:** Features are limited +
 **Alternative 2:** Facebook4j +
-**Pros:** Facebook4j provides more extensive features+
-**Cons:** It is harder to use and we do not really need advanced features for now
+**Pros:** Facebook4j provides more extensive features +
+**Cons:** It is harder to use and we do not really need advanced features for now +
 
 ---
 
-**Aspect:** Authentication+
-**Alternative 1 (current choice):** Authenticate using the built-in web browser (in FacebookPanel)  +
-**Pros:** Convenient for user as authentication is done inside the app itself
-**Cons:** The built-in Java web-engine might not support certain features of a webpage. +
+**Aspect:** Authentication +
+**Alternative 1 (current choice):** Authenticate using the built-in web browser (in FacebookPanel) +
+**Pros:** Convenient for user as authentication is done inside the app itself +
+**Cons:** The built-in Java web-engine might not support certain features of a webpage +
 **Alternative 2:** Authenticate by opening a full-pledged web browser such as Chrome/ Safari +
-**Pros:** The Facebook authorization page will be better supported by such a browser
-**Cons:** User needs to switch between different applications
+**Pros:** The Facebook authorization page will be better supported by such a browser +
+**Cons:** User needs to switch between different applications +
 
 //end::facebook[]
 
