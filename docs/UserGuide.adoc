@@ -513,6 +513,9 @@ Job postings are matched to candidates on the basis of location, skills and tags
 image::postjob.JPG.png[width="500"]
 Figure : PostJob Command adds Jobs into the Job Postings panel as shown.
 
+//end::jobposting[]
+
+//tag::editjob[]
 ==== Edit Job Command
 
 Want to change the parameters of a job after creating? IB provides the flexibility to edit an existing job posting through the `editjob` command.
@@ -531,8 +534,7 @@ At least one field must be provided for the edit command to function as expected
 image::editjob.JPG.png[width="500"]
 Figure : `editjob` edits the first job posting as marked in diagram.
 
-//end::jobposting[]
-
+//end::editjob[]
 //tag::jobpostingdelete[]
 ==== Delete Job Command
 

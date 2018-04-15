@@ -71,6 +71,8 @@ include::../DeveloperGuide.adoc[tag=jobposting2]
 
 include::../DeveloperGuide.adoc[tag=jobposting3]
 
+include::../DeveloperGuide.adoc[tag=jobposting5]
+
 include::../DeveloperGuide.adoc[tag=autocorrect]
 
 
@@ -88,13 +90,21 @@ include::../UserGuide.adoc[tag=jobpostinglist]
 
 include::../UserGuide.adoc[tag=jobpostingdelete]
 
+---
+
+include::../UserGuide.adoc[tag=editjob]
+
 === Developer Guide
 
-include::../DeveloperGuide.adoc[tag=jobposting6]
+include::../DeveloperGuide.adoc[tag=jobposting1]
 
 ---
 
 include::../DeveloperGuide.adoc[tag=jobposting4]
+
+---
+
+include::../DeveloperGuide.adoc[tag=listandfind]
 
 ---
 

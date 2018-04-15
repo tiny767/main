@@ -928,7 +928,7 @@ Any existing job postings may be matched with the list of candidates to filter p
 
 // end::jobposting[]
 
-// tag::jobposting6[]
+// tag::jobposting1[]
 
 ==== Implementation Specifics
 
@@ -978,7 +978,7 @@ An example job stored in this format is reproduced below:
 The main window contains a JobListPanel, which contains individual jobs represented using JobListCards.
 JobListCards represent the fields in each Job using Labels and flowPanes.
 
-// end::jobposting6[]
+// end::jobposting1[]
 
 // tag::jobposting2[]
 ===== Job Operations and Logic
@@ -1013,6 +1013,10 @@ The following diagram details the class relationship for Commands.
 image::CommandsStructure.png[width="300"]
 
 ---
+// end::jobposting2[]
+
+// tag::jobposting3[]
+
 
 *Adding Job Postings*
 
@@ -1035,6 +1039,8 @@ The following code snippet demonstrates the prevention of duplicates in the Uniq
 ----
 
 ---
+// end::jobposting3[]
+// tag::jobposting4[]
 
 *Editing Job Postings*
 
@@ -1071,9 +1077,6 @@ To completely specify the changes to the Job object specified by EditJobCommand,
 these operations ensures the new Job object is updated in the Infinity Book.
 
 ---
-// end::jobposting2[]
-
-// tag::jobposting5[]
 *Delete Job Postings*
 
 Deleting job postings in the Infinity Book is performed by the DeleteJobCommand. The sequence of events triggered while deleting a job posting are shown in the diagram below:
@@ -1095,10 +1098,11 @@ The DeleteJobCommand selects a Job object by matching the index with the last sh
 ----
 The changes to the UniqueJobList are enacted by AddressBook#removeJob, which completes the removal of the object and triggers Storage to update the data.
 
-
 ---
-// end::jobposting5[]
-// tag::jobposting3[]
+// end::jobposting4[]
+
+// tag::jobposting5[]
+
 *Matching Job Postings*
 
 Matching job postings to candidates in the Infinity Book is performed by the MatchJobCommand.
@@ -1137,9 +1141,9 @@ public boolean test(Person person) {
 The PersonListPanel is populated with a list of candidates who match the job according to the set parameters.
 
 ---
-// end::jobposting3[]
+// end::jobposting5[]
 
-// tag::jobposting4[]
+// tag::listandfind[]
 *Listing Job Postings*
 
 Listing all job postings in the Infinity Book is performed by the FindJobCommand. The sequence of events triggered while listing all job postings are shown in the diagram below:
@@ -1157,7 +1161,8 @@ Finding job postings by keywords in the Infinity Book is performed by the FindJo
 
 The FindJobCommand selects Job objects to display by matching the keyword with the Job Title, Location or Tags, and lists all matches in the JobListPanel.
 
-// end::jobposting4[]
+// end::listandfind[]
+
 ==== Design Considerations
 **Aspect:** Implementation of additional Skill parameter for Person and Job +
 
