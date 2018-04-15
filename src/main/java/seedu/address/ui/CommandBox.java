@@ -104,6 +104,7 @@ public class CommandBox extends UiPart<Region> {
         replaceText(historySnapshot.next());
     }
 
+    //@@author ChengSashankh
     /**
      * Updates the text field with the suggested text by auto-correct,
      * if there exists a suggestion.
@@ -149,6 +150,7 @@ public class CommandBox extends UiPart<Region> {
         }
         replaceText(chosenString);
     }
+    //@@author
 
     /**
      * Sets {@code CommandBox}'s text field with {@code text} and

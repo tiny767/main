@@ -17,6 +17,7 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.events.ui.JumpToJobListRequestEvent;
 import seedu.address.model.job.Job;
 
+//@@author ChengSashankh
 public class JobListPanelTest extends GuiUnitTest {
     private static final ObservableList<Job> TYPICAL_JOB =
             FXCollections.observableList(getTypicalJobs());
@@ -58,3 +59,4 @@ public class JobListPanelTest extends GuiUnitTest {
     }
 
 }
+//@@author

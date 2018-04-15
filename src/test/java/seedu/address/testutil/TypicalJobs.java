@@ -8,6 +8,7 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.job.Job;
 import seedu.address.model.job.exceptions.DuplicateJobException;
 
+//@@author ChengSashankh
 /**
  * A utility class containing a list of {@code Job} objects to be used in tests.
  */
@@ -48,3 +49,4 @@ public class TypicalJobs {
         return new ArrayList<>(Arrays.asList(FRONTEND, BACKEND));
     }
 }
+//@@author

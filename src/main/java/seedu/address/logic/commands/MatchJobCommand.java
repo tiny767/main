@@ -8,7 +8,7 @@ import seedu.address.model.job.PersonMatchesJobPredicate;
 
 //@@author ChengSashankh
 /**
- * Finds and lists all persons in address book whose profiles match the job posting.
+ * Finds and lists all persons in address book whose location, skills or tags match the job posting.
  * Keyword matching is case sensitive.
  */
 public class MatchJobCommand extends Command {
@@ -16,7 +16,7 @@ public class MatchJobCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Matches all persons whose profiles match job posting "
             + "the specified keywords (case-sensitive) and displays them as a list with index numbers.\n"
-            + "Parameters: JOB INDEX...\n"
+            + "Parameters: INDEX...\n"
             + "Example: " + COMMAND_WORD + " 1";
 
     private PersonMatchesJobPredicate predicate;

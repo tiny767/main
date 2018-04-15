@@ -9,15 +9,19 @@ import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.AddInterviewCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.DeleteInterviewCommand;
 import seedu.address.logic.commands.DeleteJobCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditJobCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FacebookLoginCommand;
 import seedu.address.logic.commands.FindCommand;
+import seedu.address.logic.commands.FindInterviewCommand;
+import seedu.address.logic.commands.FindJobCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.ListInterviewCommand;
 import seedu.address.logic.commands.ListJobsCommand;
 import seedu.address.logic.commands.MatchJobCommand;
 import seedu.address.logic.commands.PostJobCommand;
@@ -38,7 +42,7 @@ public class CommandCorrection {
     public static final String MATCH_FOUND_FEEDBACK_TO_USER = "Auto-completions: %1$s";
     public static final String NO_MATCHES_FEEDBACK_TO_USER = "No matching command completion found. "
             + "Try SPACE key for auto-correct.";
-    private static final int NUMBER_ALPHABET = 26;
+    private static final int NUMBER_ALPHABET = 52;
     private static final int START_INDEX = 0;
 
     private static boolean isFirstCall = true;
@@ -49,6 +53,8 @@ public class CommandCorrection {
     private static String recentInput;
     private static String recentSuggestion;
     private static int tabCounter = 0;
+
+    //==================================== Common methods ====================================================
 
     public CommandCorrection() {
         createDictionary();
@@ -76,6 +82,7 @@ public class CommandCorrection {
         commandDictionary.add(EditCommand.COMMAND_WORD);
         commandDictionary.add(EditJobCommand.COMMAND_WORD);
         commandDictionary.add(FindCommand.COMMAND_WORD);
+        commandDictionary.add(FindJobCommand.COMMAND_WORD);
         commandDictionary.add(HelpCommand.COMMAND_WORD);
         commandDictionary.add(HistoryCommand.COMMAND_WORD);
         commandDictionary.add(ListCommand.COMMAND_WORD);
@@ -90,6 +97,9 @@ public class CommandCorrection {
         commandDictionary.add(ViewCommand.COMMAND_WORD);
         commandDictionary.add(ExitCommand.COMMAND_WORD);
         commandDictionary.add(AddInterviewCommand.COMMAND_WORD);
+        commandDictionary.add(DeleteInterviewCommand.COMMAND_WORD);
+        commandDictionary.add(ListInterviewCommand.COMMAND_WORD);
+        commandDictionary.add(FindInterviewCommand.COMMAND_WORD);
         commandDictionary.add(FacebookLoginCommand.COMMAND_WORD);
         commandDictionary.add(ThemeCommand.COMMAND_WORD);
         commandDictionary.add(HistoryCommand.COMMAND_WORD);
@@ -213,6 +223,9 @@ public class CommandCorrection {
 
     //==================================== Auto-correct methods ============================================
 
+    /***
+     * Sets up CommandCorrection by creating the dictionary.
+     */
     public static void setUpCommandCorrection() {
         createDictionary();
     }
@@ -223,8 +236,7 @@ public class CommandCorrection {
     public static String extractCommandWord(String commandText) {
         String trimmedCommandText = commandText.trim();
         String[] wordsInCommandText = trimmedCommandText.split(" ");
-        commandParameters = commandText;
-        commandParameters = commandParameters.replace(wordsInCommandText[0], "");
+        commandParameters = trimmedCommandText.replace(wordsInCommandText[0], "");
         return wordsInCommandText[0];
     }
 
@@ -283,7 +295,7 @@ public class CommandCorrection {
      * @returns a corrected String, if available. Else returns the same string.
      */
     public static String addOneCharacter(String commandText) {
-        String alphabetString = "abcdefghijklmnopqrstuvwxyz";
+        String alphabetString = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
         for (int i = 0; i < NUMBER_ALPHABET; i++) {
             char alphabet = alphabetString.charAt(i);
@@ -322,4 +334,4 @@ public class CommandCorrection {
     }
 }
 
-//@@author ChengSashankh
+//@@author

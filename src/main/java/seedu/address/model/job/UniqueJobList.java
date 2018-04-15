@@ -13,6 +13,7 @@ import seedu.address.model.job.exceptions.DuplicateJobException;
 import seedu.address.model.job.exceptions.JobNotFoundException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
+//@@author ChengSashankh
 /**
  * A list of jobs that enforces uniqueness between its elements and does not allow nulls.
  *
@@ -122,14 +123,4 @@ public class UniqueJobList implements Iterable<Job> {
         return internalList.hashCode();
     }
 }
-
-
-
-
-
-
-
-
-
-
-
+//@@author

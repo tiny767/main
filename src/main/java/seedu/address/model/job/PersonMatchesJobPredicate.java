@@ -6,10 +6,10 @@ import java.util.function.Predicate;
 
 import seedu.address.model.person.Person;
 
+//@@author ChengSashankh
 /**
  * Tests that a {@code Person}'s {@code skills, address or tags} matches any of the keywords given.
  */
-
 public class PersonMatchesJobPredicate implements Predicate<Person> {
     private final List<String> keywords;
     private final boolean notLocationBound;
@@ -167,3 +167,4 @@ public class PersonMatchesJobPredicate implements Predicate<Person> {
                         (PersonMatchesJobPredicate) other).keywords)); // state check
     }
 }
+//@@author

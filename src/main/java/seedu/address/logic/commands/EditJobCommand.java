@@ -23,9 +23,9 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.job.Job;
 import seedu.address.model.job.JobTitle;
 import seedu.address.model.job.Location;
-import seedu.address.model.job.Skill;
 import seedu.address.model.job.exceptions.DuplicateJobException;
 import seedu.address.model.job.exceptions.JobNotFoundException;
+import seedu.address.model.skill.Skill;
 import seedu.address.model.tag.Tag;
 
 //@@author ChengSashankh
@@ -45,14 +45,13 @@ public class EditJobCommand extends UndoableCommand {
             + "[" + PREFIX_JOBTITLE + "JOBTITLE] "
             + "[" + PREFIX_LOCATION + "LOCATION] "
             + "[" + PREFIX_SKILLS + "SKILLS] "
-            + "[" + PREFIX_TAG + "TAG]... | "
+            + "[" + PREFIX_TAG + "TAG]... | \n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_JOBTITLE + "Backend Engineer "
             + PREFIX_LOCATION + "Singapore\n"
             + "To modify tags (case-sensitive): \n"
             + COMMAND_WORD + " -" + COMMAND_OPTION_ADD_TAG + " INDEX t/[" + PREFIX_TAG + "TAG] to add one tag \n"
             + COMMAND_WORD + " -" + COMMAND_OPTION_DELETE_TAG + " INDEX t/[" + PREFIX_TAG + "TAG] to delete one tag";
-
 
     public static final String MESSAGE_EDIT_JOB_SUCCESS = "Edited Job: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
@@ -251,7 +250,7 @@ public class EditJobCommand extends UndoableCommand {
             Location updatedLocation = getLocation().orElse(jobToEdit.getLocation());
             Skill updatedSkill = getSkill().orElse(jobToEdit.getSkills());
 
-            //@@author
+            //Adapted from EditCommand - writted by @anh2111
 
             Set<Tag> updatedTags;
             Set<Tag> jobTags = new HashSet<>(jobToEdit.getTags());
@@ -273,7 +272,6 @@ public class EditJobCommand extends UndoableCommand {
                 updatedTags = jobTags;
             }
 
-            //@@author ChengSashankh
             return new Job(updatedJobTitle, updatedLocation, updatedSkill, updatedTags);
         }
 
