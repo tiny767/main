@@ -509,9 +509,8 @@ Want to add a newly available job vacancy to IB and match candidates to this rol
 [NOTE]
 Job postings are matched to candidates on the basis of location, skills and tags. To neglect any of these during matching, set the field to 'ALL'.
 
-
+.PostJob Command adds Jobs into the Job Postings panel as shown.
 image::postjob.JPG.png[width="500"]
-Figure : PostJob Command adds Jobs into the Job Postings panel as shown.
 
 //end::jobposting[]
 
@@ -531,8 +530,8 @@ by the newly specified set of tags. This implementation mirrors the edit command
 [NOTE]
 At least one field must be provided for the edit command to function as expected.
 
+.`editjob` edits the first job posting as marked in diagram.
 image::editjob.JPG.png[width="500"]
-Figure : `editjob` edits the first job posting as marked in diagram.
 
 //end::editjob[]
 //tag::jobpostingdelete[]
@@ -544,8 +543,8 @@ Want to remove a job posting from IB after creating? IB provides a `deletejob` c
 
 *Examples:* `deletejob 1`
 
+.`deletejob` deletes the job posting at the specified index in the most recent listing from Figure as shown.
 image::deletejob.JPG.png[width="500"]
-Figure : `deletejob` deletes the job posting at the specified index in the most recent listing from Figure as shown.
 
 [NOTE]
 ====
@@ -565,8 +564,8 @@ Job matching is done on the basis of location, skills and tags. To disregard a p
 
 *Example:* `matchjob 1`
 
+.MatchJob command filters the Candidates as per Job, as shown above.
 image::matchJob.JPG.png[width="500"]
-Figure : MatchJob command filters the Candidates as per Job, as shown above.
 //end::jobpostingmatch[]
 
 //tag::jobpostinglist[]
@@ -592,8 +591,8 @@ Finds jobs whose job titles, locations, or tags contain any of the given keyword
 *Example:* `findjob Backend Geylang` +
 Returns `Backend Engineer`, `Frontend Engineer`, and `Backend Tester` whose job titles and locations match with the given keywords.
 
+.Job list after finding with keywords `backend` and `geylang`.
 image::findjob.png[width="700"]
-_Figure._ Job list after finding with keywords `backend` and `geylang`.
 
 //end::jobpostinglist[]
 
@@ -607,9 +606,8 @@ This section describes command available for managing interview in the Infinity 
 * *Format:* `addInterview i/Interview Title n/Interviewee l/LOCATION d/DATE`
 * *Examples:* `addInterview i/SE Interview n/John l/One North d/30.1.2018`
 
-
+.Add Interview command adds a new interview, as shown above.
 image::addInterviewCommand.png[width="300"]
-Figure 5.1: Add Interview command adds a new interview, as shown above.
 
 - Add the interview with predicate name, location, and date
 - Displays the added interview in list of Interview panel.
@@ -619,16 +617,16 @@ Figure 5.1: Add Interview command adds a new interview, as shown above.
 * *Format:* `listInterview`
 * *Example:* `listInterview`
 
+.List Interview command lists all interviews, as shown above.
 image::ListInterview.png[width="300"]
-Figure 5.2: List Interview command lists all interviews, as shown above.
 
 ==== Delete Interview
 * *Description:* Remove an interview from Infinity Book using the index from latest listing.
 * *Format:* `deleteInterview INDEX`
 * *Examples:* `deleteInterview 1`
 
+.List Interview command lists all interviews, as shown above.
 image::DeleteInterview.png[width="300"]
-Figure 5.3: List Interview command lists all interviews, as shown above.
 
 ****
 * Deletes the interview at the specified `INDEX`.
