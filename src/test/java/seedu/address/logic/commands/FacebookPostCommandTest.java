@@ -7,6 +7,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+//@@author tiny767
 public class FacebookPostCommandTest {
 
     @Rule

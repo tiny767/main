@@ -17,7 +17,7 @@ import seedu.address.commons.events.ui.BrowserUrlChangedEvent;
 import seedu.address.logic.commands.FacebookLoginCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 
-
+//@@author tiny767
 /**
  * The Facebook Panel of the App, used for facebook authentication and displaying profile
  */
