@@ -250,7 +250,7 @@ public class EditJobCommand extends UndoableCommand {
             Location updatedLocation = getLocation().orElse(jobToEdit.getLocation());
             Skill updatedSkill = getSkill().orElse(jobToEdit.getSkills());
 
-            //@@author
+            //Adapted from EditCommand
 
             Set<Tag> updatedTags;
             Set<Tag> jobTags = new HashSet<>(jobToEdit.getTags());
@@ -272,7 +272,6 @@ public class EditJobCommand extends UndoableCommand {
                 updatedTags = jobTags;
             }
 
-            //@@author ChengSashankh
             return new Job(updatedJobTitle, updatedLocation, updatedSkill, updatedTags);
         }
 

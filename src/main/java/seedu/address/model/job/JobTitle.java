@@ -3,6 +3,7 @@ package seedu.address.model.job;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
+//@@author ChengSashankh
 /**
  * Represents a Job's title in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidTitle(String)}
@@ -55,3 +56,4 @@ public class JobTitle {
         return fullTitle.hashCode();
     }
 }
+//@@author

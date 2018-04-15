@@ -8,7 +8,7 @@ import seedu.address.model.job.PersonMatchesJobPredicate;
 
 //@@author ChengSashankh
 /**
- * Finds and lists all persons in address book whose profiles match the job posting.
+ * Finds and lists all persons in address book whose location, skills or tags match the job posting.
  * Keyword matching is case sensitive.
  */
 public class MatchJobCommand extends Command {

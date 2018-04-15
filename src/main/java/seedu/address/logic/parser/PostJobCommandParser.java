@@ -19,13 +19,14 @@ import seedu.address.model.skill.Skill;
 import seedu.address.model.tag.Tag;
 
 /***
- * Parses input arguments and creates a new PostJobCommand object
+ * Parses input arguments in the context of the PostJobCommand
+ * and creates a new PostJobCommand object
  */
 
 public class PostJobCommandParser implements Parser<PostJobCommand> {
     /**
-     * Parses the given {@code String} of arguments in the context of the AddCommand
-     * and returns an AddCommand object for execution.
+     * Parses the given {@code String} of arguments in the context of the PostJobCommand
+     * and returns an PostJobCommand object for execution.
      * @throws ParseException if the user input does not conform the expected format
      */
     public PostJobCommand parse(String args) throws ParseException {

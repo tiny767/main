@@ -111,6 +111,8 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.addReport(report);
         indicateAddressBookChanged();
     }
+
+    //@@author ChengSashankh
     //=========== Filtered Job List Accessors =============================================================
 
     @Override
@@ -130,15 +132,15 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void updateFilteredJobList(Predicate<Job> predicate) {
-        requireNonNull(predicate);
-        filteredJobs.setPredicate(predicate);
-    }
-
-    @Override
     public synchronized void deleteJob(Job target) throws JobNotFoundException {
         addressBook.removeJob(target);
         indicateAddressBookChanged();
+    }
+
+    @Override
+    public void updateFilteredJobList(Predicate<Job> predicate) {
+        requireNonNull(predicate);
+        filteredJobs.setPredicate(predicate);
     }
 
     /**
@@ -149,6 +151,8 @@ public class ModelManager extends ComponentManager implements Model {
     public ObservableList<Job> getFilteredJobList() {
         return FXCollections.unmodifiableObservableList(filteredJobs);
     }
+
+    //@@author
 
     //=========== Filtered Person List Accessors =============================================================
 

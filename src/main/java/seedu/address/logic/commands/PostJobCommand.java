@@ -12,7 +12,7 @@ import seedu.address.model.job.exceptions.DuplicateJobException;
 
 //@@author ChengSashankh
 /***
- * Adds a job posting to the infinity book.
+ * Posts/adds a job posting to the infinity book.
  */
 public class PostJobCommand extends UndoableCommand {
 
@@ -37,7 +37,7 @@ public class PostJobCommand extends UndoableCommand {
     private final Job toAdd;
 
     /**
-     * Creates an AddCommand to add the specified {@code Job}
+     * Creates an PostJobCommand to add the specified {@code Job}
      */
     public PostJobCommand(Job job) {
         requireNonNull(job);

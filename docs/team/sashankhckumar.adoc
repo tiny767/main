@@ -2,7 +2,7 @@
 :imagesDir: ../images
 :stylesDir: ../stylesheets
 
-== PROJECT: Infinity Book - Level 4
+== PROJECT: Infinity Book
 
 ---
 
@@ -14,16 +14,22 @@ IB provides *end-to-end support*, from searching for candidates,to adding job po
 
 == Summary of contributions
 
-* *Major enhancement*: added *the ability to add job postings*
-** What it does: allows the recruiter to add a job posting along with preferred location, skills, tags and position title.
-** Justification: This feature makes all the information in the Infinity Book useful to a recruiter by providing a direct method to match and access relevant data on the Infinity Book for their job.
-** Highlights: This enhancement modifies the structure of the model and data handling in the entire application was modified to suit an additional primary data list. Implementation required many changes to the testing tools of the Infinity Book as well.
+. *Major enhancement*: *Job Postings*
 
-* *Minor enhancement*: implemented an auto-correct and auto-complete feature that assists users enter the correct commands in the Infinity Book, catching one edit distance corrections.
+** *What it does*:Allows the recruiter to add a job posting along with preferred location, skills, tags and position title. These jobs can be matched to candidate automatically, or edited, listed, searched and deleted.
+** *Justification*: This feature makes all the information in the Infinity Book useful to a recruiter by providing a direct method to match and access relevant data on the Infinity Book for their job.
+** *Highlights*:
+*** For meaningful implementation of job matching, this enhancement adds a skills field to both Person and Job. This field details the skills possessed by a candidate and those required by the job.
+*** This enhancement modifies the structure of the model and data handling in the entire application was modified to suit an additional primary data list. Implementation required many changes to the testing tools of the Infinity Book as well.
 
-* *Minor enhancement*: implemented a skills command and introduced an additional skills field for each candidate in the Infinity Book to allows users to store more relevant information about each candidate.
+. *Minor enhancement*: Auto-correct and auto-complete
+** *What it does*: Allows the recruiter to auto-complete and auto-correct command words automatically.
+** *Justification*: This feature allows the recruiter to interact with the command line interface with increased accuracy.
+** *Highlights*:
+*** Auto-correct finds and corrects misspelt command words at one edit distance even in copy pasted commands without affecting arguments.
+*** Auto-complete cycles through all possible completion on multiple key press.
 
-* *Code contributed*: [https://github.com/CS2103JAN2018-W11-B3/main/blob/master/collated/functional/ChengSashankh.md[Functional code]] [https://github.com/CS2103JAN2018-W11-B3/main/blob/master/collated/test/ChengSashankh.md[Test code]]
+. *Code contributed*: [https://github.com/CS2103JAN2018-W11-B3/main/blob/master/collated/functional/ChengSashankh.md[Functional code]] [https://github.com/CS2103JAN2018-W11-B3/main/blob/master/collated/test/ChengSashankh.md[Test code]]
 
 * *Other contributions*:
 

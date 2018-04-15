@@ -10,7 +10,7 @@ We are a team based in the http://www.comp.nus.edu.sg[School of Computing, Natio
 
 === Sashankh Chengavalli Kumar
 image::Sashankh.jpg[width="150", align="left"]
-{empty}[https://github.com/ChengSashankh[github]] [<<johndoe#, portfolio>>]
+{empty}[https://github.com/ChengSashankh[github]] [<<ChengSashankh#, portfolio>>]
 
 Role: Developer +
 Responsibilities: Model and Documentation

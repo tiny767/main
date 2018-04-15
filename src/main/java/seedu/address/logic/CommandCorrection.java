@@ -54,6 +54,8 @@ public class CommandCorrection {
     private static String recentSuggestion;
     private static int tabCounter = 0;
 
+    //==================================== Common methods ====================================================
+
     public CommandCorrection() {
         createDictionary();
         latestSuggestionsList = new ArrayList<String>();
@@ -221,6 +223,9 @@ public class CommandCorrection {
 
     //==================================== Auto-correct methods ============================================
 
+    /***
+     * Sets up CommandCorrection by creating the dictionary.
+     */
     public static void setUpCommandCorrection() {
         createDictionary();
     }
@@ -329,4 +334,4 @@ public class CommandCorrection {
     }
 }
 
-//@@author ChengSashankh
+//@@author

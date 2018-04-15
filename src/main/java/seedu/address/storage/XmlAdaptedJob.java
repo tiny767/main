@@ -15,6 +15,7 @@ import seedu.address.model.job.Location;
 import seedu.address.model.skill.Skill;
 import seedu.address.model.tag.Tag;
 
+//@@author ChengSashankh
 /**
  * JAXB-friendly version of the Job.
  */
@@ -64,7 +65,7 @@ public class XmlAdaptedJob {
     }
 
     /**
-     * Converts this jaxb-friendly adapted job object into the model's job object.
+     * Converts this jaxb-friendly adapted job object into the model's {@code Job} object.
      *
      * @throws IllegalValueException if there were any data constraints violated in the adapted job
      */
@@ -122,4 +123,4 @@ public class XmlAdaptedJob {
     }
 }
 
-
+//@@author
