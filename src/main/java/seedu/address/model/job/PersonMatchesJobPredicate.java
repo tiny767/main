@@ -11,23 +11,28 @@ import seedu.address.model.person.Person;
  * Tests that a {@code Person}'s {@code skills, address or tags} matches any of the keywords given.
  */
 public class PersonMatchesJobPredicate implements Predicate<Person> {
-    private final List<String> keywords;
+    private final List<String> locationKeywords;
+    private final List<String> skillsKeywords;
+    private final List<String> tagsKeywords;
+
     private final boolean notLocationBound;
     private final boolean notTagsBound;
     private final boolean notSkillsBound;
 
     public PersonMatchesJobPredicate(Job job) {
-        this.keywords = new ArrayList<String>();
+        this.locationKeywords = new ArrayList<String>();
+        this.tagsKeywords = new ArrayList<String>();
+        this.skillsKeywords= new ArrayList<String>();
 
         for (String entry : job.getSkills().getSkillSet()) {
             if (!(entry.compareTo("ALL") == 0)) {
-                this.keywords.add(entry);
+                this.skillsKeywords.add(entry);
             }
         }
 
         for (String entry : job.getLocation().toString().split(",")) {
             if (!(entry.compareTo("ALL") == 0)) {
-                this.keywords.add(entry);
+                this.locationKeywords.add(entry);
             }
         }
 
@@ -36,7 +41,7 @@ public class PersonMatchesJobPredicate implements Predicate<Person> {
                 entry = entry.trim();
                 entry = entry.replaceAll("\\[", "");
                 entry = entry.replaceAll("\\]", "");
-                this.keywords.add(entry);
+                this.tagsKeywords.add(entry);
             }
         }
 
@@ -57,11 +62,11 @@ public class PersonMatchesJobPredicate implements Predicate<Person> {
         String toMatchPersonTags = setUpTagsSearch(person, stringBuilder);
 
         boolean locationMatch =
-                keywords.stream().anyMatch(keyword -> toMatchPersonAddress.contains(keyword.toLowerCase()));
+                locationKeywords.stream().anyMatch(keyword -> toMatchPersonAddress.contains(keyword.toLowerCase()));
         boolean skillsMatch =
-                keywords.stream().anyMatch(keyword -> toMatchPersonSkills.contains(keyword.toLowerCase()));
+                skillsKeywords.stream().anyMatch(keyword -> toMatchPersonSkills.contains(keyword.toLowerCase()));
         boolean tagsMatch =
-                keywords.stream().anyMatch(keyword -> toMatchPersonTags.contains(keyword.toLowerCase()));
+                tagsKeywords.stream().anyMatch(keyword -> toMatchPersonTags.contains(keyword.toLowerCase()));
 
         locationMatch = isLocationMatchSatisfied(locationMatch);
         skillsMatch = isSkillsMatchSatisfied(skillsMatch);
@@ -163,8 +168,12 @@ public class PersonMatchesJobPredicate implements Predicate<Person> {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof PersonMatchesJobPredicate// instanceof handles nulls
-                && this.keywords.equals((
-                        (PersonMatchesJobPredicate) other).keywords)); // state check
+                && this.locationKeywords.equals((
+                        (PersonMatchesJobPredicate) other).locationKeywords)
+                && this.skillsKeywords.equals((
+                (PersonMatchesJobPredicate) other).skillsKeywords)
+                && this.tagsKeywords.equals((
+                (PersonMatchesJobPredicate) other).tagsKeywords)); // state check
     }
 }
 //@@author
