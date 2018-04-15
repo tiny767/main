@@ -452,6 +452,7 @@ keywords.stream()
 **Alternative 1 (current choice):** Search for all `Name`, `Tags`, `Email`, and `Phone` +
 **Pros:** User does not need to learn additional commands. +
 **Cons:** There can be unintended results, but since the set of keywords to search for each field does not overlap with each other, so such unintended results are very rare. +
+
 **Alternative 2:** Allow users to opt searching for one field in `Name`, `Tags`, `Email`, or `Phone`  +
 **Pros:** User can narrow down the search result. +
 **Cons:** User has to remember additional syntax.
@@ -462,6 +463,7 @@ keywords.stream()
 **Alternative 1 (current choice):** Return Persons whose `Name`, `Tags`, `Email`, or `Phone` have at least one keyword in the input keywords. +
 **Pros:** User can do a wider search when he or she does not remember candidates' information clearly. +
 **Cons:** User hardly does a detailed search. +
+
 **Alternative 2:** Return Persons whose `Name`, `Tags`, `Email`, or `Phone` have all input keywords. +
 **Pros:** User can narrow down the search results. +
 **Cons:** In some cases, user cannot do a more general search.
@@ -534,11 +536,12 @@ public Person createEditedPerson(Person personToEdit) {
 }
 ----
 
-==== Design Considerations*
+==== Design Considerations
 **Aspect:** Implementation of removing/adding tags +
 **Alternative 1 (current choice):** Modify `EditPersonDescriptor` in `EditCommand` +
 **Pros:** Prevent overlapping codes. +
 **Cons:** Modify other details (e.g. Name, Phone, Address,...) apart from Tags. +
+
 **Alternative 2:** Write a new EditPersonDescriptor for this command +
 **Pros:** Maintain the current `edit` logic and behaviour. +
 **Cons:** Duplicate the exact code, which may cause a lot of hassles in future development.
@@ -549,6 +552,7 @@ public Person createEditedPerson(Person personToEdit) {
 **Alternative 1 (current choice):** Add `COMMAND_OPTION` (`-add-tag` and `-delete-tag`) to the current `edit` command. +
 **Pros:** Adding or removing tags is indeed editing a Person's details, so it makes complete sense to perform this action using `edit` command and reduces the number of commands that user has to remember.  +
 **Cons:** Have to modify the parser so that it can extract the option. +
+
 **Alternative 2:** Using two new commands for adding and removing tags +
 **Pros:** It is easier to parse the command.   +
 **Cons:** User has to remember more commands.
@@ -636,9 +640,8 @@ User can view a report using `viewreport` command and save a report for future r
 
 For each report, all statistics details are encapsulated within the `Report` class. We use one `UniqueReportList` to keep all `Report` that user has saved.
 
+.Report as a part in the structure of Model Component of Infinity Book
 image::report_model.jpg[width="700"]
-
-Figure 9. Report as a part in the structure of Model Component of Infinity Book
 
 **Calculating statistics:**
 
@@ -691,9 +694,8 @@ public void updateReport(Tag population) {
 
 We keep `UniqueReportList` persistently in XML files.
 
+.`XmlAdaptedReport` in the structure of Storage Component of Infinity Book.
 image::ReportStorageDiagram.jpg[width="700"]
-
-Figure 10. `XmlAdaptedReport` in the structure of Storage Component of Infinity Book.
 
 One example of `Report` details stored in xml file:
 
@@ -731,24 +733,21 @@ One example of `Report` details stored in xml file:
 
 The below sequence diagram show interactions within `Logic` component when user executes `viewreport pop/CS`.
 
+.Interactions Inside the Logic Component for the `viewreport pop/CS` Command
 image::ViewReportDiagram.jpg[width="700"]
-
-Figure. Interactions Inside the Logic Component for the `viewreport pop/CS` Command
 
 ===== UI Component
 
 'ReportPanel' extends `UiPart<Region>` and shares the same region with `BrowserPanel`. When `viewreport` or `savereport` is executed, `MainWindow` class will swap out the `BrowserPanel` for the `ReportPanel`.
 We achieve this by posting `ToggleReportPanelEvent` (showing in the below sequence diagram).
 
-image::EventInteraction.jpg[width="700"]
-
-Figure. Posting event when we execute Report commands.
+.Posting event when we execute Report commands.
+image::ComponentInteractions.jpg[width="700"]
 
 The `EventsCenters` then handles this `Event` and then triggers the update of `Report` instance (as shown in the below seqence diagram).
 
-image::ComponentInteractions.jpg[width="700"]
-
-Figure. Update `Report` instance after the `ToggleReportPanelEvent` is posted
+.Update `Report` instance after the `ToggleReportPanelEvent` is posted
+image::EventInteraction.jpg[width="700"]
 
 ==== Design Considerations
 **Aspect:** Where calculation of statistics in the `Report` should be placed +
@@ -756,6 +755,7 @@ Figure. Update `Report` instance after the `ToggleReportPanelEvent` is posted
 **Pros:**
 Since the calculation requires fetching the list of all Persons in Infinity Book, Defining it in the `ModelManager` to reduce dependency among components. +
 **Cons:**
+
 Have to modify multiple components such as `LogicManager`, `ModelManager`, `Event`. +
 **Alternative 2:** in `Report` class itself +
 **Pros:** Do not require a `Report` instance in Infinity Book, which can be redundant when user does not use. +
@@ -767,6 +767,7 @@ Have to modify multiple components such as `LogicManager`, `ModelManager`, `Even
 **Alternative 1 (current choice):** `ReportPanel` shares the same region with `BrowserPanel` +
 **Pros:** Do not take additional area +
 **Cons:** Have to implement `Event` handling to swap panel +
+
 **Alternative 2:** Use a new panel +
 **Pros:** User can view reports and the browser at the same time.   +
 **Cons:** Add one more panel to the interface. +
@@ -1610,6 +1611,22 @@ These instructions only provide a starting point for testers to work on; testers
 .. Missing data cannot be replaced selectively.
 // TODO: read the comments originally placed here and update this section
 // .. _{explain how to simulate a missing/corrupted file and the expected behavior}_
+
+=== Add new tags to candidates
+
+. Deleting a person while all persons are listed
+
+.. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
+.. Test case: `delete 1` +
+   Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
+.. Test case: `delete 0` +
+   Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
+.. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size) +
+   Expected: Similar to previous.
+
+// TODO: Give more incorrect commands to try.
+
+
 
 link:#top[Back to top]
 
