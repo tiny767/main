@@ -920,9 +920,15 @@ HR may need a tool to manage interview efficiently. The Infinity Book will
 need interview model with basic features including adding interview, listing
 interview, and deleting interview.
 
-* Interview Model:
+* Model Component:
 
 image::InterviewModel.png[width="700"]
+Figure 5.13.1: add Interview Model to Model Component
+
+* Storage Component:
+
+image::InterviewStorage.png[width="700]
+Figure 5.13.2 add XmlAdaptedInterview to Storage Component
 
 ==== Adding an interview
 The recruiter may want to conduct an interview with candidates, and maintain
@@ -945,8 +951,17 @@ according to each candidates. +
 * `AddInterviewCommandParser` class will extract interview title, interviewee name, date,
 and interview location from user input, form a new interview,
 then pass it to `AddInterviewCommand` class.
-* `AddInterviewCommand` will take in the interview and add new Interview to
-storage.
+* `AddInterviewCommand` will take in the interview and call add new Interview to
+storage in model.
+
+[source:Java]
+----
+public synchronized void addInterview(Interview interview) throws DuplicateInterviewException {
+        addressBook.addInterview(interview);
+        updateFilteredInterviewList(PREDICATE_SHOW_ALL_INTERVIEWS);
+        indicateAddressBookChanged();
+}
+----
 
 ==== List interview
 The recruiter may want to take a look at all of the interviews.
@@ -965,7 +980,16 @@ interview when listing all candidates. +
 ** Current implementation details
 * `AddressBookParser` class will parse the command `listInterview` from CLI
 and call ListInterviewCommand.
-* `ListInterviewCommnad` will list all the interviews in storage.
+* `ListInterviewCommand` will call updateFilteredList in model and list all the interviews in storage.
+
+[source:Java]
+----
+
+public void updateFilteredInterviewList(Predicate<Interview> predicate) {
+        requireNonNull(predicate);
+        filteredInterviews.setPredicate(predicate);
+}
+----
 
 ==== Deleting Interview
 After conducted interview, the HR may want to delete the interview from the Infinity Book.
@@ -975,6 +999,7 @@ Aspects: Implementation of deleting an interview:
 **Alternative 1:** (current choice) create deleting command for deleting interview by index +
 **Pros:** It can be easily to use follow the index of listing interview command +
 **Cons:** It requires users to use two commands +
+
 **Alternative 2:** create deleting command for deleting interview by name. +
 **Pros:** It requires addtional tools to match interview +
 **Cons:** It is easier for user to use.
@@ -984,6 +1009,16 @@ Aspects: Implementation of deleting an interview:
 to be deleted and pass in to `DeleteInterviewCommand`.
 * `DeleteInterviewCommand` will take in the index and update the interview list
 accordingly.
+
+[source:Java]
+----
+
+public synchronized void deleteInterview(Interview target) throws InterviewNotFoundException {
+        addressBook.removeInterview(target);
+        indicateAddressBookChanged();
+}
+
+----
 
 //end::interviewmanagement[]
 
