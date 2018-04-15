@@ -1039,6 +1039,7 @@ compile group: 'com.restfb', name: 'restfb', version: '2.4.0'
 To use Facebook Graph API, we followed the instruction link:https://developers.facebook.com/docs/apps/register/#create-app[`here`] to create a Facebook Application on the Facebook for developer site
 
 Finishing the steps, we reached this page
+
 .Facebook Application setup page
 image::FacebookAppCreated.png[width="800"]
 
