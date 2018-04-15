@@ -41,7 +41,7 @@ public class RemarkCommand extends UndoableCommand {
 
 
     /**
-     *
+     * Creates a remark command to edit the remark of the specified person based on the index
      * @param index index of the person in the list to modify the remark
      * @param remark content of the remark to be updated
      */

@@ -792,21 +792,53 @@ We use hash code of the tag names to generate a color. This is deliberately desi
 **Pros:** Number of different color is very big (i.e. there is less repetitive color used)   +
 **Cons:** The color for each tag value might be different between app launchs +
 
-=== Display relevant Github or resume page.[coming in v1.4]
+//tag::viewcommand[]
+=== Display relevant Github or resume page. (Since v1.3)
 
 As a candidate may have linked online resume or github page. The recruiter may want
 to consider these pages.
-Aspects: Implementation of removing/adding a linked page.
 
-**Alternative 1:** (current choice): Each person has a page, which is resume or github.
-Add the view command to view a specific person, and view the linked page
-on the browser panel.
-Pros: The page can be linked to the person.
+==== Design Considerations
+**Aspect**: Aspects: Implementation of removing/adding a linked page.
 
+**Alternative 1:**(current choice) Each person has a page, which is resume or github.
+Add the view command to view a specific person, and view the linked page on the browser panel. +
+**Pros:** The page can be linked to the person, and it is easier to view by person's email +
+**Cons:** Need to modify current implementation of person model +
 **Alternative 2:** Add a new command to view specific page, which is hard code URL.
-Hard to maintain the hard code URL.
+**Pros:** No need to modify current person +
+**Cons:** Hard to maintain the hard code URL
 
-link:#top[Back to top]
+==== Implementation details
+* `ViewCommandParser` class will extract emails ID from user input, form a predicate,
+then pass it to `ViewCommand` class.
+* `ViewCommand` will take in the predicate and update the list of Persons by email ID,
+and change the browser panel accordingly.
+source, java]
+----
+public class EmailFilter implements Predicate<Person> {
+    private final String email;
+
+    public EmailFilter (Email email) {
+        this.email = email.toString();
+    }
+
+    @Override
+    public boolean test(Person person) {
+        return person.getEmail().toString().equals(this.email);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof EmailFilter // instanceof handles nulls
+                && this.email.equals(((EmailFilter) other).email)); // state check
+    }
+
+}
+----
+
+//end::viewcommand[]
 
 // tag::autocorrect[]
 === Auto-correct and Auto-complete
@@ -1189,9 +1221,24 @@ UiStyle.getInstance().setToLightTheme();
 
 // end::theme[]
 
-=== Interview Management
+//tag::interviewmanagement[]
+=== Interview Management (Since v1.5rc)
+Interviewing is one of the important steps in recruiting process.
+HR may need a tool to manage interview efficiently. The Infinity Book will
+need interview model with basic features including adding interview, listing
+interview, and deleting interview.
 
-==== Adding an interview (Since v1.4)
+* Model Component:
+
+image::InterviewModel.png[width="700"]
+Figure 5.13.1: add Interview Model to Model Component
+
+* Storage Component:
+
+image::InterviewStorage.png[width="700]
+Figure 5.13.2 add XmlAdaptedInterview to Storage Component
+
+==== Adding an interview
 The recruiter may want to conduct an interview with candidates, and maintain
 an interview lists.
 
@@ -1208,34 +1255,80 @@ according to each candidates. +
 **Pros:** It is easier to implement. +
 **Cons:** It is difficult to search specific interview effectively.
 
-==== List interview (coming v1.5)
+** Current implementation details
+* `AddInterviewCommandParser` class will extract interview title, interviewee name, date,
+and interview location from user input, form a new interview,
+then pass it to `AddInterviewCommand` class.
+* `AddInterviewCommand` will take in the interview and call add new Interview to
+storage in model.
+
+[source:Java]
+----
+public synchronized void addInterview(Interview interview) throws DuplicateInterviewException {
+        addressBook.addInterview(interview);
+        updateFilteredInterviewList(PREDICATE_SHOW_ALL_INTERVIEWS);
+        indicateAddressBookChanged();
+}
+----
+
+==== List interview
 The recruiter may want to take a look at all of the interviews.
 
 Aspects: Implementation of listing all the interviews.
 
 **Alternative 1:** (current choice) create a new command to listing all the interview. +
 **Pros:** It is easier to use and modify. +
-**Cons:** Have to create new comamnd.
+**Cons:** New command is needed.
 
 **Alternative 2:** each candidate has been linked to an interview, listing all the
 interview when listing all candidates. +
 **Pros:** No need to create new command, just need to edit current list comamnd +
 **Cons:** It increases coupling and it is harder to implement.
 
-==== Adding question/answer (coming v2.0)
-The recruiter may want to maintain a list of questions and keep track of candidate's
-answer of each interview.
+** Current implementation details
+* `AddressBookParser` class will parse the command `listInterview` from CLI
+and call ListInterviewCommand.
+* `ListInterviewCommand` will call updateFilteredList in model and list all the interviews in storage.
 
-Aspects: Implementation of adding question/answer:
+[source:Java]
+----
 
-**Alternative 1:** (current choice) create two new command for adding question/answer +
-**Pros:** It can be added the interview questions first and answer later. It can be
-conducted interview in anytime. +
-**Cons:** Create new addtional command.
+public void updateFilteredInterviewList(Predicate<Interview> predicate) {
+        requireNonNull(predicate);
+        filteredInterviews.setPredicate(predicate);
+}
+----
 
-**Alternative 2:** + combining into one command questions/answer +
-**Pros:** It is easier to maintain list answer with respect to questions +
-**Cons:** Cannot add the answer and interview separately.
+==== Deleting Interview
+After conducted interview, the HR may want to delete the interview from the Infinity Book.
+
+Aspects: Implementation of deleting an interview:
+
+**Alternative 1:** (current choice) create deleting command for deleting interview by index +
+**Pros:** It can be easily to use follow the index of listing interview command +
+**Cons:** It requires users to use two commands +
+
+**Alternative 2:** create deleting command for deleting interview by name. +
+**Pros:** It requires addtional tools to match interview +
+**Cons:** It is easier for user to use.
+
+** Current implementation details
+* `DeletingInterviewParser` class will extract the index of the interview needed
+to be deleted and pass in to `DeleteInterviewCommand`.
+* `DeleteInterviewCommand` will take in the index and update the interview list
+accordingly.
+
+[source:Java]
+----
+
+public synchronized void deleteInterview(Interview target) throws InterviewNotFoundException {
+        addressBook.removeInterview(target);
+        indicateAddressBookChanged();
+}
+
+----
+
+//end::interviewmanagement[]
 
 == Documentation
 This project maintains documentation in the docs folder, also accessible through the readme. This documentation is written and maintained using *asciidoc*.

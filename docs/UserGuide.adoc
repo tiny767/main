@@ -1,5 +1,6 @@
 = Infinity Book - User Guide
 :toc:
+:toextract:
 :toclevels: 3
 :toc-title:
 :toc-placement: preamble
@@ -20,10 +21,12 @@ endif::[]
 By: `Team JACKHA (CS2103JAN2018-W11-B3)`      Since: `Jun 2016`      Licence: `MIT`
 
 == Introduction
-
+//tag::introduction[]
 Infinity Book is a desktop application that provides Tech recruiters end-to-end support, from searching for candidates,to adding job postings and saving their resumes and interviews. +
 
 More importantly, IB is *optimized for those who prefer to work with a desktop Command Line Interface* (link:#cli[CLI]) while still having the benefits of a Graphical User Interface (link:#gui[GUI]). If you can type fast, IB can get your candidates management tasks done faster than traditional GUI apps. +
+
+//end::introduction[]
 
 Jump to the <<Quick Start>> to get started. Enjoy!
 
@@ -161,7 +164,7 @@ correct the command word without affecting the argumets entered.
 
 * *Description:* Adds a person to the Infinity Book +
 
-* *Format:* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS l/LINK[t/TAG]...`
+* *Format:* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS l/LINK [t/TAG]...`
 
 * *Examples:* +
 - `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123,
@@ -328,10 +331,11 @@ Returns `Alex Yeoh`, `Charlotte Oliveiro`, and `Alex Smith` whose names and phon
 image::Find.png[width="300"]
 _Figure._ Person list after finding with keywords `Alex` and `93210283`.
 
+//tag::viewcommand[]
 ==== Viewing a person: `view`
 
-* *Description:* Displays the person whose email is the same as given email. +
-* *Format:* `view email`
+* *Description:* viewing the person records and linking page locating by emailID +
+* *Format:* `view EmailID`
 * *Examples:* `view abcd@gmail.com`
 
 image::viewCommand.png[width="300"]
@@ -342,6 +346,19 @@ image::viewCommand.png[width="300"]
 * The email needs to be correct format.
 * Only one person returned since email is unique.
 ****
+
+[NOTE]
+====
+
+* The email needs to be correct format. +
+* Only one person returned since email is unique.
+====
+
+IMPORTANT: If there are two persons with same email, the `viewcommand` will render URL of the first person +
+
+IMPORTANT: When a person has no linked page, it will display black board in the browser panel.
+
+//end::viewcommand[]
 
 ==== Selecting a person : `select`
 
@@ -557,6 +574,7 @@ image::findjob.png[width="700"]
 _Figure._ Job list after finding with keywords `backend` and `geylang`.
 
 // end::jobposting[]
+//tag::interviewmanagement[]
 
 === Managing Interview
 This section describes command available for managing interview in the Infinity Book.
@@ -566,13 +584,36 @@ This section describes command available for managing interview in the Infinity 
 * *Format:* `addInterview i/Interview Title n/Interviewee l/LOCATION d/DATE`
 * *Examples:* `addInterview i/SE Interview n/John l/One North d/30.1.2018`
 
-image::viewCommand.png[width="300"]
+
+image::addInterviewCommand.png[width="300"]
+Figure 5.1: Add Interview command adds a new interview, as shown above.
+
 - Add the interview with predicate name, location, and date
 - Displays the added interview in list of Interview panel.
 
-==== List Interview [Coming in v1.5]
+==== List Interview
+* *Description:* List all interviews of Infinity Book.
+* *Format:* `listInterview`
+* *Example:* `listInterview`
 
-==== Add Question [Coming in v1.5]
+image::ListInterview.png[width="300"]
+Figure 5.2: List Interview command lists all interviews, as shown above.
+
+==== Delete Interview
+* *Description:* Remove an interview from Infinity Book using the index from latest listing.
+* *Format:* `deleteInterview INDEX`
+* *Examples:* `deleteInterview 1`
+
+image::DeleteInterview.png[width="300"]
+Figure 5.3: List Interview command lists all interviews, as shown above.
+
+****
+* Deletes the interview at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+//end::interviewmanagement[]
 
 // tag::facebook[]
 

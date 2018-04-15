@@ -16,7 +16,7 @@ public class JobUtil {
     /**
      * Returns an addjob command string for adding the {@code job}.
      */
-    public static String getAddJobCommand(Job job) {
+    public static String getPostJobCommand(Job job) {
         return PostJobCommand.COMMAND_WORD + " " + getJobDetails(job);
     }
 
