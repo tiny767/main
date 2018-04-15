@@ -225,7 +225,7 @@ and Infinity Book will not show any warning.
 //tag:remark[]
 ==== Add a remark : `remark` [Since v1.1]
 
-* *Description:* Adds or edits remarks to the person identified by the INDEX +
+* *Description:* Adds or edits a remark to the person identified by the INDEX +
 * *Format:* `remark INDEX r/[REMARK]`
 * *Alias:* `rm INDEX r/[REMARK]`
 * *Examples:*
@@ -597,18 +597,24 @@ Otherwise,  the post will be made to facebook wall and you will see a success me
 
 === Miscellaneous
 
+//tag::theme[]
 ==== Changing theme : `theme` [Since v1.3]
-To change the theme of InfinityBook, use the `theme` command. +
 
-*Format:* `theme [THEME_NAME]` or `t [THEME_NAME]`
+* *Description:* Change the theme of InfinityBook +
+* *Format:* `theme [THEME_NAME]` +
+`[THEME_NAME]` can be `morning`, `dark`, or `light`.
+* *Alias:* `t [THEME_NAME]`
+* *Examples:*
 
-`THEME_NAME` can be `morning`, `dark`, or `light`.
+- `theme light` +
+Change the user interface to the 'light' theme
 
-*Examples*:
+[NOTE]
+====
+* [THEME_NAME] is case-insensitive, i.e. user can command `theme mOrning`
+====
 
-* `theme` light
-
-You should see the user interface change to theme Light.
+//end::theme[]
 
 ==== Viewing help : `help`
 * *Description:* Opens the User Guide in a new window +
