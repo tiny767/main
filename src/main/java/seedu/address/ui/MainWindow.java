@@ -89,10 +89,11 @@ public class MainWindow extends UiPart<Stage> {
         setTitle(config.getAppTitle());
         setWindowDefaultSize(prefs);
 
+        //@@author tiny767
         Scene scene = primaryStage.getScene();
         UiTheme.getInstance().setScene(scene);
         primaryStage.setScene(scene);
-
+        //@@author
 
         setAccelerators();
         registerAsAnEventHandler(this);
@@ -179,6 +180,7 @@ public class MainWindow extends UiPart<Stage> {
         browserOrReportPlaceholder.getChildren().add(browserPanel.getRoot());
         isReportPanelOpen = false;
     }
+    //@@author tiny767
     /**
      * Replace the current panel by Facebook panel
      */
@@ -188,6 +190,7 @@ public class MainWindow extends UiPart<Stage> {
         browserOrReportPlaceholder.getChildren().add(facebookPanel.getRoot());
         isReportPanelOpen = false;
     }
+    //@@author
 
     @Subscribe
     private void handleRefreshReportPanel(RefreshReportPanelEvent event) {

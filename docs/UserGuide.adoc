@@ -596,11 +596,11 @@ features that Infinity Book offers.
 [NOTE]
 ====
 * Note that the current Facebook API does not allow an app to post on your behalf. Thus, we need to add your facebook account
-manually to our app in the Facebook Developer platform. +
-* We have nevertheless created a test facebook account for you to try this feature +
+manually to our app in the Facebook Developer platform before you can use this feature. +
+* We have nevertheless created a test facebook account for you to try out this feature +
 * username: infinitybook6@gmail.com +
 * password: 1d2c3b4a +
-* If you have logged in to your personal account and want to switch to this account. Simple re-launch the app.
+* If you have logged in to your personal account and want to switch to this account. Simply re-launch the app.
 ====
 
 
