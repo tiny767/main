@@ -611,7 +611,8 @@ Change the user interface to the 'light' theme
 
 [NOTE]
 ====
-* [THEME_NAME] is case-insensitive, i.e. user can command `theme mOrning`
+* [THEME_NAME] is case-insensitive. +
+* For example, `theme morning` and `theme MORNING` are treated the same
 ====
 
 //end::theme[]
