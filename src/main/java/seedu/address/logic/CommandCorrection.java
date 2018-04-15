@@ -39,7 +39,7 @@ import seedu.address.logic.commands.ViewReportCommand;
  * Auto-correct and auto-completing the command words being typed by the user in the command box.
  */
 public class CommandCorrection {
-    public static final String MATCH_FOUND_FEEDBACK_TO_USER = "Auto-corrected to: %1$s";
+    public static final String MATCH_FOUND_FEEDBACK_TO_USER = "Auto-completions: %1$s";
     public static final String NO_MATCHES_FEEDBACK_TO_USER = "No matching command completion found. "
             + "Try SPACE key for auto-correct.";
     private static final int NUMBER_ALPHABET = 26;

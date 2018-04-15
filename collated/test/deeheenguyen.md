@@ -199,6 +199,163 @@ public class DeleteInterviewCommandTest {
     }
 }
 ```
+###### \java\seedu\address\logic\commands\FindInterviewCommandTest.java
+``` java
+package seedu.address.logic.commands;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static seedu.address.commons.core.Messages.MESSAGE_INTERVIEWS_LISTED_OVERVIEW;
+import static seedu.address.testutil.TypicalInterviews.SE_INTERVIEW;
+import static seedu.address.testutil.TypicalInterviews.getTypicalAddressBook;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
+
+import seedu.address.logic.CommandHistory;
+import seedu.address.logic.UndoRedoStack;
+import seedu.address.model.AddressBook;
+import seedu.address.model.Model;
+import seedu.address.model.ModelManager;
+import seedu.address.model.UserPrefs;
+import seedu.address.model.interview.Interview;
+import seedu.address.model.interview.InterviewMatchInterviewee;
+
+/**
+ * Contains integration tests (interaction with the Model) for {@code FindCommand}.
+ */
+public class FindInterviewCommandTest {
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
+    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+
+    @Test
+    public void equals() {
+        InterviewMatchInterviewee firstPredicate =
+                new InterviewMatchInterviewee ("first");
+        InterviewMatchInterviewee secondPredicate =
+                new InterviewMatchInterviewee("second");
+
+        FindInterviewCommand findFirstCommand = new FindInterviewCommand(firstPredicate);
+        FindInterviewCommand findSecondCommand = new FindInterviewCommand(secondPredicate);
+
+        // same object -> returns true
+        assertTrue(findFirstCommand.equals(findFirstCommand));
+
+        // same values -> returns true
+        FindInterviewCommand findFirstCommandCopy = new FindInterviewCommand(firstPredicate);
+        assertTrue(findFirstCommand.equals(findFirstCommandCopy));
+
+        // different types -> returns false
+        assertFalse(findFirstCommand.equals(1));
+
+        // null -> returns false
+        assertFalse(findFirstCommand.equals(null));
+
+        // different person -> returns false
+        assertFalse(findFirstCommand.equals(findSecondCommand));
+    }
+
+    @Test
+    public void execute_zeroKeywords_noInterviewFound() {
+        String expectedMessage = String.format(MESSAGE_INTERVIEWS_LISTED_OVERVIEW, 0);
+        FindInterviewCommand command = prepareCommand(" ");
+        thrown.expect(IllegalArgumentException.class);
+        assertCommandSuccess(command, expectedMessage, Collections.emptyList());
+    }
+
+    @Test
+    public void execute_oneKeyword_interviewFound() {
+        String expectedMessage = String.format(MESSAGE_INTERVIEWS_LISTED_OVERVIEW, 1);
+        FindInterviewCommand command = prepareCommand("Kelvin");
+        assertCommandSuccess(command, expectedMessage,
+                Arrays.asList(SE_INTERVIEW));
+    }
+
+    /**
+     * Parses {@code userInput} into a {@code FindInterviewCommand}.
+     */
+    private FindInterviewCommand prepareCommand(String userInput) {
+        FindInterviewCommand command =
+                new FindInterviewCommand(new InterviewMatchInterviewee(userInput));
+        command.setData(model, new CommandHistory(), new UndoRedoStack());
+        return command;
+    }
+
+    /**
+     * Asserts that {@code command} is successfully executed, and<br>
+     *     - the command feedback is equal to {@code expectedMessage}<br>
+     *     - the {@code FilteredList<Interview>} is equal to {@code expectedList}<br>
+     *     - the {@code AddressBook} in model remains the same after executing the {@code command}
+     */
+    private void assertCommandSuccess(FindInterviewCommand command, String expectedMessage,
+                                      List<Interview> expectedList) {
+        AddressBook expectedAddressBook = new AddressBook(model.getAddressBook());
+        CommandResult commandResult = command.execute();
+
+        assertEquals(expectedMessage, commandResult.feedbackToUser);
+        assertEquals(expectedList, model.getFilteredInterviewList());
+        assertEquals(expectedAddressBook, model.getAddressBook());
+    }
+}
+```
+###### \java\seedu\address\logic\commands\ListInterviewCommandTest.java
+``` java
+package seedu.address.logic.commands;
+
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.address.logic.commands.CommandTestUtil.showInterviewAtIndex;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_INTERVIEW;
+import static seedu.address.testutil.TypicalInterviews.getTypicalAddressBook;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import seedu.address.logic.CommandHistory;
+import seedu.address.logic.UndoRedoStack;
+import seedu.address.model.Model;
+import seedu.address.model.ModelManager;
+import seedu.address.model.UserPrefs;
+
+
+/**
+ * Contains integration tests (interaction with the Model) and unit tests for ListJobsCommand.
+ */
+public class ListInterviewCommandTest {
+
+    private Model model;
+    private Model expectedModel;
+    private ListInterviewCommand listInterviewCommand;
+
+    @Before
+    public void setUp() {
+        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+
+        listInterviewCommand = new ListInterviewCommand();
+        listInterviewCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+    }
+
+    @Test
+    public void execute_interviewListIsNotFiltered_showsSameList() {
+        assertCommandSuccess(listInterviewCommand, model, ListInterviewCommand.MESSAGE_SUCCESS, expectedModel);
+    }
+
+    @Test
+    public void execute_interviewListIsFiltered_showsEverything() {
+        showInterviewAtIndex(model, INDEX_FIRST_INTERVIEW);
+        assertCommandSuccess(listInterviewCommand, model, ListInterviewCommand.MESSAGE_SUCCESS, expectedModel);
+    }
+}
+```
 ###### \java\seedu\address\logic\parser\AddInterviewCommandParserTest.java
 ``` java
 package seedu.address.logic.parser;
@@ -311,6 +468,302 @@ public class ViewCommandParserTest {
                 new ViewCommand(new EmailFilter(email));
         assertParseSuccess(parser, "john@example.com", expectedViewCommand);
     }
+}
+```
+###### \java\seedu\address\model\interview\DateTest.java
+``` java
+package seedu.address.model.interview;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
+
+import seedu.address.testutil.Assert;
+
+public class DateTest {
+
+    @Test
+    public void constructor_null_throwsNullPointerException() {
+        Assert.assertThrows(NullPointerException.class, () -> new Date(null));
+    }
+
+    @Test
+    public void constructor_invalidPhone_throwsIllegalArgumentException() {
+        String invalidDate = "0.0.0";
+        Assert.assertThrows(IllegalArgumentException.class, () -> new Date(invalidDate));
+    }
+
+    @Test
+    public void isValidDate() {
+        // null date number
+        Assert.assertThrows(NullPointerException.class, () -> Date.isValidDate(null));
+
+        // invalid phone numbers
+        assertFalse(Date.isValidDate("")); // empty string
+        assertFalse(Date.isValidDate(" ")); // spaces only
+        assertFalse(Date.isValidDate("91")); // less than 3 numbers
+        assertFalse(Date.isValidDate("phone")); // non-numeric
+        assertFalse(Date.isValidDate("9011p041")); // alphabets within digits
+        assertFalse(Date.isValidDate("9312 1534")); // spaces within digits
+        assertFalse(Date.isValidDate("31.14.2018")); // invalid month
+
+        // valid phone numbers
+        assertTrue(Date.isValidDate("01.01.2018")); // exactly 3 numbers
+        assertTrue(Date.isValidDate("31.12.2018"));
+        assertTrue(Date.isValidDate("28.02.2018")); // long phone numbers
+    }
+}
+```
+###### \java\seedu\address\model\interview\InterviewMatchIntervieweeTest.java
+``` java
+package seedu.address.model.interview;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
+
+import seedu.address.testutil.InterviewBuilder;
+
+public class InterviewMatchIntervieweeTest {
+
+    @Test
+    public void equals() {
+        String firstPredicateKeywordList = "first";
+        String secondPredicateKeywordList = "second";
+
+        InterviewMatchInterviewee firstPredicate;
+        firstPredicate = new InterviewMatchInterviewee(firstPredicateKeywordList);
+        InterviewMatchInterviewee secondPredicate;
+        secondPredicate = new InterviewMatchInterviewee(secondPredicateKeywordList);
+
+        // same object -> returns true
+        assertTrue(firstPredicate.equals(firstPredicate));
+
+        // same values -> returns true
+        InterviewMatchInterviewee firstPredicateCopy;
+        firstPredicateCopy = new InterviewMatchInterviewee(firstPredicateKeywordList);
+        assertTrue(firstPredicate.equals(firstPredicateCopy));
+
+        // different types -> returns false
+        assertFalse(firstPredicate.equals(1));
+
+        // null -> returns false
+        assertFalse(firstPredicate.equals(null));
+
+        // different person -> returns false
+        assertFalse(firstPredicate.equals(secondPredicate));
+    }
+
+    @Test
+    public void test_matchInterview_returnsTrue() {
+        // One keyword
+        InterviewMatchInterviewee predicate;
+        predicate = new InterviewMatchInterviewee("John");
+        assertTrue(predicate.test(new InterviewBuilder().withInterviewee("John").build()));
+    }
+
+    @Test
+    public void test_matchDoesNotContainKeywords_returnsFalse() {
+
+        InterviewMatchInterviewee predicate;
+        predicate = new InterviewMatchInterviewee("Alice");
+        assertFalse(predicate.test(new InterviewBuilder().withInterviewee("John").build()));
+    }
+}
+```
+###### \java\seedu\address\model\interview\InterviewTitleTest.java
+``` java
+package seedu.address.model.interview;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
+
+import seedu.address.testutil.Assert;
+
+public class InterviewTitleTest {
+
+    @Test
+    public void constructor_null_throwsNullPointerException() {
+        Assert.assertThrows(NullPointerException.class, () -> new InterviewTitle(null));
+    }
+
+    @Test
+    public void constructor_invalidJobTitle_throwsIllegalArgumentException() {
+        String invalidInterviewTitle = "";
+        Assert.assertThrows(IllegalArgumentException.class, () -> new InterviewTitle(invalidInterviewTitle));
+    }
+
+    @Test
+    public void isValidInterviewTitle() {
+        // null name
+        Assert.assertThrows(NullPointerException.class, () -> InterviewTitle.isValidTitle(null));
+
+        // invalid name
+        assertFalse(InterviewTitle.isValidTitle("")); // empty string
+        assertFalse(InterviewTitle.isValidTitle(" ")); // spaces only
+        assertFalse(InterviewTitle.isValidTitle("^")); // only non-alphanumeric characters
+        assertFalse(InterviewTitle.isValidTitle("$$*")); // contains non-alphanumeric characters
+
+        // valid name
+        assertTrue(InterviewTitle.isValidTitle("backend interview")); // alphabets only
+        assertTrue(InterviewTitle.isValidTitle("11111")); // numbers only
+        assertTrue(InterviewTitle.isValidTitle("SE interview")); // alphanumeric characters
+        assertTrue(InterviewTitle.isValidTitle("INTERNSHIP INTERNVIEW")); // with capital letters
+    }
+}
+
+```
+###### \java\seedu\address\model\person\EmailFilterTest.java
+``` java
+package seedu.address.model.person;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
+
+import seedu.address.testutil.PersonBuilder;
+
+public class EmailFilterTest {
+
+    @Test
+    public void equals() {
+        Email firstEmail = new Email("abc@example.com");
+        Email secondEmail = new Email("def@example.com");
+
+        EmailFilter firstPredicate = new EmailFilter(firstEmail);
+        EmailFilter secondPredicate = new EmailFilter(secondEmail);
+
+        // same object -> returns true
+        assertTrue(firstPredicate.equals(firstPredicate));
+
+        // same values -> returns true
+        EmailFilter firstPredicateCopy = new EmailFilter(firstEmail);
+        assertTrue(firstPredicate.equals(firstPredicateCopy));
+
+        // different types -> returns false
+        assertFalse(firstPredicate.equals(1));
+
+        // null -> returns false
+        assertFalse(firstPredicate.equals(null));
+
+        // different person -> returns false
+        assertFalse(firstPredicate.equals(secondPredicate));
+    }
+
+    @Test
+    public void tests() {
+        EmailFilter predicate = new EmailFilter(new Email("abc@example.com"));
+        assertTrue(predicate.test(new PersonBuilder().withEmail("abc@example.com").build()));
+    }
+}
+```
+###### \java\seedu\address\storage\XmlAdaptedInterviewTest.java
+``` java
+package seedu.address.storage;
+
+import static org.junit.Assert.assertEquals;
+import static seedu.address.storage.XmlAdaptedInterview.MISSING_FIELD_MESSAGE_FORMAT;
+import static seedu.address.testutil.TypicalInterviews.SE_INTERVIEW;
+
+import org.junit.Test;
+
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.interview.Date;
+import seedu.address.model.interview.InterviewLocation;
+import seedu.address.model.interview.InterviewTitle;
+import seedu.address.model.person.Name;
+import seedu.address.testutil.Assert;
+
+public class XmlAdaptedInterviewTest {
+    private static final String INVALID_INTERTVIEW_TITLE = "R@chel";
+    private static final String INVALID_DATE = "+651234";
+    private static final String INVALID_INTERVIEW_LOCATION = " ";
+    private static final String INVALID_INTERVIEWEE = "@@__";
+
+    private static final String VALID_INTERVIEW_TITLE = SE_INTERVIEW.getInterviewTitle().toString();
+    private static final String VALID_DATE = SE_INTERVIEW.getDate().toString();
+    private static final String VALID_INTERVIEWEE = SE_INTERVIEW.getInterviewee().toString();
+    private static final String VALID_INTERVIEW_LOCATION = SE_INTERVIEW.getInterviewLocation().toString();
+
+    @Test
+    public void toModelType_validInterviewDetails_returnsInterview() throws Exception {
+        XmlAdaptedInterview interview = new XmlAdaptedInterview(SE_INTERVIEW);
+        assertEquals(SE_INTERVIEW, interview.toModelType());
+    }
+
+    @Test
+    public void toModelType_invalidInterviewTitle_throwsIllegalValueException() {
+        XmlAdaptedInterview interview =
+                new XmlAdaptedInterview(INVALID_INTERTVIEW_TITLE, VALID_INTERVIEWEE, VALID_DATE,
+                        VALID_INTERVIEW_LOCATION);
+        String expectedMessage = InterviewTitle.MESSAGE_TITLE_CONSTRAINTS;
+        Assert.assertThrows(IllegalValueException.class, expectedMessage, interview::toModelType);
+    }
+
+    @Test
+    public void toModelType_nullInterviewTitle_throwsIllegalValueException() {
+        XmlAdaptedInterview interview = new XmlAdaptedInterview(null, VALID_INTERVIEWEE,
+                VALID_DATE, VALID_INTERVIEW_LOCATION);
+        String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, InterviewTitle.class.getSimpleName());
+        Assert.assertThrows(IllegalValueException.class, expectedMessage, interview::toModelType);
+    }
+
+    @Test
+    public void toModelType_invalidInterviewee_throwsIllegalValueException() {
+        XmlAdaptedInterview interview =
+                new XmlAdaptedInterview(VALID_INTERVIEW_TITLE, INVALID_INTERVIEWEE, VALID_DATE,
+                        VALID_INTERVIEW_LOCATION);
+        String expectedMessage = Name.MESSAGE_NAME_CONSTRAINTS;
+        Assert.assertThrows(IllegalValueException.class, expectedMessage, interview::toModelType);
+    }
+
+    @Test
+    public void toModelType_nullInterviewee_throwsIllegalValueException() {
+        XmlAdaptedInterview interview = new XmlAdaptedInterview(VALID_INTERVIEW_TITLE, null, VALID_DATE,
+                VALID_INTERVIEW_LOCATION);
+        String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Name.class.getSimpleName());
+        Assert.assertThrows(IllegalValueException.class, expectedMessage, interview::toModelType);
+    }
+
+    @Test
+    public void toModelType_invalidDate_throwsIllegalValueException() {
+        XmlAdaptedInterview interview =
+                new XmlAdaptedInterview(VALID_INTERVIEW_TITLE, VALID_INTERVIEWEE, INVALID_DATE,
+                        VALID_INTERVIEW_LOCATION);
+        String expectedMessage = Date.MESSAGE_DATE_CONSTRAINTS;
+        Assert.assertThrows(IllegalValueException.class, expectedMessage, interview::toModelType);
+    }
+
+    @Test
+    public void toModelType_nullDate_throwsIllegalValueException() {
+        XmlAdaptedInterview interview = new XmlAdaptedInterview(VALID_INTERVIEW_TITLE, VALID_INTERVIEWEE,
+                null, VALID_INTERVIEW_LOCATION);
+        String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Date.class.getSimpleName());
+        Assert.assertThrows(IllegalValueException.class, expectedMessage, interview::toModelType);
+    }
+
+    @Test
+    public void toModelType_invalidInterviewLocation_throwsIllegalValueException() {
+        XmlAdaptedInterview interview =
+                new XmlAdaptedInterview(VALID_INTERVIEW_TITLE, VALID_INTERVIEWEE, VALID_DATE,
+                        INVALID_INTERVIEW_LOCATION);
+        String expectedMessage = InterviewLocation.MESSAGE_LOCATION_CONSTRAINTS;
+        Assert.assertThrows(IllegalValueException.class, expectedMessage, interview::toModelType);
+    }
+
+    @Test
+    public void toModelType_nullInterviewLocation_throwsIllegalValueException() {
+        XmlAdaptedInterview interview = new XmlAdaptedInterview(VALID_INTERVIEW_TITLE, VALID_INTERVIEWEE, VALID_DATE,
+                null);
+        String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, InterviewLocation.class.getSimpleName());
+        Assert.assertThrows(IllegalValueException.class, expectedMessage, interview::toModelType);
+    }
+
 }
 ```
 ###### \java\seedu\address\testutil\InterviewBuilder.java
