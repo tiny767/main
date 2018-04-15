@@ -222,14 +222,23 @@ image::cannotdeletetag.png[width="600"]
 Figure. Cannot delete tag `computing` from the first candidate. The candidate's details will not be updated,
 and Infinity Book will not show any warning.
 
+//tag:remark[]
 ==== Add a remark : `remark` [Since v1.1]
-//tag::remark[]
-Adds or edits remarks to the person identified by the INDEX
 
-  Format: remark INDEX r/[REMARK]
+* *Description:* Adds or edits remarks to the person identified by the INDEX +
+* *Format:* `remark INDEX r/[REMARK]`
+* *Alias:* `rm INDEX r/[REMARK]`
+* *Examples:*
+-`remark 1 r/Likes to go swimming` +
+Edits the remark for the first person to Likes to drink coffee.
+-`remark 2 r/` +
+Removes the remark for the second person.
 
-  Alias: rm INDEX r/[REMARK]
-
+[NOTE]
+====
+* The index refers to the index number shown in the most recent listing. +
+* The index must be a positive integer 1, 2, 3, …​
+====
 //end::remark[]
 
 [big green]#Examples#:
@@ -237,8 +246,7 @@ Adds or edits remarks to the person identified by the INDEX
 * `remark 1 r/Likes to go swimming` +
 Edits the remark for the first person to Likes to drink coffee.
 
-* `remark 2 r/` +
-Removes the remark for the second person.
+
 
 ==== Deleting a person : `delete`
 
