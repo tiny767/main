@@ -128,7 +128,7 @@ public class EditCommand extends UndoableCommand {
                 && editPersonDescriptor.equals(e.editPersonDescriptor)
                 && Objects.equals(personToEdit, e.personToEdit);
     }
-
+    // @@author anh2111
     /**
      * Stores the details to edit the person with. Each non-empty field value will replace the
      * corresponding field value of the person.
@@ -340,4 +340,5 @@ public class EditCommand extends UndoableCommand {
                     && getTags().equals(e.getTags());
         }
     }
+    // @@author
 }

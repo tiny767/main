@@ -1,3 +1,4 @@
+// @@author anh2111
 package seedu.address.model.report;
 
 import static java.util.Objects.requireNonNull;
@@ -130,3 +131,4 @@ public class UniqueReportList implements Iterable<Report> {
         return internalList.hashCode();
     }
 }
+// @@author

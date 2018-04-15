@@ -159,7 +159,7 @@ public class MainWindow extends UiPart<Stage> {
         CommandBox commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
     }
-
+    // @@author anh2111
     /**
      * Replace the current panel by Report panel
      */
@@ -179,6 +179,7 @@ public class MainWindow extends UiPart<Stage> {
         browserOrReportPlaceholder.getChildren().add(browserPanel.getRoot());
         isReportPanelOpen = false;
     }
+    // @@author
     /**
      * Replace the current panel by Facebook panel
      */
@@ -258,7 +259,7 @@ public class MainWindow extends UiPart<Stage> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
     }
-
+    // @@author anh2111
     @Subscribe
     private void handleToggleBrowserPanelEvent(ToggleBrowserPanelEvent event) {
         switchToBrowserPanel();
@@ -268,10 +269,10 @@ public class MainWindow extends UiPart<Stage> {
     private void handleToggleReportPanelEvent(ToggleReportPanelEvent event) {
         switchToReportPanel();
     }
+    // @@author
 
     @Subscribe
     private void handleToggleFacebookPanelEvent(ToggleFacebookPanelEvent event) {
         switchToFacebookPanel();
     }
-
 }
