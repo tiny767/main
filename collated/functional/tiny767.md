@@ -9,7 +9,6 @@ public class BrowserUrlChangedEvent extends BaseEvent {
 
     public BrowserUrlChangedEvent(String newUrl) {
         this.newUrl = newUrl;
-<<<<<<< HEAD
     }
     public String getNewUrl() {
         return newUrl;
@@ -18,11 +17,6 @@ public class BrowserUrlChangedEvent extends BaseEvent {
     @Override
     public String toString() {
         return this.getClass().getSimpleName();
-=======
-    }
-    public String getNewUrl() {
-        return newUrl;
->>>>>>> 4f5b7fe6c85fc9a1b8a4cf57210391e02ea271fe
     }
 }
 ```
@@ -66,11 +60,7 @@ public class FacebookLoginCommand extends Command {
 
     private static final String FACEBOOK_AUTH_URL =
             "https://graph.facebook.com/oauth/authorize?type=user_agent&client_id=" + FACEBOOK_APP_ID
-<<<<<<< HEAD
                     + "&redirect_uri=" + FACEBOOK_DOMAIN + "&scope=" + FACEBOOK_PERMISSIONS;
-=======
-                    + "&redirect_uri=" + FACEBOOK_DOMAIN + "&scope=publish_actions";
->>>>>>> 4f5b7fe6c85fc9a1b8a4cf57210391e02ea271fe
 
     private static WebEngine webEngine;
 
