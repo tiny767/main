@@ -2099,43 +2099,49 @@ These instructions only provide a starting point for testers to work on; testers
 .. Re-launch the app by double-clicking the jar file. +
    Expected: The most recent window size and location is retained.
 
-=== Deleting a person
+=== Add tags to a candidate
 
-. Deleting a person while all persons are listed
-
-.. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
-.. Test case: `delete 1` +
-   Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
-.. Test case: `delete 0` +
-   Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
-.. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size) +
-   Expected: Similar to previous.
-
-// TODO: Give more incorrect commands to try.
-
-=== Saving data
-
-. Dealing with missing/corrupted data files
-.. Missing data cannot be replaced selectively.
-// TODO: read the comments originally placed here and update this section
-// .. _{explain how to simulate a missing/corrupted file and the expected behavior}_
-
-=== Add new tags to candidates
-
-. Deleting a person while all persons are listed
+. Add new tags to a candidate in the list.
 
 .. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
-.. Test case: `delete 1` +
-   Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
-.. Test case: `delete 0` +
-   Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
-.. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size) +
-   Expected: Similar to previous.
+.. Test case: `edit -add-tag 1 t/Year2 t/SpeakVietnamese` +
+   Expected: Added new tags to the first candidate.
+.. Test case: `edit -add-tag 1 t/Year2` +
+   Expected: Cannot add a new duplicated tag to the first candidate. The candidate’s details will not be updated, and Infinity Book will not show any warning.
 
-// TODO: Give more incorrect commands to try.
+=== Delete tags from a candidate
 
-=======
-=== Viewing a person
+. Delete tags from a candidate in the list.
+
+.. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
+.. Test case: `edit -delete-tag 1 t/computing` +
+   Expected: Cannot delete tag computing from the first candidate. The candidate’s details will not be updated, and Infinity Book will not show any warning
+.. Test case: `edit -delete-tag 1 t/Computing` +
+   Expected: Removes tag Computing from the first candidate.
+
+=== View a report
+
+. View report based on candidates in IB.
+
+.. Test case: `viewreport pop/SEIntern` +
+   Expected: Infinity Book has displayed Report with Population Tag `SEIntern` in the right-most column.
+.. Test case: `viewreport pop/SEIntern pop/Computing` +
+   Expected:  Infinity Book will display the report for Computing.
+
+Report explanation can be found in User Guide.
+
+=== Save a report
+
+. Save report based on candidates in IB.
+
+.. Test case: `savereport pop/SEIntern` +
+   Expected:  Infinity Book has saved Report with population Tag SEIntern. In the right-most column, the history list includes all statistics you have saved.
+.. Test case: `savereport pop/SEIntern pop/Computing` +
+   Expected: Infinity Book will save the report for Computing.
+
+Report explanation can be found in User Guide.
+
+=== View a person
 . Viewing a person by emailID
 .. Test case: `view notexisted@example.com` +
    Expected: person found and no new url display on browser panel
