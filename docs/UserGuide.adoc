@@ -229,9 +229,11 @@ and Infinity Book will not show any warning.
 * *Format:* `remark INDEX r/[REMARK]`
 * *Alias:* `rm INDEX r/[REMARK]`
 * *Examples:*
--`remark 1 r/Likes to go swimming` +
+
+- `remark 1 r/Likes to go swimming` +
 Edits the remark for the first person to Likes to drink coffee.
--`remark 2 r/` +
+
+- `remark 2 r/` +
 Removes the remark for the second person.
 
 [NOTE]
@@ -240,13 +242,6 @@ Removes the remark for the second person.
 * The index must be a positive integer 1, 2, 3, …​
 ====
 //end::remark[]
-
-[big green]#Examples#:
-
-* `remark 1 r/Likes to go swimming` +
-Edits the remark for the first person to Likes to drink coffee.
-
-
 
 ==== Deleting a person : `delete`
 
