@@ -58,6 +58,7 @@ public class PersonCard extends UiPart<Region> {
         initTags(person);
     }
 
+    //@@author tiny767
     /**
      * Sets up a person's tags
      * @param person
@@ -78,6 +79,7 @@ public class PersonCard extends UiPart<Region> {
     private String getTagColorFor(String tagName) {
         return TAG_COLORS[Math.abs(tagName.hashCode()) % TAG_COLORS.length];
     }
+    //@@author
 
     @Override
     public boolean equals(Object other) {

@@ -2,6 +2,7 @@ package seedu.address.ui;
 
 import javafx.scene.Scene;
 
+//@@author tiny767
 /**
  * stores the styles that can be used for the interface
  */

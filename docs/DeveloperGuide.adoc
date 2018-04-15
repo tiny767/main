@@ -458,6 +458,7 @@ keywords.stream()
 **Alternative 1 (current choice):** Search for all `Name`, `Tags`, `Email`, and `Phone` +
 **Pros:** User does not need to learn additional commands. +
 **Cons:** There can be unintended results, but since the set of keywords to search for each field does not overlap with each other, so such unintended results are very rare. +
+
 **Alternative 2:** Allow users to opt searching for one field in `Name`, `Tags`, `Email`, or `Phone`  +
 **Pros:** User can narrow down the search result. +
 **Cons:** User has to remember additional syntax.
@@ -468,6 +469,7 @@ keywords.stream()
 **Alternative 1 (current choice):** Return Persons whose `Name`, `Tags`, `Email`, or `Phone` have at least one keyword in the input keywords. +
 **Pros:** User can do a wider search when he or she does not remember candidates' information clearly. +
 **Cons:** User hardly does a detailed search. +
+
 **Alternative 2:** Return Persons whose `Name`, `Tags`, `Email`, or `Phone` have all input keywords. +
 **Pros:** User can narrow down the search results. +
 **Cons:** In some cases, user cannot do a more general search.
@@ -540,11 +542,12 @@ public Person createEditedPerson(Person personToEdit) {
 }
 ----
 
-==== Design Considerations*
+==== Design Considerations
 **Aspect:** Implementation of removing/adding tags +
 **Alternative 1 (current choice):** Modify `EditPersonDescriptor` in `EditCommand` +
 **Pros:** Prevent overlapping codes. +
 **Cons:** Modify other details (e.g. Name, Phone, Address,...) apart from Tags. +
+
 **Alternative 2:** Write a new EditPersonDescriptor for this command +
 **Pros:** Maintain the current `edit` logic and behaviour. +
 **Cons:** Duplicate the exact code, which may cause a lot of hassles in future development.
@@ -555,6 +558,7 @@ public Person createEditedPerson(Person personToEdit) {
 **Alternative 1 (current choice):** Add `COMMAND_OPTION` (`-add-tag` and `-delete-tag`) to the current `edit` command. +
 **Pros:** Adding or removing tags is indeed editing a Person's details, so it makes complete sense to perform this action using `edit` command and reduces the number of commands that user has to remember.  +
 **Cons:** Have to modify the parser so that it can extract the option. +
+
 **Alternative 2:** Using two new commands for adding and removing tags +
 **Pros:** It is easier to parse the command.   +
 **Cons:** User has to remember more commands.
@@ -619,8 +623,6 @@ if (argWithOption.isOption(EditCommand.COMMAND_OPTION_ADD_TAG)) {
     parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editPersonDescriptor::setNewTags);
 }
 ----
-
-// end::findall[]
 
 === Report (Since v1.4)
 
@@ -744,12 +746,12 @@ image::ViewReportDiagram.jpg[width="700"]
 We achieve this by posting `ToggleReportPanelEvent` (showing in the below sequence diagram).
 
 .Posting event when we execute Report commands.
-image::EventInteraction.jpg[width="700"]
+image::ComponentInteractions.jpg[width="700"]
 
 The `EventsCenters` then handles this `Event` and then triggers the update of `Report` instance (as shown in the below seqence diagram).
 
 .Update `Report` instance after the `ToggleReportPanelEvent` is posted
-image::ComponentInteractions.jpg[width="700"]
+image::EventInteraction.jpg[width="700"]
 
 ==== Design Considerations
 **Aspect:** Where calculation of statistics in the `Report` should be placed +
@@ -757,6 +759,7 @@ image::ComponentInteractions.jpg[width="700"]
 **Pros:**
 Since the calculation requires fetching the list of all Persons in Infinity Book, Defining it in the `ModelManager` to reduce dependency among components. +
 **Cons:**
+
 Have to modify multiple components such as `LogicManager`, `ModelManager`, `Event`. +
 **Alternative 2:** in `Report` class itself +
 **Pros:** Do not require a `Report` instance in Infinity Book, which can be redundant when user does not use. +
@@ -768,17 +771,30 @@ Have to modify multiple components such as `LogicManager`, `ModelManager`, `Even
 **Alternative 1 (current choice):** `ReportPanel` shares the same region with `BrowserPanel` +
 **Pros:** Do not take additional area +
 **Cons:** Have to implement `Event` handling to swap panel +
+
 **Alternative 2:** Use a new panel +
 **Pros:** User can view reports and the browser at the same time.   +
 **Cons:** Add one more panel to the interface. +
 
+---
+
+**Aspect:** Choosing the chart color in Report +
+**Alternative 1 (current choice):** Define a new color palettes +
+**Pros:**
+We are able to use color palettes that are vary in both hue and brightness
+so that they are accessible by people who are color blind and obvious for everyone. +
+**Cons:** Have to write code to overwrite the default color palettes. +
+
+**Alternative 2:** Use a the default JavaFX chart color palettes +
+**Pros:** Do not need to implement.   +
+**Cons:** Do not have the control over visual effect. +
+// end::findall[]
 === Tag colors [since v1.0]
 
 ==== Current Implementation
 
-Use different colors for different tags inside person cards. For example, `friends` tags can be all in red and `colleagues` tags can be all in blue
-Pre-defined colors are included in `DarkTheme.css` and `LightTheme.css`
-We use hash code of the tag names to generate a color. This is deliberately designed to ensure consistent colors each time the application runs.
+Use different colors for different tags inside person cards. For example, `friends` tags can be all in red and `colleagues` tags can be all in blue.
+Pre-defined colors are included in `DarkTheme.css`, `LightTheme.css` and `MorningTheme.css`. We use hash code of the tag names to generate a color. This is deliberately designed to ensure consistent colors each time the application runs.
 
 ==== Design considerations
 
@@ -1188,24 +1204,22 @@ link:#top[Back to top]
 
 === Theming Mechanism [since v1.3]
 
-The theme mechanism is facilitated by a singleton class `UiStyle` which will be called inside the `MainWindow` constructor where it passes its `scene` into the `UiStyle` class.
+The theme mechanism is facilitated by a singleton class `UiTheme` which will be called inside the `MainWindow` constructor where it passes its `scene` into the `UiTheme` class.
 The `scene` is necessary for changing the CSS at runtime.
 
-The class `UiStyle` requires the scene to be set at `MainWindow` class so that it can be used to edit themes.
+The class `UiTheme` requires the scene to be set at `MainWindow` class so that it can be used to edit themes.
 
 
 ----
-public class UiStyle {
+public class UiTheme {
     ...
-    private static Scene scene = null;
-
     public static void setScene(Scene s) {
         scene = s;
         setDefaultTheme();
     }
 
     private static void setDefaultTheme() {
-        scene.getStylesheets().add(DARK_THEME_STYLE);
+        setToMorningTheme();
     }
 
     public static void setToLightTheme() {
@@ -1215,6 +1229,10 @@ public class UiStyle {
     public static void setToDarkTheme() {
         scene.getStylesheets().setAll(DARK_THEME_STYLE);
     }
+
+    public static void setToMorningTheme() {
+        scene.getStylesheets().setAll(MORNING_THEME_STYLE);
+    }
     ...
 }
 ----
@@ -1222,14 +1240,14 @@ public class UiStyle {
 Example of calling the application to change to light theme:
 
 ----
-UiStyle.getInstance().setToLightTheme();
+UiTheme.getInstance().setToLightTheme();
 ----
 
 ==== Design Considerations
 
 **Aspect:** Ways to change the application theme +
-**Alternative 1 (current choice):** Use a dedicated singleton class `UiStyle` to change the theme +
-**Pros:** Provide a dedicated class that manages all the changing of themes. `UiStyle` can contain many CSS theme file paths and thus the theme mechanism is more scalable . It is easier for `ThemeCommand` class to call `UiStyle` instance and use its methods directly. +
+**Alternative 1 (current choice):** Use a dedicated singleton class `UiTheme` to change the theme +
+**Pros:** Provide a dedicated class that manages all the changing of themes. `UiTheme` can contain many CSS theme file paths and thus the theme mechanism is more scalable . It is easier for `ThemeCommand` class to call `UiTheme` instance and use its methods directly. +
 **Cons:** Increases coupling +
 **Alternative 2:** Change the themes in `MainWindow` class directly +
 **Pros:** Decreases coupling +
@@ -1275,8 +1293,11 @@ according to each candidates. +
 * `AddInterviewCommandParser` class will extract interview title, interviewee name, date,
 and interview location from user input, form a new interview,
 then pass it to `AddInterviewCommand` class.
-* `AddInterviewCommand` will take in the interview and call add new Interview to
-storage in model.
+* `AddInterviewCommand` will take in the interview and call add new interview to
+storage in model management.
+
+.Adding an interview sequence diagram
+image::addInterviewSequence.png[width="700"]
 
 [source,java]
 ----
@@ -1306,6 +1327,9 @@ interview when listing all candidates. +
 and call ListInterviewCommand.
 * `ListInterviewCommand` will call updateFilteredList in model and list all the interviews in storage.
 
+.Listing an interview sequence diagram
+image::ListInterviewSequence.png[width="700"]
+
 [source,java]
 ----
 
@@ -1328,6 +1352,9 @@ Aspects: Implementation of deleting an interview:
 **Pros:** It requires addtional tools to match interview +
 **Cons:** It is easier for user to use.
 
+.Delete an interview sequence diagram
+image::DeleteInterviewSequence.png[width="700"]
+
 ** Current implementation details
 * `DeletingInterviewParser` class will extract the index of the interview needed
 to be deleted and pass in to `DeleteInterviewCommand`.
@@ -1345,6 +1372,122 @@ public synchronized void deleteInterview(Interview target) throws InterviewNotFo
 ----
 
 //end::interviewmanagement[]
+
+//tag::facebook[]
+
+=== Facebook Integration
+
+The Facebook features (facebooklogin and facebookpost) are facilitated by Facebook Graph API and RestFB API. The Graph API is low-level HTTP-based API used to get data into and out of the Facebook platform while RestAPI is a high level third-party Graph API client.
+
+==== Preparation
+
+Firstly, we need to build a Graddle dependency in the `graddle.properties` file for RestFB API
+
+----
+compile group: 'com.restfb', name: 'restfb', version: '2.4.0'
+----
+
+To use Facebook Graph API, we followed the instruction link:https://developers.facebook.com/docs/apps/register/#create-app[`here`] to create a Facebook Application on the Facebook for developer site
+
+Finishing the steps, we reached this page
+
+.Facebook Application page
+image::FacebookAppCreated.png[width="800"]
+
+==== Implementation
+
+===== Facebooklogin
+
+We allow users to log in by loading the authentication URL associated with our Facebook Application to the FacebookPanel (to be explained later) specified by Graph API
+
+[source,java]
+----
+private static final String FACEBOOK_AUTH_URL =
+    "https://graph.facebook.com/oauth/authorize?type=user_agent&client_id=" + FACEBOOK_APP_ID
+        + "&redirect_uri=" + FACEBOOK_DOMAIN + "&scope" + FACEBOOK_PERMISSIONS;
+----
+
+[source,java]
+----
+Platform.runLater(() -> webEngine.load(FACEBOOK_AUTH_URL));
+----
+
+If login credentials are accepted, facebook will return an access_token in its redirected url. An example of a redirected url
+
+----
+https://www.facebook.com/?#access_token=EAAC15Ydo408BANN5h1MoSHWhLATnte3EchlxqsXA7x2WASMlZBJzlZC3rZCmlu4Wib3hi1bXR2r2sx2ZCgIJvJCrXaTAnQVN4f0ksFLSvCuezLhG43myLJtxT3Qtn0PpcIXXZBjgYUI4LwGvv837KGC2V4ifctNaBnHqRX6e7qAZDZD&expires_in=5184000
+----
+
+Using this access_token, we 'capture' this login session by making use of RestFB API. We set up the session in `FacebookLoginCommand` as followed
+
+----
+fbClient = new DefaultFacebookClient(accessToken, Version.LATEST);
+user = fbClient.fetchObject("me", User.class);
+----
+
+'fbClient' is the Facebook Graph API client with the supplied token.
+
+'user' is the authenticated user object.
+
+===== Facebookpost
+
+We will check if user is authenticated via the boolean variable isAuthenticated before allowing posting on facebook. If user is not authenticated, he will be redirected to log in
+
+[source,java]
+----
+if (!FacebookLoginCommand.getAuthenticateState()) {
+    FacebookLoginCommand fbLoginCommand = new FacebookLoginCommand();
+    fbLoginCommand.execute();
+} else {
+    completePost();
+}
+----
+
+We simply post the message to Facebook using the authenticated fbClient in `FacebookLoginCommand`
+
+[source,java]
+----
+DefaultFacebookClient fbClient = FacebookLoginCommand.getFbClient();
+fbClient.publish("me/feed", FacebookType.class, Parameter.with("message", toPost));
+----
+
+==== Implementation details
+
+'FacebookPanel' extends `UiPart<Region>` and shares the same region with `BrowserPanel` or `ReportPanel`. When `facebooklogin` is executed,
+ `MainWindow` class will swap out the `BrowserPanel` or `ReportPanel` and replace by `FacebookPanel`.
+We achieve this by posting `ToggleFacebookPanelEvent` (showing in the below sequence diagram).
+
+'FacebookPanel' is used mainly as a browser to authorize a user to Facebook. It is also used to display the Facebook page after the user is authorized.
+
+For capturing the access_token, we register `FacebookPanel` as an event handler. If the url (of `FacebookPanel`) changes to a new one that contains the access_token,
+ we raise a `BrowserUrlChangedEvent`. Also, our `FacebookPanel` is subscribed to handle `BrowserUrlChangedEvent` by passing the url (with access_token) back to `FacebookLoginCommand` to complete the authentication.
+
+The below sequence diagram show interactions within Logic component when user executes `facebookpost hello`.
+
+.Sequence diagram detailing Logic component when executing facebookpost
+image::FbSequenceDiagram.png[width="800"]
+
+==== Design considerations
+
+**Aspect:** Choice of client API for Facebook Graph API +
+**Alternative 1 (current choice):** Use `RestFB` +
+**Pros:** RestFB is simple and easy to use with well-documented API
+**Cons:** Features are limited +
+**Alternative 2:** Facebook4j +
+**Pros:** Facebook4j provides more extensive features +
+**Cons:** It is harder to use and we do not really need advanced features for now +
+
+---
+
+**Aspect:** Authentication +
+**Alternative 1 (current choice):** Authenticate using the built-in web browser (in FacebookPanel) +
+**Pros:** Convenient for user as authentication is done inside the app itself +
+**Cons:** The built-in Java web-engine might not support certain features of a webpage +
+**Alternative 2:** Authenticate by opening a full-pledged web browser such as Chrome/ Safari +
+**Pros:** The Facebook authorization page will be better supported by such a browser +
+**Cons:** User needs to switch between different applications +
+
+//end::facebook[]
 
 == Documentation
 This project maintains documentation in the docs folder, also accessible through the readme. This documentation is written and maintained using *asciidoc*.
@@ -1824,7 +1967,7 @@ Implementation needed:
 . If there is a linked page to the person, it will be displayed on the brower panel.
 
 ==== Nguyen Dinh Dung (@tiny767)
-===== Major Enhancement: Make several enhancements to the UI so that it is much more user-friendly.
+===== Major Enhancement (coming in v2.0): Make several enhancements to the UI so that it is much more user-friendly.
 This allows tech recruiters who need to manage big Infinity Books to save time by using the app more efficiently
 and feel more comfortable.
 
@@ -1834,9 +1977,22 @@ Implementations needed:
 * For the user's command input, coloring keywords such as `name`, `p/`.
 * Provide usage syntax or syntax error in real time (e.g. display syntax for `add` when the users finish typing 'add'
 
+===== Major Enhancement (since v1.5): Facebook integration
+
+Implementations needed:
+
+* Allow user to log in to their facebook account and connect the address book with that facebook account
+* Allow for some features such as posting to wall, saving friends to the address book
+
 ===== Minor Enhancement: `remark` command
 * Allow users to add remarks for people in their Infinity Books.
 * This allows tech recruiters to have a more flexible field to use for their candidates
+
+===== Minor Enhancement: `theme` command
+* Allow users to change between some pre-defined theme.
+
+===== Minor Enhancement: Tag color
+* Use different colors for different tags inside person cards
 
 link:#top[Back to top]
 
@@ -1861,6 +2017,8 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`* * *` |User who saves many resumes |Open candidates' resumes from commandline |to quickly view their profiles
 
 |`* * *` |User |Delete a tag from Infinity Book |To remove tags I am no longer interested in
+
+|`* * *` |Recruiter |Log in to Facebook on Infinity Book |Share job posting to facebook faster
 
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
@@ -2038,6 +2196,21 @@ These instructions only provide a starting point for testers to work on; testers
 // TODO: read the comments originally placed here and update this section
 // .. _{explain how to simulate a missing/corrupted file and the expected behavior}_
 
+=== Add new tags to candidates
+
+. Deleting a person while all persons are listed
+
+.. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
+.. Test case: `delete 1` +
+   Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
+.. Test case: `delete 0` +
+   Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
+.. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size) +
+   Expected: Similar to previous.
+
+// TODO: Give more incorrect commands to try.
+
+=======
 === Viewing a person
 . Viewing a person by emailID
 .. Test case: `view notexisted@example.com` +

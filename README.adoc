@@ -1,4 +1,11 @@
+ifdef::env-github[]
 image::docs/images/logo.png[width="300"]
+endif::[]
+
+ifndef::env-github[]
+image::images/logo.png[width="300"]
+endif::[]
+
 ifdef::env-github,env-browser[:relfileprefix: docs/]
 
 https://travis-ci.org/CS2103JAN2018-W11-B3/main/[image:https://api.travis-ci.org/CS2103JAN2018-W11-B3/main.svg?branch=master[Build Status]]
@@ -10,7 +17,7 @@ image::docs/images/Ui.png[width="900"]
 endif::[]
 
 ifndef::env-github[]
-image::images/Ui.png[width="600"]
+image::images/Ui.png[width="900"]
 endif::[]
 
 * Infinity Book is a desktop Address Book application. It has a GUI but most of the user interactions happen using a CLI (Command Line Interface).
@@ -22,7 +29,8 @@ endif::[]
 ** More test cases, including automated GUI testing.
 ** Support for _Build Automation_ using Gradle and for _Continuous Integration_ using Travis CI.
 
-== Site Map
+== Site Map:
+https://cs2103jan2018-w11-b3.github.io/main/
 
 * <<UserGuide#, User Guide>>
 * <<DeveloperGuide#, Developer Guide>>
@@ -33,6 +41,6 @@ endif::[]
 
 * Some parts of this sample application were inspired by the excellent http://code.makery.ch/library/javafx-8-tutorial/[Java FX tutorial] by
 _Marco Jakob_.
-* Libraries used: https://github.com/TomasMikula/EasyBind[EasyBind], https://github.com/TestFX/TestFX[TextFX], https://bitbucket.org/controlsfx/controlsfx/[ControlsFX], https://github.com/FasterXML/jackson[Jackson], https://github.com/google/guava[Guava], https://github.com/junit-team/junit4[JUnit4]
+* Libraries used: https://github.com/TomasMikula/EasyBind[EasyBind], https://github.com/TestFX/TestFX[TextFX], https://bitbucket.org/controlsfx/controlsfx/[ControlsFX], https://github.com/FasterXML/jackson[Jackson], https://github.com/google/guava[Guava], https://github.com/junit-team/junit4[JUnit4], http://restfb.com[RestFB]
 
 == Licence : link:LICENSE[MIT]
