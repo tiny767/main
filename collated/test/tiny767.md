@@ -1,41 +1,19 @@
 # tiny767
-###### \java\seedu\address\logic\commands\ThemeCommandTest.java
+###### \java\seedu\address\logic\parser\FacebookPostCommandParserTest.java
 ``` java
-package seedu.address.logic.commands;
+public class FacebookPostCommandParserTest {
+    private FacebookPostCommandParser parser = new FacebookPostCommandParser();
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static seedu.address.logic.commands.ThemeCommand.DARK_THEME;
-import static seedu.address.logic.commands.ThemeCommand.LIGHT_THEME;
-
-import org.junit.Test;
-
-public class ThemeCommandTest {
     @Test
-    public void equals() {
-        final ThemeCommand darkThemeCommand = new ThemeCommand(DARK_THEME);
-        final ThemeCommand lightThemeCommand = new ThemeCommand(LIGHT_THEME);
+    public void parse_validArgs_success() {
+        assertParseSuccess(parser, FacebookPostCommand.EXAMPLE_POST,
+                new FacebookPostCommand(FacebookPostCommand.EXAMPLE_POST));
+    }
 
-        // same object -> true
-        assertTrue(darkThemeCommand.equals(darkThemeCommand));
-
-        // same value -> true
-        ThemeCommand anotherLightThemeCommand = new ThemeCommand(LIGHT_THEME);
-        assertTrue(lightThemeCommand.equals(anotherLightThemeCommand));
-
-        // same value -> true
-        ThemeCommand anotherDarkThemeCommand = new ThemeCommand(DARK_THEME);
-        assertTrue(darkThemeCommand.equals(anotherDarkThemeCommand));
-
-        // different value -> false
-        assertFalse(darkThemeCommand.equals(lightThemeCommand));
-
-        // different type -> false
-        assertFalse(darkThemeCommand.equals(1));
-
-        // null -> false
-        assertFalse(darkThemeCommand.equals(null));
-
+    @Test
+    public void parse_invalidArgs_failure() {
+        assertParseFailure(parser, " ",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, FacebookPostCommand.MESSAGE_USAGE));
     }
 }
 ```

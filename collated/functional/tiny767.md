@@ -5,14 +5,13 @@
  * Indicates that the browser has changed
  */
 public class BrowserUrlChangedEvent extends BaseEvent {
-    private String processType;
+    private String newUrl;
 
-    public BrowserUrlChangedEvent(String processType) {
-        this.processType = processType;
+    public BrowserUrlChangedEvent(String newUrl) {
+        this.newUrl = newUrl;
     }
-
-    public String getProcessType() {
-        return processType;
+    public String getNewUrl() {
+        return newUrl;
     }
 
     @Override
@@ -32,12 +31,10 @@ public class FacebookLoginCommand extends Command {
     public static final String MESSAGE_LOGIN_INIT = "Initiating authentication. "
             + "Please log into your Facebook account.";
     public static final String MESSAGE_SUCCESS = "You are logged in to Facebook";
+    public static final String MESSAGE_FAILURE = "Error in Facebook authorisation";
     public static final String FACEBOOK_DOMAIN = "https://www.facebook.com/";
     private static final String FACEBOOK_APP_ID = "199997423936335";
 
-    private static final String FACEBOOK_AUTH_URL =
-            "https://graph.facebook.com/oauth/authorize?type=user_agent&client_id=" + FACEBOOK_APP_ID
-                    + "&redirect_uri=" + FACEBOOK_DOMAIN;
     private static final String FACEBOOK_PERMISSIONS = "user_about_me,email,publish_actions,user_birthday,"
             + "user_education_history,user_friends,user_games_activity,user_hometown,user_likes,"
             + "user_location,user_photos,user_posts,user_relationship_details,user_relationships,"
@@ -48,6 +45,10 @@ public class FacebookLoginCommand extends Command {
             + "user_actions.news,rsvp_event,user_events,user_managed_groups,"
             + "pages_manage_instant_articles,user_actions.video,instagram_basic,instagram_manage_comments,"
             + "instagram_manage_insights,read_audience_network_insights,read_insights";
+
+    private static final String FACEBOOK_AUTH_URL =
+            "https://graph.facebook.com/oauth/authorize?type=user_agent&client_id=" + FACEBOOK_APP_ID
+                    + "&redirect_uri=" + FACEBOOK_DOMAIN + "&scope=publish_actions";
 
     private static WebEngine webEngine;
 
@@ -64,7 +65,6 @@ public class FacebookLoginCommand extends Command {
     public static DefaultFacebookClient getFbClient() {
         return fbClient;
     }
-
 
     public static String getAuthenticatedUsername() {
         return authenticatedUsername;
@@ -104,24 +104,37 @@ public class FacebookLoginCommand extends Command {
             authenticatedUsername = user.getName();
             authenticatedUserId = user.getId();
         } catch (Exception e) {
-            throw new CommandException("Error in Facebook Authorisation");
+            throw new CommandException(MESSAGE_FAILURE);
         }
 
         if (accessToken != null) {
             isAuthenticated = true;
-            authenticatedUserPage = "https://www.facebook.com/" + authenticatedUserId;
+            authenticatedUserPage = FACEBOOK_DOMAIN + authenticatedUserId;
             EventsCenter.getInstance().post(new NewResultAvailableEvent(
-                    MESSAGE_SUCCESS + " User name: " + authenticatedUsername));
+                    MESSAGE_SUCCESS + "\n" + "User name: " + authenticatedUsername));
         } else {
-            throw new CommandException("Error in Facebook Authorisation");
+            throw new CommandException(MESSAGE_FAILURE);
         }
     }
 
     @Override
     public CommandResult execute() throws CommandException {
-        webEngine.load(FACEBOOK_AUTH_URL);
+
+        EventsCenter.getInstance().post(new ToggleFacebookPanelEvent());
+
+        try {
+            Platform.runLater(() -> webEngine.load(FACEBOOK_AUTH_URL));
+        } catch (Exception e) {
+            throw new CommandException(MESSAGE_FAILURE);
+        }
 
         return new CommandResult(MESSAGE_LOGIN_INIT);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof FacebookLoginCommand); // instanceof handles nulls
     }
 }
 ```
@@ -141,11 +154,11 @@ public class FacebookPostCommand extends Command {
             + "Parameters: MESSAGE\n"
             + "Example: " + COMMAND_WORD + " " + EXAMPLE_POST;
 
-    public static final String MESSAGE_FACEBOOK_POST_SUCCESS = "Posted to Facebook.";
-    public static final String MESSAGE_FACEBOOK_POST_LOGIN = "User has not been authenticated yet, please log in.";
+    public static final String MESSAGE_FACEBOOK_POST_SUCCESS = "Attempted to post to Facebook";
+    public static final String MESSAGE_FACEBOOK_POST_LOGIN = "User has not been authenticated" + "\n"
+            + "Please log in and then try posting again!";
     public static final String MESSAGE_FACEBOOK_POST_FAIL = "There was an error posting to Facebook";
 
-    private static String currentPost;
     private static WebEngine webEngine;
 
     private String toPost;
@@ -154,7 +167,7 @@ public class FacebookPostCommand extends Command {
      * Creates an FacebookPostCommand based on the message
      */
     public FacebookPostCommand(String message) {
-        currentPost = message;
+        requireNonNull(message);
         toPost = message;
     }
 
@@ -165,29 +178,29 @@ public class FacebookPostCommand extends Command {
 
         DefaultFacebookClient fbClient = FacebookLoginCommand.getFbClient();
         try {
-            //fbClient.(currentPost);
-            fbClient.publish("me/feed", FacebookType.class, Parameter.with("message", currentPost));
+            fbClient.publish("me/feed", FacebookType.class, Parameter.with("message", toPost));
         } catch (Exception e) {
             e.printStackTrace();
             new CommandException(MESSAGE_FACEBOOK_POST_FAIL);
         }
-        EventsCenter.getInstance().post(new NewResultAvailableEvent(MESSAGE_FACEBOOK_POST_SUCCESS
-                + " (to " + FacebookLoginCommand.getAuthenticatedUsername() + "'s page.)"));
+
+        EventsCenter.getInstance().post(new ToggleFacebookPanelEvent());
+
         webEngine = FacebookLoginCommand.getWebEngine();
-        webEngine.load(FacebookLoginCommand.getAuthenticatedUserPage());
+        Platform.runLater(() -> webEngine.load(FacebookLoginCommand.getAuthenticatedUserPage()));
     }
 
     @Override
     public CommandResult execute() throws CommandException {
         if (!FacebookLoginCommand.getAuthenticateState()) {
-            BrowserPanel.setProcessType(COMMAND_WORD);
             FacebookLoginCommand fbLoginCommand = new FacebookLoginCommand();
             fbLoginCommand.execute();
             return new CommandResult(MESSAGE_FACEBOOK_POST_LOGIN);
         } else {
             completePost();
-            return new CommandResult(MESSAGE_FACEBOOK_POST_SUCCESS + " (to "
-                    + FacebookLoginCommand.getAuthenticatedUsername() + "'s page.)");
+            return new CommandResult(MESSAGE_FACEBOOK_POST_SUCCESS
+                +    "\nUsername: " + FacebookLoginCommand.getAuthenticatedUsername()
+                +    "\nmessage: '" + toPost + "'");
         }
     }
 
