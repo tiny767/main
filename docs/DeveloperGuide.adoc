@@ -618,8 +618,6 @@ if (argWithOption.isOption(EditCommand.COMMAND_OPTION_ADD_TAG)) {
 }
 ----
 
-// end::findall[]
-
 === Report (Since v1.4)
 
 Each `Report` is identified with a `Tag population`:
@@ -771,7 +769,7 @@ Have to modify multiple components such as `LogicManager`, `ModelManager`, `Even
 **Alternative 2:** Use a new panel +
 **Pros:** User can view reports and the browser at the same time.   +
 **Cons:** Add one more panel to the interface. +
-
+// end::findall[]
 === Tag colors [since v1.0]
 
 ==== Current Implementation

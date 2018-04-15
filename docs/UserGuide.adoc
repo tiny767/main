@@ -123,6 +123,7 @@ Edits the name of the 2nd person to be `Betsy Crower` and clears all existing ta
 * You can remove all the person's tags by typing `t/` without specifying any tags after it.
 ****
 
+// tag::edittags[]
 ==== Add new tags to a person : `edit -add-tag`
 
 Infinity Book helps you process candidate's information faster.
@@ -191,7 +192,7 @@ image::cannotdeletetag.png[width="600"]
 
 Figure. Cannot delete tag `computing` from the first candidate. The candidate's details will not be updated,
 and Infinity Book will not show any warning.
-
+//end::edittags[]
 ==== Add a remark : `remark` [Since v1.1]
 //tag::remark[]
 Adds or edits remarks to the person identified by the INDEX
@@ -241,7 +242,7 @@ Deletes the 1st person in the results of the `find` command.
 * *Description:* Shows a list of all candidates in the Infinity Book. +
 * *Format:* `list`
 
-
+// tag::findall[]
 ==== Finding candidates by name, phone, email, and tags: `find`
 
 Finds candidates whose names, phone numbers, emails, or tags contain any of the given keywords. +
@@ -262,6 +263,7 @@ Returns `Alex Yeoh`, `Charlotte Oliveiro`, and `Alex Smith` whose names and phon
 
 image::Find.png[width="300"]
 _Figure._ Person list after finding with keywords `Alex` and `93210283`.
+//end::findall[]
 
 ==== Viewing a person: `view`
 
