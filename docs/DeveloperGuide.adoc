@@ -931,9 +931,9 @@ The following code snippet demonstrates this ability clearly.
        }
 ----
 
-link:#top[Back to top]
-
 // end::autocorrect[]
+
+link:#top[Back to top]
 
 // tag::jobposting[]
 === Job Postings [Since v1.3]
@@ -944,7 +944,7 @@ Any existing job postings may be matched with the list of candidates to filter p
 
 // end::jobposting[]
 
-// tag::jobposting6[]
+// tag::jobposting1[]
 
 ==== Implementation Specifics
 
@@ -959,7 +959,7 @@ Individual job postings are represented by the Job object with attributes `Job T
 in Figure 2 below.
 
 .UML diagram showing representation of Job in Infinity Book.
-image::JobUMLDiagram.png[width="400"]
+image::JobUMLDiagram.png[width="300"]
 
 In addition, the Person and Job class have been modified to maintain Skills as an additional field to offer better functionality
 during candidate-job matching. The `add` and `edit` commands reflect these changes as well.
@@ -967,14 +967,14 @@ during candidate-job matching. The `add` and `edit` commands reflect these chang
 Together, this modifies the Model to the state shown in the following diagram.
 
 .A complete picture of the model as maintained by Infinity Book.
-image::ModelWithJobUML.png[width="700"]
+image::ModelWithJobUML.png[width="600"]
 
 ===== Storage Component
 
 Job postings are stored in `XmlAdaptedJob` objects, which maintain a class relationship as shown in this diagram.
 
 .Job objects are saved using XmlAdaptedJob objects as shown above.
-image::JobStorageDiagram.png[width="700"]
+image::JobStorageDiagram.png[width="600"]
 
 An example job stored in this format is reproduced below:
 
@@ -994,7 +994,7 @@ An example job stored in this format is reproduced below:
 The main window contains a JobListPanel, which contains individual jobs represented using JobListCards.
 JobListCards represent the fields in each Job using Labels and flowPanes.
 
-// end::jobposting6[]
+// end::jobposting1[]
 
 // tag::jobposting2[]
 ===== Job Operations and Logic
@@ -1009,7 +1009,7 @@ Operations performed on jobs follow the sequence of operations described in the 
 This sequence of events is summarized in the following sequence diagram.
 
 .A high level sequence diagram showing events triggered by the `postjob` command.
-image::SequenceDiagramJobPosting.png[width="700"]
+image::SequenceDiagramJobPosting.png[width="600"]
 
 The following job posting commands are implemented extending `UndoableCommand` and `Command`:
 
@@ -1029,13 +1029,17 @@ The following diagram details the class relationship for Commands.
 image::CommandsStructure.png[width="300"]
 
 ---
+// end::jobposting2[]
+
+// tag::jobposting3[]
+
 
 *Adding Job Postings*
 
 Adding job postings to Infinity Book is performed by the PostJobCommand. The sequence of events triggered while adding a job posting are shown in the diagram below:
 
 .Adding a job posting is executed as shown above.
-image::PostJobCommandSequenceDiagram.png[width="700"]
+image::PostJobCommandSequenceDiagram.png[width="600"]
 
 The PostJobCommand#executeUndoableCommand triggers addition of the Job to `UniqueJobList` in AddressBook#add
 The following code snippet demonstrates the prevention of duplicates in the UniqueJobList
@@ -1051,13 +1055,15 @@ The following code snippet demonstrates the prevention of duplicates in the Uniq
 ----
 
 ---
+// end::jobposting3[]
+// tag::jobposting4[]
 
 *Editing Job Postings*
 
 Editing job postings in the Infinity Book is performed by the EditJobCommand. The sequence of events triggered while editing a job posting are shown in the diagram below:
 
 .Editing a job posting is executed as shown above.
-image::EditJobCommandSequenceDiagram.png[width="700"]
+image::EditJobCommandSequenceDiagram.png[width="600"]
 
 The EditJobCommand#executeUndoableCommand triggers editing of a existing Job in `UniqueJobList` in AddressBook#add
 The `EditJobCommand` ensures that the index specified refers to a valid index in the most recent listing of jobs.
@@ -1069,16 +1075,13 @@ The following code snippet demonstrates the prevention of duplicates and index c
 ----
     public void setJob(Job target, Job editedJob) throws DuplicateJobException, JobNotFoundException {
         requireNonNull(editedJob);
-
         int index = internalList.indexOf(target);
         if (index == -1) {
             throw new JobNotFoundException();
         }
-
         if (!target.equals(editedJob) && internalList.contains(editedJob)) {
             throw new DuplicateJobException();
         }
-
         internalList.set(index, editedJob);
     }
 ----
@@ -1087,9 +1090,6 @@ To completely specify the changes to the Job object specified by EditJobCommand,
 these operations ensures the new Job object is updated in the Infinity Book.
 
 ---
-// end::jobposting2[]
-
-// tag::jobposting5[]
 *Delete Job Postings*
 
 Deleting job postings in the Infinity Book is performed by the DeleteJobCommand. The sequence of events triggered while deleting a job posting are shown in the diagram below:
@@ -1102,7 +1102,6 @@ The DeleteJobCommand selects a Job object by matching the index with the last sh
 ----
  protected void preprocessUndoableCommand() throws CommandException {
         List<Job> lastShownList = model.getFilteredJobList();
-
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_JOB_DISPLAYED_INDEX);
         }
@@ -1111,10 +1110,11 @@ The DeleteJobCommand selects a Job object by matching the index with the last sh
 ----
 The changes to the UniqueJobList are enacted by AddressBook#removeJob, which completes the removal of the object and triggers Storage to update the data.
 
-
 ---
-// end::jobposting5[]
-// tag::jobposting3[]
+// end::jobposting4[]
+
+// tag::jobposting5[]
+
 *Matching Job Postings*
 
 Matching job postings to candidates in the Infinity Book is performed by the MatchJobCommand.
@@ -1135,13 +1135,11 @@ The following code snippet shows how Location can be excluded from the search. O
 public boolean test(Person person) {
 
         // .. code to set up and assign locationMatch, skillsMatch and tagsMatch
-
         locationMatch = isLocationMatchSatisfied(locationMatch);
         //.. similarly for skillsMatch and tagsMatch
 
         return locationMatch && skillsMatch && tagsMatch;
  }
-
  private boolean isLocationMatchSatisfied(boolean locationMatch) {
          if (notLocationBound) {
              locationMatch = true;
@@ -1153,15 +1151,15 @@ public boolean test(Person person) {
 The PersonListPanel is populated with a list of candidates who match the job according to the set parameters.
 
 ---
-// end::jobposting3[]
+// end::jobposting5[]
 
-// tag::jobposting4[]
+// tag::listandfind[]
 *Listing Job Postings*
 
 Listing all job postings in the Infinity Book is performed by the FindJobCommand. The sequence of events triggered while listing all job postings are shown in the diagram below:
 
 .Sequence diagram above shows the sequence of events triggered on execution of `listjobs`
-image::listjobcommandSequenceDiagram.png[width="700"]
+image::listjobcommandSequenceDiagram.png[width="600"]
 
 The ListJobCommand selects displays all Job objects from UniqueJobList in the JobListPanel.
 
@@ -1173,7 +1171,8 @@ Finding job postings by keywords in the Infinity Book is performed by the FindJo
 
 The FindJobCommand selects Job objects to display by matching the keyword with the Job Title, Location or Tags, and lists all matches in the JobListPanel.
 
-// end::jobposting4[]
+// end::listandfind[]
+
 ==== Design Considerations
 **Aspect:** Implementation of additional Skill parameter for Person and Job +
 
@@ -1197,9 +1196,9 @@ The FindJobCommand selects Job objects to display by matching the keyword with t
 **Pros:** Search can be customized to be as accurate as required. +
 **Cons:** Spelling differences may still cause diminished effectiveness.
 
-link:#top[Back to top]
-
 // end::jobposting[]
+
+link:#top[Back to top]
 
 // tag::theme[]
 
@@ -1265,9 +1264,8 @@ interview, and deleting interview.
 
 * Model Component:
 
-.add Interview Model to Model Component
+.Add Interview Model to Model Component
 image::InterviewModel.png[width="700"]
-
 
 * Storage Component:
 
@@ -2198,7 +2196,6 @@ These instructions only provide a starting point for testers to work on; testers
 // TODO: read the comments originally placed here and update this section
 // .. _{explain how to simulate a missing/corrupted file and the expected behavior}_
 
-<<<<<<< HEAD
 === Add new tags to candidates
 
 . Deleting a person while all persons are listed
@@ -2212,7 +2209,6 @@ These instructions only provide a starting point for testers to work on; testers
    Expected: Similar to previous.
 
 // TODO: Give more incorrect commands to try.
-
 
 =======
 === Viewing a person
@@ -2251,7 +2247,6 @@ These instructions only provide a starting point for testers to work on; testers
    Expected: No interview is deleted. Error details shown in the status message.
 .. Other incorrect delete commands to try: `deleteInterview`, `deleteInterview x` (where x is larger than the list size) +
    Expected: Similar to previous.
->>>>>>> master
 
 === Job Management
 
@@ -2311,11 +2306,4 @@ These instructions only provide a starting point for testers to work on; testers
    Expected: Similar to previous.
 
 
-
-
-
-
-
 link:#top[Back to top]
-
-
