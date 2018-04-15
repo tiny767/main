@@ -864,24 +864,22 @@ through the command `matchjob INDEX`, which displays the suitable candidates in 
 
 === Theming Mechanism [since v1.3]
 
-The theme mechanism is facilitated by a singleton class `UiStyle` which will be called inside the `MainWindow` constructor where it passes its `scene` into the `UiStyle` class.
+The theme mechanism is facilitated by a singleton class `UiTheme` which will be called inside the `MainWindow` constructor where it passes its `scene` into the `UiTheme` class.
 The `scene` is necessary for changing the CSS at runtime.
 
-The class `UiStyle` requires the scene to be set at `MainWindow` class so that it can be used to edit themes.
+The class `UiTheme` requires the scene to be set at `MainWindow` class so that it can be used to edit themes.
 
 
 ----
-public class UiStyle {
+public class UiTheme {
     ...
-    private static Scene scene = null;
-
     public static void setScene(Scene s) {
         scene = s;
         setDefaultTheme();
     }
 
     private static void setDefaultTheme() {
-        scene.getStylesheets().add(DARK_THEME_STYLE);
+        setToMorningTheme();
     }
 
     public static void setToLightTheme() {
@@ -890,6 +888,10 @@ public class UiStyle {
 
     public static void setToDarkTheme() {
         scene.getStylesheets().setAll(DARK_THEME_STYLE);
+    }
+
+    public static void setToMorningTheme() {
+        scene.getStylesheets().setAll(MORNING_THEME_STYLE);
     }
     ...
 }
@@ -904,8 +906,8 @@ UiStyle.getInstance().setToLightTheme();
 ==== Design Considerations
 
 **Aspect:** Ways to change the application theme +
-**Alternative 1 (current choice):** Use a dedicated singleton class `UiStyle` to change the theme +
-**Pros:** Provide a dedicated class that manages all the changing of themes. `UiStyle` can contain many CSS theme file paths and thus the theme mechanism is more scalable . It is easier for `ThemeCommand` class to call `UiStyle` instance and use its methods directly. +
+**Alternative 1 (current choice):** Use a dedicated singleton class `UiTheme` to change the theme +
+**Pros:** Provide a dedicated class that manages all the changing of themes. `UiTheme` can contain many CSS theme file paths and thus the theme mechanism is more scalable . It is easier for `ThemeCommand` class to call `UiTheme` instance and use its methods directly. +
 **Cons:** Increases coupling +
 **Alternative 2:** Change the themes in `MainWindow` class directly +
 **Pros:** Decreases coupling +
