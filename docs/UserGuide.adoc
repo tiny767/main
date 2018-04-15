@@ -531,6 +531,9 @@ At least one field must be provided for the edit command to function as expected
 image::editjob.JPG.png[width="500"]
 Figure : `editjob` edits the first job posting as marked in diagram.
 
+//end::jobposting[]
+
+//tag::jobpostingdelete[]
 ==== Delete Job Command
 
 Remove a job posting from Infinity Book using the index from latest listing.
@@ -547,6 +550,9 @@ Figure : `deletejob` deletes the job posting at the specified index in the most 
 Index to be used as displayed in the panel.
 ====
 
+//end::jobpostingdelete[]
+
+//tag::jobpostingmatch[]
 ==== Match Job Command
 
 To match an existing job posting to potential candidates, use the `matchjob` command to filter out candidates for the chosen job.
@@ -559,7 +565,9 @@ Job matching is done on the basis of location, skills and tags. To disregard a p
 
 image::matchJob.JPG.png[width="500"]
 Figure : MatchJob command filters the Candidates as per Job, as shown above.
+//end::jobpostingmatch[]
 
+//tag::jobpostinglist[]
 ==== Listing all jobs : `listjobs`
 
 * *Description:* Shows a list of all jobs posted in the Infinity Book. +
@@ -585,7 +593,7 @@ Returns `Backend Engineer`, `Frontend Engineer`, and `Backend Tester` whose job 
 image::findjob.png[width="700"]
 _Figure._ Job list after finding with keywords `backend` and `geylang`.
 
-//end::jobposting[]
+//end::jobpostinglist[]
 
 //tag::interviewmanagement[]
 

@@ -51,6 +51,12 @@ IB provides *end-to-end support* for recruiters, from searching for candidates,t
 
 include::../UserGuide.adoc[tag=jobposting]
 
+---
+
+include::../UserGuide.adoc[tag=jobpostingmatch]
+
+---
+
 include::../UserGuide.adoc[tag=autocomplete]
 
 == Contributions to the Developer Guide
@@ -61,12 +67,38 @@ include::../UserGuide.adoc[tag=autocomplete]
 
 include::../DeveloperGuide.adoc[tag=jobposting]
 
+include::../DeveloperGuide.adoc[tag=jobposting2]
+
+include::../DeveloperGuide.adoc[tag=jobposting3]
+
 include::../DeveloperGuide.adoc[tag=autocorrect]
 
 
 [Appendix]
-== Additional Contributions
+== Appendix: Additional Contributions
 
+=== User Guide
 include::../UserGuide.adoc[tag=faq]
 
-include::../
+---
+
+include::../UserGuide.adoc[tag=jobpostinglist]
+
+---
+
+include::../UserGuide.adoc[tag=jobpostingdelete]
+
+=== Developer Guide
+
+include::../DeveloperGuide.adoc[tag=jobposting6]
+
+---
+
+include::../DeveloperGuide.adoc[tag=jobposting4]
+
+---
+
+include::../DeveloperGuide.adoc[tag=jobposting5]
+
+
+
