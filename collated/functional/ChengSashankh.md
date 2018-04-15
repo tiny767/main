@@ -1147,7 +1147,7 @@ public class PersonMatchesJobPredicate implements Predicate<Person> {
     public PersonMatchesJobPredicate(Job job) {
         this.locationKeywords = new ArrayList<String>();
         this.tagsKeywords = new ArrayList<String>();
-        this.skillsKeywords= new ArrayList<String>();
+        this.skillsKeywords = new ArrayList<String>();
 
         for (String entry : job.getSkills().getSkillSet()) {
             if (!(entry.compareTo("ALL") == 0)) {
