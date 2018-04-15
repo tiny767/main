@@ -183,7 +183,6 @@ public class MainWindow extends UiPart<Stage> {
 
     // @@author
     //@@author tiny767
-    
     /**
      * Replace the current panel by Facebook panel
      */

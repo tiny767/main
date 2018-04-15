@@ -239,6 +239,7 @@ Adds a new tag `Year2` to the first candidate, but it is not successful since th
 image::cannotaddtag.png[width="900"]
 // end::addtags[]
 // tag::deletetags[]
+
 ==== Delete tags from a person : `edit -delete-tag`
 
 Some tags are no longer seem to be relevant to the candidate? Remove them using the `edit -delete-tag` command.
@@ -264,8 +265,7 @@ image::candeletetag.png[width="600"]
 * `edit -delete-tag 1 t/computing` +
 Removes tag `computing` from the first candidate, but it is not successful since this candidate does not have tag `computing`.
 
-.Cannot delete tag `computing` from the first candidate. The candidate's details will not be updated,
-and Infinity Book will not show any warning.
+.Cannot delete tag `computing` from the first candidate. The candidate's details will not be updated, and Infinity Book will not show any warning.
 image::cannotdeletetag.png[width="600"]
 
 //end::deletetags[]
@@ -473,7 +473,7 @@ When you execute a Report command, Infinity Book will show you a bar chart, a pi
 * If there are no candidates tagged with the Population Tag you provide, Inifinity Book will not show you the pie chart. +
 
 * If you provide multiple `POPULATION_TAG`, Infinity Book will take the last one.
-For example, when you execute `viewreport pop/SEIntern pop/Computing`, Infinity Book will display the report for `Computing`. +
+For example, when you execute `savereport pop/SEIntern pop/Computing`, Infinity Book will display the report for `Computing`. +
 ====
 
 ==== Saving a report : `savereport` or `sr` [Since v1.4]

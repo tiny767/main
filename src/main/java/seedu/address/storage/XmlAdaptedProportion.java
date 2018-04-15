@@ -67,4 +67,4 @@ public class XmlAdaptedProportion {
             && totalPersonsInProportion.equals(((XmlAdaptedProportion) other).totalPersonsInProportion);
     }
 }
-// @@author 
+// @@author
