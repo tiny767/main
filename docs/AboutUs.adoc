@@ -19,7 +19,7 @@ Responsibilities: Model and Documentation
 
 === Nguyen Thi Viet Ha
 image::Viet Ha.jpg[width="150", align="left"]
-{empty}[https://github.com/deeheenguyen[github]] [<<johndoe#, portfolio>>]
+{empty}[https://github.com/deeheenguyen[github]] [<<deeheenguyen#, portfolio>>]
 
 Role: Team Lead +
 Responsibilities: UI
@@ -28,7 +28,7 @@ Responsibilities: UI
 
 === Huynh Thanh Duc Anh
 image::Anh.jpg[width="150", align="left"]
-{empty}[https://github.com/anh2111[github]] [<<johndoe#, portfolio>>]
+{empty}[https://github.com/anh2111[github]] [<<anh2111#, portfolio>>]
 
 Role: Developer +
 Responsibilities: Code Quality
@@ -37,7 +37,7 @@ Responsibilities: Code Quality
 
 === Nguyen Dinh Dung
 image::m133225.jpg[width="150", align="left"]
-{empty}[https://github.com/tiny767[github]] [<<johndoe#, portfolio>>]
+{empty}[https://github.com/tiny767[github]] [<<tiny767#, portfolio>>]
 
 Role: Developer +
 Responsibilities: Deliverables and Deadlines
