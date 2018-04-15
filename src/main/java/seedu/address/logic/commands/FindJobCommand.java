@@ -4,8 +4,10 @@ import java.util.function.Predicate;
 
 import seedu.address.model.job.Job;
 
+//@@author ChengSashankh
+
 /**
- * Lists all jobs in infinity book for which Job Title, Location or Tags contain any of the argument keywords.
+ * Lists all jobs in Infinity Book for which Job Title, Location or Tags contain any of the argument keywords.
  * Keyword matching is case insensitive.
  */
 public class FindJobCommand extends Command {
@@ -36,3 +38,4 @@ public class FindJobCommand extends Command {
                 && this.predicate.equals(((FindJobCommand) other).predicate)); // state check
     }
 }
+//@@author

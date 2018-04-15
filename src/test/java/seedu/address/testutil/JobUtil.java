@@ -8,6 +8,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import seedu.address.logic.commands.PostJobCommand;
 import seedu.address.model.job.Job;
 
+//@@author ChengSashankh
 /***
  * A utility class for Job.
  */
@@ -32,3 +33,4 @@ public class JobUtil {
         return sb.toString();
     }
 }
+//@@author

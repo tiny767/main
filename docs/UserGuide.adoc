@@ -98,22 +98,66 @@ Infinity Book uses a command line interface that follows the command format give
 
 === Auto-complete and auto-correct
 
-* Spell corrects and completes command words being typed into Infinity Book +
+To enhance your experience with the Command Line Interface(CLI), Infinity Book comes with built in auto-correct and auto-complete. This section explains
+how you can use these features to speed up your CLI experience.
 
-* kbd:[TAB] key auto-completes a partial command word and kbd:[SPACE] autocorrects an incorrect command word spelling.
+==== Auto-complete
+Auto completes command words being typed into Infinity Book +
 
-* *Example:*
-** `li` + kbd:[TAB] key press +
-Completes to command word to `list`
+To auto-complete a command word:
 
-** `lsit` + kbd:[SPACE] key press +
-Corrects command word to `list`.
-
+. Type in atleast the first character of your command word.
+. Press kbd:[TAB] until your desired command word appears in the command box.
 
 [NOTE]
+Entered text must match (case sensitive) the start of the desired command. +
+If no matches are available, no change is made to the input text.
+
+*Example:*
+
+** `li` + kbd:[TAB] : Completes command word to `list`.
+
+** `LI` + kbd:[TAB]  : Reports no completions found.
+
+[TIP]
 ====
-* Auto-correct only corrects one edit distance errors.
-* When completions are available, use `TAB` to toggle through options.
+Use kbd:[TAB] repeatedly to loop through the list as many times as you need.
+====
+
+
+==== Auto-correct
+Auto correct spell checks command words being typed into Infinity Book. +
+
+To auto-correct a command word:
+
+[NOTE]
+Entered text must be within one edit-distance of the desired command. +
+If no corrections are available, no change is made to the input text.
+
+. Type in a possibly incorrect version of the command word.
+. Press kbd:[SPACE] and watch the command word auto-corrected immediately.
+
+[TIP]
+====
+If a copy-pasted command may contain a spelling error in the command word, press kbd:[SPACE] to
+correct the command word without affecting the argumets entered.
+====
+
+
+*Example:*
+
+** `lsit` +  kbd:[SPACE] : Corrects command word to `list`.
+
+** `lit` +   kbd:[SPACE] : Corrects command word to `list`.
+
+** `liist` + kbd:[SPACE] : Corrects command word to `list`.
+
+** `lllist` + kbd:[SPACE] : Does not make any correction.
+
+
+[WARNING]
+====
+While copy pasting commands with spelling errors, the kbd:[SPACE] key will not be available for use to insert spaces in the command while editing.
 ====
 
 
@@ -445,15 +489,15 @@ which means you cannot edit or delete saved reports. You also cannot undo `saver
 IMPORTANT: If you provide multiple `POPULATION_TAG`, Infinity Book will take the last one. For example, when you execute `viewreport pop/SEIntern pop/Computing`, Infinity Book will save the report for `Computing`.
 
 // end::report[]
-// tag::jobposting[]
 
-=== Managing Job Postings
+// tag::jobposting[]
+=== Job Postings
 
 In line with the vision of offering end to end support, Infinity Book offers recruiters a very efficient way to keep track of job vacancies and match candidates to these positions. +
 
 This section details commands for managing job postings.
 
-==== Post Job Command
+==== Add Job Posting
 Want to add a newly available job vacancy to IB and match candidates to this role? Add a job posting using the `postjob` command.
 
 *Format:* `postjob j/JOB TITLE l/LOCATION t/[TAGS] s/SKILLS`
@@ -464,8 +508,42 @@ Want to add a newly available job vacancy to IB and match candidates to this rol
 Job postings are matched to candidates on the basis of location, skills and tags. To neglect any of these during matching, set the field to 'ALL'.
 
 
-image::postjob.JPG[width="500"]
-Figure : PostJob Command adds Jobs into a new pane as shown.
+image::postjob.JPG.png[width="500"]
+Figure : PostJob Command adds Jobs into the Job Postings panel as shown.
+
+==== Edit Job Command
+
+Want to change the parameters of a job after creating? IB provides the flexibility to edit an existing job posting through the `editjob` command.
+
+*Format:* ` editjob [-add-tag/-delete-tag] INDEX [j/JOBTITLE] [l/LOCATION] [s/SKILLS] [t/TAG]`
+
+Specifying -add-tag or -delete-tag causes editjob command to specifically add or delete the specified tag for the index specified tag. If unspecified, the tag list is over-written
+by the newly specified set of tags. This implementation mirrors the edit command.
+
+*Examples:* `editjob 1 j/Backend Engineer l/Singapore` +
+`editjob 1 -delete-tag j/Backend Engineer l/Singapore`
+
+[NOTE]
+At least one field must be provided for the edit command to function as expected.
+
+image::editjob.JPG.png[width="500"]
+Figure : `editjob` edits the first job posting as marked in diagram.
+
+==== Delete Job Command
+
+Remove a job posting from Infinity Book using the index from latest listing.
+
+*Format:* `deletejob INDEX`
+
+*Examples:* `deletejob 1`
+
+image::deletejob.JPG.png[width="500"]
+Figure : `deletejob` deletes the job posting at the specified index in the most recent listing from Figure as shown.
+
+[NOTE]
+====
+Index to be used as displayed in the panel.
+====
 
 ==== Match Job Command
 
@@ -477,42 +555,35 @@ Job matching is done on the basis of location, skills and tags. To disregard a p
 
 *Example:* `matchjob 1`
 
-image::matchJob.JPG[width="500"]
+image::matchJob.JPG.png[width="500"]
 Figure : MatchJob command filters the Candidates as per Job, as shown above.
 
-==== Edit Job Command
+==== Listing all jobs : `listjobs`
 
-Want to change the parameters of a job after creating? IB provides the flexibility to edit an existing job posting through the `editjob` command.
+* *Description:* Shows a list of all jobs posted in the Infinity Book. +
+* *Format:* `listjobs`
 
-*Format:* ` editjob INDEX [j/JOBTITLE] [l/LOCATION] [s/SKILLS] [t/TAG]`
+==== Finding jobs by Job Title, Location, and tags: `findjob`
 
-*Examples:* ` editjob 1 j/Backend Engineer l/Singapore`
+Finds jobs whose job titles, locations, or tags contain any of the given keywords. +
 
-[NOTE]
-At least one field must be provided for the edit command to function as expected.
+*Format:* `find KEYWORD [MORE_KEYWORDS]` +
 
-image::editjob.JPG[width="500"]
-Figure : `editjob` edits the first job posting from Figure as shown.
+****
+* The search is case insensitive. e.g `backend` will match `Backend`.
+* The order of the keywords does not matter. e.g. `Engineer Backend` will match `Backend Engineer`.
+* Only job's title, location and tags are searched.
+* Only full words will be matched e.g. `Eng` will not match `Engineer`.
+* Jobs matching at least one keyword will be returned (i.e. `OR` search). e.g. `Engineer` will return `Backend Engineer`, `Frontend Engineer`
+****
 
-_{Enter the figure number in the Figure description above.}_
+*Example:* `findjob Backend Geylang` +
+Returns `Backend Engineer`, `Frontend Engineer`, and `Backend Tester` whose job titles and locations match with the given keywords.
 
-==== Delete Job Command
+image::findjob.png[width="700"]
+_Figure._ Job list after finding with keywords `backend` and `geylang`.
 
-Remove a job posting from Infinity Book using the index from latest listing.
-
-*Format:* `deletejob INDEX`
-
-*Examples:* `deletejob 1`
-
-image::deletejob.JPG[width="500"]
-Figure : `deletejob` deletes the job posting at the specified index in the most recent listing from Figure as shown.
 // end::jobposting[]
-
-[NOTE]
-====
-Index to be used as displayed in the panel.
-====
-
 //tag::interviewmanagement[]
 
 === Managing Interview
@@ -683,6 +754,7 @@ There is no need to save manually.
 *Q*: How do I transfer my data to another Computer? +
 *A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Infinity Book folder.
 
+// tag::faq[]
 *Q*: How do I check if Infinity Book is compatible with my computer? +
 *A*: Infinity Book is compatible with Windows, Mac OS and Ubuntu with Java `1.8.0_60` or later installed. Compatibility with other link:#unix[UNIX] distributions is not guaranteed. +
 
@@ -704,7 +776,7 @@ To check your Java Version:
 2. In the terminal copy paste the following command without enclosing double quotes to find your Java vesion:
 `"java -v"`
 ****
-
+// end::faq[]
 == Command Summary
 
 The following table summarises Infinity Book commands with suitable examples:
@@ -712,21 +784,27 @@ The following table summarises Infinity Book commands with suitable examples:
 [width="100%",cols="10%,<45%,<45%",options="header",]
 |=====================================================================================================
 |Command |Command Format |Example
-|Add |`add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` | `add n/James Ho p/22224444 e/jamesho@example.com a/123,
+|Add Person|`add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` | `add n/James Ho p/22224444 e/jamesho@example.com a/123,
  Clementi Rd, 1234665 t/friend t/colleague`
 |Add Interview | `addInterview i/INTERVIEW_TITLE n/INTERVIEWEE d/DATE l/INTERVIEW_LOCATION`| `addInterview i/SE Interview n/David
-d/04.05.2018 l/Suntex City `
+|Add Job|`postjob j/JOBTITLE l/LOCATION s/SKILLS [t/TAG]` | `postjob j/Backend Engineer l/Singapore s/SQL, Javascript t/FreshGrad`
 |Clear |`clear`| `clear`
 |Delete |`delete INDEX` |`delete 3`
-|Delete Interview |`delete INDEX | `deleteInterview 3`
+|Delete Interview |`deleteInterview INDEX | `deleteInterview 3`
+|Delete Job |`deletejob INDEX` | `deletejob 1`
 |Edit |`edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` |`edit 2 n/James Lee e/jameslee@example.com`
-|Add new tags to a person |`edit -add-tag INDEX [t/TAG]...` |`edit -add-tag 2 t/Computing`
+|Edit Job |`[j/JOBTITLE] [l/LOCATION] [s/SKILLS] [t/TAG]` | `editjob 1 j/Backend Engineer l/Singapore`
+|Add tags to person |`edit -add-tag INDEX [t/TAG]...` |`edit -add-tag 2 t/Computing`
+|Add tags to job |`editjob -add-tag INDEX [t/TAG]...` |`editjob -add-tag 2 t/Computing`
 |Delete tags from a person |`edit -delete-tag INDEX [t/TAG]...` |`edit -delete-tag 2 t/Computing`
 |Find |`find KEYWORD [MORE_KEYWORDS]` |`find James Jake`
 |Find Interview | `FindInterview n/INTERVIEWEE`| `FindInterview David`
+|Find Job |`findjob KEYWORD [MORE_KEYWORDS]` | `findjob frontend backend systems`
 |Help |`help` |`help`
 |History |`history` | `history`
-|List | `list`|`list`
+|List People | `list`|`list`
+|List Jobs |`listjobs` | `listjobs`
+|Match Job |`matchjob INDEX` | `matchjob 2`
 |Redo |`redo`|`redo`
 |Select |`select INDEX` |`select 2`
 |Undo |`undo` |`undo`

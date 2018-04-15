@@ -7,6 +7,7 @@ import javafx.scene.control.ListView;
 import seedu.address.model.job.Job;
 import seedu.address.ui.JobCard;
 
+//@@author ChengSashankh
 /**
  * Provides a handle for {@code JobListPanel} containing the list of {@code JobCard}.
  */
@@ -132,3 +133,4 @@ public class JobListPanelHandle extends NodeHandle<ListView<JobCard>> {
         return getRootNode().getItems().size();
     }
 }
+//@@author

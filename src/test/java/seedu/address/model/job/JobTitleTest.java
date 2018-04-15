@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import seedu.address.testutil.Assert;
 
+//@@author ChengSashankh
 public class JobTitleTest {
 
     @Test
@@ -39,4 +40,4 @@ public class JobTitleTest {
         assertTrue(JobTitle.isValidTitle("Summer Software Engineering Intern Cloud Operations")); // long names
     }
 }
-
+//@@author
