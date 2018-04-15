@@ -174,6 +174,29 @@ public class AddressBook implements ReadOnlyAddressBook {
                 person.getRemark(), person.getLink(), person.getSkills(), correctTagReferences);
     }
 
+    //@@author ChengSashankh
+    /**
+     *  Updates the master tag list to include tags in {@code job} that are not in the list.
+     *  @return a copy of this {@code job} such that every tag in this person points to a Tag object in the master
+     *  list.
+     */
+    private Job syncWithMasterTagList(Job job) {
+        final UniqueTagList jobTags = new UniqueTagList(job.getTags());
+        tags.mergeFrom(jobTags);
+
+        // Create map with values = tag object references in the master list
+        // used for checking job tag references
+        final Map<Tag, Tag> masterTagObjects = new HashMap<>();
+        tags.forEach(tag -> masterTagObjects.put(tag, tag));
+
+        // Rebuild the list of person tags to point to the relevant tags in the master tag list.
+        final Set<Tag> correctTagReferences = new HashSet<>();
+        jobTags.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
+        return new Job(
+                job.getJobTitle(), job.getLocation(), job.getSkills(), correctTagReferences);
+    }
+    //@@author
+
     /**
      * Removes {@code key} from this {@code AddressBook}.
      * @throws PersonNotFoundException if the {@code key} is not in this {@code AddressBook}.
@@ -267,29 +290,8 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
     //@@author
     //// job methods
-    /**
-     *  Updates the master tag list to include tags in {@code job} that are not in the list.
-     *  @return a copy of this {@code job} such that every tag in this person points to a Tag object in the master
-     *  list.
-     */
-    private Job syncWithMasterTagList(Job job) {
-        final UniqueTagList jobTags = new UniqueTagList(job.getTags());
-        tags.mergeFrom(jobTags);
-
-        // Create map with values = tag object references in the master list
-        // used for checking job tag references
-        final Map<Tag, Tag> masterTagObjects = new HashMap<>();
-        tags.forEach(tag -> masterTagObjects.put(tag, tag));
-
-        // Rebuild the list of person tags to point to the relevant tags in the master tag list.
-        final Set<Tag> correctTagReferences = new HashSet<>();
-        jobTags.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
-        return new Job(
-                job.getJobTitle(), job.getLocation(), job.getSkills(), correctTagReferences);
-    }
-
-
     //@@author ChengSashankh
+
     /**
      * Adds a job to the address book.
      *
