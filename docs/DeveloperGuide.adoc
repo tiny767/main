@@ -954,7 +954,7 @@ then pass it to `AddInterviewCommand` class.
 * `AddInterviewCommand` will take in the interview and call add new Interview to
 storage in model.
 
-[source:Java]
+[source,java]
 ----
 public synchronized void addInterview(Interview interview) throws DuplicateInterviewException {
         addressBook.addInterview(interview);
@@ -982,7 +982,7 @@ interview when listing all candidates. +
 and call ListInterviewCommand.
 * `ListInterviewCommand` will call updateFilteredList in model and list all the interviews in storage.
 
-[source:Java]
+[source,java]
 ----
 
 public void updateFilteredInterviewList(Predicate<Interview> predicate) {
@@ -1010,7 +1010,7 @@ to be deleted and pass in to `DeleteInterviewCommand`.
 * `DeleteInterviewCommand` will take in the index and update the interview list
 accordingly.
 
-[source:Java]
+[source,java]
 ----
 
 public synchronized void deleteInterview(Interview target) throws InterviewNotFoundException {
@@ -1703,6 +1703,43 @@ These instructions only provide a starting point for testers to work on; testers
 .. Missing data cannot be replaced selectively.
 // TODO: read the comments originally placed here and update this section
 // .. _{explain how to simulate a missing/corrupted file and the expected behavior}_
+
+=== Viewing a person
+. Viewing a person by emailID
+.. Test case: `view notexisted@example.com` +
+   Expected: person found and no new url display on browser panel
+
+.. Test case: `view a@example.com` +
+   Prerequisites: the person with email a@example.com exists on Infinity Book. +
+   Expected: the person with email a@example.com returned,
+   and the corresponding linking page has been displayed on the browser panel.
+
+=== Interview Management
+
+==== Add interview
+. Add an interview to current infinity book.
+.. Test case: `addInterview` +
+   Expected:  Invalid format showing in the status message +
+.. Test case:  `addInterview i/SE INTERVIEW n/DAVID d/04.05.2018 l/NUS SOC` +
+   Expected: new interview added in the status message.
+   New interview added in the browser panel.
+
+==== List interview
+. List all interviews of infinity book
+.. Test case: `listInterview`
+   Expected: Showing all the interviews in the interview panel
+
+==== Delete Interview
+. Prerequisites: List all interviews using the `listInterview` command. Multiple interviews in the list. +
+
+. Deleting an interview while all interviews are listed
+.. Test case: `deleteInterview 1`
+   Expected: First interview deleted from the interview list.
+   Details of the deleted contact shown in the status message.
+.. Test case: `deleteInterview 0`
+   Expected: No interview is deleted. Error details shown in the status message.
+.. Other incorrect delete commands to try: `deleteInterview`, `deleteInterview x` (where x is larger than the list size) +
+   Expected: Similar to previous.
 
 link:#top[Back to top]
 
