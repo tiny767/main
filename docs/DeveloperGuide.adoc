@@ -2076,6 +2076,69 @@ These instructions only provide a starting point for testers to work on; testers
 .. Other incorrect delete commands to try: `deleteInterview`, `deleteInterview x` (where x is larger than the list size) +
    Expected: Similar to previous.
 
+=== Job Management
+
+==== Add Job
+. Post a job to infinity book.
+.. Test case: `postjob` +
+   Expected:  Invalid format showing in the status message +
+.. Test case:  `postjob j/JobTitle l/location s/skill t/NewTag` +
+   Expected: new job posted in the status message.
+   New job card displauyed in the JobListPanel.
+
+==== List Jobs
+. List all jobs of infinity book
+.. Test case: `listjobs`
+   Expected: Showing all jobs in the job panel.
+
+==== Delete Job
+. Prerequisites: List all jobs using the `listjobs` command. All entries are displayed in JobListPanel. +
+
+. Deleting a job while all jobs are listed
+.. Test case: `deletejob 1`
+   Expected: First job deleted from the job list.
+   Details of the deleted job shown in the status message.
+.. Test case: `deletejob 0`
+   Expected: No interview is deleted. Error details shown in the status message.
+.. Other incorrect delete commands to try: `deletejob`, `deletejob x` (where x is larger than the list size) +
+   Expected: Similar to previous.
+
+==== Edit Job
+. Prerequisites: List all jobs using the `listjobs` command. All entries are displayed in JobListPanel. +
+
+. Editing a job while all jobs are listed
+.. Test case: `editjob 1 j/newTitle l/newLocation s/newSkill t/NewTag`
+   Expected: First job edited to contain new job title.
+   Details of the deleted job shown in the status message.
+.. Test case: `editjob 1 j/newTitle l/newLocation s/newSkill t/NewTag` + editjob 2 j/newTitle l/newLocation s/newSkill t/NewTag
+   Expected: Second job is not edited, but first is. Error details shown in the status message.
+.. Other incorrect delete commands to try: `editjob 1`, `deletejob x` (where x is larger than the list size) +
+   Expected: Similar to previous.
+
+==== Find Job
+. Find a job by keyword[s].
+.. Test case: `findjob keyword`
+   Expected: Showing all jobs matching keyword in the job panel.
+.. Test case: `findjob`
+   Expected: No job list change is made. Error details shown in the status message.
+
+==== Match Job
+. Prerequisites: List all jobs using the `listjobs` command. All entries are displayed in JobListPanel. +
+
+. Matching a job to candidates while all jobs are listed
+.. Test case: `matchjob 1`
+   Expected: All candidates matching the first job are displayed in the PersonListPanel.
+.. Test case: `matchjob 0`
+   Expected: No change is seen in the panels. Error message shown in the status message.
+.. Other incorrect delete commands to try: `matchjob`, `matchjob x` (where x is larger than the list size) +
+   Expected: Similar to previous.
+
+
+
+
+
+
+
 link:#top[Back to top]
 
 
