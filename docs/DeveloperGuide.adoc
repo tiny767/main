@@ -1040,7 +1040,7 @@ To use Facebook Graph API, we followed the instruction link:https://developers.f
 
 Finishing the steps, we reached this page
 .Facebook Application setup page
-image::facebook_developers_app.png[width="800"]
+image::FacebookAppCreated.png[width="800"]
 
 ==== Implementation
 
@@ -1109,7 +1109,7 @@ We achieve this by posting `ToggleFacebookPanelEvent` (showing in the below sequ
 
 Capturing the access_token: We registered `FacebookPanel` as an event handler. If the url (of FacebookPanel) changes to a new one that contains the access_token,
  we raise a BrowserUrlChangedEvent. At the same time, our FacebookPanel is subscribed to handle BrowserUrlChangedEvent by passing the url (with access_token) back to FacebookLoginCommand to complete the authentication.
- 
+
 //end::facebook[]
 
 == Documentation
