@@ -22,7 +22,6 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.ui.RefreshReportPanelEvent;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.skill.Skill;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Link;
@@ -32,6 +31,7 @@ import seedu.address.model.person.Phone;
 import seedu.address.model.person.Remark;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.skill.Skill;
 import seedu.address.model.tag.Tag;
 
 /**

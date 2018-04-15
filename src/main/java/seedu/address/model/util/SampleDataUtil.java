@@ -16,7 +16,6 @@ import seedu.address.model.interview.exceptions.DuplicateInterviewException;
 import seedu.address.model.job.Job;
 import seedu.address.model.job.JobTitle;
 import seedu.address.model.job.Location;
-import seedu.address.model.skill.Skill;
 import seedu.address.model.job.exceptions.DuplicateJobException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
@@ -28,6 +27,7 @@ import seedu.address.model.person.Remark;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.report.Proportion;
 import seedu.address.model.report.Report;
+import seedu.address.model.skill.Skill;
 import seedu.address.model.tag.Tag;
 
 /**
