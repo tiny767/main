@@ -8,49 +8,35 @@
 
 == Overview
 
-Infinity Book (IB) is an address book application for Tech recruiters who prefer to use a desktop app for managing candidates.
-
-IB provides end-to-end support, from searching for candidates,to adding job postings and saving their resumes and interviews.
+Infinity Book (IB) is an address book application for Tech recruiters, providing end-to-end support, from searching for candidates,to adding job postings and saving their resumes and interviews.
 
 == Summary of contributions
 
 * *Major enhancement*: Implementation of Dashboard Reporting and Tagging features.
+*** Recruiters may have to screen through one candidate's profile many times, which costs time. Thus, I improved `edit`
+command so that recruiters can add new tags or remove current tags from candidates.
+This enables them to summarize each candidate in a few keywords to save time for their future reference.
 
-** Description: Dashboard Reporting allows user to visualize statistics of the group of candidates tagged with a specific tag so that they can have an overview of candidates in their contact list within a few keystrokes.
-** Justification: Infinity Book helps recruiters process candidate’s information faster. Aligning with this vision, I implemented two features:
-*** First, recruiters may have to screen through one candidate's profile many times, which costs time. Thus, I improved `edit` command so that recruiters can add new tags or remove current tags from candidates. This enables them to summarize each candidate in a few keywords to save time for their future reference.
-*** Second, recruiters need to make decisions and understand actions they have to take based on candidates' information in their contact list. But their list is overwhelmingly long, so I implemented `Report` feature showing them statistics from Tags they have added so that recruiters can have an idea of what is happening without going through each record. And numbers may be boring, so I represented it in charts to give them a better visualization.
-** Highlights: This enhancement touches multiple components:
-*** Added a new Report to the Model component to encapsulate report details.
-*** Modified Logic component to accept new commands and provide information needed to display the report on UI.
-*** Modified Storage component so that IB can store report persistently among sessions.
-*** Added a new panel to display the report and ensured this UI component updates whenever recruiters update candidate' information.
+*** Recruiters need to make decisions based on candidates' information in their contact list.
+But their list is overwhelmingly long, so I implemented `Report` feature showing them statistics from Tags they have added
+so that recruiters can have an idea of what is happening without going through each record.
+
+*** Highlights: This enhancement touches multiple components: Model, Logic, Storage, and UI.
 
 * *Minor enhancement*: Improvement of `Find` command.
-** Previous Implementation: In the previous iteration of the product, `Find` only allows users to search by contacts' name.
-** Since Infinity Book v1.2, recruiters can find candidates by their name, email, phone, and tags.
-** Justification: Given the huge number of contacts that a recruiter has, it is not possible for them to remember candidates' name. Hence, recruiters must be able to search by other fields so that it is easier for them to locate a person.
+*** Since Infinity Book v1.2, recruiters can find candidates by their name, email, phone, and tags.
+*** Justification: Given the huge number of contacts that a recruiter has, it is not possible for them to remember candidates' name. Hence, recruiters must be able to search by other fields so that it is easier for them to locate a person.
 
-* *Minor enhancement*: UI Overhaul.
-
-* *Code contributed*: [https://github.com/CS2103JAN2018-W11-B3/main/blob/master/collated/functional/anh2111.md[Functional code]]
-[https://github.com/CS2103JAN2018-W11-B3/main/blob/master/collated/test/anh2111.md[Test code]] _{give links to collated code files}_
+* *Code contributed*: [https://github.com/CS2103JAN2018-W11-B3/main/blob/master/collated/functional/anh2111.md[Functional code]][https://github.com/CS2103JAN2018-W11-B3/main/blob/master/collated/test/anh2111.md[Test code]]
 
 * *Other contributions*:
 
-** Enhancements to existing features:
-*** Did a UI overhaul to provide a sleek and visual appeal look that optimize for users' satisfaction and enjoyment. Infinity Book v1.5 uses this design as the default theme.
-*** Wrote additional tests for existing features to increase 4.9% coverage (Pull request 159: https://github.com/CS2103JAN2018-W11-B3/main/pull/159)
-
-** Project management:
-*** Managed to wrapped up project properly on GitHub from v1.1 to v1.5
-
-** Documentation:
-*** Grouped features in User Guide to provide a more intuitive flow to the readers.
-*** Was responsible for updating Readme and UI screenshot to match with the actual product.
+** Did a UI overhaul to provide a sleek and visual appeal look that optimize for users' satisfaction and enjoyment. Infinity Book v1.5 uses this design as the default theme.
+** Managed to wrapped up project properly on GitHub from v1.1 to v1.5
+** Was responsible for updating Readme, UI screenshot, User Guide, Developer Guide to match with the actual product.
 ** Community:
 *** PRs reviewed (with non-trivial review comments): https://github.com/CS2103JAN2018-W11-B3/main/pull/58, https://github.com/CS2103JAN2018-W11-B3/main/pull/140
-*** Reported bugs and suggestions for other teams in the class: https://github.com/CS2103JAN2018-F11-B2/main/issues/116#event-1568942469, https://github.com/CS2103JAN2018-F11-B2/main/issues/109#event-1571532062
+*** Reported bugs and suggestions for other teams in the class: https://github.com/CS2103JAN2018-F11-B2/main/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aclosed+anh2111+
 
 == Contributions to the User Guide
 
@@ -59,8 +45,12 @@ IB provides end-to-end support, from searching for candidates,to adding job post
 |===
 
 include::../UserGuide.adoc[tag=report]
-include::../UserGuide.adoc[tag=eddittags]
-include::../UserGuide.adoc[tag=findall]
+An example usage can be found in Appendices.
+
+include::../UserGuide.adoc[tag=reportcommands]
+include::../UserGuide.adoc[tag=addtags]
+
+You can find my other contributions to User Guide: Delete Tags and Improved Find command in Appendices.
 
 == Contributions to the Developer Guide
 
@@ -68,6 +58,24 @@ include::../UserGuide.adoc[tag=findall]
 |_Given below are sections I contributed to the Developer Guide, which showcase my ability to write technical documentation and the technical depth of my contributions to the project._
 |===
 
+include::../DeveloperGuide.adoc[tag=report]
+include::../DeveloperGuide.adoc[tag=edittags]
+
+You can find my other contributions to Developer Guide.
+
+== Appendices
+
+=== Other contributions to the User Guide
+
+==== An example usage of Report
+include::../UserGuide.adoc[tag=reportexample]
+
+include::../UserGuide.adoc[tag=deletetags]
+
+include::../UserGuide.adoc[tag=findall]
+
+=== Other contributions to the Developer Guide
+
 include::../DeveloperGuide.adoc[tag=findall]
 
----
+include::../DeveloperGuide.adoc[tag=option]

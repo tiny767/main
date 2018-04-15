@@ -473,6 +473,8 @@ keywords.stream()
 **Alternative 2:** Return Persons whose `Name`, `Tags`, `Email`, or `Phone` have all input keywords. +
 **Pros:** User can narrow down the search results. +
 **Cons:** In some cases, user cannot do a more general search.
+// end::findall[]
+// tag::edittags[]
 
 === Add/Remove Tags (Since v1.3)
 
@@ -491,56 +493,6 @@ try {
 
 From v1.0, user can overwrite any field of a candidate using `edit` command. Enhancing on top of this, the creation of the new `Person` is updated
 so that user can add new tags by `edit -add-tag INDEX [t/TAG]...` command and remove existing tags by `edit -delete-tag [t/TAG]...` command.
-
-The code snippet below shows the updated creation of new `Person`.
-
-[source, java]
-----
-/**
- * Creates and returns a {@code Person} with the details of {@code personToEdit}
- * edited with {@code editPersonDescriptor}.
- */
-public Person createEditedPerson(Person personToEdit) {
-    boolean isTagsChanged = getTags().isPresent();
-    boolean isNewTagsChanged = getNewTags().isPresent();
-    boolean isDeletedTagsChanged = getDeletedTags().isPresent();
-
-    boolean isMultipleTagsChanged = (isTagsChanged && isNewTagsChanged)
-            || (isTagsChanged && isDeletedTagsChanged) || (isDeletedTagsChanged && isNewTagsChanged);
-    assert !isMultipleTagsChanged;
-
-    assert personToEdit != null;
-
-    Name updatedName = getName().orElse(personToEdit.getName());
-    Phone updatedPhone = getPhone().orElse(personToEdit.getPhone());
-    Email updatedEmail = getEmail().orElse(personToEdit.getEmail());
-    Remark updatedRemark = personToEdit.getRemark();
-    Address updatedAddress = getAddress().orElse(personToEdit.getAddress());
-
-    Set<Tag> updatedTags;
-    Set<Tag> personTags = new HashSet<>(personToEdit.getTags());
-    if (isTagsChanged) {
-        updatedTags = getTags().orElse(null);
-    } else if (isNewTagsChanged) {
-        if (personTags.isEmpty()) {
-            updatedTags = getNewTags().orElse(null);
-        } else {
-            updatedTags = personTags;
-            updatedTags.addAll(getNewTags().orElse(null));
-        }
-    } else if (isDeletedTagsChanged) {
-        updatedTags = personTags;
-        if (personTags.isEmpty()) {
-            updatedTags.removeAll(getDeletedTags().orElse(null));
-        }
-    } else {
-        updatedTags = personTags;
-    }
-
-
-    return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedRemark, updatedTags);
-}
-----
 
 ==== Design Considerations
 **Aspect:** Implementation of removing/adding tags +
@@ -562,6 +514,9 @@ public Person createEditedPerson(Person personToEdit) {
 **Alternative 2:** Using two new commands for adding and removing tags +
 **Pros:** It is easier to parse the command.   +
 **Cons:** User has to remember more commands.
+
+// end::edittags[]
+// tag::option[]
 
 === Accept Option for Commands (Since v1.2)
 
@@ -623,6 +578,9 @@ if (argWithOption.isOption(EditCommand.COMMAND_OPTION_ADD_TAG)) {
     parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editPersonDescriptor::setNewTags);
 }
 ----
+
+// end::option[]
+// tag::report[]
 
 === Report (Since v1.4)
 
@@ -701,38 +659,6 @@ We keep `UniqueReportList` persistently in XML files.
 .`XmlAdaptedReport` in the structure of Storage Component of Infinity Book.
 image::ReportStorageDiagram.jpg[width="700"]
 
-One example of `Report` details stored in xml file:
-
-[source, xml]
-----
-<reports>
-    <population>SEIntern</population>
-    <totalTags>11</totalTags>
-    <totalPersons>11</totalPersons>
-    <proportions>
-        <proportionName>Screening</proportionName>
-        <value>5</value>
-        <totalPersonsInProportion>5</totalPersonsInProportion>
-    </proportions>
-    <proportions>
-        <proportionName>Rejected</proportionName>
-        <value>1</value>
-        <totalPersonsInProportion>1</totalPersonsInProportion>
-    </proportions>
-    <proportions>
-        <proportionName>Offered</proportionName>
-        <value>2</value>
-        <totalPersonsInProportion>2</totalPersonsInProportion>
-    </proportions>
-    <proportions>
-        <proportionName>Interviewing</proportionName>
-        <value>3</value>
-        <totalPersonsInProportion>3</totalPersonsInProportion>
-    </proportions>
-    <date>04/06/2018 14:41:30</date>
-</reports>
-----
-
 ===== Logic Component
 
 The below sequence diagram show interactions within `Logic` component when user executes `viewreport pop/CS`.
@@ -758,9 +684,7 @@ image::EventInteraction.jpg[width="700"]
 **Alternative 1 (current choice):** in `ModelManager` +
 **Pros:**
 Since the calculation requires fetching the list of all Persons in Infinity Book, Defining it in the `ModelManager` to reduce dependency among components. +
-**Cons:**
-
-Have to modify multiple components such as `LogicManager`, `ModelManager`, `Event`. +
+**Cons:** Have to modify multiple components such as `LogicManager`, `ModelManager`, `Event`. +
 **Alternative 2:** in `Report` class itself +
 **Pros:** Do not require a `Report` instance in Infinity Book, which can be redundant when user does not use. +
 **Cons:** Have to write setter and getter to get the list of Persons from `Model`.
@@ -788,7 +712,7 @@ so that they are accessible by people who are color blind and obvious for everyo
 **Alternative 2:** Use a the default JavaFX chart color palettes +
 **Pros:** Do not need to implement.   +
 **Cons:** Do not have the control over visual effect. +
-// end::findall[]
+// end::report[]
 === Tag colors [since v1.0]
 
 ==== Current Implementation
