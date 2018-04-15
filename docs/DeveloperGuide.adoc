@@ -1074,9 +1074,9 @@ fbClient = new DefaultFacebookClient(accessToken, Version.LATEST);
 user = fbClient.fetchObject("me", User.class);
 ----
 
-fbClient is the Facebook Graph API client with the supplied token.
+'fbClient' is the Facebook Graph API client with the supplied token.
 
-user is the authenticated user object.
+'user' is the authenticated user object.
 
 ===== Facebookpost
 
@@ -1100,21 +1100,41 @@ DefaultFacebookClient fbClient = FacebookLoginCommand.getFbClient();
 fbClient.publish("me/feed", FacebookType.class, Parameter.with("message", toPost));
 ----
 
-==== Implementation details:
+==== Implementation details
 
 'FacebookPanel' extends `UiPart<Region>` and shares the same region with `BrowserPanel` or `ReportPanel`. When `facebooklogin` is executed,
  `MainWindow` class will swap out the `BrowserPanel` or `ReportPanel` and replace by `FacebookPanel`.
 We achieve this by posting `ToggleFacebookPanelEvent` (showing in the below sequence diagram).
 
-'FacebookPanel' is used mainly as a browser to authorize a user to Facebook.
+'FacebookPanel' is used mainly as a browser to authorize a user to Facebook. It is also used to display the Facebook page after the user is authorized.
 
-Capturing the access_token: We registered `FacebookPanel` as an event handler. If the url (of FacebookPanel) changes to a new one that contains the access_token,
- we raise a BrowserUrlChangedEvent. At the same time, our FacebookPanel is subscribed to handle BrowserUrlChangedEvent by passing the url (with access_token) back to FacebookLoginCommand to complete the authentication.
+For capturing the access_token, we register `FacebookPanel` as an event handler. If the url (of `FacebookPanel`) changes to a new one that contains the access_token,
+ we raise a `BrowserUrlChangedEvent`. Also, our `FacebookPanel` is subscribed to handle `BrowserUrlChangedEvent` by passing the url (with access_token) back to `FacebookLoginCommand` to complete the authentication.
 
 The below sequence diagram show interactions within Logic component when user executes `facebookpost hello`.
 
 .Sequence diagram detailing Logic component when executing facebookpost
 image::FbSequenceDiagram.png[width="800"]
+
+==== Design considerations
+
+**Aspect:** Choice of client API for Facebook Graph API+
+**Alternative 1 (current choice):** Use `RestFB` +
+**Pros:** RestFB is simple and easy to use with well-documented API
+**Cons:** Features are limited+
+**Alternative 2:** Facebook4j +
+**Pros:** Facebook4j provides more extensive features+
+**Cons:** It is harder to use and we do not really need advanced features for now
+
+---
+
+**Aspect:** Authentication+
+**Alternative 1 (current choice):** Authenticate using the built-in web browser (in FacebookPanel)  +
+**Pros:** Convenient for user as authentication is done inside the app itself
+**Cons:** The built-in Java web-engine might not support certain features of a webpage. +
+**Alternative 2:** Authenticate by opening a full-pledged web browser such as Chrome/ Safari +
+**Pros:** The Facebook authorization page will be better supported by such a browser
+**Cons:** User needs to switch between different applications
 
 //end::facebook[]
 
