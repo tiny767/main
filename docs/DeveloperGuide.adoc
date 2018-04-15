@@ -775,9 +775,8 @@ Have to modify multiple components such as `LogicManager`, `ModelManager`, `Even
 
 ==== Current Implementation
 
-Use different colors for different tags inside person cards. For example, `friends` tags can be all in red and `colleagues` tags can be all in blue
-Pre-defined colors are included in `DarkTheme.css` and `LightTheme.css`
-We use hash code of the tag names to generate a color. This is deliberately designed to ensure consistent colors each time the application runs.
+Use different colors for different tags inside person cards. For example, `friends` tags can be all in red and `colleagues` tags can be all in blue.
+Pre-defined colors are included in `DarkTheme.css`, `LightTheme.css` and `MorningTheme.css`. We use hash code of the tag names to generate a color. This is deliberately designed to ensure consistent colors each time the application runs.
 
 ==== Design considerations
 
@@ -900,7 +899,7 @@ public class UiTheme {
 Example of calling the application to change to light theme:
 
 ----
-UiStyle.getInstance().setToLightTheme();
+UiTheme.getInstance().setToLightTheme();
 ----
 
 ==== Design Considerations
