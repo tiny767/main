@@ -36,14 +36,13 @@ IB provides *end-to-end support*, from searching for candidates,to adding job po
 ** Project management:
 *** Managed releases `v1.3` `v1.4.1` (2 releases) on GitHub
 ** Enhancements to existing features:
-*** Updated the add and edit command to support the skills field(Pull requests https://github.com[#33], https://github.com[#34])
+*** Updated the add and edit command to support the skills field(Pull requests https://github.com/CS2103JAN2018-W11-B3/main/pull/157/[#157])
 ** Documentation:
-*** Did cosmetic tweaks to existing contents of the User Guide: https://github.com[#14]
+*** Did cosmetic tweaks to existing contents of the User Guide: https://github.com/CS2103JAN2018-W11-B3/main/pull/174[#174], https://github.com/CS2103JAN2018-W11-B3/main/pull/56[#56], https://github.com/CS2103JAN2018-W11-B3/main/pull/160[#160]
 ** Community:
-*** PRs reviewed (with non-trivial review comments): https://github.com[#12], https://github.com[#32], https://github.com[#19], https://github.com[#42]
-*** Contributed to forum discussions (examples:  https://github.com[1], https://github.com[2], https://github.com[3], https://github.com[4])
-*** Reported bugs and suggestions for other teams in the class (examples:  https://github.com[1], https://github.com[2], https://github.com[3])
-*** Some parts of the history feature I added was adopted by several other class mates (https://github.com[1], https://github.com[2])
+*** PRs reviewed (with non-trivial review comments): https://github.com[#12], https://github.com[#32], https://github.com[#19], https://github.com[#42],
+*** Reported bugs and suggestions for other teams in the class (examples:  https://github.com/CS2103JAN2018-W13-B3/main/issues/148[148], https://github.com/CS2103JAN2018-W13-B3/main/issues/147[147], https://github.com/CS2103JAN2018-W13-B3/main/issues/154[154], https://github.com/CS2103JAN2018-W13-B3/main/issues/155[155])
+*** Opened non-trivial issues for improvement: https://github.com/CS2103JAN2018-W11-B3/main/issues/54[#54], https://github.com/CS2103JAN2018-W11-B3/main/issues/55[#55],
 
 _{you can add/remove categories in the list above}_
 

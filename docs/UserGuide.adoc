@@ -115,7 +115,7 @@ If no matches are available, no change is made to the input text.
 
 *Example:*
 
-** `li` + kbd:[TAB] : Completes to command word to `list`.
+** `li` + kbd:[TAB] : Completes command word to `list`.
 
 ** `LI` + kbd:[TAB]  : Reports no completions found.
 
@@ -130,12 +130,19 @@ Auto correct spell checks command words being typed into Infinity Book. +
 
 To auto-correct a command word:
 
-. Type in a possibly incorrect version of the command word.
-. Press kbd:[SPACE] and watch the command word auto-corrected immediately.
-
 [NOTE]
 Entered text must be within one edit-distance of the desired command. +
 If no corrections are available, no change is made to the input text.
+
+. Type in a possibly incorrect version of the command word.
+. Press kbd:[SPACE] and watch the command word auto-corrected immediately.
+
+[TIP]
+====
+If a copy-pasted command may contain a spelling error in the command word, press kbd:[SPACE] to
+correct the command word without affecting the argumets entered.
+====
+
 
 *Example:*
 
@@ -147,13 +154,12 @@ If no corrections are available, no change is made to the input text.
 
 ** `lllist` + kbd:[SPACE] : Does not make any correction.
 
-[TIP]
+
+[WARNING]
 ====
-If a copy-pasted command may contain a spelling error in the command word, press kbd:[SPACE] to
-correct the command word without affecting the argumets entered.
+While copy pasting commands with spelling errors, the kbd:[SPACE] key will not be available for use to insert spaces in the command while editing.
 ====
 
-** `lsit` + kbd:[SPACE] : Corrects command word to `list`.
 
 [[Features]]
 == Features
@@ -509,9 +515,13 @@ Figure : PostJob Command adds Jobs into the Job Postings panel as shown.
 
 Want to change the parameters of a job after creating? IB provides the flexibility to edit an existing job posting through the `editjob` command.
 
-*Format:* ` editjob INDEX [j/JOBTITLE] [l/LOCATION] [s/SKILLS] [t/TAG]`
+*Format:* ` editjob [-add-tag/-delete-tag] INDEX [j/JOBTITLE] [l/LOCATION] [s/SKILLS] [t/TAG]`
 
-*Examples:* ` editjob 1 j/Backend Engineer l/Singapore`
+Specifying -add-tag or -delete-tag causes editjob command to specifically add or delete the specified tag for the index specified tag. If unspecified, the tag list is over-written
+by the newly specified set of tags. This implementation mirrors the edit command.
+
+*Examples:* `editjob 1 j/Backend Engineer l/Singapore` +
+`editjob 1 -delete-tag j/Backend Engineer l/Singapore`
 
 [NOTE]
 At least one field must be provided for the edit command to function as expected.

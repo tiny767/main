@@ -45,7 +45,7 @@ public class EditJobCommand extends UndoableCommand {
             + "[" + PREFIX_JOBTITLE + "JOBTITLE] "
             + "[" + PREFIX_LOCATION + "LOCATION] "
             + "[" + PREFIX_SKILLS + "SKILLS] "
-            + "[" + PREFIX_TAG + "TAG]... | "
+            + "[" + PREFIX_TAG + "TAG]... | \n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_JOBTITLE + "Backend Engineer "
             + PREFIX_LOCATION + "Singapore\n"

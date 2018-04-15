@@ -33,7 +33,7 @@ public class PostJobCommandParser implements Parser<PostJobCommand> {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_JOBTITLE, PREFIX_LOCATION, PREFIX_SKILLS, PREFIX_TAG);
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_JOBTITLE, PREFIX_LOCATION)
+        if (!arePrefixesPresent(argMultimap, PREFIX_JOBTITLE, PREFIX_LOCATION, PREFIX_SKILLS)
                 || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, PostJobCommand.MESSAGE_USAGE));
         }

@@ -941,6 +941,9 @@ in Figure _{num}_ .
 .UML diagram showing representation of Job in Infinity Book.
 image::JobUMLDiagram.png[width="400"]
 
+In addition, the Person and Job class have been modified to maintain Skills as an additional field to offer better functionality
+during candidate-job matching. The `add` and `edit` commands reflect these changes as well.
+
 Together, this modifies the Model to the state shown in the following diagram.
 
 .A complete picture of the model as mantained by Infinity Book.
