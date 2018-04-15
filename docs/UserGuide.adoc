@@ -30,6 +30,7 @@ More importantly, IB is *optimized for those who prefer to work with a desktop C
 
 Jump to the <<Quick Start>> to get started. Enjoy!
 
+//tag::testtag[]
 == About
 
 This User Guide introduces a user to Infinity Book, provides set up instructions and details the features of the product.
@@ -39,6 +40,8 @@ To quickly set up Infinity Book and try out the features, jump to <<Quick Start>
 
 [NOTE]
 For information about implementation and architecture, please refer to the Developer Guide.
+
+//end::testtag[]
 
 == Quick Start
 If you are a first time user, this section will help you get started with Infinity Book in 5 easy steps:
@@ -95,27 +98,70 @@ Infinity Book uses a command line interface that follows the command format give
 * Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
 * Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
-
+//tag::autocomplete[]
 === Auto-complete and auto-correct
 
-* Spell corrects and completes command words being typed into Infinity Book +
+To enhance your experience with the Command Line Interface(CLI), Infinity Book comes with built in auto-correct and auto-complete. This section explains
+how you can use these features to speed up your CLI experience.
 
-* kbd:[TAB] key auto-completes a partial command word and kbd:[SPACE] autocorrects an incorrect command word spelling.
+==== Auto-complete
+Auto completes command words being typed into Infinity Book. +
 
-* *Example:*
-** `li` + kbd:[TAB] key press +
-Completes to command word to `list`
+To auto-complete a command word:
 
-** `lsit` + kbd:[SPACE] key press +
-Corrects command word to `list`.
-
+. Type in atleast the first character of your command word.
+. Press kbd:[TAB] until your desired command word appears in the command box.
 
 [NOTE]
+Entered text must match (case sensitive) the start of the desired command. +
+If no matches are available, no change is made to the input text.
+
+*Example:*
+
+** `li` + kbd:[TAB] : Completes command word to `list`.
+
+** `LI` + kbd:[TAB]  : Reports no completions found.
+
+[TIP]
 ====
-* Auto-correct only corrects one edit distance errors.
-* When completions are available, use `TAB` to toggle through options.
+Use kbd:[TAB] repeatedly to loop through the list as many times as you need.
 ====
 
+
+==== Auto-correct
+Auto correct spell checks command words being typed into Infinity Book. +
+
+To auto-correct a command word:
+
+[NOTE]
+Entered text must be within one edit-distance of the desired command, by removal, addition or swapping of adjacent characters +
+If no corrections are available, no change is made to the input text.
+
+. Type in a possibly incorrect version of the command word.
+. Press kbd:[SPACE] and watch the command word auto-corrected immediately.
+
+[TIP]
+====
+If a copy-pasted command may contain a spelling error in the command word, press kbd:[SPACE] to
+correct the command word without affecting the arguments entered.
+====
+
+*Example:*
+
+** `lsit` +  kbd:[SPACE] : Corrects command word to `list`.
+
+** `lit` +   kbd:[SPACE] : Corrects command word to `list`.
+
+** `liist` + kbd:[SPACE] : Corrects command word to `list`.
+
+** `lllist` + kbd:[SPACE] : Does not make any correction.
+
+[WARNING]
+====
+While copy pasting commands with spelling errors, the kbd:[SPACE] key will not be available for use to insert spaces in the command while editing.
+====
+
+//end::autocomplete[]
 
 [[Features]]
 == Features
@@ -156,6 +202,7 @@ Edits the name of the 2nd person to be `Betsy Crower` and clears all existing ta
 * You can remove all the person's tags by typing `t/` without specifying any tags after it.
 ****
 
+// tag::edittags[]
 ==== Add new tags to a person : `edit -add-tag`
 
 Infinity Book helps you process candidate's information faster.
@@ -165,16 +212,18 @@ Summarize each candidate in a few keywords using the `edit -add-tag` command to 
 
 [NOTE]
 ====
-* Each candidate +
+* Each candidate: +
 
 . Can have any number (including zero) of tags.
 . Cannot have duplicated tags. Tag name comparision is case sensitive, which means the list of tags of a candidate can be
 `Java` `JAVA` `JAVa`, for example, but cannot be `JAVA` `JAVA`.
 . Cannot have tags with empty tag name.
-
-* When you provide invalid tags, Infinity Book will ignore them. To verify, you can look at all tags shown under the candidate's name in the list.
-
 * Ensure that the specified `INDEX` is a positive integer that is smaller or equal to the total number of candidates shown in the list.
+====
+
+[WARNING]
+====
+* When you provide invalid tags, Infinity Book will ignore them. To verify, you can look at all tags shown under candidate's name in the list.
 ====
 
 *Examples:* +
@@ -195,7 +244,7 @@ and Infinity Book will not show any warning.
 
 ==== Delete tags from a person : `edit -delete-tag`
 
-Some tags are no longer seems to be relevant to the candidate? Remove them using the `edit -delete-tag` command.
+Some tags are no longer seem to be relevant to the candidate? Remove them using the `edit -delete-tag` command.
 
 *Format:* `edit -delete-tag INDEX [t/TAG]...`
 
@@ -207,6 +256,7 @@ Some tags are no longer seems to be relevant to the candidate? Remove them using
 ====
 
 *Examples:* +
+
 * `edit -delete-tag 1 t/computing` +
 Deletes tag `computing` from the first candidate.
 
@@ -221,6 +271,8 @@ image::cannotdeletetag.png[width="600"]
 
 Figure. Cannot delete tag `computing` from the first candidate. The candidate's details will not be updated,
 and Infinity Book will not show any warning.
+
+//end::edittags[]
 
 //tag:remark[]
 ==== Add a remark : `remark` [Since v1.1]
@@ -274,7 +326,7 @@ Deletes the 1st person in the results of the `find` command.
 * *Description:* Shows a list of all candidates in the Infinity Book. +
 * *Format:* `list`
 
-
+// tag::findall[]
 ==== Finding candidates by name, phone, email, and tags: `find`
 
 Finds candidates whose names, phone numbers, emails, or tags contain any of the given keywords. +
@@ -295,6 +347,7 @@ Returns `Alex Yeoh`, `Charlotte Oliveiro`, and `Alex Smith` whose names and phon
 
 image::Find.png[width="300"]
 _Figure._ Person list after finding with keywords `Alex` and `93210283`.
+//end::findall[]
 
 //tag::viewcommand[]
 ==== Viewing a person: `view`
@@ -412,15 +465,16 @@ _Figure._ Infinity Book has displayed Report with Population Tag `SEIntern` in t
 
 [NOTE]
 ====
-Regarding displaying the Report, +
-
-* In the right-most column, Infinity Book will show you a bar chart, a pie chart, and a history list.
+When you execute a Report command, Infinity Book will show you a bar chart, a pie chart, and a history list in the right-most column.
 ====
 
-IMPORTANT: If there are no candidates tagged with the Population Tag you provide, Inifinity Book will not show you the pie chart. +
+[WARNING]
+====
+* If there are no candidates tagged with the Population Tag you provide, Inifinity Book will not show you the pie chart. +
 
-IMPORTANT: If you provide multiple `POPULATION_TAG`, Infinity Book will take the last one.
+* If you provide multiple `POPULATION_TAG`, Infinity Book will take the last one.
 For example, when you execute `viewreport pop/SEIntern pop/Computing`, Infinity Book will display the report for `Computing`. +
+====
 
 ==== Saving a report : `savereport` or `sr` [Since v1.4]
 
@@ -445,18 +499,18 @@ the history list includes all statistics you have saved.
 which means you cannot edit or delete saved reports. You also cannot undo `savereport` command.
 ====
 
-IMPORTANT: If you provide multiple `POPULATION_TAG`, Infinity Book will take the last one. For example, when you execute `viewreport pop/SEIntern pop/Computing`, Infinity Book will save the report for `Computing`.
+WARNING: If you provide multiple `POPULATION_TAG`, Infinity Book will take the last one. For example, when you execute `viewreport pop/SEIntern pop/Computing`, Infinity Book will save the report for `Computing`.
 
 // end::report[]
-// tag::jobposting[]
 
-=== Managing Job Postings
+//tag::jobposting[]
+=== Job Postings
 
 In line with the vision of offering end to end support, Infinity Book offers recruiters a very efficient way to keep track of job vacancies and match candidates to these positions. +
 
 This section details commands for managing job postings.
 
-==== Post Job Command
+==== Add Job Posting
 Want to add a newly available job vacancy to IB and match candidates to this role? Add a job posting using the `postjob` command.
 
 *Format:* `postjob j/JOB TITLE l/LOCATION t/[TAGS] s/SKILLS`
@@ -467,9 +521,49 @@ Want to add a newly available job vacancy to IB and match candidates to this rol
 Job postings are matched to candidates on the basis of location, skills and tags. To neglect any of these during matching, set the field to 'ALL'.
 
 
-image::postjob.JPG[width="500"]
-Figure : PostJob Command adds Jobs into a new pane as shown.
+image::postjob.JPG.png[width="500"]
+Figure : PostJob Command adds Jobs into the Job Postings panel as shown.
 
+==== Edit Job Command
+
+Want to change the parameters of a job after creating? IB provides the flexibility to edit an existing job posting through the `editjob` command.
+
+*Format:* `editjob [-add-tag/-delete-tag] INDEX [j/JOBTITLE] [l/LOCATION] [s/SKILLS] [t/TAG]`
+
+Specifying -add-tag or -delete-tag causes editjob command to specifically add or delete the specified tag for the index specified tag. If unspecified, the tag list is over-written
+by the newly specified set of tags. This implementation mirrors the edit command.
+
+*Examples:* `editjob 1 j/Backend Engineer l/Singapore` +
+`editjob 1 -delete-tag j/Backend Engineer l/Singapore`
+
+[NOTE]
+At least one field must be provided for the edit command to function as expected.
+
+image::editjob.JPG.png[width="500"]
+Figure : `editjob` edits the first job posting as marked in diagram.
+
+//end::jobposting[]
+
+//tag::jobpostingdelete[]
+==== Delete Job Command
+
+Want to remove a job posting from IB after creating? IB provides a `deletejob` command to delete any existing job posting from memory.
+
+*Format:* `deletejob INDEX`
+
+*Examples:* `deletejob 1`
+
+image::deletejob.JPG.png[width="500"]
+Figure : `deletejob` deletes the job posting at the specified index in the most recent listing from Figure as shown.
+
+[NOTE]
+====
+Index to be used as displayed in the panel.
+====
+
+//end::jobpostingdelete[]
+
+//tag::jobpostingmatch[]
 ==== Match Job Command
 
 To match an existing job posting to potential candidates, use the `matchjob` command to filter out candidates for the chosen job.
@@ -480,41 +574,37 @@ Job matching is done on the basis of location, skills and tags. To disregard a p
 
 *Example:* `matchjob 1`
 
-image::matchJob.JPG[width="500"]
+image::matchJob.JPG.png[width="500"]
 Figure : MatchJob command filters the Candidates as per Job, as shown above.
+//end::jobpostingmatch[]
 
-==== Edit Job Command
+//tag::jobpostinglist[]
+==== Listing all jobs : `listjobs`
 
-Want to change the parameters of a job after creating? IB provides the flexibility to edit an existing job posting through the `editjob` command.
+* *Description:* Shows a list of all jobs posted in the Infinity Book. +
+* *Format:* `listjobs`
 
-*Format:* ` editjob INDEX [j/JOBTITLE] [l/LOCATION] [s/SKILLS] [t/TAG]`
+==== Finding jobs by Job Title, Location, and tags: `findjob`
 
-*Examples:* ` editjob 1 j/Backend Engineer l/Singapore`
+Finds jobs whose job titles, locations, or tags contain any of the given keywords. +
 
-[NOTE]
-At least one field must be provided for the edit command to function as expected.
+*Format:* `find KEYWORD [MORE_KEYWORDS]` +
 
-image::editjob.JPG[width="500"]
-Figure : `editjob` edits the first job posting from Figure as shown.
+****
+* The search is case insensitive. e.g `backend` will match `Backend`.
+* The order of the keywords does not matter. e.g. `Engineer Backend` will match `Backend Engineer`.
+* Only job's title, location and tags are searched.
+* Only full words will be matched e.g. `Eng` will not match `Engineer`.
+* Jobs matching at least one keyword will be returned (i.e. `OR` search). e.g. `Engineer` will return `Backend Engineer`, `Frontend Engineer`
+****
 
-_{Enter the figure number in the Figure description above.}_
+*Example:* `findjob Backend Geylang` +
+Returns `Backend Engineer`, `Frontend Engineer`, and `Backend Tester` whose job titles and locations match with the given keywords.
 
-==== Delete Job Command
+image::findjob.png[width="700"]
+_Figure._ Job list after finding with keywords `backend` and `geylang`.
 
-Remove a job posting from Infinity Book using the index from latest listing.
-
-*Format:* `deletejob INDEX`
-
-*Examples:* `deletejob 1`
-
-image::deletejob.JPG[width="500"]
-Figure : `deletejob` deletes the job posting at the specified index in the most recent listing from Figure as shown.
-// end::jobposting[]
-
-[NOTE]
-====
-Index to be used as displayed in the panel.
-====
+//end::jobpostinglist[]
 
 //tag::interviewmanagement[]
 
@@ -721,6 +811,7 @@ There is no need to save manually.
 *Q*: How do I transfer my data to another Computer? +
 *A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Infinity Book folder.
 
+// tag::faq[]
 *Q*: How do I check if Infinity Book is compatible with my computer? +
 *A*: Infinity Book is compatible with Windows, Mac OS and Ubuntu with Java `1.8.0_60` or later installed. Compatibility with other link:#unix[UNIX] distributions is not guaranteed. +
 
@@ -742,7 +833,7 @@ To check your Java Version:
 2. In the terminal copy paste the following command without enclosing double quotes to find your Java vesion:
 `"java -v"`
 ****
-
+// end::faq[]
 == Command Summary
 
 The following table summarises Infinity Book commands with suitable examples:
@@ -750,21 +841,26 @@ The following table summarises Infinity Book commands with suitable examples:
 [width="100%",cols="10%,<45%,<45%",options="header",]
 |=====================================================================================================
 |Command |Command Format |Example
-|Add |`add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` | `add n/James Ho p/22224444 e/jamesho@example.com a/123,
- Clementi Rd, 1234665 t/friend t/colleague`
+|Add Person|`n/NAME p/PHONE e/EMAIL a/ADDRESS s/SKILLS l/LINK [t/TAG]...` | ` add n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 l/link s/CSSt/friends t/owesMoney`
 |Add Interview | `addInterview i/INTERVIEW_TITLE n/INTERVIEWEE d/DATE l/INTERVIEW_LOCATION`| `addInterview i/SE Interview n/David
-d/04.05.2018 l/Suntex City `
+|Add Job|`postjob j/JOBTITLE l/LOCATION s/SKILLS [t/TAG]` | `postjob j/Backend Engineer l/Singapore s/SQL, Javascript t/FreshGrad`
 |Clear |`clear`| `clear`
 |Delete |`delete INDEX` |`delete 3`
-|Delete Interview |`delete INDEX | `deleteInterview 3`
-|Edit |`edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` |`edit 2 n/James Lee e/jameslee@example.com`
-|Add new tags to a person |`edit -add-tag INDEX [t/TAG]...` |`edit -add-tag 2 t/Computing`
+|Delete Interview |`deleteInterview INDEX | `deleteInterview 3`
+|Delete Job |`deletejob INDEX` | `deletejob 1`
+|Edit |`edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [s/SKILL] [t/TAG]...` |`edit 2 n/James Lee e/jameslee@example.com`
+|Edit Job |`[j/JOBTITLE] [l/LOCATION] [s/SKILLS] [t/TAG]` | `editjob 1 j/Backend Engineer l/Singapore`
+|Add tags to person |`edit -add-tag INDEX [t/TAG]...` |`edit -add-tag 2 t/Computing`
+|Add tags to job |`editjob -add-tag INDEX [t/TAG]...` |`editjob -add-tag 2 t/Computing`
 |Delete tags from a person |`edit -delete-tag INDEX [t/TAG]...` |`edit -delete-tag 2 t/Computing`
 |Find |`find KEYWORD [MORE_KEYWORDS]` |`find James Jake`
 |Find Interview | `FindInterview n/INTERVIEWEE`| `FindInterview David`
+|Find Job |`findjob KEYWORD [MORE_KEYWORDS]` | `findjob frontend backend systems`
 |Help |`help` |`help`
 |History |`history` | `history`
-|List | `list`|`list`
+|List People | `list`|`list`
+|List Jobs |`listjobs` | `listjobs`
+|Match Job |`matchjob INDEX` | `matchjob 2`
 |Redo |`redo`|`redo`
 |Select |`select INDEX` |`select 2`
 |Undo |`undo` |`undo`

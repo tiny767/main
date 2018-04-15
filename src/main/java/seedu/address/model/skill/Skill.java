@@ -1,4 +1,4 @@
-package seedu.address.model.job;
+package seedu.address.model.skill;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
@@ -6,6 +6,7 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 import java.util.HashSet;
 import java.util.Set;
 
+//@@author ChengSashankh
 /***
  * Represents a Job's and Person's required Skills in the Infinity Book.
  * Guarantees: is valid as declared in {@link #isValidSkill(String)}
@@ -54,3 +55,4 @@ public class Skill {
     }
 
 }
+//@@author

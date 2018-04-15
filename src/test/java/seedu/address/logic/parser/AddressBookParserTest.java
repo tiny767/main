@@ -84,12 +84,14 @@ public class AddressBookParserTest {
         assertTrue(parser.parseCommand(ClearCommand.COMMAND_WORD + " 3") instanceof ClearCommand);
     }
 
+    //@@author ChengSashankh
     @Test
     public void parseCommand_postJob() throws Exception {
         Job job = new JobBuilder().build();
         PostJobCommand command = (PostJobCommand) parser.parseCommand(JobUtil.getPostJobCommand(job));
         assertEquals(new PostJobCommand(job), command);
     }
+    //@@author
 
     @Test
     public void parseCommand_clearAlias() throws Exception {
@@ -111,6 +113,7 @@ public class AddressBookParserTest {
         assertEquals(new DeleteCommand(INDEX_FIRST_PERSON), command);
     }
 
+    //@@author ChengSashankh
     @Test
     public void parseCommand_deleteJob() throws Exception {
         DeleteJobCommand command = (DeleteJobCommand) parser.parseCommand(
@@ -124,6 +127,7 @@ public class AddressBookParserTest {
                 DeleteJobCommand.COMMAND_ALIAS + " " + INDEX_FIRST_JOB.getOneBased());
         assertEquals(new DeleteJobCommand(INDEX_FIRST_JOB), command);
     }
+    //@@author
 
     @Test
     public void parseCommand_edit() throws Exception {
@@ -143,6 +147,7 @@ public class AddressBookParserTest {
         assertEquals(new EditCommand(INDEX_FIRST_PERSON, descriptor), command);
     }
 
+    //@@author ChengSashankh
     @Test
     public void parseCommand_editJob() throws Exception {
         Job job = new JobBuilder().build();
@@ -160,6 +165,7 @@ public class AddressBookParserTest {
                 + INDEX_FIRST_JOB.getOneBased() + " " + JobUtil.getJobDetails(job));
         assertEquals(new EditJobCommand(INDEX_FIRST_JOB, descriptor), command);
     }
+    //@@author
 
     @Test
     public void parseCommand_exit() throws Exception {
@@ -175,6 +181,7 @@ public class AddressBookParserTest {
         assertEquals(new FindCommand(new PersonContainsKeywordsPredicate(keywords)), command);
     }
 
+    //@@author ChengSashankh
     @Test
     public void parseCommand_findJob() throws Exception {
         List<String> keywords = Arrays.asList("foo", "bar", "baz");
@@ -182,6 +189,7 @@ public class AddressBookParserTest {
                 FindJobCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
         assertEquals(new FindJobCommand(new JobMatchesKeywordsPredicate(keywords)), command);
     }
+    //@@author
 
     @Test
     public void parseCommand_viewreport() throws Exception {
@@ -232,11 +240,13 @@ public class AddressBookParserTest {
         assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD + " 3") instanceof ListCommand);
     }
 
+    //@@author ChengSashankh
     @Test
     public void parseCommand_listJob() throws Exception {
         assertTrue(parser.parseCommand(ListJobsCommand.COMMAND_WORD) instanceof ListJobsCommand);
         assertTrue(parser.parseCommand(ListJobsCommand.COMMAND_WORD + " 3") instanceof ListJobsCommand);
     }
+    //@@author
 
     @Test
     public void parseCommand_select() throws Exception {

@@ -5,8 +5,10 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import seedu.address.model.skill.Skill;
 import seedu.address.testutil.Assert;
 
+//@@author ChengSashankh
 public class SkillsTest {
     @Test
     public void constructor_null_throwsNullPointerException() {
@@ -37,3 +39,4 @@ public class SkillsTest {
         assertTrue(Skill.isValidSkill("Statistics 2")); // long names
     }
 }
+//@@author
