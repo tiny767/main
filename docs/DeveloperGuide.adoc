@@ -1044,6 +1044,8 @@ image::facebook_developers_app.png[width="800"]
 
 ==== Implementation
 
+===== Facebooklogin
+
 We allow users to log in by loading the Authentication URL to the FacebookPanel associated to our Facebook application specified by Graph API
 
 [source,java]
@@ -1058,15 +1060,43 @@ private static final String FACEBOOK_AUTH_URL =
 Platform.runLater(() -> webEngine.load(FACEBOOK_AUTH_URL));
 ----
 
-In the facebook panel, if login credentials are accepted, facebook will return an access_token in its redirected url
+If login credentials are accepted, facebook will return an access_token in its redirected url. An example of a redirected url
 
-Using this access_token, we 'capture' this login session by making use of restfp api
+----
+https://www.facebook.com/?#access_token=EAAC15Ydo408BANN5h1MoSHWhLATnte3EchlxqsXA7x2WASMlZBJzlZC3rZCmlu4Wib3hi1bXR2r2sx2ZCgIJvJCrXaTAnQVN4f0ksFLSvCuezLhG43myLJtxT3Qtn0PpcIXXZBjgYUI4LwGvv837KGC2V4ifctNaBnHqRX6e7qAZDZD&expires_in=5184000
+---
 
-Facebook post
+Using this access_token, we 'capture' this login session by making use of RestFB API. We set up the session in FacebookLoginCommand as followed
+
+----
+fbClient = new DefaultFacebookClient(accessToken, Version.LATEST);
+user = fbClient.fetchObject("me", User.class);
+----
+
+fbClient is the Facebook Graph API client with the supplied token.
+user is the authenticated user object.
+
+===== Facebookpost
 
 We will check if user is authenticated via the boolean variable isAuthenticated before allowing to post on fb
 
-Using the restfb api to post the message to fb
+[source,java]
+----
+if (!FacebookLoginCommand.getAuthenticateState()) {
+    FacebookLoginCommand fbLoginCommand = new FacebookLoginCommand();
+    fbLoginCommand.execute();
+} else {
+    completePost();
+}
+----
+
+We simple post the message to Facebook using the authenticated fbClient in FacebookLoginCommand
+
+[source,java]
+----
+DefaultFacebookClient fbClient = FacebookLoginCommand.getFbClient();
+fbClient.publish("me/feed", FacebookType.class, Parameter.with("message", toPost));
+----
 
 Implementation details:
 
