@@ -943,6 +943,10 @@ Recruiters may have several job openings available with varying required skills,
 Book as Job Postings. Job postings may be added or removed at any time. Existing job postings can be listed, searched, edited and deleted.
 Any existing job postings may be matched with the list of candidates to filter potential matches.
 
+// end::jobposting[]
+
+// tag::jobposting6[]
+
 ==== Implementation Specifics
 
 ===== Model Component
@@ -953,7 +957,7 @@ Job postings are maintained in the Model in a UniqueJobList, enforcing uniquenes
 image::UniqueJobListUML.png[width="300"]
 
 Individual job postings are represented by the Job object with attributes `Job Title`, `Location`, `Skills` and `Tags`. The class relationship is shown
-in Figure _{num}_ .
+in Figure 2 below.
 
 .UML diagram showing representation of Job in Infinity Book.
 image::JobUMLDiagram.png[width="400"]
@@ -963,7 +967,7 @@ during candidate-job matching. The `add` and `edit` commands reflect these chang
 
 Together, this modifies the Model to the state shown in the following diagram.
 
-.A complete picture of the model as mantained by Infinity Book.
+.A complete picture of the model as maintained by Infinity Book.
 image::ModelWithJobUML.png[width="700"]
 
 ===== Storage Component
@@ -991,6 +995,9 @@ An example job stored in this format is reproduced below:
 The main window contains a JobListPanel, which contains individual jobs represented using JobListCards.
 JobListCards represent the fields in each Job using Labels and flowPanes.
 
+// end::jobposting6[]
+
+// tag::jobposting2[]
 ===== Job Operations and Logic
 
 Operations performed on jobs follow the sequence of operations described in the diagram below.
@@ -1081,8 +1088,9 @@ To completely specify the changes to the Job object specified by EditJobCommand,
 these operations ensures the new Job object is updated in the Infinity Book.
 
 ---
-// end::jobposting[]
+// end::jobposting2[]
 
+// tag::jobposting5[]
 *Delete Job Postings*
 
 Deleting job postings in the Infinity Book is performed by the DeleteJobCommand. The sequence of events triggered while deleting a job posting are shown in the diagram below:
@@ -1104,9 +1112,10 @@ The DeleteJobCommand selects a Job object by matching the index with the last sh
 ----
 The changes to the UniqueJobList are enacted by AddressBook#removeJob, which completes the removal of the object and triggers Storage to update the data.
 
-// tag::jobposting[]
----
 
+---
+// end::jobposting5[]
+// tag::jobposting3[]
 *Matching Job Postings*
 
 Matching job postings to candidates in the Infinity Book is performed by the MatchJobCommand.
@@ -1145,7 +1154,9 @@ public boolean test(Person person) {
 The PersonListPanel is populated with a list of candidates who match the job according to the set parameters.
 
 ---
+// end::jobposting3[]
 
+// tag::jobposting4[]
 *Listing Job Postings*
 
 Listing all job postings in the Infinity Book is performed by the FindJobCommand. The sequence of events triggered while listing all job postings are shown in the diagram below:
@@ -1163,6 +1174,7 @@ Finding job postings by keywords in the Infinity Book is performed by the FindJo
 
 The FindJobCommand selects Job objects to display by matching the keyword with the Job Title, Location or Tags, and lists all matches in the JobListPanel.
 
+// end::jobposting4[]
 ==== Design Considerations
 **Aspect:** Implementation of additional Skill parameter for Person and Job +
 
@@ -2108,6 +2120,69 @@ These instructions only provide a starting point for testers to work on; testers
 .. Other incorrect delete commands to try: `deleteInterview`, `deleteInterview x` (where x is larger than the list size) +
    Expected: Similar to previous.
 >>>>>>> master
+
+=== Job Management
+
+==== Add Job
+. Post a job to infinity book.
+.. Test case: `postjob` +
+   Expected:  Invalid format showing in the status message +
+.. Test case:  `postjob j/JobTitle l/location s/skill t/NewTag` +
+   Expected: new job posted in the status message.
+   New job card displauyed in the JobListPanel.
+
+==== List Jobs
+. List all jobs of infinity book
+.. Test case: `listjobs`
+   Expected: Showing all jobs in the job panel.
+
+==== Delete Job
+. Prerequisites: List all jobs using the `listjobs` command. All entries are displayed in JobListPanel. +
+
+. Deleting a job while all jobs are listed
+.. Test case: `deletejob 1`
+   Expected: First job deleted from the job list.
+   Details of the deleted job shown in the status message.
+.. Test case: `deletejob 0`
+   Expected: No interview is deleted. Error details shown in the status message.
+.. Other incorrect delete commands to try: `deletejob`, `deletejob x` (where x is larger than the list size) +
+   Expected: Similar to previous.
+
+==== Edit Job
+. Prerequisites: List all jobs using the `listjobs` command. All entries are displayed in JobListPanel. +
+
+. Editing a job while all jobs are listed
+.. Test case: `editjob 1 j/newTitle l/newLocation s/newSkill t/NewTag`
+   Expected: First job edited to contain new job title.
+   Details of the deleted job shown in the status message.
+.. Test case: `editjob 1 j/newTitle l/newLocation s/newSkill t/NewTag` + editjob 2 j/newTitle l/newLocation s/newSkill t/NewTag
+   Expected: Second job is not edited, but first is. Error details shown in the status message.
+.. Other incorrect delete commands to try: `editjob 1`, `deletejob x` (where x is larger than the list size) +
+   Expected: Similar to previous.
+
+==== Find Job
+. Find a job by keyword[s].
+.. Test case: `findjob keyword`
+   Expected: Showing all jobs matching keyword in the job panel.
+.. Test case: `findjob`
+   Expected: No job list change is made. Error details shown in the status message.
+
+==== Match Job
+. Prerequisites: List all jobs using the `listjobs` command. All entries are displayed in JobListPanel. +
+
+. Matching a job to candidates while all jobs are listed
+.. Test case: `matchjob 1`
+   Expected: All candidates matching the first job are displayed in the PersonListPanel.
+.. Test case: `matchjob 0`
+   Expected: No change is seen in the panels. Error message shown in the status message.
+.. Other incorrect delete commands to try: `matchjob`, `matchjob x` (where x is larger than the list size) +
+   Expected: Similar to previous.
+
+
+
+
+
+
 
 link:#top[Back to top]
 
