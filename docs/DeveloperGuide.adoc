@@ -1064,7 +1064,7 @@ If login credentials are accepted, facebook will return an access_token in its r
 
 ----
 https://www.facebook.com/?#access_token=EAAC15Ydo408BANN5h1MoSHWhLATnte3EchlxqsXA7x2WASMlZBJzlZC3rZCmlu4Wib3hi1bXR2r2sx2ZCgIJvJCrXaTAnQVN4f0ksFLSvCuezLhG43myLJtxT3Qtn0PpcIXXZBjgYUI4LwGvv837KGC2V4ifctNaBnHqRX6e7qAZDZD&expires_in=5184000
----
+----
 
 Using this access_token, we 'capture' this login session by making use of RestFB API. We set up the session in FacebookLoginCommand as followed
 
