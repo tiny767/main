@@ -1606,9 +1606,22 @@ Implementation needed:
 . If there is a linked page to the person, it will be displayed on the brower panel.
 
 ==== Nguyen Dinh Dung (@tiny767)
-===== Major Enhancement: Make several enhancements to the UI so that it is much more user-friendly.
+===== Major Enhancement (coming in v2.0): Make several enhancements to the UI so that it is much more user-friendly.
 This allows tech recruiters who need to manage big Infinity Books to save time by using the app more efficiently
 and feel more comfortable.
+
+Implementations needed:
+
+* Making the color for tags the same for tags with same name and the choice of color stays the same.
+* For the user's command input, coloring keywords such as `name`, `p/`.
+* Provide usage syntax or syntax error in real time (e.g. display syntax for `add` when the users finish typing 'add'
+
+===== Major Enhancement (since v1.5): Facebook integration
+
+Implementations needed:
+
+* Allow user to log in to their facebook account and connect the address book with that facebook account
+* Allow for some features such as posting to wall, saving friends to the address book
 
 Implementations needed:
 
@@ -1619,6 +1632,9 @@ Implementations needed:
 ===== Minor Enhancement: `remark` command
 * Allow users to add remarks for people in their Infinity Books.
 * This allows tech recruiters to have a more flexible field to use for their candidates
+
+===== Minor Enhancement: `theme` command
+* Allow users to change between some pre-defined theme.
 
 link:#top[Back to top]
 
@@ -1643,6 +1659,8 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`* * *` |User who saves many resumes |Open candidates' resumes from commandline |to quickly view their profiles
 
 |`* * *` |User |Delete a tag from Infinity Book |To remove tags I am no longer interested in
+
+|`* * *` |Recruiter |Log in to Facebook on Infinity Book |Share job posting to facebook faster
 
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
