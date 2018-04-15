@@ -1026,22 +1026,37 @@ public synchronized void deleteInterview(Interview target) throws InterviewNotFo
 
 === Facebook Integration
 
-Preface:
+The Facebook features (facebooklogin and facebookpost) are facilitated by Facebook Graph API and RestFB API. RestAPI is a third party Facebook Graph API client.
 
-The Facebook features (facebooklogin and facebookpost) are facilitated by Facebook Graph API and restfb API. It supports loging in to Facebook and posting to Facebook's wall
+==== Preparation
 
-We need to build a Graddle dependency in the `graddle.properties` file for restfb API
+Firstly, we need to build a Graddle dependency in the `graddle.properties` file for RestFB API
 
-Logic flow:
+----
+compile group: 'com.restfb', name: 'restfb', version: '2.4.0'
+----
 
-Facebook login
+To use Facebook Graph API, we followed the instruction (link:https://developers.facebook.com/docs/apps/register/#create-app[`here`]) to create a Facebook Application on the Facebook for developer site
 
-To use Facebook Graph API, we followed the instruction (here) to create a Facebook Application on the Facebook for developer site
+Finishing the steps, we reached this page
+.Facebook Application setup page
+image::facebook_developers_app.png[width="800"]
 
-We reached this page after finish creating the app
-Noting down the app's ID and secret
+==== Implementation
 
-We allow users to log in by redirecting the Facebook Panel URL to the Authentication URL specified by Graph API
+We allow users to log in by loading the Authentication URL to the FacebookPanel associated to our Facebook application specified by Graph API
+
+[source,java]
+----
+private static final String FACEBOOK_AUTH_URL =
+    "https://graph.facebook.com/oauth/authorize?type=user_agent&client_id=" + FACEBOOK_APP_ID
+        + "&redirect_uri=" + FACEBOOK_DOMAIN + "&scope" + FACEBOOK_PERMISSIONS;
+----
+
+[source,java]
+----
+Platform.runLater(() -> webEngine.load(FACEBOOK_AUTH_URL));
+----
 
 In the facebook panel, if login credentials are accepted, facebook will return an access_token in its redirected url
 
