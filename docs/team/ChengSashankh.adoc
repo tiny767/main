@@ -73,8 +73,9 @@ include::../DeveloperGuide.adoc[tag=jobposting3]
 
 include::../DeveloperGuide.adoc[tag=jobposting5]
 
-include::../DeveloperGuide.adoc[tag=autocorrect]
+---
 
+include::../DeveloperGuide.adoc[tag=autocorrect]
 
 [Appendix]
 == Appendix: Additional Contributions
@@ -108,7 +109,6 @@ include::../DeveloperGuide.adoc[tag=listandfind]
 
 ---
 
-include::../DeveloperGuide.adoc[tag=jobposting5]
 
 
 
