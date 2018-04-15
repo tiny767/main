@@ -11,6 +11,7 @@ import seedu.address.model.job.Location;
 import seedu.address.model.skill.Skill;
 import seedu.address.model.tag.Tag;
 
+//@@author ChengSashankh
 /**
  * A utility class to help with building EditJobDescriptor objects.
  */
@@ -74,3 +75,4 @@ public class EditJobDescriptorBuilder {
         return descriptor;
     }
 }
+//@@author

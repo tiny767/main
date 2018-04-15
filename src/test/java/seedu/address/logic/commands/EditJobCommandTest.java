@@ -31,6 +31,7 @@ import seedu.address.model.job.Job;
 import seedu.address.testutil.EditJobDescriptorBuilder;
 import seedu.address.testutil.JobBuilder;
 
+//@@author ChengSashankh
 public class EditJobCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
@@ -258,3 +259,4 @@ public class EditJobCommandTest {
     }
 
 }
+//@@author

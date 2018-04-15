@@ -11,6 +11,7 @@ import guitests.guihandles.JobCardHandle;
 import seedu.address.model.job.Job;
 import seedu.address.testutil.JobBuilder;
 
+//@@author ChengSashankh
 public class JobCardTest extends GuiUnitTest {
     @Test
     public void display() {
@@ -70,3 +71,4 @@ public class JobCardTest extends GuiUnitTest {
     }
 
 }
+//@@author

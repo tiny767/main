@@ -148,6 +148,7 @@ public class CommandBoxTest extends GuiUnitTest {
         assertInputHistory(KeyCode.UP, thirdCommand);
     }
 
+    //@@author ChengSashankh
     @Test
     public void handleKeyPress_startingWithTab() {
         // no completion exists
@@ -173,6 +174,7 @@ public class CommandBoxTest extends GuiUnitTest {
         commandBoxHandle.run(COMMAND_THAT_FAILS);
         assertInputHistory(KeyCode.TAB, COMMAND_THAT_FAILS);
     }
+    //@@author
 
     @Test
     public void handleKeyPress_afterSpace() {

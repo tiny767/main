@@ -15,6 +15,7 @@ import seedu.address.model.job.Location;
 import seedu.address.model.skill.Skill;
 import seedu.address.testutil.Assert;
 
+//@@author ChengSashankh
 public class XmlAdaptedJobTest {
     private static final String INVALID_JOBTITLE = "B!@@#";
     private static final String INVALID_LOCATION = " ";
@@ -83,3 +84,4 @@ public class XmlAdaptedJobTest {
     }
 
 }
+//@@author

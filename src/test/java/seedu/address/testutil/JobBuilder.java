@@ -10,6 +10,7 @@ import seedu.address.model.skill.Skill;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
 
+//@@author ChengSashankh
 /**
  * A utility class to help with building Job objects.
  */
@@ -79,3 +80,4 @@ public class JobBuilder {
     }
 
 }
+//@@author
