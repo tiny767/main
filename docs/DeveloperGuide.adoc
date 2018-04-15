@@ -1022,6 +1022,53 @@ public synchronized void deleteInterview(Interview target) throws InterviewNotFo
 
 //end::interviewmanagement[]
 
+//tag::facebook[]
+
+=== Facebook Integration
+
+Preface:
+
+The Facebook features (facebooklogin and facebookpost) are facilitated by Facebook Graph API and restfb API. It supports loging in to Facebook and posting to Facebook's wall
+
+We need to build a Graddle dependency in the `graddle.properties` file for restfb API
+
+Logic flow:
+
+Facebook login
+
+To use Facebook Graph API, we followed the instruction (here) to create a Facebook Application on the Facebook for developer site
+
+We reached this page after finish creating the app
+Noting down the app's ID and secret
+
+We allow users to log in by redirecting the Facebook Panel URL to the Authentication URL specified by Graph API
+
+In the facebook panel, if login credentials are accepted, facebook will return an access_token in its redirected url
+
+Using this access_token, we 'capture' this login session by making use of restfp api
+
+Facebook post
+
+We will check if user is authenticated via the boolean variable isAuthenticated before allowing to post on fb
+
+Using the restfb api to post the message to fb
+
+Implementation details:
+
+FacebookPanel: extend Region<Part> is very similar to BrowserPanel. It contains a browser to display login form. Note that at any time, the region used for this panel can be a facebook panel, browser panel or report panel. Thus, we need to switch back to Facebook Panel everytime Facebook login is called.
+This is achieved via posting an even 'ToggleFacebookPanelevent' inside execute()
+
+Capturing the access_token: We registered the FacebookPanel as an event handler. If the browser url (of FacebookPanel) changes to a new one that contains the access_token, we raise a BrowserUrlChangedEvent. At the same time, our FacebookPanel is subscribed to handle BrowserUrlChangedEvent by passing the url (with access_token) back to FacebookLoginCommand to complete the auth.
+
+FacebookLoginCommand: in its execute() method, this command do the following
+	post a ToggleFacebookPanelEvent
+	load the Facebook authorisation URL to the browser of FacebookPanel
+                     It waits for the FacebookPanel to pass back the access_token to comeplete the auth
+
+FacebookPostCommand: if the user is authenticated, it will retrieve the login session from FacebookLoginCommand and make use of restfb api to make a post
+
+//end::facebook[]
+
 == Documentation
 This project maintains documentation in the docs folder, also accessible through the readme. This documentation is written and maintained using *asciidoc*.
 
