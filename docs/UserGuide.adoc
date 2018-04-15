@@ -62,7 +62,6 @@ Refer to <<FAQ>> for instructions to check Java version.
 
 image::Ui.png[width="790"]
 
-
 Set up is now complete. You have launched Infinity Book. You should see the interface as shown in Figure 1. +
 
 Type your command in the command box and press kbd:[Enter] to execute it. Some examples are given below.
@@ -270,23 +269,27 @@ and Infinity Book will not show any warning.
 image::cannotdeletetag.png[width="600"]
 
 //end::deletetags[]
+
+//tag:remark[]
 ==== Add a remark : `remark` [Since v1.1]
-//tag::remark[]
-Adds or edits remarks to the person identified by the INDEX
 
-  Format: remark INDEX r/[REMARK]
+* *Description:* Adds or edits a remark to the person identified by the INDEX +
+* *Format:* `remark INDEX r/[REMARK]`
+* *Alias:* `rm INDEX r/[REMARK]`
+* *Examples:*
 
-  Alias: rm INDEX r/[REMARK]
-
-//end::remark[]
-
-[big green]#Examples#:
-
-* `remark 1 r/Likes to go swimming` +
+- `remark 1 r/Likes to go swimming` +
 Edits the remark for the first person to Likes to drink coffee.
 
-* `remark 2 r/` +
+- `remark 2 r/` +
 Removes the remark for the second person.
+
+[NOTE]
+====
+* The index refers to the index number shown in the most recent listing. +
+* The index must be a positive integer 1, 2, 3, …​
+====
+//end::remark[]
 
 ==== Deleting a person : `delete`
 
@@ -516,10 +519,12 @@ Want to add a newly available job vacancy to IB and match candidates to this rol
 [NOTE]
 Job postings are matched to candidates on the basis of location, skills and tags. To neglect any of these during matching, set the field to 'ALL'.
 
-
+.PostJob Command adds Jobs into the Job Postings panel as shown.
 image::postjob.JPG.png[width="500"]
-Figure : PostJob Command adds Jobs into the Job Postings panel as shown.
 
+//end::jobposting[]
+
+//tag::editjob[]
 ==== Edit Job Command
 
 Want to change the parameters of a job after creating? IB provides the flexibility to edit an existing job posting through the `editjob` command.
@@ -535,11 +540,10 @@ by the newly specified set of tags. This implementation mirrors the edit command
 [NOTE]
 At least one field must be provided for the edit command to function as expected.
 
+.`editjob` edits the first job posting as marked in diagram.
 image::editjob.JPG.png[width="500"]
-Figure : `editjob` edits the first job posting as marked in diagram.
 
-//end::jobposting[]
-
+//end::editjob[]
 //tag::jobpostingdelete[]
 ==== Delete Job Command
 
@@ -549,8 +553,8 @@ Want to remove a job posting from IB after creating? IB provides a `deletejob` c
 
 *Examples:* `deletejob 1`
 
+.`deletejob` deletes the job posting at the specified index in the most recent listing from Figure as shown.
 image::deletejob.JPG.png[width="500"]
-Figure : `deletejob` deletes the job posting at the specified index in the most recent listing from Figure as shown.
 
 [NOTE]
 ====
@@ -570,8 +574,8 @@ Job matching is done on the basis of location, skills and tags. To disregard a p
 
 *Example:* `matchjob 1`
 
+.MatchJob command filters the Candidates as per Job, as shown above.
 image::matchJob.JPG.png[width="500"]
-Figure : MatchJob command filters the Candidates as per Job, as shown above.
 //end::jobpostingmatch[]
 
 //tag::jobpostinglist[]
@@ -597,8 +601,8 @@ Finds jobs whose job titles, locations, or tags contain any of the given keyword
 *Example:* `findjob Backend Geylang` +
 Returns `Backend Engineer`, `Frontend Engineer`, and `Backend Tester` whose job titles and locations match with the given keywords.
 
+.Job list after finding with keywords `backend` and `geylang`.
 image::findjob.png[width="700"]
-_Figure._ Job list after finding with keywords `backend` and `geylang`.
 
 //end::jobpostinglist[]
 
@@ -612,9 +616,8 @@ This section describes command available for managing interview in the Infinity 
 * *Format:* `addInterview i/Interview Title n/Interviewee l/LOCATION d/DATE`
 * *Examples:* `addInterview i/SE Interview n/John l/One North d/30.1.2018`
 
-
+.Add Interview command adds a new interview, as shown above.
 image::addInterviewCommand.png[width="300"]
-Figure 5.1: Add Interview command adds a new interview, as shown above.
 
 - Add the interview with predicate name, location, and date
 - Displays the added interview in list of Interview panel.
@@ -624,16 +627,16 @@ Figure 5.1: Add Interview command adds a new interview, as shown above.
 * *Format:* `listInterview`
 * *Example:* `listInterview`
 
+.List Interview command lists all interviews, as shown above.
 image::ListInterview.png[width="300"]
-Figure 5.2: List Interview command lists all interviews, as shown above.
 
 ==== Delete Interview
 * *Description:* Remove an interview from Infinity Book using the index from latest listing.
 * *Format:* `deleteInterview INDEX`
 * *Examples:* `deleteInterview 1`
 
+.List Interview command lists all interviews, as shown above.
 image::DeleteInterview.png[width="300"]
-Figure 5.3: List Interview command lists all interviews, as shown above.
 
 ****
 * Deletes the interview at the specified `INDEX`.
@@ -645,56 +648,91 @@ Figure 5.3: List Interview command lists all interviews, as shown above.
 
 // tag::facebook[]
 
-=== Social Media (FB, Linkedin) Integration [Since v1.4]
+=== Social Media (FB, Linkedin) Integration
 
-==== Facebook integration
+==== Facebook Login [Since v1.4]
 
-Connecting to Facebook [Since v1.4]: `facebooklogin`
+* *Description:* Connect your Facebook account to InfinityBook
+* *Format:* `facebooklogin`
+* *Alias:* `fblogin`
+* *Example:* `facebooklogin`
 
-To connect your Facebook account to Infinity Book, use the `facebooklogin` command.
-
+[NOTE]
 ====
-*Command format*: `[red]#facebooklogin#` +
-*Alias*: `[red]#fb#` +
+* Any arguments supplied after `facebooklogin` or `fblogin` will be ignored +
+* For example, `facebooklogin a b c 1 2 3` will be treated the same as `facebooklogin`
 ====
 
-You will be prompted by a Facebook authorization page (displayed in the browser panel)
+You will be prompted by a Facebook authorization page (displayed in the right-most panel)
 
-You can key in your facebook credentials. Infinity Book is then connected to that facebook account and you can use other
+You can key in your facebook credentials. InfinityBook is then connected to that facebook account and you can use other
 features that Infinity Book offers.
+
+[NOTE]
+====
+* If there is no Internet connection, the right-most panel will display a blank page. You can try login again at a later time.
+* If you are already logged-in, the command will simple re-direct you to your facebook page instead of displaying the login page
+====
 
 ==== Make a post to facebook wall: `facebookpost` [Since v1.5rc]
 
-*Command format*: `facebookpost` [MESSAGE] +
-*Alias*: `fbpost` [MESSAGE] +
-
+* *Description:* Posting a message to your facebook wall
+* *Format:* `facebookpost [MESSAGE]` +
 [MESSAGE] is the message that users wants to post
+* *Alias:* `fbpost [MESSAGE]`
+* *Example:* `facebookpost Good morning!`
 
-*Examples*:
+[NOTE]
+====
+* Note that the current Facebook API does not allow an app to post on your behalf. Thus, we need to add your facebook account
+manually to our app in the Facebook Developer platform before you can use this feature. +
+* We have nevertheless created a test facebook account for you to try out this feature +
+* username: infinitybook6@gmail.com +
+* password: 1d2c3b4a +
+* If you have logged in to your personal account and want to switch to this account. Simply re-launch the app.
+====
 
-* `facebookpost` Good morning!
 
-Note that if you are not yet logged in to facebook (by using the command `facebooklogin`), you will be
-asked to login.
+[NOTE]
+====
+* If you are not yet logged in to facebook (by using the command `facebooklogin`), you will be re-directed to the login page. +
 
-Otherwise,  the post will be made to facebook wall and you will see a success message
+IMPORTANT: After logging in, you need to make the `facebookpost` command again to post the message. +
+
+* You can use the facebook page in the right-most panel to review your post
+====
+
+IMPORTANT: Even when you are logged in and you use the correct syntax, your message might not be posted to Facebook if it is
+rejected at Facebook's end. This might be due to errors such as duplicate post, 'not enough permission' or change in Facebook API.
+However, under normal circumstances, you can expect that the message will be posted.
+
+
+
+
 
 // end::facebook[]
 
 === Miscellaneous
 
+//tag::theme[]
 ==== Changing theme : `theme` [Since v1.3]
-To change the theme of InfinityBook, use the `theme` command. +
 
-*Format:* `theme [THEME_NAME]` or `t [THEME_NAME]`
+* *Description:* Change the theme of InfinityBook +
+* *Format:* `theme [THEME_NAME]` +
+`[THEME_NAME]` can be `morning`, `dark`, or `light`.
+* *Alias:* `t [THEME_NAME]`
+* *Examples:*
 
-`THEME_NAME` can be `morning`, `dark`, or `light`.
+- `theme light` +
+Change the user interface to the 'light' theme
 
-*Examples*:
+[NOTE]
+====
+* [THEME_NAME] is case-insensitive. +
+* For example, `theme morning` and `theme MORNING` are treated the same
+====
 
-* `theme` light
-
-You should see the user interface change to theme Light.
+//end::theme[]
 
 ==== Viewing help : `help`
 * *Description:* Opens the User Guide in a new window +
@@ -828,6 +866,10 @@ The following table summarises Infinity Book commands with suitable examples:
 |View |`view emailID`| `view johnd@example.com`
 |View Report |`viewreport pop/[POPULATION_TAG]` |`viewreport pop/SEIntern`
 |Save Report |`savereport pop/[POPULATION_TAG]` |`savereport pop/SEIntern`
+|Add/ Edit remark |`remark INDEX r/[REMARK]` |`remark 1 r/Likes to go swimming`
+|Change theme |`theme [THEME_NAME]` |`theme light`
+|Log in to Facebook |`facebooklogin` |`facebooklogin`
+|Post to Facebook | `facebookpost [MESSAGE]` |`facebookpost Good morning!`
 |=====================================================================================================
 
 [appendix]

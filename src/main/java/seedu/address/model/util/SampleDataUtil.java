@@ -39,6 +39,7 @@ public class SampleDataUtil {
 
     public static final Link INIT_LINK = new Link("https://github.com/CS2103JAN2018-W11-B3/main");
     public static final Skill SAMPLE_SKILL = new Skill("Java");
+    public static final Skill DATA_SKILL = new Skill("Python");
 
 
     public static Person[] getSamplePersons() {
@@ -74,14 +75,14 @@ public class SampleDataUtil {
                     new Address("Blk 45 Aljunied Street 85, #11-31"), SAMPLE_REMARK, INIT_LINK, SAMPLE_SKILL,
                     getTagSet("SEIntern", "Interviewing")),
             new Person(new Name("Jacques Duquesne"), new Phone("92624417"), new Email("e@example.com"),
-                    new Address("Blk 45 Aljunied Street 85, #11-31"), SAMPLE_REMARK, INIT_LINK, SAMPLE_SKILL,
-                    getTagSet("SEIntern", "Interviewing")),
+                    new Address("Blk 45 Aljunied Street 85, #11-31"), SAMPLE_REMARK, INIT_LINK, DATA_SKILL,
+                    getTagSet("SEIntern", "Interviewing", "Intern")),
             new Person(new Name("Pietro Maximoff"), new Phone("92624417"), new Email("f@example.com"),
                     new Address("Blk 45 Aljunied Street 85, #11-31"), SAMPLE_REMARK, INIT_LINK, SAMPLE_SKILL,
                     getTagSet("SEIntern", "Screening")),
             new Person(new Name("Wanda Maximoff"), new Phone("92624417"), new Email("j@example.com"),
                     new Address("Blk 45 Aljunied Street 85, #11-31"), SAMPLE_REMARK, INIT_LINK, SAMPLE_SKILL,
-                    getTagSet("SEIntern", "Screening"))
+                    getTagSet("SEIntern", "Screening", "Experienced"))
         };
     }
 
@@ -92,7 +93,13 @@ public class SampleDataUtil {
             new Job(new JobTitle("Frontend Engineer"), new Location("Serangoon"), new Skill("JavaScript,CSS,HTML"),
                     getTagSet("FreshGrad")),
             new Job(new JobTitle("Data Scientist"), new Location("Ang Mo Kio"), new Skill("Python, R"),
-                    getTagSet("Experienced"))
+                    getTagSet("Experienced")),
+            new Job(new JobTitle("Systems Engineer"), new Location("Tampines"), new Skill("ALL"),
+                    getTagSet("ALL")),
+            new Job(new JobTitle("Frontend Developer"), new Location("Aljunied"), new Skill("ALL"),
+                    getTagSet("Experienced")),
+            new Job(new JobTitle("Data Engineer"), new Location("ALL"), new Skill("Python, R"),
+                    getTagSet("Intern"))
         };
     }
     // @@author anh2111

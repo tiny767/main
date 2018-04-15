@@ -22,7 +22,7 @@ public class FacebookPostCommand extends Command {
     public static final String EXAMPLE_POST = "Good morning!";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": make a post Facebook wall of user\n"
+            + ": make a post to Facebook wall \n"
             + "Alias: " + COMMAND_ALIAS + "\n"
             + "Parameters: MESSAGE\n"
             + "Example: " + COMMAND_WORD + " " + EXAMPLE_POST;
