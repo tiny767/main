@@ -313,10 +313,12 @@ Suppose that the user has just launched the application. The `UndoRedoStack` wil
 
 The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th candidate in the Infinity Book. The current state of the Infinity Book is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
 
+.UndoRedo stack at the start.
 image::UndoRedoStartingStackDiagram.png[width="800"]
 
 As the user continues to use the program, more commands are added into the `undoStack`. For example, the user may execute `add n/David ...` to add a new person.
 
+.Undo Redo stack showing add command.
 image::UndoRedoNewCommand1StackDiagram.png[width="800"]
 
 [NOTE]
@@ -326,6 +328,7 @@ The user now decides that adding the candidate was a mistake, and decides to und
 
 We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore the Infinity Book to the state before the `add` command executed.
 
+.UndoRedo stack demonstration
 image::UndoRedoExecuteUndoStackDiagram.png[width="800"]
 
 [NOTE]
@@ -333,6 +336,7 @@ If the `undoStack` is empty, then there are no other commands left to be undone,
 
 The following sequence diagram shows how the undo operation works:
 
+.Sequence diagram for the undo operation.
 image::UndoRedoSequenceDiagram.png[width="800"]
 
 The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores the Infinity Book to the state after the command is executed).
@@ -342,14 +346,17 @@ If the `redoStack` is empty, then there are no other commands left to be redone,
 
 The user now decides to execute a new command, `clear`. As before, `clear` will be pushed into the `undoStack`. This time the `redoStack` is no longer empty. It will be purged as it no longer make sense to redo the `add n/David` command (this is the behavior that most modern desktop applications follow).
 
+.UndoRedo stack showing Redo operation.
 image::UndoRedoNewCommand2StackDiagram.png[width="800"]
 
 Commands that are not undoable are not added into the `undoStack`. For example, `list`, which inherits from `Command` rather than `UndoableCommand`, will not be added after execution:
 
+.UndoRedo stack showing no changes due to Commands that are not undoable.
 image::UndoRedoNewCommand3StackDiagram.png[width="800"]
 
 The following activity diagram summarize what happens inside the `UndoRedoStack` when a user executes a new command:
 
+.Activity Diagram for Undo and Redo operations
 image::UndoRedoActivityDiagram.png[width="650"]
 
 ==== Design Considerations
@@ -635,9 +642,8 @@ User can view a report using `viewreport` command and save a report for future r
 
 For each report, all statistics details are encapsulated within the `Report` class. We use one `UniqueReportList` to keep all `Report` that user has saved.
 
+.Report as a part in the structure of Model Component of Infinity Book
 image::report_model.jpg[width="700"]
-
-Figure 9. Report as a part in the structure of Model Component of Infinity Book
 
 **Calculating statistics:**
 
@@ -690,9 +696,8 @@ public void updateReport(Tag population) {
 
 We keep `UniqueReportList` persistently in XML files.
 
+.`XmlAdaptedReport` in the structure of Storage Component of Infinity Book.
 image::ReportStorageDiagram.jpg[width="700"]
-
-Figure 10. `XmlAdaptedReport` in the structure of Storage Component of Infinity Book.
 
 One example of `Report` details stored in xml file:
 
@@ -730,24 +735,21 @@ One example of `Report` details stored in xml file:
 
 The below sequence diagram show interactions within `Logic` component when user executes `viewreport pop/CS`.
 
+.Interactions Inside the Logic Component for the `viewreport pop/CS` Command
 image::ViewReportDiagram.jpg[width="700"]
-
-Figure. Interactions Inside the Logic Component for the `viewreport pop/CS` Command
 
 ===== UI Component
 
 'ReportPanel' extends `UiPart<Region>` and shares the same region with `BrowserPanel`. When `viewreport` or `savereport` is executed, `MainWindow` class will swap out the `BrowserPanel` for the `ReportPanel`.
 We achieve this by posting `ToggleReportPanelEvent` (showing in the below sequence diagram).
 
+.Posting event when we execute Report commands.
 image::EventInteraction.jpg[width="700"]
-
-Figure. Posting event when we execute Report commands.
 
 The `EventsCenters` then handles this `Event` and then triggers the update of `Report` instance (as shown in the below seqence diagram).
 
+.Update `Report` instance after the `ToggleReportPanelEvent` is posted
 image::ComponentInteractions.jpg[width="700"]
-
-Figure. Update `Report` instance after the `ToggleReportPanelEvent` is posted
 
 ==== Design Considerations
 **Aspect:** Where calculation of statistics in the `Report` should be placed +
@@ -812,14 +814,26 @@ link:#top[Back to top]
 Infinity Book enhances the user's interaction with the application, with built in auto-correct and auto-complete. Command
 words that are typed in are examined for spelling errors and completions upon `SPACE` and `TAB` press respectively.
 
-The following sequence diagram shows the sequence of events triggered by both operations.
+To include completion and correction support for a new command, simply add it into commandDictionary in
+CommandCorrection#createDictionary() as shown in code snippet.
 
-//_{ add image here }_
+[source:Java]
+----
+public static void createDictionary() {
+        commandDictionary = new HashSet<>();
+
+        // .. add other command words
+        commandDictionary.add(PostJobCommand.COMMAND_WORD);
+}
+----
 
 ==== Auto-complete Implementation
 
 The user input is recorded in CommandBox, and upon `TAB` keypress, the CommandBox#navigateToCompletedCommand() method looks for command
 words containing the entered string as the first substring.
+
+.This activity diagram demonstrates the high level behavior of the autocomplete feature.
+image::AutocompleteActivityDiagram.png[width="700"]
 
 When CommandCorrection#updateSuggestionsList() method is called, it searches through all command words for suitable matches.
 
@@ -869,6 +883,8 @@ The following code snippet demonstrates this ability clearly.
        }
 ----
 
+link:#top[Back to top]
+
 // end::autocorrect[]
 
 // tag::jobposting[]
@@ -884,21 +900,25 @@ Any existing job postings may be matched with the list of candidates to filter p
 
 Job postings are maintained in the Model in a UniqueJobList, enforcing uniqueness among the stored individual job postings.
 
+.UML diagram showing representation of UniqueJobList in Infinity Book.
 image::UniqueJobListUML.png[width="300"]
 
 Individual job postings are represented by the Job object with attributes `Job Title`, `Location`, `Skills` and `Tags`. The class relationship is shown
 in Figure _{num}_ .
 
+.UML diagram showing representation of Job in Infinity Book.
 image::JobUMLDiagram.png[width="400"]
 
 Together, this modifies the Model to the state shown in the following diagram.
 
+.A complete picture of the model as mantained by Infinity Book.
 image::ModelWithJobUML.png[width="700"]
 
 ===== Storage Component
 
 Job postings are stored in `XmlAdaptedJob` objects, which maintain a class relationship as shown in this diagram.
 
+.Job objects are saved using XmlAdaptedJob objects as shown above.
 image::JobStorageDiagram.png[width="700"]
 
 An example job stored in this format is reproduced below:
@@ -930,18 +950,24 @@ Operations performed on jobs follow the sequence of operations described in the 
 
 This sequence of events is summarized in the following sequence diagram.
 
+.A high level sequence diagram showing events triggered by the `postjob` command.
 image::SequenceDiagramJobPosting.png[width="700"]
 
-The following job posting commands are implemented according to this structure:
+The following job posting commands are implemented extending `UndoableCommand` and `Command`:
 
-[width="100%",cols="<50%,<50%",options="header",]
+[width="50%",cols="<50%,<50%",options="header",]
 |=====================
 |extends `UndoableCommand` | extends `Command`
-|`PostJobCommand` , `EditJobCommand` , `DeleteJobCommand` , `MatchJobCommand`| `ListJobCommand` , `FindJobCommand`
+|`PostJobCommand` +
+ `EditJobCommand` +
+ `DeleteJobCommand` +
+ `MatchJobCommand` | `ListJobCommand` +
+  `FindJobCommand`
 |=====================
 
 The following diagram details the class relationship for Commands.
 
+.UML Diagram depicting the class relationship between command classes.
 image::CommandsStructure.png[width="300"]
 
 ---
@@ -950,6 +976,7 @@ image::CommandsStructure.png[width="300"]
 
 Adding job postings to Infinity Book is performed by the PostJobCommand. The sequence of events triggered while adding a job posting are shown in the diagram below:
 
+.Adding a job posting is executed as shown above.
 image::PostJobCommandSequenceDiagram.png[width="700"]
 
 The PostJobCommand#executeUndoableCommand triggers addition of the Job to `UniqueJobList` in AddressBook#add
@@ -971,6 +998,7 @@ The following code snippet demonstrates the prevention of duplicates in the Uniq
 
 Editing job postings in the Infinity Book is performed by the EditJobCommand. The sequence of events triggered while editing a job posting are shown in the diagram below:
 
+.Editing a job posting is executed as shown above.
 image::EditJobCommandSequenceDiagram.png[width="700"]
 
 The EditJobCommand#executeUndoableCommand triggers editing of a existing Job in `UniqueJobList` in AddressBook#add
@@ -1006,6 +1034,7 @@ these operations ensures the new Job object is updated in the Infinity Book.
 
 Deleting job postings in the Infinity Book is performed by the DeleteJobCommand. The sequence of events triggered while deleting a job posting are shown in the diagram below:
 
+.Deleting a job posting is executed as shown above.
 image::DeleteJobCommandSequenceDiagram.png[width="700"]
 
 The DeleteJobCommand selects a Job object by matching the index with the last shown job list, and checks the index as shown in the following code snippet.
@@ -1026,9 +1055,12 @@ The changes to the UniqueJobList are enacted by AddressBook#removeJob, which com
 
 *Matching Job Postings*
 
-Matching job postings to candidates in the Infinity Book is performed by the MatchJobCommand. The sequence of events triggered while matching a job posting are shown in the diagram below:
+Matching job postings to candidates in the Infinity Book is performed by the MatchJobCommand.
 
-//_{ insert diagram here }_
+The sequence of events triggered while matching a job posting are shown in the diagram below:
+
+.`matchjob` uses predicate based filtering similar to `findjob` and `listjobs`
+image::matchJobSequenceDiagram.png[width="700"]
 
 The MatchJobCommand selects a Job object by matching the index with the last shown job list. A PersonMatchesJobPredicate is used to find matches, by looking for matches between tags, location and skills fields of the Job and Person.
 
@@ -1060,23 +1092,22 @@ The PersonListPanel is populated with a list of candidates who match the job acc
 
 ---
 
-*Finding Job Postings*
-
-Finding job postings by keywords in the Infinity Book is performed by the FindJobCommand. The sequence of events triggered while finding a job posting are shown in the diagram below:
-
-//_{ insert diagram here }_
-
-The FindJobCommand selects Job objects to display by matching the keyword with the Job Title, Location or Tags, and lists all matches in the JobListPanel.
-
----
-
 *Listing Job Postings*
 
 Listing all job postings in the Infinity Book is performed by the FindJobCommand. The sequence of events triggered while listing all job postings are shown in the diagram below:
 
-//_{ insert diagram here }_
+.Sequence diagram above shows the sequence of events triggered on execution of `listjobs`
+image::listjobcommandSequenceDiagram.png[width="700"]
 
 The ListJobCommand selects displays all Job objects from UniqueJobList in the JobListPanel.
+
+---
+
+*Finding Job Postings*
+
+Finding job postings by keywords in the Infinity Book is performed by the FindJobCommand. The sequence of events triggered while finding a job posting are extremely similar to listing all job postings as in Figure above, differing only in the specifics of the predicate used.
+
+The FindJobCommand selects Job objects to display by matching the keyword with the Job Title, Location or Tags, and lists all matches in the JobListPanel.
 
 ==== Design Considerations
 **Aspect:** Implementation of additional Skill parameter for Person and Job +
@@ -1100,6 +1131,9 @@ The ListJobCommand selects displays all Job objects from UniqueJobList in the Jo
 **Alternative 2:** Indicate required and optional matches in job posting. +
 **Pros:** Search can be customized to be as accurate as required. +
 **Cons:** Spelling differences may still cause diminished effectiveness.
+
+link:#top[Back to top]
+
 // end::jobposting[]
 
 // tag::theme[]
