@@ -940,7 +940,7 @@ Job postings are maintained in the Model in a UniqueJobList, enforcing uniquenes
 image::UniqueJobListUML.png[width="300"]
 
 Individual job postings are represented by the Job object with attributes `Job Title`, `Location`, `Skills` and `Tags`. The class relationship is shown
-in Figure _{num}_ .
+in Figure 2 below.
 
 .UML diagram showing representation of Job in Infinity Book.
 image::JobUMLDiagram.png[width="400"]
@@ -950,7 +950,7 @@ during candidate-job matching. The `add` and `edit` commands reflect these chang
 
 Together, this modifies the Model to the state shown in the following diagram.
 
-.A complete picture of the model as mantained by Infinity Book.
+.A complete picture of the model as maintained by Infinity Book.
 image::ModelWithJobUML.png[width="700"]
 
 ===== Storage Component

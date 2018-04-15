@@ -105,7 +105,7 @@ To enhance your experience with the Command Line Interface(CLI), Infinity Book c
 how you can use these features to speed up your CLI experience.
 
 ==== Auto-complete
-Auto completes command words being typed into Infinity Book +
+Auto completes command words being typed into Infinity Book. +
 
 To auto-complete a command word:
 
@@ -143,7 +143,7 @@ If no corrections are available, no change is made to the input text.
 [TIP]
 ====
 If a copy-pasted command may contain a spelling error in the command word, press kbd:[SPACE] to
-correct the command word without affecting the argumets entered.
+correct the command word without affecting the arguments entered.
 ====
 
 *Example:*
@@ -517,7 +517,7 @@ Figure : PostJob Command adds Jobs into the Job Postings panel as shown.
 
 Want to change the parameters of a job after creating? IB provides the flexibility to edit an existing job posting through the `editjob` command.
 
-*Format:* ` editjob [-add-tag/-delete-tag] INDEX [j/JOBTITLE] [l/LOCATION] [s/SKILLS] [t/TAG]`
+*Format:* `editjob [-add-tag/-delete-tag] INDEX [j/JOBTITLE] [l/LOCATION] [s/SKILLS] [t/TAG]`
 
 Specifying -add-tag or -delete-tag causes editjob command to specifically add or delete the specified tag for the index specified tag. If unspecified, the tag list is over-written
 by the newly specified set of tags. This implementation mirrors the edit command.
@@ -536,7 +536,7 @@ Figure : `editjob` edits the first job posting as marked in diagram.
 //tag::jobpostingdelete[]
 ==== Delete Job Command
 
-Remove a job posting from Infinity Book using the index from latest listing.
+Want to remove a job posting from IB after creating? IB provides a `deletejob` command to delete any existing job posting from memory.
 
 *Format:* `deletejob INDEX`
 
