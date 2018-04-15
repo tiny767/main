@@ -604,7 +604,7 @@ IMPORTANT: After logging in, you need to make the `facebookpost` command again t
 
 IMPORTANT: Even when you are logged in and you use the correct syntax, your message might not be posted to Facebook if it is
 rejected at Facebook's end. This might be due to errors such as duplicate post, 'not enough permission' or change in Facebook API.
-* However, under normal circumstances, you can expect that the message will be posted.
+However, under normal circumstances, you can expect that the message will be posted.
 
 
 
@@ -760,6 +760,10 @@ d/04.05.2018 l/Suntex City `
 |View |`view emailID`| `view johnd@example.com`
 |View Report |`viewreport pop/[POPULATION_TAG]` |`viewreport pop/SEIntern`
 |Save Report |`savereport pop/[POPULATION_TAG]` |`savereport pop/SEIntern`
+|Add/ Edit remark |`remark INDEX r/[REMARK]` |`remark 1 r/Likes to go swimming`
+|Change theme |`theme [THEME_NAME]` |`theme light`
+|Log in to Facebook |`facebooklogin` |`facebooklogin`
+|Post to Facebook | `facebookpost [MESSAGE]` |`facebookpost Good morning!`
 |=====================================================================================================
 
 [appendix]
