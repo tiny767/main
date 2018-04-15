@@ -1,3 +1,4 @@
+// @@author anh2111
 package seedu.address.ui;
 
 import java.util.ArrayList;
@@ -20,12 +21,6 @@ import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.report.Proportion;
 import seedu.address.model.report.Report;
-
-
-
-
-
-
 
 /**
  * The Report Panel of the App.
@@ -129,3 +124,4 @@ public class ReportPanel extends UiPart<Region> {
         }
     }
 }
+// @@author

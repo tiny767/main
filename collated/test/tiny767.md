@@ -139,6 +139,37 @@ public class RemarkCommandTest {
 
 }
 ```
+###### \java\seedu\address\logic\commands\ThemeCommandTest.java
+``` java
+public class ThemeCommandTest {
+    @Test
+    public void equals() {
+        final ThemeCommand darkThemeCommand = new ThemeCommand(DARK_THEME);
+        final ThemeCommand lightThemeCommand = new ThemeCommand(LIGHT_THEME);
+
+        // same object -> true
+        assertTrue(darkThemeCommand.equals(darkThemeCommand));
+
+        // same value -> true
+        ThemeCommand anotherLightThemeCommand = new ThemeCommand(LIGHT_THEME);
+        assertTrue(lightThemeCommand.equals(anotherLightThemeCommand));
+
+        // same value -> true
+        ThemeCommand anotherDarkThemeCommand = new ThemeCommand(DARK_THEME);
+        assertTrue(darkThemeCommand.equals(anotherDarkThemeCommand));
+
+        // different value -> false
+        assertFalse(darkThemeCommand.equals(lightThemeCommand));
+
+        // different type -> false
+        assertFalse(darkThemeCommand.equals(1));
+
+        // null -> false
+        assertFalse(darkThemeCommand.equals(null));
+
+    }
+}
+```
 ###### \java\seedu\address\logic\parser\FacebookPostCommandParserTest.java
 ``` java
 public class FacebookPostCommandParserTest {

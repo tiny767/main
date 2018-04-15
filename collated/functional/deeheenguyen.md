@@ -639,7 +639,7 @@ public class Interview {
                 .append(" Interviewee: ")
                 .append(getInterviewee())
                 .append(" Date: ")
-                .append(getInterviewee())
+                .append(getDate())
                 .append(" Interview Location: ")
                 .append(getInterviewLocation());
         return builder.toString();

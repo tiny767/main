@@ -105,13 +105,13 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.updatePerson(target, editedPerson);
         indicateAddressBookChanged();
     }
-
+    // @@author anh2111
     @Override
     public synchronized void addReport(Report report) {
         addressBook.addReport(report);
         indicateAddressBookChanged();
     }
-
+    // @@author
     //@@author ChengSashankh
     //=========== Filtered Job List Accessors =============================================================
 
@@ -172,7 +172,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     //=========== Report Accessors =============================================================
-
+    // @@author anh2111
     @Override
     public Report getReport() {
         return report;
@@ -214,7 +214,7 @@ public class ModelManager extends ComponentManager implements Model {
     public void refreshReport() {
         this.updateReport(this.report.getPopulation());
     }
-
+    // @@author
     @Override
     public boolean equals(Object obj) {
         // short circuit if same object
@@ -264,7 +264,7 @@ public class ModelManager extends ComponentManager implements Model {
         filteredInterviews.setPredicate(predicate);
     }
     //@@author
-
+    // @@author anh2111
     /**
      * Returns an unmodifiable view of the list of {@code Report} backed by the internal list of
      * {@code addressBook}
@@ -279,5 +279,5 @@ public class ModelManager extends ComponentManager implements Model {
         });
         return FXCollections.unmodifiableObservableList(reportList);
     }
-
+    // @@author
 }

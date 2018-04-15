@@ -62,7 +62,6 @@ Refer to <<FAQ>> for instructions to check Java version.
 
 image::Ui.png[width="790"]
 
-
 Set up is now complete. You have launched Infinity Book. You should see the interface as shown in Figure 1. +
 
 Type your command in the command box and press kbd:[Enter] to execute it. Some examples are given below.
@@ -202,7 +201,7 @@ Edits the name of the 2nd person to be `Betsy Crower` and clears all existing ta
 * You can remove all the person's tags by typing `t/` without specifying any tags after it.
 ****
 
-// tag::edittags[]
+// tag::addtags[]
 ==== Add new tags to a person : `edit -add-tag`
 
 Infinity Book helps you process candidate's information faster.
@@ -230,17 +229,16 @@ Summarize each candidate in a few keywords using the `edit -add-tag` command to 
 * `edit -add-tag 1 t/Year2 t/SpeakVietnamese` +
 Adds tag `Year2` and `SpeakVietnamese` to the first candidate.
 
+.Added new tags to the first candidate.
 image::canaddtag.png[width="900"]
-
-Figure. Added new tags to the first candidate.
 
 * `edit -add-tag 1 t/Year2` +
 Adds a new tag `Year2` to the first candidate, but it is not successful since this candidate already has tag `Year2`.
 
+.Cannot add a new duplicated tag to the first candidate. The candidate's details will not be updated, and Infinity Book will not show any warning.
 image::cannotaddtag.png[width="900"]
-
-Figure. Cannot add a new duplicated tag to the first candidate. The candidate's details will not be updated,
-and Infinity Book will not show any warning.
+// end::addtags[]
+// tag::deletetags[]
 
 ==== Delete tags from a person : `edit -delete-tag`
 
@@ -260,19 +258,17 @@ Some tags are no longer seem to be relevant to the candidate? Remove them using 
 * `edit -delete-tag 1 t/computing` +
 Deletes tag `computing` from the first candidate.
 
+.Remove tags from the first candidate.
 image::candeletetag.png[width="600"]
 
-Figure. Remove tags from the first candidate.
 
 * `edit -delete-tag 1 t/computing` +
 Removes tag `computing` from the first candidate, but it is not successful since this candidate does not have tag `computing`.
 
+.Cannot delete tag `computing` from the first candidate. The candidate's details will not be updated, and Infinity Book will not show any warning.
 image::cannotdeletetag.png[width="600"]
 
-Figure. Cannot delete tag `computing` from the first candidate. The candidate's details will not be updated,
-and Infinity Book will not show any warning.
-
-//end::edittags[]
+//end::deletetags[]
 
 //tag:remark[]
 ==== Add a remark : `remark` [Since v1.1]
@@ -413,6 +409,8 @@ In the report, you will find statistics of the group of all candidates tagged wi
 * A pie chart illustrating the numerical proportion of each tag.
 * A history panel listing statistics of this group at earlier points of time.
 
+// end::report[]
+// tag::reportexample[]
 *An example usage:*
 
 You are recruiting Software Engineering interns, and you want to keep track of the number of candidates in each stage:
@@ -423,25 +421,25 @@ Using our Report with Population Tag `SEIntern`, +
 
 * To ensure your team keeps up with deadlines, you can monitor the whole recruiting pipeline using Report bar chart.
 
+.Bar chart in `SEIntern` report
 image::barchart.png[width="400"]
 
-_Figure._ Bar chart in `SEIntern` report +
 _Explanation:_ there are 11 candidates tagged with `SEIntern` in which 5 of them are tagged with `Screening`, 3 of them
 are tagged with `Interviewing`, 1 of them is tagged with `Rejected`, and 2 of them are tagged with `Offered`.
 
 * To see the progress of your interns recruitment, you can view percentages of candidates in each stage using Report pie chart.
 
+.Pie chart in `SEIntern` report
 image::piechart.png[width="400"]
 
-_Figure._ Pie chart in `SEIntern` report +
 _Explanation:_ there are 11 tags that candidates tagged with `SEIntern` has in total, and 45% of them are `Screening`,
 27% are `Interviewing`, 18% are `Offered`, and 9% are `Rejected`.
 
 * To analyze your team's productivity, you can track the speed at which tasks are done using the history list.
 
+.History list in `SEIntern` report +
 image::history copy.png[width="400"]
 
-_Figure._ History list in `SEIntern` report +
 _Example in the firgure:_ At 14:10:24 04/06/2018, there are 9 candidates tagged with `Screening` in Infinity Book,
 then at 16:36:55 04/12/2018, there are only 5 `Screening` candidates left.
 
@@ -449,7 +447,8 @@ then at 16:36:55 04/12/2018, there are only 5 `Screening` candidates left.
 ====
 Date format is in **"hh/mm/ss mm/dd/yyyy""**.
 ====
-
+// end::reportexample[]
+// tag::reportcommands[]
 ==== Viewing a report : `viewreport` or `vr` [Since v1.4]
 
 Want to have bird's view statistics of a certain group of candidates? View a report using `viewreport` or `vr` command. +
@@ -460,8 +459,9 @@ Want to have bird's view statistics of a certain group of candidates? View a rep
 `viewreport pop/SEIntern` +
 Displays statistics for candidates tagged with `SEIntern`.
 
+.Infinity Book has displayed Report with Population Tag `SEIntern` in the right-most column.
 image::viewreport.png[width="600"]
-_Figure._ Infinity Book has displayed Report with Population Tag `SEIntern` in the right-most column.
+
 
 [NOTE]
 ====
@@ -473,7 +473,7 @@ When you execute a Report command, Infinity Book will show you a bar chart, a pi
 * If there are no candidates tagged with the Population Tag you provide, Inifinity Book will not show you the pie chart. +
 
 * If you provide multiple `POPULATION_TAG`, Infinity Book will take the last one.
-For example, when you execute `viewreport pop/SEIntern pop/Computing`, Infinity Book will display the report for `Computing`. +
+For example, when you execute `savereport pop/SEIntern pop/Computing`, Infinity Book will display the report for `Computing`. +
 ====
 
 ==== Saving a report : `savereport` or `sr` [Since v1.4]
@@ -487,9 +487,8 @@ Wish to save the current statistics for future reference? Saving the report usin
 Saves the current statistics for candidates tagged with `SEIntern` at this current time.
 Infinity Book will add a new entry to the history list in the report.
 
+.Infinity Book has saved Report with population Tag `SEIntern`. In the right-most column, the history list includes all statistics you have saved.
 image::savereport.png[width="600"]
-_Figure._ Infinity Book has saved Report with population Tag `SEIntern`. In the right-most column,
-the history list includes all statistics you have saved.
 
 [NOTE]
 ====
@@ -501,7 +500,7 @@ which means you cannot edit or delete saved reports. You also cannot undo `saver
 
 WARNING: If you provide multiple `POPULATION_TAG`, Infinity Book will take the last one. For example, when you execute `viewreport pop/SEIntern pop/Computing`, Infinity Book will save the report for `Computing`.
 
-// end::report[]
+// end::reportcommands[]
 
 //tag::jobposting[]
 === Job Postings
@@ -520,10 +519,12 @@ Want to add a newly available job vacancy to IB and match candidates to this rol
 [NOTE]
 Job postings are matched to candidates on the basis of location, skills and tags. To neglect any of these during matching, set the field to 'ALL'.
 
-
+.PostJob Command adds Jobs into the Job Postings panel as shown.
 image::postjob.JPG.png[width="500"]
-Figure : PostJob Command adds Jobs into the Job Postings panel as shown.
 
+//end::jobposting[]
+
+//tag::editjob[]
 ==== Edit Job Command
 
 Want to change the parameters of a job after creating? IB provides the flexibility to edit an existing job posting through the `editjob` command.
@@ -539,11 +540,10 @@ by the newly specified set of tags. This implementation mirrors the edit command
 [NOTE]
 At least one field must be provided for the edit command to function as expected.
 
+.`editjob` edits the first job posting as marked in diagram.
 image::editjob.JPG.png[width="500"]
-Figure : `editjob` edits the first job posting as marked in diagram.
 
-//end::jobposting[]
-
+//end::editjob[]
 //tag::jobpostingdelete[]
 ==== Delete Job Command
 
@@ -553,8 +553,8 @@ Want to remove a job posting from IB after creating? IB provides a `deletejob` c
 
 *Examples:* `deletejob 1`
 
+.`deletejob` deletes the job posting at the specified index in the most recent listing from Figure as shown.
 image::deletejob.JPG.png[width="500"]
-Figure : `deletejob` deletes the job posting at the specified index in the most recent listing from Figure as shown.
 
 [NOTE]
 ====
@@ -574,8 +574,8 @@ Job matching is done on the basis of location, skills and tags. To disregard a p
 
 *Example:* `matchjob 1`
 
+.MatchJob command filters the Candidates as per Job, as shown above.
 image::matchJob.JPG.png[width="500"]
-Figure : MatchJob command filters the Candidates as per Job, as shown above.
 //end::jobpostingmatch[]
 
 //tag::jobpostinglist[]
@@ -601,8 +601,8 @@ Finds jobs whose job titles, locations, or tags contain any of the given keyword
 *Example:* `findjob Backend Geylang` +
 Returns `Backend Engineer`, `Frontend Engineer`, and `Backend Tester` whose job titles and locations match with the given keywords.
 
+.Job list after finding with keywords `backend` and `geylang`.
 image::findjob.png[width="700"]
-_Figure._ Job list after finding with keywords `backend` and `geylang`.
 
 //end::jobpostinglist[]
 
@@ -616,9 +616,8 @@ This section describes command available for managing interview in the Infinity 
 * *Format:* `addInterview i/Interview Title n/Interviewee l/LOCATION d/DATE`
 * *Examples:* `addInterview i/SE Interview n/John l/One North d/30.1.2018`
 
-
+.Add Interview command adds a new interview, as shown above.
 image::addInterviewCommand.png[width="300"]
-Figure 5.1: Add Interview command adds a new interview, as shown above.
 
 - Add the interview with predicate name, location, and date
 - Displays the added interview in list of Interview panel.
@@ -628,16 +627,16 @@ Figure 5.1: Add Interview command adds a new interview, as shown above.
 * *Format:* `listInterview`
 * *Example:* `listInterview`
 
+.List Interview command lists all interviews, as shown above.
 image::ListInterview.png[width="300"]
-Figure 5.2: List Interview command lists all interviews, as shown above.
 
 ==== Delete Interview
 * *Description:* Remove an interview from Infinity Book using the index from latest listing.
 * *Format:* `deleteInterview INDEX`
 * *Examples:* `deleteInterview 1`
 
+.List Interview command lists all interviews, as shown above.
 image::DeleteInterview.png[width="300"]
-Figure 5.3: List Interview command lists all interviews, as shown above.
 
 ****
 * Deletes the interview at the specified `INDEX`.

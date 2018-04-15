@@ -473,6 +473,8 @@ keywords.stream()
 **Alternative 2:** Return Persons whose `Name`, `Tags`, `Email`, or `Phone` have all input keywords. +
 **Pros:** User can narrow down the search results. +
 **Cons:** In some cases, user cannot do a more general search.
+// end::findall[]
+// tag::edittags[]
 
 === Add/Remove Tags (Since v1.3)
 
@@ -491,56 +493,6 @@ try {
 
 From v1.0, user can overwrite any field of a candidate using `edit` command. Enhancing on top of this, the creation of the new `Person` is updated
 so that user can add new tags by `edit -add-tag INDEX [t/TAG]...` command and remove existing tags by `edit -delete-tag [t/TAG]...` command.
-
-The code snippet below shows the updated creation of new `Person`.
-
-[source, java]
-----
-/**
- * Creates and returns a {@code Person} with the details of {@code personToEdit}
- * edited with {@code editPersonDescriptor}.
- */
-public Person createEditedPerson(Person personToEdit) {
-    boolean isTagsChanged = getTags().isPresent();
-    boolean isNewTagsChanged = getNewTags().isPresent();
-    boolean isDeletedTagsChanged = getDeletedTags().isPresent();
-
-    boolean isMultipleTagsChanged = (isTagsChanged && isNewTagsChanged)
-            || (isTagsChanged && isDeletedTagsChanged) || (isDeletedTagsChanged && isNewTagsChanged);
-    assert !isMultipleTagsChanged;
-
-    assert personToEdit != null;
-
-    Name updatedName = getName().orElse(personToEdit.getName());
-    Phone updatedPhone = getPhone().orElse(personToEdit.getPhone());
-    Email updatedEmail = getEmail().orElse(personToEdit.getEmail());
-    Remark updatedRemark = personToEdit.getRemark();
-    Address updatedAddress = getAddress().orElse(personToEdit.getAddress());
-
-    Set<Tag> updatedTags;
-    Set<Tag> personTags = new HashSet<>(personToEdit.getTags());
-    if (isTagsChanged) {
-        updatedTags = getTags().orElse(null);
-    } else if (isNewTagsChanged) {
-        if (personTags.isEmpty()) {
-            updatedTags = getNewTags().orElse(null);
-        } else {
-            updatedTags = personTags;
-            updatedTags.addAll(getNewTags().orElse(null));
-        }
-    } else if (isDeletedTagsChanged) {
-        updatedTags = personTags;
-        if (personTags.isEmpty()) {
-            updatedTags.removeAll(getDeletedTags().orElse(null));
-        }
-    } else {
-        updatedTags = personTags;
-    }
-
-
-    return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedRemark, updatedTags);
-}
-----
 
 ==== Design Considerations
 **Aspect:** Implementation of removing/adding tags +
@@ -562,6 +514,9 @@ public Person createEditedPerson(Person personToEdit) {
 **Alternative 2:** Using two new commands for adding and removing tags +
 **Pros:** It is easier to parse the command.   +
 **Cons:** User has to remember more commands.
+
+// end::edittags[]
+// tag::option[]
 
 === Accept Option for Commands (Since v1.2)
 
@@ -623,6 +578,9 @@ if (argWithOption.isOption(EditCommand.COMMAND_OPTION_ADD_TAG)) {
     parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editPersonDescriptor::setNewTags);
 }
 ----
+
+// end::option[]
+// tag::report[]
 
 === Report (Since v1.4)
 
@@ -701,38 +659,6 @@ We keep `UniqueReportList` persistently in XML files.
 .`XmlAdaptedReport` in the structure of Storage Component of Infinity Book.
 image::ReportStorageDiagram.jpg[width="700"]
 
-One example of `Report` details stored in xml file:
-
-[source, xml]
-----
-<reports>
-    <population>SEIntern</population>
-    <totalTags>11</totalTags>
-    <totalPersons>11</totalPersons>
-    <proportions>
-        <proportionName>Screening</proportionName>
-        <value>5</value>
-        <totalPersonsInProportion>5</totalPersonsInProportion>
-    </proportions>
-    <proportions>
-        <proportionName>Rejected</proportionName>
-        <value>1</value>
-        <totalPersonsInProportion>1</totalPersonsInProportion>
-    </proportions>
-    <proportions>
-        <proportionName>Offered</proportionName>
-        <value>2</value>
-        <totalPersonsInProportion>2</totalPersonsInProportion>
-    </proportions>
-    <proportions>
-        <proportionName>Interviewing</proportionName>
-        <value>3</value>
-        <totalPersonsInProportion>3</totalPersonsInProportion>
-    </proportions>
-    <date>04/06/2018 14:41:30</date>
-</reports>
-----
-
 ===== Logic Component
 
 The below sequence diagram show interactions within `Logic` component when user executes `viewreport pop/CS`.
@@ -758,9 +684,7 @@ image::EventInteraction.jpg[width="700"]
 **Alternative 1 (current choice):** in `ModelManager` +
 **Pros:**
 Since the calculation requires fetching the list of all Persons in Infinity Book, Defining it in the `ModelManager` to reduce dependency among components. +
-**Cons:**
-
-Have to modify multiple components such as `LogicManager`, `ModelManager`, `Event`. +
+**Cons:** Have to modify multiple components such as `LogicManager`, `ModelManager`, `Event`. +
 **Alternative 2:** in `Report` class itself +
 **Pros:** Do not require a `Report` instance in Infinity Book, which can be redundant when user does not use. +
 **Cons:** Have to write setter and getter to get the list of Persons from `Model`.
@@ -788,9 +712,10 @@ so that they are accessible by people who are color blind and obvious for everyo
 **Alternative 2:** Use a the default JavaFX chart color palettes +
 **Pros:** Do not need to implement.   +
 **Cons:** Do not have the control over visual effect. +
-// end::findall[]
 
-//tag::tagcolor[]
+//end::report[]
+
+//tag:tagcolor[]
 === Tag colors [since v1.0]
 
 ==== Current Implementation
@@ -935,9 +860,9 @@ The following code snippet demonstrates this ability clearly.
        }
 ----
 
-link:#top[Back to top]
-
 // end::autocorrect[]
+
+link:#top[Back to top]
 
 // tag::jobposting[]
 === Job Postings [Since v1.3]
@@ -948,7 +873,7 @@ Any existing job postings may be matched with the list of candidates to filter p
 
 // end::jobposting[]
 
-// tag::jobposting6[]
+// tag::jobposting1[]
 
 ==== Implementation Specifics
 
@@ -963,7 +888,7 @@ Individual job postings are represented by the Job object with attributes `Job T
 in Figure 2 below.
 
 .UML diagram showing representation of Job in Infinity Book.
-image::JobUMLDiagram.png[width="400"]
+image::JobUMLDiagram.png[width="300"]
 
 In addition, the Person and Job class have been modified to maintain Skills as an additional field to offer better functionality
 during candidate-job matching. The `add` and `edit` commands reflect these changes as well.
@@ -971,14 +896,14 @@ during candidate-job matching. The `add` and `edit` commands reflect these chang
 Together, this modifies the Model to the state shown in the following diagram.
 
 .A complete picture of the model as maintained by Infinity Book.
-image::ModelWithJobUML.png[width="700"]
+image::ModelWithJobUML.png[width="600"]
 
 ===== Storage Component
 
 Job postings are stored in `XmlAdaptedJob` objects, which maintain a class relationship as shown in this diagram.
 
 .Job objects are saved using XmlAdaptedJob objects as shown above.
-image::JobStorageDiagram.png[width="700"]
+image::JobStorageDiagram.png[width="600"]
 
 An example job stored in this format is reproduced below:
 
@@ -998,7 +923,7 @@ An example job stored in this format is reproduced below:
 The main window contains a JobListPanel, which contains individual jobs represented using JobListCards.
 JobListCards represent the fields in each Job using Labels and flowPanes.
 
-// end::jobposting6[]
+// end::jobposting1[]
 
 // tag::jobposting2[]
 ===== Job Operations and Logic
@@ -1013,7 +938,7 @@ Operations performed on jobs follow the sequence of operations described in the 
 This sequence of events is summarized in the following sequence diagram.
 
 .A high level sequence diagram showing events triggered by the `postjob` command.
-image::SequenceDiagramJobPosting.png[width="700"]
+image::SequenceDiagramJobPosting.png[width="600"]
 
 The following job posting commands are implemented extending `UndoableCommand` and `Command`:
 
@@ -1033,13 +958,17 @@ The following diagram details the class relationship for Commands.
 image::CommandsStructure.png[width="300"]
 
 ---
+// end::jobposting2[]
+
+// tag::jobposting3[]
+
 
 *Adding Job Postings*
 
 Adding job postings to Infinity Book is performed by the PostJobCommand. The sequence of events triggered while adding a job posting are shown in the diagram below:
 
 .Adding a job posting is executed as shown above.
-image::PostJobCommandSequenceDiagram.png[width="700"]
+image::PostJobCommandSequenceDiagram.png[width="600"]
 
 The PostJobCommand#executeUndoableCommand triggers addition of the Job to `UniqueJobList` in AddressBook#add
 The following code snippet demonstrates the prevention of duplicates in the UniqueJobList
@@ -1055,13 +984,15 @@ The following code snippet demonstrates the prevention of duplicates in the Uniq
 ----
 
 ---
+// end::jobposting3[]
+// tag::jobposting4[]
 
 *Editing Job Postings*
 
 Editing job postings in the Infinity Book is performed by the EditJobCommand. The sequence of events triggered while editing a job posting are shown in the diagram below:
 
 .Editing a job posting is executed as shown above.
-image::EditJobCommandSequenceDiagram.png[width="700"]
+image::EditJobCommandSequenceDiagram.png[width="600"]
 
 The EditJobCommand#executeUndoableCommand triggers editing of a existing Job in `UniqueJobList` in AddressBook#add
 The `EditJobCommand` ensures that the index specified refers to a valid index in the most recent listing of jobs.
@@ -1073,16 +1004,13 @@ The following code snippet demonstrates the prevention of duplicates and index c
 ----
     public void setJob(Job target, Job editedJob) throws DuplicateJobException, JobNotFoundException {
         requireNonNull(editedJob);
-
         int index = internalList.indexOf(target);
         if (index == -1) {
             throw new JobNotFoundException();
         }
-
         if (!target.equals(editedJob) && internalList.contains(editedJob)) {
             throw new DuplicateJobException();
         }
-
         internalList.set(index, editedJob);
     }
 ----
@@ -1091,9 +1019,6 @@ To completely specify the changes to the Job object specified by EditJobCommand,
 these operations ensures the new Job object is updated in the Infinity Book.
 
 ---
-// end::jobposting2[]
-
-// tag::jobposting5[]
 *Delete Job Postings*
 
 Deleting job postings in the Infinity Book is performed by the DeleteJobCommand. The sequence of events triggered while deleting a job posting are shown in the diagram below:
@@ -1106,7 +1031,6 @@ The DeleteJobCommand selects a Job object by matching the index with the last sh
 ----
  protected void preprocessUndoableCommand() throws CommandException {
         List<Job> lastShownList = model.getFilteredJobList();
-
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_JOB_DISPLAYED_INDEX);
         }
@@ -1115,10 +1039,11 @@ The DeleteJobCommand selects a Job object by matching the index with the last sh
 ----
 The changes to the UniqueJobList are enacted by AddressBook#removeJob, which completes the removal of the object and triggers Storage to update the data.
 
-
 ---
-// end::jobposting5[]
-// tag::jobposting3[]
+// end::jobposting4[]
+
+// tag::jobposting5[]
+
 *Matching Job Postings*
 
 Matching job postings to candidates in the Infinity Book is performed by the MatchJobCommand.
@@ -1139,13 +1064,11 @@ The following code snippet shows how Location can be excluded from the search. O
 public boolean test(Person person) {
 
         // .. code to set up and assign locationMatch, skillsMatch and tagsMatch
-
         locationMatch = isLocationMatchSatisfied(locationMatch);
         //.. similarly for skillsMatch and tagsMatch
 
         return locationMatch && skillsMatch && tagsMatch;
  }
-
  private boolean isLocationMatchSatisfied(boolean locationMatch) {
          if (notLocationBound) {
              locationMatch = true;
@@ -1157,15 +1080,15 @@ public boolean test(Person person) {
 The PersonListPanel is populated with a list of candidates who match the job according to the set parameters.
 
 ---
-// end::jobposting3[]
+// end::jobposting5[]
 
-// tag::jobposting4[]
+// tag::listandfind[]
 *Listing Job Postings*
 
 Listing all job postings in the Infinity Book is performed by the FindJobCommand. The sequence of events triggered while listing all job postings are shown in the diagram below:
 
 .Sequence diagram above shows the sequence of events triggered on execution of `listjobs`
-image::listjobcommandSequenceDiagram.png[width="700"]
+image::listjobcommandSequenceDiagram.png[width="600"]
 
 The ListJobCommand selects displays all Job objects from UniqueJobList in the JobListPanel.
 
@@ -1177,7 +1100,8 @@ Finding job postings by keywords in the Infinity Book is performed by the FindJo
 
 The FindJobCommand selects Job objects to display by matching the keyword with the Job Title, Location or Tags, and lists all matches in the JobListPanel.
 
-// end::jobposting4[]
+// end::listandfind[]
+
 ==== Design Considerations
 **Aspect:** Implementation of additional Skill parameter for Person and Job +
 
@@ -1201,9 +1125,9 @@ The FindJobCommand selects Job objects to display by matching the keyword with t
 **Pros:** Search can be customized to be as accurate as required. +
 **Cons:** Spelling differences may still cause diminished effectiveness.
 
-link:#top[Back to top]
-
 // end::jobposting[]
+
+link:#top[Back to top]
 
 // tag::theme[]
 
@@ -1269,9 +1193,8 @@ interview, and deleting interview.
 
 * Model Component:
 
-.add Interview Model to Model Component
+.Add Interview Model to Model Component
 image::InterviewModel.png[width="700"]
-
 
 * Storage Component:
 
@@ -2181,45 +2104,49 @@ These instructions only provide a starting point for testers to work on; testers
 .. Re-launch the app by double-clicking the jar file. +
    Expected: The most recent window size and location is retained.
 
-=== Deleting a person
+=== Add tags to a candidate
 
-. Deleting a person while all persons are listed
-
-.. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
-.. Test case: `delete 1` +
-   Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
-.. Test case: `delete 0` +
-   Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
-.. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size) +
-   Expected: Similar to previous.
-
-// TODO: Give more incorrect commands to try.
-
-=== Saving data
-
-. Dealing with missing/corrupted data files
-.. Missing data cannot be replaced selectively.
-// TODO: read the comments originally placed here and update this section
-// .. _{explain how to simulate a missing/corrupted file and the expected behavior}_
-
-<<<<<<< HEAD
-=== Add new tags to candidates
-
-. Deleting a person while all persons are listed
+. Add new tags to a candidate in the list.
 
 .. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
-.. Test case: `delete 1` +
-   Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
-.. Test case: `delete 0` +
-   Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
-.. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size) +
-   Expected: Similar to previous.
+.. Test case: `edit -add-tag 1 t/Year2 t/SpeakVietnamese` +
+   Expected: Added new tags to the first candidate.
+.. Test case: `edit -add-tag 1 t/Year2` +
+   Expected: Cannot add a new duplicated tag to the first candidate. The candidate’s details will not be updated, and Infinity Book will not show any warning.
 
-// TODO: Give more incorrect commands to try.
+=== Delete tags from a candidate
 
+. Delete tags from a candidate in the list.
 
-=======
-=== Viewing a person
+.. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
+.. Test case: `edit -delete-tag 1 t/computing` +
+   Expected: Cannot delete tag computing from the first candidate. The candidate’s details will not be updated, and Infinity Book will not show any warning
+.. Test case: `edit -delete-tag 1 t/Computing` +
+   Expected: Removes tag Computing from the first candidate.
+
+=== View a report
+
+. View report based on candidates in IB.
+
+.. Test case: `viewreport pop/SEIntern` +
+   Expected: Infinity Book has displayed Report with Population Tag `SEIntern` in the right-most column.
+.. Test case: `viewreport pop/SEIntern pop/Computing` +
+   Expected:  Infinity Book will display the report for Computing.
+
+Report explanation can be found in User Guide.
+
+=== Save a report
+
+. Save report based on candidates in IB.
+
+.. Test case: `savereport pop/SEIntern` +
+   Expected:  Infinity Book has saved Report with population Tag SEIntern. In the right-most column, the history list includes all statistics you have saved.
+.. Test case: `savereport pop/SEIntern pop/Computing` +
+   Expected: Infinity Book will save the report for Computing.
+
+Report explanation can be found in User Guide.
+
+=== View a person
 . Viewing a person by emailID
 .. Test case: `view notexisted@example.com` +
    Expected: person found and no new url display on browser panel
@@ -2255,7 +2182,6 @@ These instructions only provide a starting point for testers to work on; testers
    Expected: No interview is deleted. Error details shown in the status message.
 .. Other incorrect delete commands to try: `deleteInterview`, `deleteInterview x` (where x is larger than the list size) +
    Expected: Similar to previous.
->>>>>>> master
 
 === Job Management
 
@@ -2315,11 +2241,4 @@ These instructions only provide a starting point for testers to work on; testers
    Expected: Similar to previous.
 
 
-
-
-
-
-
 link:#top[Back to top]
-
-

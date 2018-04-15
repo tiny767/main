@@ -64,11 +64,12 @@ public class XmlAddressBookStorage implements AddressBookStorage {
             throw new ParseException("Parse exception found", 0);
         }
     }
-
+    // @@author anh2111
     @Override
     public void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
         saveAddressBook(addressBook, filePath + ".backup");
     }
+    // @@author
 
     @Override
     public void saveAddressBook(ReadOnlyAddressBook addressBook) throws IOException {

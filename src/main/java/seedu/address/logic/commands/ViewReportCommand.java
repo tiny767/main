@@ -1,3 +1,4 @@
+// @@author anh2111
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
@@ -38,3 +39,4 @@ public class ViewReportCommand extends Command {
                 && this.population.equals(((ViewReportCommand) other).population)); // state check
     }
 }
+// @@author
