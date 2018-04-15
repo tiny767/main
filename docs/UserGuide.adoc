@@ -1,5 +1,6 @@
 = Infinity Book - User Guide
 :toc:
+:toextract:
 :toclevels: 3
 :toc-title:
 :toc-placement: preamble
@@ -292,7 +293,7 @@ Returns `Alex Yeoh`, `Charlotte Oliveiro`, and `Alex Smith` whose names and phon
 image::Find.png[width="300"]
 _Figure._ Person list after finding with keywords `Alex` and `93210283`.
 
-//tag:: viewcommand[]
+//tag::viewcommand[]
 ==== Viewing a person: `view`
 
 * *Description:* viewing the person records and linking page locating by emailID +
@@ -307,7 +308,19 @@ image::viewCommand.png[width="300"]
 * The email needs to be correct format.
 * Only one person returned since email is unique.
 ****
-//end:: viewcommand[]
+
+[NOTE]
+====
+
+* The email needs to be correct format. +
+* Only one person returned since email is unique.
+====
+
+IMPORTANT: If there are two persons with same email, the `viewcommand` will render URL of the first person +
+
+IMPORTANT: When a person has no linked page, it will display black board in the browser panel.
+
+//end::viewcommand[]
 
 ==== Selecting a person : `select`
 
@@ -511,7 +524,7 @@ This section describes command available for managing interview in the Infinity 
 * *Examples:* `addInterview i/SE Interview n/John l/One North d/30.1.2018`
 
 
-image::viewCommand.png[width="300"]
+image::addInterviewCommand.png[width="300"]
 Figure 5.1: Add Interview command adds a new interview, as shown above.
 
 - Add the interview with predicate name, location, and date

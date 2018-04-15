@@ -801,9 +801,9 @@ to consider these pages.
 **Aspect**: Aspects: Implementation of removing/adding a linked page.
 
 **Alternative 1:**(current choice) Each person has a page, which is resume or github.
-Add the view command to view a specific person, and view the linked page on the browser panel.+
-**Pros:** The page can be linked to the person, and it is easier to view by person's email+
-**Cons:** +
+Add the view command to view a specific person, and view the linked page on the browser panel. +
+**Pros:** The page can be linked to the person, and it is easier to view by person's email +
+**Cons:** Need to modify current implementation of person model +
 **Alternative 2:** Add a new command to view specific page, which is hard code URL.
 **Pros:** No need to modify current person +
 **Cons:** Hard to maintain the hard code URL

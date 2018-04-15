@@ -59,13 +59,11 @@ https://github.com/CS2103JAN2018-W11-B3/main/pull/166[#166])
 
 
 == Contributions to the User Guide
-
 include::../UserGuide.adoc[tag=viewcommand]
 
 include::../UserGuide.adoc[tag=interviewmanagement]
 
 == Contributions to the Developer Guide
-
 include::../DeveloperGuide.adoc[tag=viewcommand]
 
 include::../DeveloperGuide.adoc[tag=interviewmanagement]
