@@ -10,8 +10,9 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.job.Job;
 import seedu.address.model.job.exceptions.DuplicateJobException;
 
+//@@author ChengSashankh
 /***
- * Adds a job posting to the infinity book.
+ * Posts/adds a job posting to the infinity book.
  */
 public class PostJobCommand extends UndoableCommand {
 
@@ -28,7 +29,7 @@ public class PostJobCommand extends UndoableCommand {
             + PREFIX_JOBTITLE + "Backend Engineer "
             + PREFIX_LOCATION + "Singapore "
             + PREFIX_SKILLS + "SQL, Javascript "
-            + PREFIX_TAG + "Fresh Graduate ";
+            + PREFIX_TAG + "FreshGrad ";
 
     public static final String MESSAGE_SUCCESS = "New job added: %1$s";
     public static final String MESSAGE_DUPLICATE_JOB = "This job already exists in the address book";
@@ -36,7 +37,7 @@ public class PostJobCommand extends UndoableCommand {
     private final Job toAdd;
 
     /**
-     * Creates an AddCommand to add the specified {@code Job}
+     * Creates an PostJobCommand to add the specified {@code Job}
      */
     public PostJobCommand(Job job) {
         requireNonNull(job);
@@ -63,3 +64,5 @@ public class PostJobCommand extends UndoableCommand {
                 && toAdd.equals(((PostJobCommand) other).toAdd));
     }
 }
+
+//@@author ChengSashankh

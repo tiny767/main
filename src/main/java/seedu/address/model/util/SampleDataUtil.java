@@ -16,7 +16,6 @@ import seedu.address.model.interview.exceptions.DuplicateInterviewException;
 import seedu.address.model.job.Job;
 import seedu.address.model.job.JobTitle;
 import seedu.address.model.job.Location;
-import seedu.address.model.job.Skill;
 import seedu.address.model.job.exceptions.DuplicateJobException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
@@ -28,6 +27,7 @@ import seedu.address.model.person.Remark;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.report.Proportion;
 import seedu.address.model.report.Report;
+import seedu.address.model.skill.Skill;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -37,7 +37,7 @@ public class SampleDataUtil {
     public static final Remark EMPTY_REMARK = new Remark("");
     public static final Remark SAMPLE_REMARK = new Remark("Like fishing");
 
-    public static final Link INIT_LINK = new Link("https://www.google.com.sg/");
+    public static final Link INIT_LINK = new Link("https://github.com/CS2103JAN2018-W11-B3/main");
     public static final Skill SAMPLE_SKILL = new Skill("Java");
 
 

@@ -22,6 +22,7 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.job.Job;
 
+//@@author ChengSashankh
 public class DeleteJobCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
@@ -156,3 +157,4 @@ public class DeleteJobCommandTest {
         assertTrue(model.getFilteredJobList().isEmpty());
     }
 }
+//@@author

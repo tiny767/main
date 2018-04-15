@@ -7,6 +7,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Region;
 
+//@@author ChengSashankh
 /**
  * Provides a handle to a job card in the job list panel.
  */
@@ -61,3 +62,4 @@ public class JobCardHandle extends NodeHandle<Node> {
                 .collect(Collectors.toList());
     }
 }
+//@@author

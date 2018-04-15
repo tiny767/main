@@ -1,5 +1,6 @@
 = Infinity Book - User Guide
 :toc:
+:toextract:
 :toclevels: 3
 :toc-title:
 :toc-placement: preamble
@@ -20,20 +21,21 @@ endif::[]
 By: `Team JACKHA (CS2103JAN2018-W11-B3)`      Since: `Jun 2016`      Licence: `MIT`
 
 == Introduction
+//tag::introduction[]
+Infinity Book is a desktop application that provides Tech recruiters end-to-end support, from searching for candidates,to adding job postings and saving their resumes and interviews. +
 
-Infinity Book is an address book application for Tech recruiters who *prefer to use a desktop app to keep track candidates' information, job postings, and interview*.  +
+More importantly, IB is *optimized for those who prefer to work with a desktop Command Line Interface* (link:#cli[CLI]) while still having the benefits of a Graphical User Interface (link:#gui[GUI]). If you can type fast, IB can get your candidates management tasks done faster than traditional GUI apps. +
 
-Infinity Book provides end-to-end support, from searching for candidates,to adding job postings and saving their resumes and interviews. +
+//end::introduction[]
 
-More importantly, Infinity Book is *optimized for those who prefer to work with a Command Line Interface* (link:#cli[CLI]) while still having the benefits of a Graphical User Interface (link:#gui[GUI]). If you can type fast, Infinity Book can get your candidates management tasks done faster than traditional GUI apps. +
-
-Interested? +
 Jump to the <<Quick Start>> to get started. Enjoy!
 
 == About
 
 This User Guide introduces a user to Infinity Book, provides set up instructions and details the features of the product.
-This document does not assume any prior knowledge, and the glossary explains any technical terms.
+This document does not assume any prior technical knowledge, and the glossary explains any technical terms. Please check the FAQ section for frequent user issues.
+
+To quickly set up Infinity Book and try out the features, jump to <<Quick Start>>.
 
 [NOTE]
 For information about implementation and architecture, please refer to the Developer Guide.
@@ -41,13 +43,14 @@ For information about implementation and architecture, please refer to the Devel
 == Quick Start
 If you are a first time user, this section will help you get started with Infinity Book in 5 easy steps:
 
-.  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
+.  Ensure you have Java version `1.8.0_60` or later installed in your Computer. If you do not have Java installed, get it link:https://java.com/en/download/[here].
 +
 [NOTE]
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8. +
 Refer to <<FAQ>> for instructions to check Java version.
 +
+
 .  Download the latest `infinitybook.jar` link:{repoURL}/releases[here].
 .  Copy the file to the folder you want to use as the home folder for your Infinity Book.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
@@ -55,29 +58,36 @@ Refer to <<FAQ>> for instructions to check Java version.
 .The User Interface.
 
 image::Ui.png[width="790"]
-+
 
-.  Type the command in the command box and press kbd:[Enter] to execute it. +
-e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
-.  Set up is now complete. You should see the interface as shown in Figure 1. Try some example commands shown here:
+
+Set up is now complete. You have launched Infinity Book. You should see the interface as shown in Figure 1. +
+
+Type your command in the command box and press kbd:[Enter] to execute it. Some examples are given below.
+
+====
+Typing *`help`* and pressing kbd:[Enter] will open the help window.
+Other basic example commands are shown here:
 
 * *`list`* : lists all contacts
 * **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Infinity Book.
 * **`delete`**`3` : deletes the 3rd contact shown in the current list
 * *`exit`* : exits the app
 
+You can view the entire command list <<Command Summary, here>>.
+====
 [NOTE]
 ====
 The User Interface might appear mildly different for different versions of the product.
 ====
 
-.  Refer to <<Features>> for details of each command and for more commands.
+Refer to <<Features>> for details of each command and for more commands.
 
-[[Features]]
-== Features
+[[CommandLine]]
+== Command Line
 
-====
-*Command Format*
+Infinity Book uses a command line interface that follows the command format given below. Auto-complete and auto-correct are optimised to assist in CLI usage as detailed in this section.
+
+=== Command Format
 
 * Command starts with a `COMMAND WORD` to specify the command you want to perform.
 * Words prefixed with a dash (optional) are `COMMAND OPTION` e.g. in `edit -add-tag t/TAG`, `-add-tag` is a command option.
@@ -85,7 +95,74 @@ The User Interface might appear mildly different for different versions of the p
 * Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
 * Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
+
+=== Auto-complete and auto-correct
+
+To enhance your experience with the Command Line Interface(CLI), Infinity Book comes with built in auto-correct and auto-complete. This section explains
+how you can use these features to speed up your CLI experience.
+
+==== Auto-complete
+Auto completes command words being typed into Infinity Book +
+
+To auto-complete a command word:
+
+. Type in atleast the first character of your command word.
+. Press kbd:[TAB] until your desired command word appears in the command box.
+
+[NOTE]
+Entered text must match (case sensitive) the start of the desired command. +
+If no matches are available, no change is made to the input text.
+
+*Example:*
+
+** `li` + kbd:[TAB] : Completes command word to `list`.
+
+** `LI` + kbd:[TAB]  : Reports no completions found.
+
+[TIP]
 ====
+Use kbd:[TAB] repeatedly to loop through the list as many times as you need.
+====
+
+
+==== Auto-correct
+Auto correct spell checks command words being typed into Infinity Book. +
+
+To auto-correct a command word:
+
+[NOTE]
+Entered text must be within one edit-distance of the desired command. +
+If no corrections are available, no change is made to the input text.
+
+. Type in a possibly incorrect version of the command word.
+. Press kbd:[SPACE] and watch the command word auto-corrected immediately.
+
+[TIP]
+====
+If a copy-pasted command may contain a spelling error in the command word, press kbd:[SPACE] to
+correct the command word without affecting the argumets entered.
+====
+
+
+*Example:*
+
+** `lsit` +  kbd:[SPACE] : Corrects command word to `list`.
+
+** `lit` +   kbd:[SPACE] : Corrects command word to `list`.
+
+** `liist` + kbd:[SPACE] : Corrects command word to `list`.
+
+** `lllist` + kbd:[SPACE] : Does not make any correction.
+
+
+[WARNING]
+====
+While copy pasting commands with spelling errors, the kbd:[SPACE] key will not be available for use to insert spaces in the command while editing.
+====
+
+
+[[Features]]
+== Features
 
 === Managing Candidates' Information
 
@@ -93,7 +170,7 @@ The User Interface might appear mildly different for different versions of the p
 
 * *Description:* Adds a person to the Infinity Book +
 
-* *Format:* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS l/LINK[t/TAG]...`
+* *Format:* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS l/LINK [t/TAG]...`
 
 * *Examples:* +
 - `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123,
@@ -106,7 +183,7 @@ A person can have any number of tags (including 0)
 
 ==== Editing a person : `edit`
 
-* *Description:* Edits an existing person in Infinity Book. +
+* *Description:* Edits an existing person's record in Infinity Book. +
 * *Format:* `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
 
 * *Examples:* +
@@ -213,7 +290,7 @@ Removes the remark for the second person.
 
 ==== Deleting a person : `delete`
 
-* *Description:* Deletes the specified person from the Infinity Book. +
+* *Description:* Deletes the specified person's record from the Infinity Book. +
 * *Format:* `delete INDEX`
 * *Examples:*
 
@@ -265,10 +342,11 @@ image::Find.png[width="300"]
 _Figure._ Person list after finding with keywords `Alex` and `93210283`.
 //end::findall[]
 
+//tag::viewcommand[]
 ==== Viewing a person: `view`
 
-* *Description:* Displays the person whose email is the same as given email. +
-* *Format:* `view email`
+* *Description:* viewing the person records and linking page locating by emailID +
+* *Format:* `view EmailID`
 * *Examples:* `view abcd@gmail.com`
 
 image::viewCommand.png[width="300"]
@@ -279,6 +357,19 @@ image::viewCommand.png[width="300"]
 * The email needs to be correct format.
 * Only one person returned since email is unique.
 ****
+
+[NOTE]
+====
+
+* The email needs to be correct format. +
+* Only one person returned since email is unique.
+====
+
+IMPORTANT: If there are two persons with same email, the `viewcommand` will render URL of the first person +
+
+IMPORTANT: When a person has no linked page, it will display black board in the browser panel.
+
+//end::viewcommand[]
 
 ==== Selecting a person : `select`
 
@@ -297,24 +388,6 @@ Selects the 1st person in the results of the `find` command.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* `1, 2, 3, ...`
 ****
-
-==== Auto-correct and auto-complete
-
-* *Description:* Spell corrects and completes command words being typed into Infinity Book +
-* *Format:* `TAB` keypress auto-completes and `SPACE` autocorrects
-* *Example:*
-
-- `li` + `TAB` key press +
-Completes to command word to `list`
-
-- `lsit` + `SPACE` key press +
-Corrects command word to `list`.
-
-****
-* Auto-correct only corrects one edit distance errors.
-* When completions are available, use `TAB` to toggle through options.
-****
-
 // tag::report[]
 
 === Dashboard Reporting
@@ -422,51 +495,102 @@ which means you cannot edit or delete saved reports. You also cannot undo `saver
 WARNING: If you provide multiple `POPULATION_TAG`, Infinity Book will take the last one. For example, when you execute `viewreport pop/SEIntern pop/Computing`, Infinity Book will save the report for `Computing`.
 
 // end::report[]
+
 // tag::jobposting[]
+=== Job Postings
 
-=== Managing Job Postings
+In line with the vision of offering end to end support, Infinity Book offers recruiters a very efficient way to keep track of job vacancies and match candidates to these positions. +
 
-This section describes commands available for managing job postings in the Infinity Book.
+This section details commands for managing job postings.
 
-==== Post Job Command
+==== Add Job Posting
+Want to add a newly available job vacancy to IB and match candidates to this role? Add a job posting using the `postjob` command.
 
-image::postjob.JPG[width="500"]
+*Format:* `postjob j/JOB TITLE l/LOCATION t/[TAGS] s/SKILLS`
 
-Figure 2: PostJob Command adds Jobs into a new pane as shown.
+*Examples:* `postjob j/Backend Engineer l/Singapore t/FreshGrad s/Java`
 
-
-* *Description:* Add a job posting to Infinity Book to filter out qualified candidates.
-* *Format:* `postjob j/JOB TITLE l/LOCATION t/[TAGS] s/SKILLS`
-* *Examples:* `postjob j/Backend Engineer l/Singapore t/FreshGrad s/Java`
-
-==== Match Job Command
-
-image::matchJob.JPG[width="500"]
-Figure 3: MatchJob command filters the Candidates as per Job, as shown above.
+[NOTE]
+Job postings are matched to candidates on the basis of location, skills and tags. To neglect any of these during matching, set the field to 'ALL'.
 
 
-* *Description:* Match a job posting to list out the filtered candidates for this job.
-* *Format:* `matchjob INDEX`
-* *Example:* `matchjob 1`
+image::postjob.JPG.png[width="500"]
+Figure : PostJob Command adds Jobs into the Job Postings panel as shown.
 
 ==== Edit Job Command
 
-* *Description:* Edits an existing job posting in the Infinity Book.
-* *Format:* ` editjob INDEX [j/JOBTITLE] [l/LOCATION] [s/SKILLS] [t/TAG]`
-* *Examples:* ` editjob 1 j/Backend Engineer l/Singapore`
+Want to change the parameters of a job after creating? IB provides the flexibility to edit an existing job posting through the `editjob` command.
+
+*Format:* ` editjob [-add-tag/-delete-tag] INDEX [j/JOBTITLE] [l/LOCATION] [s/SKILLS] [t/TAG]`
+
+Specifying -add-tag or -delete-tag causes editjob command to specifically add or delete the specified tag for the index specified tag. If unspecified, the tag list is over-written
+by the newly specified set of tags. This implementation mirrors the edit command.
+
+*Examples:* `editjob 1 j/Backend Engineer l/Singapore` +
+`editjob 1 -delete-tag j/Backend Engineer l/Singapore`
+
+[NOTE]
+At least one field must be provided for the edit command to function as expected.
+
+image::editjob.JPG.png[width="500"]
+Figure : `editjob` edits the first job posting as marked in diagram.
 
 ==== Delete Job Command
 
-* *Description:* Remove a job posting from Infinity Book using the index from latest listing.
-* *Format:* `deletejob INDEX`
-* *Examples:* `deletejob 1`
+Remove a job posting from Infinity Book using the index from latest listing.
 
-// end::jobposting[]
+*Format:* `deletejob INDEX`
+
+*Examples:* `deletejob 1`
+
+image::deletejob.JPG.png[width="500"]
+Figure : `deletejob` deletes the job posting at the specified index in the most recent listing from Figure as shown.
 
 [NOTE]
 ====
 Index to be used as displayed in the panel.
 ====
+
+==== Match Job Command
+
+To match an existing job posting to potential candidates, use the `matchjob` command to filter out candidates for the chosen job.
+
+Job matching is done on the basis of location, skills and tags. To disregard a parameter during matching, set it to 'ALL' using `postjob` or `editjob`.
+
+*Format:* `matchjob INDEX`
+
+*Example:* `matchjob 1`
+
+image::matchJob.JPG.png[width="500"]
+Figure : MatchJob command filters the Candidates as per Job, as shown above.
+
+==== Listing all jobs : `listjobs`
+
+* *Description:* Shows a list of all jobs posted in the Infinity Book. +
+* *Format:* `listjobs`
+
+==== Finding jobs by Job Title, Location, and tags: `findjob`
+
+Finds jobs whose job titles, locations, or tags contain any of the given keywords. +
+
+*Format:* `find KEYWORD [MORE_KEYWORDS]` +
+
+****
+* The search is case insensitive. e.g `backend` will match `Backend`.
+* The order of the keywords does not matter. e.g. `Engineer Backend` will match `Backend Engineer`.
+* Only job's title, location and tags are searched.
+* Only full words will be matched e.g. `Eng` will not match `Engineer`.
+* Jobs matching at least one keyword will be returned (i.e. `OR` search). e.g. `Engineer` will return `Backend Engineer`, `Frontend Engineer`
+****
+
+*Example:* `findjob Backend Geylang` +
+Returns `Backend Engineer`, `Frontend Engineer`, and `Backend Tester` whose job titles and locations match with the given keywords.
+
+image::findjob.png[width="700"]
+_Figure._ Job list after finding with keywords `backend` and `geylang`.
+
+// end::jobposting[]
+//tag::interviewmanagement[]
 
 === Managing Interview
 This section describes command available for managing interview in the Infinity Book.
@@ -476,13 +600,36 @@ This section describes command available for managing interview in the Infinity 
 * *Format:* `addInterview i/Interview Title n/Interviewee l/LOCATION d/DATE`
 * *Examples:* `addInterview i/SE Interview n/John l/One North d/30.1.2018`
 
-image::viewCommand.png[width="300"]
+
+image::addInterviewCommand.png[width="300"]
+Figure 5.1: Add Interview command adds a new interview, as shown above.
+
 - Add the interview with predicate name, location, and date
 - Displays the added interview in list of Interview panel.
 
-==== List Interview [Coming in v1.5]
+==== List Interview
+* *Description:* List all interviews of Infinity Book.
+* *Format:* `listInterview`
+* *Example:* `listInterview`
 
-==== Add Question [Coming in v1.5]
+image::ListInterview.png[width="300"]
+Figure 5.2: List Interview command lists all interviews, as shown above.
+
+==== Delete Interview
+* *Description:* Remove an interview from Infinity Book using the index from latest listing.
+* *Format:* `deleteInterview INDEX`
+* *Examples:* `deleteInterview 1`
+
+image::DeleteInterview.png[width="300"]
+Figure 5.3: List Interview command lists all interviews, as shown above.
+
+****
+* Deletes the interview at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+//end::interviewmanagement[]
 
 // tag::facebook[]
 
@@ -613,6 +760,7 @@ There is no need to save manually.
 *Q*: How do I transfer my data to another Computer? +
 *A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Infinity Book folder.
 
+// tag::faq[]
 *Q*: How do I check if Infinity Book is compatible with my computer? +
 *A*: Infinity Book is compatible with Windows, Mac OS and Ubuntu with Java `1.8.0_60` or later installed. Compatibility with other link:#unix[UNIX] distributions is not guaranteed. +
 
@@ -634,7 +782,7 @@ To check your Java Version:
 2. In the terminal copy paste the following command without enclosing double quotes to find your Java vesion:
 `"java -v"`
 ****
-
+// end::faq[]
 == Command Summary
 
 The following table summarises Infinity Book commands with suitable examples:
@@ -642,21 +790,27 @@ The following table summarises Infinity Book commands with suitable examples:
 [width="100%",cols="10%,<45%,<45%",options="header",]
 |=====================================================================================================
 |Command |Command Format |Example
-|Add |`add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` | `add n/James Ho p/22224444 e/jamesho@example.com a/123,
+|Add Person|`add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` | `add n/James Ho p/22224444 e/jamesho@example.com a/123,
  Clementi Rd, 1234665 t/friend t/colleague`
 |Add Interview | `addInterview i/INTERVIEW_TITLE n/INTERVIEWEE d/DATE l/INTERVIEW_LOCATION`| `addInterview i/SE Interview n/David
-d/04.05.2018 l/Suntex City `
+|Add Job|`postjob j/JOBTITLE l/LOCATION s/SKILLS [t/TAG]` | `postjob j/Backend Engineer l/Singapore s/SQL, Javascript t/FreshGrad`
 |Clear |`clear`| `clear`
 |Delete |`delete INDEX` |`delete 3`
-|Delete Interview |`delete INDEX | `deleteInterview 3`
+|Delete Interview |`deleteInterview INDEX | `deleteInterview 3`
+|Delete Job |`deletejob INDEX` | `deletejob 1`
 |Edit |`edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` |`edit 2 n/James Lee e/jameslee@example.com`
-|Add new tags to a person |`edit -add-tag INDEX [t/TAG]...` |`edit -add-tag 2 t/Computing`
+|Edit Job |`[j/JOBTITLE] [l/LOCATION] [s/SKILLS] [t/TAG]` | `editjob 1 j/Backend Engineer l/Singapore`
+|Add tags to person |`edit -add-tag INDEX [t/TAG]...` |`edit -add-tag 2 t/Computing`
+|Add tags to job |`editjob -add-tag INDEX [t/TAG]...` |`editjob -add-tag 2 t/Computing`
 |Delete tags from a person |`edit -delete-tag INDEX [t/TAG]...` |`edit -delete-tag 2 t/Computing`
 |Find |`find KEYWORD [MORE_KEYWORDS]` |`find James Jake`
 |Find Interview | `FindInterview n/INTERVIEWEE`| `FindInterview David`
+|Find Job |`findjob KEYWORD [MORE_KEYWORDS]` | `findjob frontend backend systems`
 |Help |`help` |`help`
 |History |`history` | `history`
-|List | `list`|`list`
+|List People | `list`|`list`
+|List Jobs |`listjobs` | `listjobs`
+|Match Job |`matchjob INDEX` | `matchjob 2`
 |Redo |`redo`|`redo`
 |Select |`select INDEX` |`select 2`
 |Undo |`undo` |`undo`

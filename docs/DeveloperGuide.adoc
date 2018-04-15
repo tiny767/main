@@ -39,7 +39,6 @@ link:#top[Back to top]
 
 This section provides step-by-step instructions to set up Infinity Book for development on your computer. +
 
-link:#top[Back to top]
 
 === Prerequisites
 
@@ -314,10 +313,12 @@ Suppose that the user has just launched the application. The `UndoRedoStack` wil
 
 The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th candidate in the Infinity Book. The current state of the Infinity Book is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
 
+.UndoRedo stack at the start.
 image::UndoRedoStartingStackDiagram.png[width="800"]
 
 As the user continues to use the program, more commands are added into the `undoStack`. For example, the user may execute `add n/David ...` to add a new person.
 
+.Undo Redo stack showing add command.
 image::UndoRedoNewCommand1StackDiagram.png[width="800"]
 
 [NOTE]
@@ -327,6 +328,7 @@ The user now decides that adding the candidate was a mistake, and decides to und
 
 We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore the Infinity Book to the state before the `add` command executed.
 
+.UndoRedo stack demonstration
 image::UndoRedoExecuteUndoStackDiagram.png[width="800"]
 
 [NOTE]
@@ -334,6 +336,7 @@ If the `undoStack` is empty, then there are no other commands left to be undone,
 
 The following sequence diagram shows how the undo operation works:
 
+.Sequence diagram for the undo operation.
 image::UndoRedoSequenceDiagram.png[width="800"]
 
 The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores the Infinity Book to the state after the command is executed).
@@ -343,14 +346,17 @@ If the `redoStack` is empty, then there are no other commands left to be redone,
 
 The user now decides to execute a new command, `clear`. As before, `clear` will be pushed into the `undoStack`. This time the `redoStack` is no longer empty. It will be purged as it no longer make sense to redo the `add n/David` command (this is the behavior that most modern desktop applications follow).
 
+.UndoRedo stack showing Redo operation.
 image::UndoRedoNewCommand2StackDiagram.png[width="800"]
 
 Commands that are not undoable are not added into the `undoStack`. For example, `list`, which inherits from `Command` rather than `UndoableCommand`, will not be added after execution:
 
+.UndoRedo stack showing no changes due to Commands that are not undoable.
 image::UndoRedoNewCommand3StackDiagram.png[width="800"]
 
 The following activity diagram summarize what happens inside the `UndoRedoStack` when a user executes a new command:
 
+.Activity Diagram for Undo and Redo operations
 image::UndoRedoActivityDiagram.png[width="650"]
 
 ==== Design Considerations
@@ -803,41 +809,383 @@ We use hash code of the tag names to generate a color. This is deliberately desi
 **Pros:** Number of different color is very big (i.e. there is less repetitive color used)   +
 **Cons:** The color for each tag value might be different between app launchs +
 
-=== Display relevant Github or resume page.[coming in v1.4]
+//tag::viewcommand[]
+=== Display relevant Github or resume page. (Since v1.3)
 
 As a candidate may have linked online resume or github page. The recruiter may want
 to consider these pages.
-Aspects: Implementation of removing/adding a linked page.
 
-**Alternative 1:** (current choice): Each person has a page, which is resume or github.
-Add the view command to view a specific person, and view the linked page
-on the browser panel.
-Pros: The page can be linked to the person.
+==== Design Considerations
+**Aspect**: Aspects: Implementation of removing/adding a linked page.
 
+**Alternative 1:**(current choice) Each person has a page, which is resume or github.
+Add the view command to view a specific person, and view the linked page on the browser panel. +
+**Pros:** The page can be linked to the person, and it is easier to view by person's email +
+**Cons:** Need to modify current implementation of person model +
 **Alternative 2:** Add a new command to view specific page, which is hard code URL.
-Hard to maintain the hard code URL.
+**Pros:** No need to modify current person +
+**Cons:** Hard to maintain the hard code URL
+
+==== Implementation details
+* `ViewCommandParser` class will extract emails ID from user input, form a predicate,
+then pass it to `ViewCommand` class.
+* `ViewCommand` will take in the predicate and update the list of Persons by email ID,
+and change the browser panel accordingly.
+source, java]
+----
+public class EmailFilter implements Predicate<Person> {
+    private final String email;
+
+    public EmailFilter (Email email) {
+        this.email = email.toString();
+    }
+
+    @Override
+    public boolean test(Person person) {
+        return person.getEmail().toString().equals(this.email);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof EmailFilter // instanceof handles nulls
+                && this.email.equals(((EmailFilter) other).email)); // state check
+    }
+
+}
+----
+
+//end::viewcommand[]
+
+// tag::autocorrect[]
+=== Auto-correct and Auto-complete
+
+Infinity Book enhances the user's interaction with the application, with built in auto-correct and auto-complete. Command
+words that are typed in are examined for spelling errors and completions upon `SPACE` and `TAB` press respectively.
+
+To include completion and correction support for a new command, simply add it into commandDictionary in
+CommandCorrection#createDictionary() as shown in code snippet.
+
+[source:Java]
+----
+public static void createDictionary() {
+        commandDictionary = new HashSet<>();
+
+        // .. add other command words
+        commandDictionary.add(PostJobCommand.COMMAND_WORD);
+}
+----
+
+==== Auto-complete Implementation
+
+The user input is recorded in CommandBox, and upon `TAB` keypress, the CommandBox#navigateToCompletedCommand() method looks for command
+words containing the entered string as the first substring.
+
+.This activity diagram demonstrates the high level behavior of the autocomplete feature.
+image::AutocompleteActivityDiagram.png[width="700"]
+
+When CommandCorrection#updateSuggestionsList() method is called, it searches through all command words for suitable matches.
+
+When multiple matches are available, the `TAB` keypress is counted, and the command box cycles through all suggestions. When no suggestions are available, the existing
+text is left unchanged.
+
+Since the text in the command box is altered with each `TAB` press, a brief history is maintained containing the most recent suggestion
+made by auto-complete and original user input. Here, the user has pressed the `TAB` key multiple times, but expects completions based on his input, not the recent suggestion that fills the command box.
+
+
+The following code snipped demonstrates the use of the suggestion history to choose the text to complete.
+
+[source:Java]
+----
+    public static String updateTextToComplete(String textToComplete) {
+        if (textToComplete.compareTo(recentSuggestion.trim()) == 0) {
+            return recentInput;
+        } else {
+            return textToComplete;
+        }
+    }
+----
+
+==== Auto-correct Implementation
+
+Auto-correct searches command word input for potential one edit distance errors, including missed,swapped and stray characters.
+
+Two details about the implementation are noteworthy:
+
+. For seamless background operation, command words that are not recognized are automatically analysed for spelling errors on `SPACE` key press.
+. In cases where commands with spell errors are copy-pasted into the command box, `SPACE` key press separates the command word from arguments, and corrects the command word without altering the rest of the command.
+
+Upon being triggered, CommandBox#navigateToLikelyInput() method returns the likely correction using the mentioned heuristics.
+
+When multiple suggestions are available, corrections obtained by removing stray character, and adding missing character are prioritized, in that order. This is in line with
+belief that these are the most common kinds of errors.
+
+The following code snippet demonstrates this ability clearly.
+
+[source:Java]
+----
+   public static String extractCommandWord(String commandText) {
+           String trimmedCommandText = commandText.trim();
+           String[] wordsInCommandText = trimmedCommandText.split(" ");
+           commandParameters = trimmedCommandText.replace(wordsInCommandText[0], "");
+           return wordsInCommandText[0];
+       }
+----
 
 link:#top[Back to top]
 
+// end::autocorrect[]
+
 // tag::jobposting[]
-=== Add and match job postings to candidates. [Since v1.3]
-As there might be several candidates with varying suitability for a position, the reccruiter should be able to
-filter candidates by ability, location and some other basic filters.
+=== Job Postings [Since v1.3]
 
-Jobs may be added through the command `postjob j/JOB TITLE s/SKILLS t/TAGS l/LOCATION` ,
-and then might be matched with candidates using index displayed in the panel. This is implemented
-through the command `matchjob INDEX`, which displays the suitable candidates in the person panel.
+Recruiters may have several job openings available with varying required skills, location and tags. These are represented in the Infinity
+Book as Job Postings. Job postings may be added or removed at any time. Existing job postings can be listed, searched, edited and deleted.
+Any existing job postings may be matched with the list of candidates to filter potential matches.
 
-==== Design Considerations*
+==== Implementation Specifics
+
+===== Model Component
+
+Job postings are maintained in the Model in a UniqueJobList, enforcing uniqueness among the stored individual job postings.
+
+.UML diagram showing representation of UniqueJobList in Infinity Book.
+image::UniqueJobListUML.png[width="300"]
+
+Individual job postings are represented by the Job object with attributes `Job Title`, `Location`, `Skills` and `Tags`. The class relationship is shown
+in Figure _{num}_ .
+
+.UML diagram showing representation of Job in Infinity Book.
+image::JobUMLDiagram.png[width="400"]
+
+In addition, the Person and Job class have been modified to maintain Skills as an additional field to offer better functionality
+during candidate-job matching. The `add` and `edit` commands reflect these changes as well.
+
+Together, this modifies the Model to the state shown in the following diagram.
+
+.A complete picture of the model as mantained by Infinity Book.
+image::ModelWithJobUML.png[width="700"]
+
+===== Storage Component
+
+Job postings are stored in `XmlAdaptedJob` objects, which maintain a class relationship as shown in this diagram.
+
+.Job objects are saved using XmlAdaptedJob objects as shown above.
+image::JobStorageDiagram.png[width="700"]
+
+An example job stored in this format is reproduced below:
+
+[source:xml]
+----
+<jobs>
+        <jobTitle>Backend Engineer</jobTitle>
+        <location>Geylang</location>
+        <skills>Java,SQL</skills>
+        <tagged>SEIntern</tagged>
+        <tagged>ATAP</tagged>
+</jobs>
+----
+
+===== UI Component
+
+The main window contains a JobListPanel, which contains individual jobs represented using JobListCards.
+JobListCards represent the fields in each Job using Labels and flowPanes.
+
+===== Job Operations and Logic
+
+Operations performed on jobs follow the sequence of operations described in the diagram below.
+
+. Command input is received by the UI component.
+. The command execution is handled by the Logic component.
+. The changes to data are effected by the Model component.
+. The new Infinity Book data is saved by the Storage component.
+
+This sequence of events is summarized in the following sequence diagram.
+
+.A high level sequence diagram showing events triggered by the `postjob` command.
+image::SequenceDiagramJobPosting.png[width="700"]
+
+The following job posting commands are implemented extending `UndoableCommand` and `Command`:
+
+[width="50%",cols="<50%,<50%",options="header",]
+|=====================
+|extends `UndoableCommand` | extends `Command`
+|`PostJobCommand` +
+ `EditJobCommand` +
+ `DeleteJobCommand` +
+ `MatchJobCommand` | `ListJobCommand` +
+  `FindJobCommand`
+|=====================
+
+The following diagram details the class relationship for Commands.
+
+.UML Diagram depicting the class relationship between command classes.
+image::CommandsStructure.png[width="300"]
+
+---
+
+*Adding Job Postings*
+
+Adding job postings to Infinity Book is performed by the PostJobCommand. The sequence of events triggered while adding a job posting are shown in the diagram below:
+
+.Adding a job posting is executed as shown above.
+image::PostJobCommandSequenceDiagram.png[width="700"]
+
+The PostJobCommand#executeUndoableCommand triggers addition of the Job to `UniqueJobList` in AddressBook#add
+The following code snippet demonstrates the prevention of duplicates in the UniqueJobList
+[source:Java]
+----
+    public void add(Job toAdd) throws DuplicateJobException {
+        requireNonNull(toAdd);
+        if (contains(toAdd)) {
+            throw new DuplicateJobException();
+        }
+        internalList.add(toAdd);
+    }
+----
+
+---
+
+*Editing Job Postings*
+
+Editing job postings in the Infinity Book is performed by the EditJobCommand. The sequence of events triggered while editing a job posting are shown in the diagram below:
+
+.Editing a job posting is executed as shown above.
+image::EditJobCommandSequenceDiagram.png[width="700"]
+
+The EditJobCommand#executeUndoableCommand triggers editing of a existing Job in `UniqueJobList` in AddressBook#add
+The `EditJobCommand` ensures that the index specified refers to a valid index in the most recent listing of jobs.
+Editing jobs to cause duplicates in the UniqueJobList is prevented by throwing a DuplicateJobException.
+
+The following code snippet demonstrates the prevention of duplicates and index checking in the UniqueJobList after editing
+
+[source:Java]
+----
+    public void setJob(Job target, Job editedJob) throws DuplicateJobException, JobNotFoundException {
+        requireNonNull(editedJob);
+
+        int index = internalList.indexOf(target);
+        if (index == -1) {
+            throw new JobNotFoundException();
+        }
+
+        if (!target.equals(editedJob) && internalList.contains(editedJob)) {
+            throw new DuplicateJobException();
+        }
+
+        internalList.set(index, editedJob);
+    }
+----
+
+To completely specify the changes to the Job object specified by EditJobCommand, an EditJobCommandDescriptor is parsed from the command, and used to update changes in the Model. Completing
+these operations ensures the new Job object is updated in the Infinity Book.
+
+---
+
+*Delete Job Postings*
+
+Deleting job postings in the Infinity Book is performed by the DeleteJobCommand. The sequence of events triggered while deleting a job posting are shown in the diagram below:
+
+.Deleting a job posting is executed as shown above.
+image::DeleteJobCommandSequenceDiagram.png[width="700"]
+
+The DeleteJobCommand selects a Job object by matching the index with the last shown job list, and checks the index as shown in the following code snippet.
+[source:Java]
+----
+ protected void preprocessUndoableCommand() throws CommandException {
+        List<Job> lastShownList = model.getFilteredJobList();
+
+        if (targetIndex.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_JOB_DISPLAYED_INDEX);
+        }
+
+        jobToDelete = lastShownList.get(targetIndex.getZeroBased());
+----
+The changes to the UniqueJobList are enacted by AddressBook#removeJob, which completes the removal of the object and triggers Storage to update the data.
+
+---
+
+*Matching Job Postings*
+
+Matching job postings to candidates in the Infinity Book is performed by the MatchJobCommand.
+
+The sequence of events triggered while matching a job posting are shown in the diagram below:
+
+.`matchjob` uses predicate based filtering similar to `findjob` and `listjobs`
+image::matchJobSequenceDiagram.png[width="700"]
+
+The MatchJobCommand selects a Job object by matching the index with the last shown job list. A PersonMatchesJobPredicate is used to find matches, by looking for matches between tags, location and skills fields of the Job and Person.
+
+Search parameters can be excluded from search when they are set to 'ALL'. Under these circumstances only the other parameters will influence the search.
+
+The following code snippet shows how Location can be excluded from the search. Other two parameters are handles similarly.
+
+[source:Java]
+----
+public boolean test(Person person) {
+
+        // .. code to set up and assign locationMatch, skillsMatch and tagsMatch
+
+        locationMatch = isLocationMatchSatisfied(locationMatch);
+        //.. similarly for skillsMatch and tagsMatch
+
+        return locationMatch && skillsMatch && tagsMatch;
+ }
+
+ private boolean isLocationMatchSatisfied(boolean locationMatch) {
+         if (notLocationBound) {
+             locationMatch = true;
+         }
+         return locationMatch;
+ }
+----
+
+The PersonListPanel is populated with a list of candidates who match the job according to the set parameters.
+
+---
+
+*Listing Job Postings*
+
+Listing all job postings in the Infinity Book is performed by the FindJobCommand. The sequence of events triggered while listing all job postings are shown in the diagram below:
+
+.Sequence diagram above shows the sequence of events triggered on execution of `listjobs`
+image::listjobcommandSequenceDiagram.png[width="700"]
+
+The ListJobCommand selects displays all Job objects from UniqueJobList in the JobListPanel.
+
+---
+
+*Finding Job Postings*
+
+Finding job postings by keywords in the Infinity Book is performed by the FindJobCommand. The sequence of events triggered while finding a job posting are extremely similar to listing all job postings as in Figure above, differing only in the specifics of the predicate used.
+
+The FindJobCommand selects Job objects to display by matching the keyword with the Job Title, Location or Tags, and lists all matches in the JobListPanel.
+
+==== Design Considerations
+**Aspect:** Implementation of additional Skill parameter for Person and Job +
+
+**Alternative 1 (current choice):** Maintain skills as list of strings. +
+**Pros:** Allows recruiter freedom in creating a skills list as they need. +
+**Cons:** Searching requires complex string operations. Duplicates of the same skill will be found under different persons. +
+
+**Alternative 2:** Maintain a UniqueSkillsList similar to tags. +
+**Pros:** Different candidates with similar skills will utilize the same object. +
+**Cons:** The list of skills must be synchronized with both person list and job list, removing any skills that are not used by both.
+
+---
+
 **Aspect:** Implementation of Job-Person Matching +
 
 **Alternative 1 (current choice):** Match as many keywords in an OR search as possible +
 **Pros:** Maintains existing search predicates with minor modifications. +
 **Cons:** May not provide effective filtering. +
 
-**Alternative 2:** Indicate required and optional matches in job posting expected in v1.4 +
+**Alternative 2:** Indicate required and optional matches in job posting. +
 **Pros:** Search can be customized to be as accurate as required. +
 **Cons:** Spelling differences may still cause diminished effectiveness.
+
+link:#top[Back to top]
+
 // end::jobposting[]
 
 // tag::theme[]
@@ -893,9 +1241,24 @@ UiStyle.getInstance().setToLightTheme();
 
 // end::theme[]
 
-=== Interview Management
+//tag::interviewmanagement[]
+=== Interview Management (Since v1.5rc)
+Interviewing is one of the important steps in recruiting process.
+HR may need a tool to manage interview efficiently. The Infinity Book will
+need interview model with basic features including adding interview, listing
+interview, and deleting interview.
 
-==== Adding an interview (Since v1.4)
+* Model Component:
+
+image::InterviewModel.png[width="700"]
+Figure 5.13.1: add Interview Model to Model Component
+
+* Storage Component:
+
+image::InterviewStorage.png[width="700]
+Figure 5.13.2 add XmlAdaptedInterview to Storage Component
+
+==== Adding an interview
 The recruiter may want to conduct an interview with candidates, and maintain
 an interview lists.
 
@@ -912,34 +1275,80 @@ according to each candidates. +
 **Pros:** It is easier to implement. +
 **Cons:** It is difficult to search specific interview effectively.
 
-==== List interview (coming v1.5)
+** Current implementation details
+* `AddInterviewCommandParser` class will extract interview title, interviewee name, date,
+and interview location from user input, form a new interview,
+then pass it to `AddInterviewCommand` class.
+* `AddInterviewCommand` will take in the interview and call add new Interview to
+storage in model.
+
+[source,java]
+----
+public synchronized void addInterview(Interview interview) throws DuplicateInterviewException {
+        addressBook.addInterview(interview);
+        updateFilteredInterviewList(PREDICATE_SHOW_ALL_INTERVIEWS);
+        indicateAddressBookChanged();
+}
+----
+
+==== List interview
 The recruiter may want to take a look at all of the interviews.
 
 Aspects: Implementation of listing all the interviews.
 
 **Alternative 1:** (current choice) create a new command to listing all the interview. +
 **Pros:** It is easier to use and modify. +
-**Cons:** Have to create new comamnd.
+**Cons:** New command is needed.
 
 **Alternative 2:** each candidate has been linked to an interview, listing all the
 interview when listing all candidates. +
 **Pros:** No need to create new command, just need to edit current list comamnd +
 **Cons:** It increases coupling and it is harder to implement.
 
-==== Adding question/answer (coming v2.0)
-The recruiter may want to maintain a list of questions and keep track of candidate's
-answer of each interview.
+** Current implementation details
+* `AddressBookParser` class will parse the command `listInterview` from CLI
+and call ListInterviewCommand.
+* `ListInterviewCommand` will call updateFilteredList in model and list all the interviews in storage.
 
-Aspects: Implementation of adding question/answer:
+[source,java]
+----
 
-**Alternative 1:** (current choice) create two new command for adding question/answer +
-**Pros:** It can be added the interview questions first and answer later. It can be
-conducted interview in anytime. +
-**Cons:** Create new addtional command.
+public void updateFilteredInterviewList(Predicate<Interview> predicate) {
+        requireNonNull(predicate);
+        filteredInterviews.setPredicate(predicate);
+}
+----
 
-**Alternative 2:** + combining into one command questions/answer +
-**Pros:** It is easier to maintain list answer with respect to questions +
-**Cons:** Cannot add the answer and interview separately.
+==== Deleting Interview
+After conducted interview, the HR may want to delete the interview from the Infinity Book.
+
+Aspects: Implementation of deleting an interview:
+
+**Alternative 1:** (current choice) create deleting command for deleting interview by index +
+**Pros:** It can be easily to use follow the index of listing interview command +
+**Cons:** It requires users to use two commands +
+
+**Alternative 2:** create deleting command for deleting interview by name. +
+**Pros:** It requires addtional tools to match interview +
+**Cons:** It is easier for user to use.
+
+** Current implementation details
+* `DeletingInterviewParser` class will extract the index of the interview needed
+to be deleted and pass in to `DeleteInterviewCommand`.
+* `DeleteInterviewCommand` will take in the index and update the interview list
+accordingly.
+
+[source,java]
+----
+
+public synchronized void deleteInterview(Interview target) throws InterviewNotFoundException {
+        addressBook.removeInterview(target);
+        indicateAddressBookChanged();
+}
+
+----
+
+//end::interviewmanagement[]
 
 == Documentation
 This project maintains documentation in the docs folder, also accessible through the readme. This documentation is written and maintained using *asciidoc*.
@@ -1623,6 +2032,7 @@ These instructions only provide a starting point for testers to work on; testers
 // TODO: read the comments originally placed here and update this section
 // .. _{explain how to simulate a missing/corrupted file and the expected behavior}_
 
+<<<<<<< HEAD
 === Add new tags to candidates
 
 . Deleting a person while all persons are listed
@@ -1638,6 +2048,44 @@ These instructions only provide a starting point for testers to work on; testers
 // TODO: Give more incorrect commands to try.
 
 
+=======
+=== Viewing a person
+. Viewing a person by emailID
+.. Test case: `view notexisted@example.com` +
+   Expected: person found and no new url display on browser panel
+
+.. Test case: `view a@example.com` +
+   Prerequisites: the person with email a@example.com exists on Infinity Book. +
+   Expected: the person with email a@example.com returned,
+   and the corresponding linking page has been displayed on the browser panel.
+
+=== Interview Management
+
+==== Add interview
+. Add an interview to current infinity book.
+.. Test case: `addInterview` +
+   Expected:  Invalid format showing in the status message +
+.. Test case:  `addInterview i/SE INTERVIEW n/DAVID d/04.05.2018 l/NUS SOC` +
+   Expected: new interview added in the status message.
+   New interview added in the browser panel.
+
+==== List interview
+. List all interviews of infinity book
+.. Test case: `listInterview`
+   Expected: Showing all the interviews in the interview panel
+
+==== Delete Interview
+. Prerequisites: List all interviews using the `listInterview` command. Multiple interviews in the list. +
+
+. Deleting an interview while all interviews are listed
+.. Test case: `deleteInterview 1`
+   Expected: First interview deleted from the interview list.
+   Details of the deleted contact shown in the status message.
+.. Test case: `deleteInterview 0`
+   Expected: No interview is deleted. Error details shown in the status message.
+.. Other incorrect delete commands to try: `deleteInterview`, `deleteInterview x` (where x is larger than the list size) +
+   Expected: Similar to previous.
+>>>>>>> master
 
 link:#top[Back to top]
 

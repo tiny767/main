@@ -6,10 +6,11 @@ import java.util.Set;
 import seedu.address.model.job.Job;
 import seedu.address.model.job.JobTitle;
 import seedu.address.model.job.Location;
-import seedu.address.model.job.Skill;
+import seedu.address.model.skill.Skill;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
 
+//@@author ChengSashankh
 /**
  * A utility class to help with building Job objects.
  */
@@ -79,3 +80,4 @@ public class JobBuilder {
     }
 
 }
+//@@author

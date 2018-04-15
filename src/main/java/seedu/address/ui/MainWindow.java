@@ -20,6 +20,7 @@ import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.RefreshReportPanelEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.events.ui.ToggleBrowserPanelEvent;
+import seedu.address.commons.events.ui.ToggleFacebookPanelEvent;
 import seedu.address.commons.events.ui.ToggleReportPanelEvent;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
@@ -39,6 +40,7 @@ public class MainWindow extends UiPart<Stage> {
 
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
+    private FacebookPanel facebookPanel;
     private ReportPanel reportPanel;
     private InterviewListPanel interviewListPanel;
     private PersonListPanel personListPanel;
@@ -88,7 +90,7 @@ public class MainWindow extends UiPart<Stage> {
         setWindowDefaultSize(prefs);
 
         Scene scene = primaryStage.getScene();
-        UiStyle.getInstance().setScene(scene);
+        UiTheme.getInstance().setScene(scene);
         primaryStage.setScene(scene);
 
 
@@ -177,6 +179,15 @@ public class MainWindow extends UiPart<Stage> {
         browserOrReportPlaceholder.getChildren().add(browserPanel.getRoot());
         isReportPanelOpen = false;
     }
+    /**
+     * Replace the current panel by Facebook panel
+     */
+    void switchToFacebookPanel() {
+        facebookPanel = new FacebookPanel();
+        browserOrReportPlaceholder.getChildren().clear();
+        browserOrReportPlaceholder.getChildren().add(facebookPanel.getRoot());
+        isReportPanelOpen = false;
+    }
 
     @Subscribe
     private void handleRefreshReportPanel(RefreshReportPanelEvent event) {
@@ -257,4 +268,10 @@ public class MainWindow extends UiPart<Stage> {
     private void handleToggleReportPanelEvent(ToggleReportPanelEvent event) {
         switchToReportPanel();
     }
+
+    @Subscribe
+    private void handleToggleFacebookPanelEvent(ToggleFacebookPanelEvent event) {
+        switchToFacebookPanel();
+    }
+
 }

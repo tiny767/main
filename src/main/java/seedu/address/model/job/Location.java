@@ -3,6 +3,7 @@ package seedu.address.model.job;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
+//@@author ChengSashankh
 /**
  * Represents a Job's location in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidLocation(String)}
@@ -11,7 +12,6 @@ public class Location {
 
     public static final String MESSAGE_LOCATION_CONSTRAINTS =
             "Job locations can take any values, and it should not be blank";
-
 
     /*
      * The first character of the location must not be a whitespace,
@@ -47,8 +47,8 @@ public class Location {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof seedu.address.model.job.Location // instanceof handles nulls
-                && this.value.equals(((seedu.address.model.job.Location) other).value)); // state check
+                || (other instanceof Location // instanceof handles nulls
+                && this.value.compareTo(((Location) other).value) == 0); // state check
     }
 
     @Override
@@ -57,3 +57,4 @@ public class Location {
     }
 
 }
+//@@author

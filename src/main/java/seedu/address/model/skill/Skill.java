@@ -1,4 +1,4 @@
-package seedu.address.model.job;
+package seedu.address.model.skill;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
@@ -6,6 +6,7 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 import java.util.HashSet;
 import java.util.Set;
 
+//@@author ChengSashankh
 /***
  * Represents a Job's and Person's required Skills in the Infinity Book.
  * Guarantees: is valid as declared in {@link #isValidSkill(String)}
@@ -33,6 +34,13 @@ public class Skill {
         return skillSet;
     }
 
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof Skill // instanceof handles nulls
+                && this.value.compareTo(((Skill) other).value) == 0); // state check
+    }
+
     public String toString() {
         return value;
     }
@@ -47,3 +55,4 @@ public class Skill {
     }
 
 }
+//@@author

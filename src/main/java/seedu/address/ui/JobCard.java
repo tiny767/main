@@ -7,6 +7,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.model.job.Job;
 
+//@@author ChengSashankh
 /**
  * An UI component that displays information of a {@code Job}.
  */
@@ -88,6 +89,4 @@ public class JobCard extends UiPart<Region> {
     }
 }
 
-
-
-
+//@@author

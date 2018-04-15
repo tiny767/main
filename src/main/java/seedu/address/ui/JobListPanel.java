@@ -17,6 +17,7 @@ import seedu.address.commons.events.ui.JobPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.JumpToJobListRequestEvent;
 import seedu.address.model.job.Job;
 
+//@@author ChengSashankh
 /**
  * Panel containing the list of jobs.
  */
@@ -84,6 +85,5 @@ public class JobListPanel extends UiPart<Region> {
             }
         }
     }
-
-
 }
+//@@author

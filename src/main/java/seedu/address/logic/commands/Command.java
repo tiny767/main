@@ -25,6 +25,16 @@ public abstract class Command {
     }
 
     /**
+     * Constructs a feedback message to summarise an operation that displayed a listing of jobs.
+     *
+     * @param displaySize used to generate summary
+     * @return summary message for jobs displayed
+     */
+    public static String getMessageForJobListShownSummary(int displaySize) {
+        return String.format(Messages.MESSAGE_JOBS_LISTED_OVERVIEW, displaySize);
+    }
+
+    /**
      * Constructs a feedback message to summarise an operation that displayed a listing of persons.
      *
      * @param displaySize used to generate summary

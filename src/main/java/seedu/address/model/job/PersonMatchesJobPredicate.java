@@ -6,10 +6,10 @@ import java.util.function.Predicate;
 
 import seedu.address.model.person.Person;
 
+//@@author ChengSashankh
 /**
  * Tests that a {@code Person}'s {@code skills, address or tags} matches any of the keywords given.
  */
-
 public class PersonMatchesJobPredicate implements Predicate<Person> {
     private final List<String> keywords;
     private final boolean notLocationBound;
@@ -57,11 +57,11 @@ public class PersonMatchesJobPredicate implements Predicate<Person> {
         String toMatchPersonTags = setUpTagsSearch(person, stringBuilder);
 
         boolean locationMatch =
-                keywords.stream().anyMatch(keyword -> toMatchPersonAddress.contains(keyword));
+                keywords.stream().anyMatch(keyword -> toMatchPersonAddress.contains(keyword.toLowerCase()));
         boolean skillsMatch =
-                keywords.stream().anyMatch(keyword -> toMatchPersonSkills.contains(keyword));
+                keywords.stream().anyMatch(keyword -> toMatchPersonSkills.contains(keyword.toLowerCase()));
         boolean tagsMatch =
-                keywords.stream().anyMatch(keyword -> toMatchPersonTags.contains(keyword));
+                keywords.stream().anyMatch(keyword -> toMatchPersonTags.contains(keyword.toLowerCase()));
 
         locationMatch = isLocationMatchSatisfied(locationMatch);
         skillsMatch = isSkillsMatchSatisfied(skillsMatch);
@@ -116,7 +116,7 @@ public class PersonMatchesJobPredicate implements Predicate<Person> {
         String[] toMatchPersonTagsWords = person.getTags().toString().split(",");
         for (String entry : toMatchPersonTagsWords) {
             if (!(entry.compareTo("ALL") == 0)) {
-                entry = entry.trim();
+                entry = entry.trim().toLowerCase();
                 entry = entry.replaceAll("\\[", "");
                 entry = entry.replaceAll("\\]", "");
                 stringBuilder.append(" " + entry + " ");
@@ -135,7 +135,7 @@ public class PersonMatchesJobPredicate implements Predicate<Person> {
         String[] toMatchPersonSkillsWords = person.getSkills().toString().split(",");
         for (String entry : toMatchPersonSkillsWords) {
             if (!(entry.compareTo("ALL") == 0)) {
-                entry = entry.trim();
+                entry = entry.trim().toLowerCase();
                 stringBuilder.append(" " + entry + " ");
             }
         }
@@ -152,7 +152,7 @@ public class PersonMatchesJobPredicate implements Predicate<Person> {
         String[] toMatchPersonAddressWords = person.getAddress().toString().split(",");
         for (String entry : toMatchPersonAddressWords) {
             if (!(entry.compareTo("ALL") == 0)) {
-                entry = entry.trim();
+                entry = entry.trim().toLowerCase();
                 stringBuilder.append(" " + entry + " ");
             }
         }
@@ -167,3 +167,4 @@ public class PersonMatchesJobPredicate implements Predicate<Person> {
                         (PersonMatchesJobPredicate) other).keywords)); // state check
     }
 }
+//@@author

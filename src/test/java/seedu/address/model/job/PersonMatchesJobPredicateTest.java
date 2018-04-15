@@ -8,6 +8,7 @@ import org.junit.Test;
 import seedu.address.testutil.JobBuilder;
 import seedu.address.testutil.PersonBuilder;
 
+//@@author ChengSashankh
 public class PersonMatchesJobPredicateTest {
     @Test
     public void equals() {
@@ -78,3 +79,4 @@ public class PersonMatchesJobPredicateTest {
     }
 
 }
+//@@author

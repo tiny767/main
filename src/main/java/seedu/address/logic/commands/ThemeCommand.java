@@ -1,6 +1,6 @@
 package seedu.address.logic.commands;
 
-import seedu.address.ui.UiStyle;
+import seedu.address.ui.UiTheme;
 
 /**
  * Change the theme of addressbook
@@ -22,7 +22,7 @@ public class ThemeCommand extends Command {
     private final String theme;
 
     /**
-     * Creates an AddCommand to add the specified {@code Person}
+     * Creates a ThemeCommand to change the theme to the specified {@code theme}
      */
     public ThemeCommand(String theme) {
         this.theme = theme;
@@ -31,11 +31,11 @@ public class ThemeCommand extends Command {
     @Override
     public CommandResult execute() {
         if (theme.equalsIgnoreCase(ThemeCommand.LIGHT_THEME)) {
-            UiStyle.getInstance().setToLightTheme();
+            UiTheme.getInstance().setToLightTheme();
         } else if (theme.equalsIgnoreCase(ThemeCommand.DARK_THEME)) {
-            UiStyle.getInstance().setToDarkTheme();
+            UiTheme.getInstance().setToDarkTheme();
         } else if (theme.equalsIgnoreCase(ThemeCommand.MORNING_THEME)) {
-            UiStyle.getInstance().setToMorningTheme();
+            UiTheme.getInstance().setToMorningTheme();
         }
 
         return new CommandResult(MESSAGE_SUCCESS);

@@ -13,6 +13,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.job.Job;
 import seedu.address.model.job.exceptions.JobNotFoundException;
 
+//@@author ChengSashankh
 /**
  * Deletes a job identified using it's last displayed index from the address book.
  */
@@ -25,7 +26,7 @@ public class DeleteJobCommand extends UndoableCommand {
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_DELETE_JOB_SUCCESS = "Deleted Job: %1$s";
+    public static final String MESSAGE_DELETE_JOB_SUCCESS = "Deleted job: %1$s";
 
     private final Index targetIndex;
 
@@ -69,3 +70,4 @@ public class DeleteJobCommand extends UndoableCommand {
 
 }
 
+//@@author

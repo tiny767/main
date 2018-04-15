@@ -21,15 +21,14 @@ public class AddInterviewCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "addInterview";
     public static final String COMMAND_ALIAS = "ai";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds an interview to the address book. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds an interview to the address book.\n"
             + "Parameters: "
             + PREFIX_INTERVIEW + "INTERVIEW "
             + PREFIX_NAME + "INTERVIEWEE "
-            + PREFIX_DATE + "INTERVIEW_DATE"
-            + PREFIX_LOCATION + "INTERVIEW_LOCATION "
-            + "\n "
+            + PREFIX_DATE + "INTERVIEW_DATE "
+            + PREFIX_LOCATION + "INTERVIEW_LOCATION \n"
             + "Example: " + COMMAND_WORD + " "
-            + PREFIX_INTERVIEW + "INTERNSHIP INTERVIEW "
+            + PREFIX_INTERVIEW + "SE INTERVIEW "
             + PREFIX_NAME + "DAVID "
             + PREFIX_DATE + "04.05.2018 "
             + PREFIX_LOCATION + "SUNTEX CITY ";
@@ -245,7 +244,7 @@ public class AddInterviewCommandParser implements Parser<AddInterviewCommand> {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_INTERVIEW, PREFIX_NAME, PREFIX_DATE, PREFIX_LOCATION);
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_INTERVIEW, PREFIX_LOCATION)
+        if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_INTERVIEW, PREFIX_DATE, PREFIX_LOCATION)
                 || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddInterviewCommand.MESSAGE_USAGE));
         }
@@ -347,6 +346,107 @@ public class FindInterviewCommandParser implements Parser<FindInterviewCommand> 
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindInterviewCommand.MESSAGE_USAGE));
         }
         return new FindInterviewCommand(new InterviewMatchInterviewee(keywords[0]));
+    }
+}
+```
+###### \java\seedu\address\logic\parser\ParserUtil.java
+``` java
+    /**
+     * Parses a {@code String string} into a trimmed {@code Location}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code string} is invalid.
+     */
+    public static InterviewLocation parseInterviewLocation(String string) throws IllegalValueException {
+        requireNonNull(string);
+        String trimmedString = string.trim();
+        if (!Location.isValidLocation(trimmedString)) {
+            throw new IllegalValueException(InterviewLocation.MESSAGE_LOCATION_CONSTRAINTS);
+        }
+        return new InterviewLocation(trimmedString);
+    }
+
+    /**
+     * Parses a {@code Optional<String> string} into an {@code Optional<Location>} if {@code string} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<InterviewLocation> parseInterviewLocation(Optional<String> string)
+            throws IllegalValueException {
+        requireNonNull(string);
+        return string.isPresent() ? Optional.of(parseInterviewLocation(string.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String link} into an {@code Link}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code email} is invalid.
+     */
+    public static Link parseLink(String link) throws IllegalValueException {
+        requireNonNull(link);
+        String trimmedLink = link.trim();
+        if (!Link.isValidLink(trimmedLink)) {
+            throw new IllegalValueException(Link.MESSAGE_LINK_CONSTRAINTS);
+        }
+        return new Link(link);
+    }
+
+    /**
+     * Parses a {@code Optional<String> link} into an {@code Optional<Link>} if {@code link} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Link> parseLink(Optional<String> link) throws IllegalValueException {
+        requireNonNull(link);
+        return link.isPresent() ? Optional.of(parseLink(link.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String link} into an {@code Link}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code email} is invalid.
+     */
+    public static InterviewTitle parseInterviewTitle(String interviewTitle) throws IllegalValueException {
+        requireNonNull(interviewTitle);
+        String trimmedInterviewTitle = interviewTitle.trim();
+        if (!Link.isValidLink(trimmedInterviewTitle)) {
+            throw new IllegalValueException(InterviewTitle.MESSAGE_TITLE_CONSTRAINTS);
+        }
+        return new InterviewTitle(interviewTitle);
+    }
+
+    /**
+     * Parses a {@code Optional<String> link} into an {@code Optional<Link>} if {@code link} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<InterviewTitle> parseInterviewTitle(Optional<String> interviewTitle)
+                throws IllegalValueException {
+        requireNonNull(interviewTitle);
+        return interviewTitle.isPresent() ? Optional.of(parseInterviewTitle(interviewTitle.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String link} into an {@code Link}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code email} is invalid.
+     */
+    public static Date parseDate(String date) throws IllegalValueException {
+        requireNonNull(date);
+        String trimmedDate = date.trim();
+        if (!Date.isValidDate(trimmedDate)) {
+            throw new IllegalValueException(Date.MESSAGE_DATE_CONSTRAINTS);
+        }
+        return new Date(date);
+    }
+
+    /**
+     * Parses a {@code Optional<String> link} into an {@code Optional<Link>} if {@code link} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Date> parseDate(Optional<String> date) throws IllegalValueException {
+        requireNonNull(date);
+        return date.isPresent() ? Optional.of(parseDate(date.get())) : Optional.empty();
     }
 }
 ```
@@ -469,6 +569,8 @@ public class Date {
 ``` java
 package seedu.address.model.interview;
 
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+
 import java.util.Objects;
 
 import seedu.address.model.person.Name;
@@ -484,6 +586,7 @@ public class Interview {
     private InterviewLocation interviewLocation;
 
     public Interview(InterviewTitle interviewTitle, Name interviewee, Date date, InterviewLocation location) {
+        requireAllNonNull(interviewTitle, interviewee, date, location);
         this.interviewTitle = interviewTitle;
         this.interviewee = interviewee;
         this.date = date;
@@ -638,7 +741,7 @@ public class InterviewMatchInterviewee implements Predicate<Interview> {
     }
 
 }
-//author@@ deeheenguyen
+//author@@
 ```
 ###### \java\seedu\address\model\interview\InterviewTitle.java
 ``` java
@@ -648,8 +751,8 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
 /**
- * Represents a Job's title in the address book.
- * Guarantees: immutable; is valid as declared in {@link #isValidTitle(String)}
+ * Represents a Interview's title in the address book.
+ * Guarantees: immutable; is valid as declared in {@title #isValidTitle(String)}
  */
 
 public class InterviewTitle {
@@ -667,7 +770,7 @@ public class InterviewTitle {
     /**
      * Constructs a {@code JobTitle}.
      *
-     * @param title A valid job title.
+     * @param title A valid interview title.
      */
     public InterviewTitle(String title) {
         requireNonNull(title);
@@ -824,6 +927,37 @@ public class UniqueInterviewList implements Iterable<Interview> {
 }
 //author@@ deeheenguyen
 ```
+###### \java\seedu\address\model\ModelManager.java
+``` java
+    //=========== Filtered Interview List Accessors =============================================================
+    @Override
+    public synchronized void addInterview(Interview interview) throws DuplicateInterviewException {
+        addressBook.addInterview(interview);
+        updateFilteredInterviewList(PREDICATE_SHOW_ALL_INTERVIEWS);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public synchronized void deleteInterview(Interview target) throws InterviewNotFoundException {
+        addressBook.removeInterview(target);
+        indicateAddressBookChanged();
+    }
+
+    /**
+     * Returns an unmodifiable view of the list of {@code Interview} backed by the internal list of
+     * {@code addressBook}
+     */
+    @Override
+    public ObservableList<Interview> getFilteredInterviewList() {
+        return FXCollections.unmodifiableObservableList(filteredInterviews);
+    }
+
+    @Override
+    public void updateFilteredInterviewList(Predicate<Interview> predicate) {
+        requireNonNull(predicate);
+        filteredInterviews.setPredicate(predicate);
+    }
+```
 ###### \java\seedu\address\model\person\EmailFilter.java
 ``` java
 package seedu.address.model.person;
@@ -931,7 +1065,7 @@ import seedu.address.model.person.Name;
  * JAXB-friendly version of the Job.
  */
 public class XmlAdaptedInterview {
-    public static final String MISSING_FIELD_MESSAGE_FORMAT = "Job's %s field is missing!";
+    public static final String MISSING_FIELD_MESSAGE_FORMAT = "Interview's %s field is missing!";
 
     @XmlElement(required = true)
     private String interviewTitle;
@@ -951,7 +1085,7 @@ public class XmlAdaptedInterview {
     /**
      * Constructs an {@code XmlAdaptedInterview} with the given interview details.
      */
-    public XmlAdaptedInterview(String interviewTitle, String interviewee, String location, String date) {
+    public XmlAdaptedInterview(String interviewTitle, String interviewee, String date, String location) {
         this.interviewTitle = interviewTitle;
         this.interviewLocation = location;
         this.date = date;
@@ -1114,8 +1248,6 @@ import java.util.logging.Logger;
 
 import org.fxmisc.easybind.EasyBind;
 
-import com.google.common.eventbus.Subscribe;
-
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -1124,7 +1256,6 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.InterviewPanelSelectionChangedEvent;
-import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.model.interview.Interview;
 
 /**
@@ -1173,14 +1304,8 @@ public class InterviewListPanel extends UiPart<Region> {
         });
     }
 
-    @Subscribe
-    private void handleJumpToListRequestEvent(JumpToListRequestEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        scrollTo(event.targetIndex);
-    }
-
     /**
-     * Custom {@code ListCell} that displays the graphics of a {@code JobCard}.
+     * Custom {@code ListCell} that displays the graphics of a {@code InterviewCard}.
      */
     class InterviewListViewCell extends ListCell<InterviewCard> {
 

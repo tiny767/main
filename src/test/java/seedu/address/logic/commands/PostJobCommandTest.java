@@ -34,6 +34,7 @@ import seedu.address.model.report.Report;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.JobBuilder;
 
+//@@author ChengSashankh
 public class PostJobCommandTest {
 
     @Rule
@@ -258,3 +259,4 @@ public class PostJobCommandTest {
     }
 
 }
+//@@author

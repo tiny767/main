@@ -5,6 +5,8 @@ import java.util.function.Predicate;
 
 import seedu.address.commons.util.StringUtil;
 
+//@@author ChengSashankh
+
 /**
  * Tests that a {@code Job}'s {@code JobTitle} or {@code Location} or {@code Tags} matches any of the
  * keywords given.
@@ -33,3 +35,4 @@ public class JobMatchesKeywordsPredicate implements Predicate<Job> {
     }
 
 }
+//@@author
