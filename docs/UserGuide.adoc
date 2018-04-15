@@ -62,7 +62,6 @@ Refer to <<FAQ>> for instructions to check Java version.
 
 image::Ui.png[width="790"]
 
-
 Set up is now complete. You have launched Infinity Book. You should see the interface as shown in Figure 1. +
 
 Type your command in the command box and press kbd:[Enter] to execute it. Some examples are given below.
