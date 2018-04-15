@@ -793,9 +793,8 @@ so that they are accessible by people who are color blind and obvious for everyo
 
 ==== Current Implementation
 
-Use different colors for different tags inside person cards. For example, `friends` tags can be all in red and `colleagues` tags can be all in blue
-Pre-defined colors are included in `DarkTheme.css` and `LightTheme.css`
-We use hash code of the tag names to generate a color. This is deliberately designed to ensure consistent colors each time the application runs.
+Use different colors for different tags inside person cards. For example, `friends` tags can be all in red and `colleagues` tags can be all in blue.
+Pre-defined colors are included in `DarkTheme.css`, `LightTheme.css` and `MorningTheme.css`. We use hash code of the tag names to generate a color. This is deliberately designed to ensure consistent colors each time the application runs.
 
 ==== Design considerations
 
@@ -1206,24 +1205,22 @@ link:#top[Back to top]
 
 === Theming Mechanism [since v1.3]
 
-The theme mechanism is facilitated by a singleton class `UiStyle` which will be called inside the `MainWindow` constructor where it passes its `scene` into the `UiStyle` class.
+The theme mechanism is facilitated by a singleton class `UiTheme` which will be called inside the `MainWindow` constructor where it passes its `scene` into the `UiTheme` class.
 The `scene` is necessary for changing the CSS at runtime.
 
-The class `UiStyle` requires the scene to be set at `MainWindow` class so that it can be used to edit themes.
+The class `UiTheme` requires the scene to be set at `MainWindow` class so that it can be used to edit themes.
 
 
 ----
-public class UiStyle {
+public class UiTheme {
     ...
-    private static Scene scene = null;
-
     public static void setScene(Scene s) {
         scene = s;
         setDefaultTheme();
     }
 
     private static void setDefaultTheme() {
-        scene.getStylesheets().add(DARK_THEME_STYLE);
+        setToMorningTheme();
     }
 
     public static void setToLightTheme() {
@@ -1233,6 +1230,10 @@ public class UiStyle {
     public static void setToDarkTheme() {
         scene.getStylesheets().setAll(DARK_THEME_STYLE);
     }
+
+    public static void setToMorningTheme() {
+        scene.getStylesheets().setAll(MORNING_THEME_STYLE);
+    }
     ...
 }
 ----
@@ -1240,14 +1241,14 @@ public class UiStyle {
 Example of calling the application to change to light theme:
 
 ----
-UiStyle.getInstance().setToLightTheme();
+UiTheme.getInstance().setToLightTheme();
 ----
 
 ==== Design Considerations
 
 **Aspect:** Ways to change the application theme +
-**Alternative 1 (current choice):** Use a dedicated singleton class `UiStyle` to change the theme +
-**Pros:** Provide a dedicated class that manages all the changing of themes. `UiStyle` can contain many CSS theme file paths and thus the theme mechanism is more scalable . It is easier for `ThemeCommand` class to call `UiStyle` instance and use its methods directly. +
+**Alternative 1 (current choice):** Use a dedicated singleton class `UiTheme` to change the theme +
+**Pros:** Provide a dedicated class that manages all the changing of themes. `UiTheme` can contain many CSS theme file paths and thus the theme mechanism is more scalable . It is easier for `ThemeCommand` class to call `UiTheme` instance and use its methods directly. +
 **Cons:** Increases coupling +
 **Alternative 2:** Change the themes in `MainWindow` class directly +
 **Pros:** Decreases coupling +
@@ -1373,6 +1374,122 @@ public synchronized void deleteInterview(Interview target) throws InterviewNotFo
 ----
 
 //end::interviewmanagement[]
+
+//tag::facebook[]
+
+=== Facebook Integration
+
+The Facebook features (facebooklogin and facebookpost) are facilitated by Facebook Graph API and RestFB API. The Graph API is low-level HTTP-based API used to get data into and out of the Facebook platform while RestAPI is a high level third-party Graph API client.
+
+==== Preparation
+
+Firstly, we need to build a Graddle dependency in the `graddle.properties` file for RestFB API
+
+----
+compile group: 'com.restfb', name: 'restfb', version: '2.4.0'
+----
+
+To use Facebook Graph API, we followed the instruction link:https://developers.facebook.com/docs/apps/register/#create-app[`here`] to create a Facebook Application on the Facebook for developer site
+
+Finishing the steps, we reached this page
+
+.Facebook Application page
+image::FacebookAppCreated.png[width="800"]
+
+==== Implementation
+
+===== Facebooklogin
+
+We allow users to log in by loading the authentication URL associated with our Facebook Application to the FacebookPanel (to be explained later) specified by Graph API
+
+[source,java]
+----
+private static final String FACEBOOK_AUTH_URL =
+    "https://graph.facebook.com/oauth/authorize?type=user_agent&client_id=" + FACEBOOK_APP_ID
+        + "&redirect_uri=" + FACEBOOK_DOMAIN + "&scope" + FACEBOOK_PERMISSIONS;
+----
+
+[source,java]
+----
+Platform.runLater(() -> webEngine.load(FACEBOOK_AUTH_URL));
+----
+
+If login credentials are accepted, facebook will return an access_token in its redirected url. An example of a redirected url
+
+----
+https://www.facebook.com/?#access_token=EAAC15Ydo408BANN5h1MoSHWhLATnte3EchlxqsXA7x2WASMlZBJzlZC3rZCmlu4Wib3hi1bXR2r2sx2ZCgIJvJCrXaTAnQVN4f0ksFLSvCuezLhG43myLJtxT3Qtn0PpcIXXZBjgYUI4LwGvv837KGC2V4ifctNaBnHqRX6e7qAZDZD&expires_in=5184000
+----
+
+Using this access_token, we 'capture' this login session by making use of RestFB API. We set up the session in `FacebookLoginCommand` as followed
+
+----
+fbClient = new DefaultFacebookClient(accessToken, Version.LATEST);
+user = fbClient.fetchObject("me", User.class);
+----
+
+'fbClient' is the Facebook Graph API client with the supplied token.
+
+'user' is the authenticated user object.
+
+===== Facebookpost
+
+We will check if user is authenticated via the boolean variable isAuthenticated before allowing posting on facebook. If user is not authenticated, he will be redirected to log in
+
+[source,java]
+----
+if (!FacebookLoginCommand.getAuthenticateState()) {
+    FacebookLoginCommand fbLoginCommand = new FacebookLoginCommand();
+    fbLoginCommand.execute();
+} else {
+    completePost();
+}
+----
+
+We simply post the message to Facebook using the authenticated fbClient in `FacebookLoginCommand`
+
+[source,java]
+----
+DefaultFacebookClient fbClient = FacebookLoginCommand.getFbClient();
+fbClient.publish("me/feed", FacebookType.class, Parameter.with("message", toPost));
+----
+
+==== Implementation details
+
+'FacebookPanel' extends `UiPart<Region>` and shares the same region with `BrowserPanel` or `ReportPanel`. When `facebooklogin` is executed,
+ `MainWindow` class will swap out the `BrowserPanel` or `ReportPanel` and replace by `FacebookPanel`.
+We achieve this by posting `ToggleFacebookPanelEvent` (showing in the below sequence diagram).
+
+'FacebookPanel' is used mainly as a browser to authorize a user to Facebook. It is also used to display the Facebook page after the user is authorized.
+
+For capturing the access_token, we register `FacebookPanel` as an event handler. If the url (of `FacebookPanel`) changes to a new one that contains the access_token,
+ we raise a `BrowserUrlChangedEvent`. Also, our `FacebookPanel` is subscribed to handle `BrowserUrlChangedEvent` by passing the url (with access_token) back to `FacebookLoginCommand` to complete the authentication.
+
+The below sequence diagram show interactions within Logic component when user executes `facebookpost hello`.
+
+.Sequence diagram detailing Logic component when executing facebookpost
+image::FbSequenceDiagram.png[width="800"]
+
+==== Design considerations
+
+**Aspect:** Choice of client API for Facebook Graph API +
+**Alternative 1 (current choice):** Use `RestFB` +
+**Pros:** RestFB is simple and easy to use with well-documented API
+**Cons:** Features are limited +
+**Alternative 2:** Facebook4j +
+**Pros:** Facebook4j provides more extensive features +
+**Cons:** It is harder to use and we do not really need advanced features for now +
+
+---
+
+**Aspect:** Authentication +
+**Alternative 1 (current choice):** Authenticate using the built-in web browser (in FacebookPanel) +
+**Pros:** Convenient for user as authentication is done inside the app itself +
+**Cons:** The built-in Java web-engine might not support certain features of a webpage +
+**Alternative 2:** Authenticate by opening a full-pledged web browser such as Chrome/ Safari +
+**Pros:** The Facebook authorization page will be better supported by such a browser +
+**Cons:** User needs to switch between different applications +
+
+//end::facebook[]
 
 == Documentation
 This project maintains documentation in the docs folder, also accessible through the readme. This documentation is written and maintained using *asciidoc*.
@@ -1852,7 +1969,7 @@ Implementation needed:
 . If there is a linked page to the person, it will be displayed on the brower panel.
 
 ==== Nguyen Dinh Dung (@tiny767)
-===== Major Enhancement: Make several enhancements to the UI so that it is much more user-friendly.
+===== Major Enhancement (coming in v2.0): Make several enhancements to the UI so that it is much more user-friendly.
 This allows tech recruiters who need to manage big Infinity Books to save time by using the app more efficiently
 and feel more comfortable.
 
@@ -1862,9 +1979,22 @@ Implementations needed:
 * For the user's command input, coloring keywords such as `name`, `p/`.
 * Provide usage syntax or syntax error in real time (e.g. display syntax for `add` when the users finish typing 'add'
 
+===== Major Enhancement (since v1.5): Facebook integration
+
+Implementations needed:
+
+* Allow user to log in to their facebook account and connect the address book with that facebook account
+* Allow for some features such as posting to wall, saving friends to the address book
+
 ===== Minor Enhancement: `remark` command
 * Allow users to add remarks for people in their Infinity Books.
 * This allows tech recruiters to have a more flexible field to use for their candidates
+
+===== Minor Enhancement: `theme` command
+* Allow users to change between some pre-defined theme.
+
+===== Minor Enhancement: Tag color
+* Use different colors for different tags inside person cards
 
 link:#top[Back to top]
 
@@ -1889,6 +2019,8 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`* * *` |User who saves many resumes |Open candidates' resumes from commandline |to quickly view their profiles
 
 |`* * *` |User |Delete a tag from Infinity Book |To remove tags I am no longer interested in
+
+|`* * *` |Recruiter |Log in to Facebook on Infinity Book |Share job posting to facebook faster
 
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
