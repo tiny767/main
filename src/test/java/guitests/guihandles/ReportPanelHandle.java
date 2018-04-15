@@ -1,3 +1,4 @@
+// @@author anh2111
 package guitests.guihandles;
 
 import javafx.scene.Node;
@@ -18,3 +19,4 @@ public class ReportPanelHandle extends NodeHandle<Node> {
         return isReportPanelOpened;
     }
 }
+// @@author

@@ -1,3 +1,4 @@
+// @@author anh2111
 package seedu.address.model.report;
 
 import org.junit.Test;
@@ -11,3 +12,4 @@ public class ProportionTest {
         Assert.assertThrows(NullPointerException.class, () -> new Proportion(null, 0, 0));
     }
 }
+// @@author

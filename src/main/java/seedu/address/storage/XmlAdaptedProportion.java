@@ -1,3 +1,4 @@
+// @@author anh2111
 package seedu.address.storage;
 
 import javax.xml.bind.annotation.XmlElement;
@@ -66,3 +67,4 @@ public class XmlAdaptedProportion {
             && totalPersonsInProportion.equals(((XmlAdaptedProportion) other).totalPersonsInProportion);
     }
 }
+// @@author 

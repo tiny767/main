@@ -102,7 +102,7 @@ public class SampleDataUtil {
                     getTagSet("Intern"))
         };
     }
-
+    // @@author anh2111
     public static Report[] getSampleReports() throws InterruptedException {
         ArrayList<Report> sampleHistory = new ArrayList<>();
 
@@ -133,7 +133,7 @@ public class SampleDataUtil {
             reportC
         };
     }
-
+    // @@author
     public static Interview[] getSampleInterviews() {
         return new Interview[] {
             new Interview(new InterviewTitle("Backend Interview"), new Name("David"), new Date("01.01.2015"),

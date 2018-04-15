@@ -201,7 +201,7 @@ Edits the name of the 2nd person to be `Betsy Crower` and clears all existing ta
 * You can remove all the person's tags by typing `t/` without specifying any tags after it.
 ****
 
-// tag::edittags[]
+// tag::addtags[]
 ==== Add new tags to a person : `edit -add-tag`
 
 Infinity Book helps you process candidate's information faster.
@@ -229,18 +229,16 @@ Summarize each candidate in a few keywords using the `edit -add-tag` command to 
 * `edit -add-tag 1 t/Year2 t/SpeakVietnamese` +
 Adds tag `Year2` and `SpeakVietnamese` to the first candidate.
 
+.Added new tags to the first candidate.
 image::canaddtag.png[width="900"]
-
-Figure. Added new tags to the first candidate.
 
 * `edit -add-tag 1 t/Year2` +
 Adds a new tag `Year2` to the first candidate, but it is not successful since this candidate already has tag `Year2`.
 
+.Cannot add a new duplicated tag to the first candidate. The candidate's details will not be updated, and Infinity Book will not show any warning.
 image::cannotaddtag.png[width="900"]
-
-Figure. Cannot add a new duplicated tag to the first candidate. The candidate's details will not be updated,
-and Infinity Book will not show any warning.
-
+// end::addtags[]
+// tag::deletetags[]
 ==== Delete tags from a person : `edit -delete-tag`
 
 Some tags are no longer seem to be relevant to the candidate? Remove them using the `edit -delete-tag` command.
@@ -259,19 +257,18 @@ Some tags are no longer seem to be relevant to the candidate? Remove them using 
 * `edit -delete-tag 1 t/computing` +
 Deletes tag `computing` from the first candidate.
 
+.Remove tags from the first candidate.
 image::candeletetag.png[width="600"]
 
-Figure. Remove tags from the first candidate.
 
 * `edit -delete-tag 1 t/computing` +
 Removes tag `computing` from the first candidate, but it is not successful since this candidate does not have tag `computing`.
 
+.Cannot delete tag `computing` from the first candidate. The candidate's details will not be updated,
+and Infinity Book will not show any warning.
 image::cannotdeletetag.png[width="600"]
 
-Figure. Cannot delete tag `computing` from the first candidate. The candidate's details will not be updated,
-and Infinity Book will not show any warning.
-
-//end::edittags[]
+//end::deletetags[]
 
 //tag:remark[]
 ==== Add a remark : `remark` [Since v1.1]
@@ -412,6 +409,8 @@ In the report, you will find statistics of the group of all candidates tagged wi
 * A pie chart illustrating the numerical proportion of each tag.
 * A history panel listing statistics of this group at earlier points of time.
 
+// end::report[]
+// tag::reportexample[]
 *An example usage:*
 
 You are recruiting Software Engineering interns, and you want to keep track of the number of candidates in each stage:
@@ -422,25 +421,25 @@ Using our Report with Population Tag `SEIntern`, +
 
 * To ensure your team keeps up with deadlines, you can monitor the whole recruiting pipeline using Report bar chart.
 
+.Bar chart in `SEIntern` report
 image::barchart.png[width="400"]
 
-_Figure._ Bar chart in `SEIntern` report +
 _Explanation:_ there are 11 candidates tagged with `SEIntern` in which 5 of them are tagged with `Screening`, 3 of them
 are tagged with `Interviewing`, 1 of them is tagged with `Rejected`, and 2 of them are tagged with `Offered`.
 
 * To see the progress of your interns recruitment, you can view percentages of candidates in each stage using Report pie chart.
 
+.Pie chart in `SEIntern` report
 image::piechart.png[width="400"]
 
-_Figure._ Pie chart in `SEIntern` report +
 _Explanation:_ there are 11 tags that candidates tagged with `SEIntern` has in total, and 45% of them are `Screening`,
 27% are `Interviewing`, 18% are `Offered`, and 9% are `Rejected`.
 
 * To analyze your team's productivity, you can track the speed at which tasks are done using the history list.
 
+.History list in `SEIntern` report +
 image::history copy.png[width="400"]
 
-_Figure._ History list in `SEIntern` report +
 _Example in the firgure:_ At 14:10:24 04/06/2018, there are 9 candidates tagged with `Screening` in Infinity Book,
 then at 16:36:55 04/12/2018, there are only 5 `Screening` candidates left.
 
@@ -448,7 +447,8 @@ then at 16:36:55 04/12/2018, there are only 5 `Screening` candidates left.
 ====
 Date format is in **"hh/mm/ss mm/dd/yyyy""**.
 ====
-
+// end::reportexample[]
+// tag::reportcommands[]
 ==== Viewing a report : `viewreport` or `vr` [Since v1.4]
 
 Want to have bird's view statistics of a certain group of candidates? View a report using `viewreport` or `vr` command. +
@@ -459,8 +459,9 @@ Want to have bird's view statistics of a certain group of candidates? View a rep
 `viewreport pop/SEIntern` +
 Displays statistics for candidates tagged with `SEIntern`.
 
+.Infinity Book has displayed Report with Population Tag `SEIntern` in the right-most column.
 image::viewreport.png[width="600"]
-_Figure._ Infinity Book has displayed Report with Population Tag `SEIntern` in the right-most column.
+
 
 [NOTE]
 ====
@@ -486,9 +487,8 @@ Wish to save the current statistics for future reference? Saving the report usin
 Saves the current statistics for candidates tagged with `SEIntern` at this current time.
 Infinity Book will add a new entry to the history list in the report.
 
+.Infinity Book has saved Report with population Tag `SEIntern`. In the right-most column, the history list includes all statistics you have saved.
 image::savereport.png[width="600"]
-_Figure._ Infinity Book has saved Report with population Tag `SEIntern`. In the right-most column,
-the history list includes all statistics you have saved.
 
 [NOTE]
 ====
@@ -500,7 +500,7 @@ which means you cannot edit or delete saved reports. You also cannot undo `saver
 
 WARNING: If you provide multiple `POPULATION_TAG`, Infinity Book will take the last one. For example, when you execute `viewreport pop/SEIntern pop/Computing`, Infinity Book will save the report for `Computing`.
 
-// end::report[]
+// end::reportcommands[]
 
 //tag::jobposting[]
 === Job Postings

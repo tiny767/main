@@ -1,3 +1,4 @@
+// @@author anh2111
 package seedu.address.ui;
 
 import javafx.fxml.FXML;
@@ -86,3 +87,4 @@ public class ReportCard extends UiPart<Region> {
                 && report.equals(card.report);
     }
 }
+// @@author
