@@ -922,13 +922,14 @@ interview, and deleting interview.
 
 * Model Component:
 
+.add Interview Model to Model Component
 image::InterviewModel.png[width="700"]
-Figure 5.13.1: add Interview Model to Model Component
+
 
 * Storage Component:
 
+.add XmlAdaptedInterview to Storage Component
 image::InterviewStorage.png[width="700]
-Figure 5.13.2 add XmlAdaptedInterview to Storage Component
 
 ==== Adding an interview
 The recruiter may want to conduct an interview with candidates, and maintain
