@@ -582,7 +582,7 @@ features that Infinity Book offers.
 [NOTE]
 ====
 * If there is no Internet connection, the right-most panel will display a blank page. You can try login again at a later time.
-* If you are already logged-in, the command will simple re-direct you to your facebook page instead of display the login page
+* If you are already logged-in, the command will simple re-direct you to your facebook page instead of displaying the login page
 ====
 
 ==== Make a post to facebook wall: `facebookpost` [Since v1.5rc]
@@ -596,13 +596,13 @@ features that Infinity Book offers.
 [NOTE]
 ====
 * If you are not yet logged in to facebook (by using the command `facebooklogin`), you will be re-directed to the login page. +
+
 IMPORTANT: After logging in, you need to make the `facebookpost` command again to post the message. +
 
 * You can use the facebook page in the right-most panel to review your post
 ====
 
-IMPORTANT:
-* Even when you are logged in and you use the correct syntax, your message might not be posted to Facebook if it is
+IMPORTANT: Even when you are logged in and you use the correct syntax, your message might not be posted to Facebook if it is
 rejected at Facebook's end. This might be due to errors such as duplicate post, 'not enough permission' or change in Facebook API.
 * However, under normal circumstances, you can expect that the message will be posted.
 
