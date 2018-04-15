@@ -77,6 +77,9 @@ include::../DeveloperGuide.adoc[tag=jobposting5]
 
 include::../DeveloperGuide.adoc[tag=autocorrect]
 
+----
+The following section contains optional contributions demonstrating technical writing capability.
+----
 [Appendix]
 == Appendix: Additional Contributions
 

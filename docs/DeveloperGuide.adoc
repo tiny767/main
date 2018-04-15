@@ -943,7 +943,7 @@ Individual job postings are represented by the Job object with attributes `Job T
 in Figure 2 below.
 
 .UML diagram showing representation of Job in Infinity Book.
-image::JobUMLDiagram.png[width="400"]
+image::JobUMLDiagram.png[width="300"]
 
 In addition, the Person and Job class have been modified to maintain Skills as an additional field to offer better functionality
 during candidate-job matching. The `add` and `edit` commands reflect these changes as well.
@@ -951,14 +951,14 @@ during candidate-job matching. The `add` and `edit` commands reflect these chang
 Together, this modifies the Model to the state shown in the following diagram.
 
 .A complete picture of the model as maintained by Infinity Book.
-image::ModelWithJobUML.png[width="700"]
+image::ModelWithJobUML.png[width="600"]
 
 ===== Storage Component
 
 Job postings are stored in `XmlAdaptedJob` objects, which maintain a class relationship as shown in this diagram.
 
 .Job objects are saved using XmlAdaptedJob objects as shown above.
-image::JobStorageDiagram.png[width="700"]
+image::JobStorageDiagram.png[width="600"]
 
 An example job stored in this format is reproduced below:
 
@@ -993,7 +993,7 @@ Operations performed on jobs follow the sequence of operations described in the 
 This sequence of events is summarized in the following sequence diagram.
 
 .A high level sequence diagram showing events triggered by the `postjob` command.
-image::SequenceDiagramJobPosting.png[width="700"]
+image::SequenceDiagramJobPosting.png[width="600"]
 
 The following job posting commands are implemented extending `UndoableCommand` and `Command`:
 
@@ -1023,7 +1023,7 @@ image::CommandsStructure.png[width="300"]
 Adding job postings to Infinity Book is performed by the PostJobCommand. The sequence of events triggered while adding a job posting are shown in the diagram below:
 
 .Adding a job posting is executed as shown above.
-image::PostJobCommandSequenceDiagram.png[width="700"]
+image::PostJobCommandSequenceDiagram.png[width="600"]
 
 The PostJobCommand#executeUndoableCommand triggers addition of the Job to `UniqueJobList` in AddressBook#add
 The following code snippet demonstrates the prevention of duplicates in the UniqueJobList
@@ -1047,7 +1047,7 @@ The following code snippet demonstrates the prevention of duplicates in the Uniq
 Editing job postings in the Infinity Book is performed by the EditJobCommand. The sequence of events triggered while editing a job posting are shown in the diagram below:
 
 .Editing a job posting is executed as shown above.
-image::EditJobCommandSequenceDiagram.png[width="700"]
+image::EditJobCommandSequenceDiagram.png[width="600"]
 
 The EditJobCommand#executeUndoableCommand triggers editing of a existing Job in `UniqueJobList` in AddressBook#add
 The `EditJobCommand` ensures that the index specified refers to a valid index in the most recent listing of jobs.
@@ -1059,16 +1059,13 @@ The following code snippet demonstrates the prevention of duplicates and index c
 ----
     public void setJob(Job target, Job editedJob) throws DuplicateJobException, JobNotFoundException {
         requireNonNull(editedJob);
-
         int index = internalList.indexOf(target);
         if (index == -1) {
             throw new JobNotFoundException();
         }
-
         if (!target.equals(editedJob) && internalList.contains(editedJob)) {
             throw new DuplicateJobException();
         }
-
         internalList.set(index, editedJob);
     }
 ----
@@ -1089,7 +1086,6 @@ The DeleteJobCommand selects a Job object by matching the index with the last sh
 ----
  protected void preprocessUndoableCommand() throws CommandException {
         List<Job> lastShownList = model.getFilteredJobList();
-
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_JOB_DISPLAYED_INDEX);
         }
@@ -1123,13 +1119,11 @@ The following code snippet shows how Location can be excluded from the search. O
 public boolean test(Person person) {
 
         // .. code to set up and assign locationMatch, skillsMatch and tagsMatch
-
         locationMatch = isLocationMatchSatisfied(locationMatch);
         //.. similarly for skillsMatch and tagsMatch
 
         return locationMatch && skillsMatch && tagsMatch;
  }
-
  private boolean isLocationMatchSatisfied(boolean locationMatch) {
          if (notLocationBound) {
              locationMatch = true;
@@ -1149,7 +1143,7 @@ The PersonListPanel is populated with a list of candidates who match the job acc
 Listing all job postings in the Infinity Book is performed by the FindJobCommand. The sequence of events triggered while listing all job postings are shown in the diagram below:
 
 .Sequence diagram above shows the sequence of events triggered on execution of `listjobs`
-image::listjobcommandSequenceDiagram.png[width="700"]
+image::listjobcommandSequenceDiagram.png[width="600"]
 
 The ListJobCommand selects displays all Job objects from UniqueJobList in the JobListPanel.
 
