@@ -15,6 +15,8 @@ import seedu.address.model.person.Remark;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
+//@@author tiny767
+//Solution below adapted from https://github.com/se-edu/addressbook-level4/pull/599
 /**
  * Modifies the remark of a person in the address book
  */

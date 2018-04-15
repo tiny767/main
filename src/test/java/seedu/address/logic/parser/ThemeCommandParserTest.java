@@ -8,6 +8,7 @@ import org.junit.Test;
 
 import seedu.address.logic.commands.ThemeCommand;
 
+//@@author tiny767
 public class ThemeCommandParserTest {
     private ThemeCommandParser parser = new ThemeCommandParser();
 

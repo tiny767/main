@@ -7,6 +7,7 @@ import static seedu.address.logic.commands.ThemeCommand.LIGHT_THEME;
 
 import org.junit.Test;
 
+//@@author tiny767
 public class ThemeCommandTest {
     @Test
     public void equals() {
