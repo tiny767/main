@@ -1,5 +1,4 @@
 # tiny767
-<<<<<<< HEAD
 ###### \java\seedu\address\logic\commands\FacebookLoginCommandTest.java
 ``` java
 public class FacebookLoginCommandTest {
@@ -138,29 +137,6 @@ public class RemarkCommandTest {
         return remarkCommand;
     }
 
-}
-```
-###### \java\seedu\address\logic\commands\ThemeCommandTest.java
-``` java
-public class ThemeCommandTest {
-=======
-###### \java\seedu\address\logic\parser\FacebookPostCommandParserTest.java
-``` java
-public class FacebookPostCommandParserTest {
-    private FacebookPostCommandParser parser = new FacebookPostCommandParser();
-
->>>>>>> 4f5b7fe6c85fc9a1b8a4cf57210391e02ea271fe
-    @Test
-    public void parse_validArgs_success() {
-        assertParseSuccess(parser, FacebookPostCommand.EXAMPLE_POST,
-                new FacebookPostCommand(FacebookPostCommand.EXAMPLE_POST));
-    }
-
-    @Test
-    public void parse_invalidArgs_failure() {
-        assertParseFailure(parser, " ",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, FacebookPostCommand.MESSAGE_USAGE));
-    }
 }
 ```
 ###### \java\seedu\address\logic\parser\FacebookPostCommandParserTest.java
