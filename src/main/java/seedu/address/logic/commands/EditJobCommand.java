@@ -23,7 +23,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.job.Job;
 import seedu.address.model.job.JobTitle;
 import seedu.address.model.job.Location;
-import seedu.address.model.job.Skill;
+import seedu.address.model.skill.Skill;
 import seedu.address.model.job.exceptions.DuplicateJobException;
 import seedu.address.model.job.exceptions.JobNotFoundException;
 import seedu.address.model.tag.Tag;

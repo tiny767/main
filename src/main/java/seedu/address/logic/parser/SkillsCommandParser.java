@@ -8,7 +8,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.SkillsCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.job.Skill;
+import seedu.address.model.skill.Skill;
 
 /**
  * Parses input arguments and creates a new SkillsCommand object
@@ -26,7 +26,7 @@ public class SkillsCommandParser implements Parser<SkillsCommand> {
                 ArgumentTokenizer.tokenize(args, PREFIX_SKILLS);
 
         Index index;
-        seedu.address.model.job.Skill skill;
+        Skill skill;
 
         index = getIndexFromArguments(argMultimap);
         skill = getSkillsListFromArguments(argMultimap);

@@ -6,7 +6,7 @@ import java.util.Collections;
 import java.util.Objects;
 import java.util.Set;
 
-import seedu.address.model.job.Skill;
+import seedu.address.model.skill.Skill;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -20,7 +20,7 @@ public class Person {
     private final Phone phone;
     private final Email email;
     private final Address address;
-    private final seedu.address.model.job.Skill skills;
+    private final Skill skills;
     private final Remark remark;
     private final UniqueTagList tags;
     private final Link link;

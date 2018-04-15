@@ -13,7 +13,7 @@ image::Sashankh.jpg[width="150", align="left"]
 {empty}[https://github.com/ChengSashankh[github]] [<<johndoe#, portfolio>>]
 
 Role: Developer +
-Responsibilities: Documentation
+Responsibilities: Model and Documentation
 
 '''
 

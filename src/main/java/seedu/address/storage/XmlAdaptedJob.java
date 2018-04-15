@@ -12,7 +12,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.job.Job;
 import seedu.address.model.job.JobTitle;
 import seedu.address.model.job.Location;
-import seedu.address.model.job.Skill;
+import seedu.address.model.skill.Skill;
 import seedu.address.model.tag.Tag;
 
 /**
