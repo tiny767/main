@@ -915,9 +915,9 @@ The following code snippet demonstrates this ability clearly.
        }
 ----
 
-link:#top[Back to top]
-
 // end::autocorrect[]
+
+link:#top[Back to top]
 
 // tag::jobposting[]
 === Job Postings [Since v1.3]
@@ -1186,9 +1186,9 @@ The FindJobCommand selects Job objects to display by matching the keyword with t
 **Pros:** Search can be customized to be as accurate as required. +
 **Cons:** Spelling differences may still cause diminished effectiveness.
 
-link:#top[Back to top]
-
 // end::jobposting[]
+
+link:#top[Back to top]
 
 // tag::theme[]
 
@@ -2139,11 +2139,4 @@ These instructions only provide a starting point for testers to work on; testers
    Expected: Similar to previous.
 
 
-
-
-
-
-
 link:#top[Back to top]
-
-
