@@ -769,6 +769,19 @@ Have to modify multiple components such as `LogicManager`, `ModelManager`, `Even
 **Alternative 2:** Use a new panel +
 **Pros:** User can view reports and the browser at the same time.   +
 **Cons:** Add one more panel to the interface. +
+
+---
+
+**Aspect:** Choosing the chart color in Report +
+**Alternative 1 (current choice):** Define a new color palettes +
+**Pros:**
+We are able to use color palettes that are vary in both hue and brightness
+so that they are accessible by people who are color blind and obvious for everyone. +
+**Cons:** Have to write code to overwrite the default color palettes. +
+
+**Alternative 2:** Use a the default JavaFX chart color palettes +
+**Pros:** Do not need to implement.   +
+**Cons:** Do not have the control over visual effect. +
 // end::findall[]
 === Tag colors [since v1.0]
 
