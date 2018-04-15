@@ -30,6 +30,7 @@ More importantly, IB is *optimized for those who prefer to work with a desktop C
 
 Jump to the <<Quick Start>> to get started. Enjoy!
 
+//tag::testtag[]
 == About
 
 This User Guide introduces a user to Infinity Book, provides set up instructions and details the features of the product.
@@ -39,6 +40,8 @@ To quickly set up Infinity Book and try out the features, jump to <<Quick Start>
 
 [NOTE]
 For information about implementation and architecture, please refer to the Developer Guide.
+
+//end::testtag[]
 
 == Quick Start
 If you are a first time user, this section will help you get started with Infinity Book in 5 easy steps:
@@ -95,9 +98,7 @@ Infinity Book uses a command line interface that follows the command format give
 * Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
 * Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
-
-// tag::autocomplete[]
-
+//tag::autocomplete[]
 === Auto-complete and auto-correct
 
 To enhance your experience with the Command Line Interface(CLI), Infinity Book comes with built in auto-correct and auto-complete. This section explains
@@ -155,12 +156,12 @@ correct the command word without affecting the argumets entered.
 
 ** `lllist` + kbd:[SPACE] : Does not make any correction.
 
-
 [WARNING]
 ====
 While copy pasting commands with spelling errors, the kbd:[SPACE] key will not be available for use to insert spaces in the command while editing.
 ====
-// end::autcomplete[]
+
+//end::autocomplete[]
 
 [[Features]]
 == Features
@@ -491,7 +492,7 @@ IMPORTANT: If you provide multiple `POPULATION_TAG`, Infinity Book will take the
 
 // end::report[]
 
-// tag::jobposting[]
+//tag::jobposting[]
 === Job Postings
 
 In line with the vision of offering end to end support, Infinity Book offers recruiters a very efficient way to keep track of job vacancies and match candidates to these positions. +
@@ -584,7 +585,8 @@ Returns `Backend Engineer`, `Frontend Engineer`, and `Backend Tester` whose job 
 image::findjob.png[width="700"]
 _Figure._ Job list after finding with keywords `backend` and `geylang`.
 
-// end::jobposting[]
+//end::jobposting[]
+
 //tag::interviewmanagement[]
 
 === Managing Interview
