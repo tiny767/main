@@ -96,6 +96,8 @@ Infinity Book uses a command line interface that follows the command format give
 * Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 
+// tag::autocomplete[]
+
 === Auto-complete and auto-correct
 
 To enhance your experience with the Command Line Interface(CLI), Infinity Book comes with built in auto-correct and auto-complete. This section explains
@@ -131,7 +133,7 @@ Auto correct spell checks command words being typed into Infinity Book. +
 To auto-correct a command word:
 
 [NOTE]
-Entered text must be within one edit-distance of the desired command. +
+Entered text must be within one edit-distance of the desired command, by removal, addition or swapping of adjacent characters +
 If no corrections are available, no change is made to the input text.
 
 . Type in a possibly incorrect version of the command word.
@@ -142,7 +144,6 @@ If no corrections are available, no change is made to the input text.
 If a copy-pasted command may contain a spelling error in the command word, press kbd:[SPACE] to
 correct the command word without affecting the argumets entered.
 ====
-
 
 *Example:*
 
@@ -159,7 +160,7 @@ correct the command word without affecting the argumets entered.
 ====
 While copy pasting commands with spelling errors, the kbd:[SPACE] key will not be available for use to insert spaces in the command while editing.
 ====
-
+// end::autcomplete[]
 
 [[Features]]
 == Features
@@ -784,15 +785,14 @@ The following table summarises Infinity Book commands with suitable examples:
 [width="100%",cols="10%,<45%,<45%",options="header",]
 |=====================================================================================================
 |Command |Command Format |Example
-|Add Person|`add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` | `add n/James Ho p/22224444 e/jamesho@example.com a/123,
- Clementi Rd, 1234665 t/friend t/colleague`
+|Add Person|`n/NAME p/PHONE e/EMAIL a/ADDRESS s/SKILLS l/LINK [t/TAG]...` | ` add n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 l/link s/CSSt/friends t/owesMoney`
 |Add Interview | `addInterview i/INTERVIEW_TITLE n/INTERVIEWEE d/DATE l/INTERVIEW_LOCATION`| `addInterview i/SE Interview n/David
 |Add Job|`postjob j/JOBTITLE l/LOCATION s/SKILLS [t/TAG]` | `postjob j/Backend Engineer l/Singapore s/SQL, Javascript t/FreshGrad`
 |Clear |`clear`| `clear`
 |Delete |`delete INDEX` |`delete 3`
 |Delete Interview |`deleteInterview INDEX | `deleteInterview 3`
 |Delete Job |`deletejob INDEX` | `deletejob 1`
-|Edit |`edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` |`edit 2 n/James Lee e/jameslee@example.com`
+|Edit |`edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [s/SKILL] [t/TAG]...` |`edit 2 n/James Lee e/jameslee@example.com`
 |Edit Job |`[j/JOBTITLE] [l/LOCATION] [s/SKILLS] [t/TAG]` | `editjob 1 j/Backend Engineer l/Singapore`
 |Add tags to person |`edit -add-tag INDEX [t/TAG]...` |`edit -add-tag 2 t/Computing`
 |Add tags to job |`editjob -add-tag INDEX [t/TAG]...` |`editjob -add-tag 2 t/Computing`

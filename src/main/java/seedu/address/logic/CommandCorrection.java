@@ -42,7 +42,7 @@ public class CommandCorrection {
     public static final String MATCH_FOUND_FEEDBACK_TO_USER = "Auto-completions: %1$s";
     public static final String NO_MATCHES_FEEDBACK_TO_USER = "No matching command completion found. "
             + "Try SPACE key for auto-correct.";
-    private static final int NUMBER_ALPHABET = 26;
+    private static final int NUMBER_ALPHABET = 52;
     private static final int START_INDEX = 0;
 
     private static boolean isFirstCall = true;
@@ -295,7 +295,7 @@ public class CommandCorrection {
      * @returns a corrected String, if available. Else returns the same string.
      */
     public static String addOneCharacter(String commandText) {
-        String alphabetString = "abcdefghijklmnopqrstuvwxyz";
+        String alphabetString = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
         for (int i = 0; i < NUMBER_ALPHABET; i++) {
             char alphabet = alphabetString.charAt(i);

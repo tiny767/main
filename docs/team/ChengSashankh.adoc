@@ -10,7 +10,7 @@
 
 Infinity Book (IB) is an address book application for Tech recruiters who prefer to use a desktop app for managing candidates. +
 
-IB provides *end-to-end support*, from searching for candidates,to adding job postings and saving their resumes and interviews.
+IB provides *end-to-end support* for recruiters, from searching for candidates,to adding job postings and saving their resumes and interviews.
 
 == Summary of contributions
 
@@ -34,19 +34,16 @@ IB provides *end-to-end support*, from searching for candidates,to adding job po
 * *Other contributions*:
 
 ** Project management:
-*** Managed releases `v1.3` `v1.4.1` (2 releases) on GitHub
+*** Managed releases `v1.3` and `v1.4.1` ( 2 releases ) on GitHub
 ** Enhancements to existing features:
-*** Updated the add and edit command to support the skills field(Pull requests https://github.com/CS2103JAN2018-W11-B3/main/pull/157/[#157])
+*** Updated the add and edit command to support the skills field(Pull request https://github.com/CS2103JAN2018-W11-B3/main/pull/157/[#157])
 ** Documentation:
 *** Did cosmetic tweaks to existing contents of the User Guide: https://github.com/CS2103JAN2018-W11-B3/main/pull/174[#174], https://github.com/CS2103JAN2018-W11-B3/main/pull/56[#56], https://github.com/CS2103JAN2018-W11-B3/main/pull/160[#160]
 ** Community:
 *** Reported bugs and suggestions for other teams in the class (examples:  https://github.com/CS2103JAN2018-W13-B3/main/issues/148[148], https://github.com/CS2103JAN2018-W13-B3/main/issues/147[147], https://github.com/CS2103JAN2018-W13-B3/main/issues/154[154], https://github.com/CS2103JAN2018-W13-B3/main/issues/155[155])
-*** Opened non-trivial issues for improvement: https://github.com/CS2103JAN2018-W11-B3/main/issues/54[#54], https://github.com/CS2103JAN2018-W11-B3/main/issues/55[#55],
-
-_{you can add/remove categories in the list above}_
+*** Opened non-trivial issues for improvement: https://github.com/CS2103JAN2018-W11-B3/main/issues/54[#54], https://github.com/CS2103JAN2018-W11-B3/main/issues/55[#55]
 
 == Contributions to the User Guide
-
 
 |===
 |_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
@@ -54,7 +51,7 @@ _{you can add/remove categories in the list above}_
 
 include::../UserGuide.adoc[tag=jobposting]
 
-//include::../UserGuide.adoc[tag=]
+include::../UserGuide.adoc[tag=autocomplete]
 
 == Contributions to the Developer Guide
 
@@ -64,6 +61,12 @@ include::../UserGuide.adoc[tag=jobposting]
 
 include::../DeveloperGuide.adoc[tag=jobposting]
 
-//include::../DeveloperGuide.adoc[tag=]
+include::../DeveloperGuide.adoc[tag=autocorrect]
 
-_{Optionally, you may include other projects in your portfolio.}_
+
+[Appendix]
+== Additional Contributions
+
+include::../UserGuide.adoc[tag=faq]
+
+include::../

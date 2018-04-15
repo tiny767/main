@@ -1064,6 +1064,7 @@ To completely specify the changes to the Job object specified by EditJobCommand,
 these operations ensures the new Job object is updated in the Infinity Book.
 
 ---
+// end::jobposting[]
 
 *Delete Job Postings*
 
@@ -1086,6 +1087,7 @@ The DeleteJobCommand selects a Job object by matching the index with the last sh
 ----
 The changes to the UniqueJobList are enacted by AddressBook#removeJob, which completes the removal of the object and triggers Storage to update the data.
 
+// tag::jobposting[]
 ---
 
 *Matching Job Postings*
